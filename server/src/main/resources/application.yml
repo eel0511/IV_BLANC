@@ -2,8 +2,8 @@
 logging:
   level:
     root: warn
-    com.strait.shop.api: debug
-    com.strait.shop.core: debug
+    com.ivblanc.shop.api: debug
+    com.ivblanc.shop.core: debug
     org.hibernate.type.descriptor.sql: trace
 spring:
   profiles:

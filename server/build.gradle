@@ -19,7 +19,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
 
-    group = 'com.strait'
+    group = 'com.ivblanc'
     version '0.0.1'
 
     targetCompatibility = 1.8
