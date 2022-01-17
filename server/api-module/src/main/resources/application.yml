@@ -1,0 +1,6 @@
+# application yml active 설정
+spring:
+  profiles:
+    active: alpha
+  freemarker:
+    check-template-location: false
