@@ -78,7 +78,7 @@ public class FriendController {
 	@ApiOperation(value = "친구수락")
 	@PostMapping(value = "/isaccept")
 	public @ResponseBody
-	SingleResult<FriendResDTO> acceptFriend(@Valid MakeFriendReqDTO req) throws Exception {
+	SingleResult<FriendResDTO> acceptFriend(@RequestBody MakeFriendReqDTO req) throws Exception {
 		Friend me = friendService.findUserFreind(req.getApplicant(), req.getFriend_name());
 		me.setIsaccept(YNCode.Y);
 		friendService.makeFriend(me);
@@ -114,7 +114,7 @@ public class FriendController {
 
 	@ApiOperation(value = "친구추가")
 	@PostMapping(value = "/save")
-	public @ResponseBody SingleResult<FriendResDTO> addFriend(@Valid MakeFriendReqDTO req) throws Exception {
+	public @ResponseBody SingleResult<FriendResDTO> addFriend(@RequestBody MakeFriendReqDTO req) throws Exception {
 		Friend friend = Friend.builder()
 			.applicant(req.getApplicant())
 			.friendName(req.getFriend_name())
