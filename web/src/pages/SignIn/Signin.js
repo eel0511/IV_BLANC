@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+
 import a from '../../../src/assets/logo2.png';
 
 function Copyright(props) {
@@ -31,9 +34,26 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  const [email, setEmail] = useState('');
+  const [isRemember, setIsRemember] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
+
+  useEffect(() => {
+    if (cookies.rememberEmail !== undefined) {
+      setEmail(cookies.rememberEmail);
+      setIsRemember(true);
+    }
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    if (isRemember) {
+      setCookie('rememberEmail', email, { maxAge: 2000 });
+    } else {
+      removeCookie('rememberEmail');
+    }
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
@@ -76,9 +96,9 @@ export default function SignInSide() {
               로그인
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus />
+              <TextField margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
               <TextField margin='normal' required fullWidth name='password' label='Password' type='password' id='password' autoComplete='current-password' />
-              <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='아이디 저장' />
+              <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
               <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                 로그인
               </Button>
