@@ -11,20 +11,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회원가입"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="32dp"
+            android:textSize="24sp"
+            android:fontFamily="@font/app_font"
+            android:textFontWeight="600"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
-            app:layout_constraintGuide_percent="0.28"
+            app:layout_constraintGuide_percent="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"/>
-
-        <ImageView
-            android:layout_width="@dimen/logo_size"
-            android:layout_height="@dimen/logo_size"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_logo"/>
 
         <LinearLayout
             android:id="@+id/linearLayout_joinF_userInfo"
@@ -98,10 +102,27 @@
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="휴대전화번호">
+                android:hint="휴대전화번호"
+                app:placeholderText="01012341234"
+                app:placeholderTextColor="@color/gray_200">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_joinF_phone"
+                    style="@style/NumberInputStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="생년월일"
+                app:placeholderText="901231"
+                app:placeholderTextColor="@color/gray_200">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editText_joinF_birthday"
                     style="@style/NumberInputStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
