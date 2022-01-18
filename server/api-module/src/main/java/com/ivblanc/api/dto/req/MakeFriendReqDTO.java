@@ -17,10 +17,10 @@ import lombok.Setter;
 public class MakeFriendReqDTO {
 
 	@NotBlank
-	@ApiModelProperty(value = "applicant : 자신 이메일",required = true,example = "user@email.com")
+	@ApiModelProperty(value = "applicant : 자신 이메일", required = true, example = "user@email.com")
 	private String applicant;
 
 	@NotBlank
-	@ApiModelProperty(value = "friend : 친구 이메일",required = true,example = "friend@email.com")
+	@ApiModelProperty(value = "friend : 친구 이메일", required = true, example = "friend@email.com")
 	private String friend_name;
 }

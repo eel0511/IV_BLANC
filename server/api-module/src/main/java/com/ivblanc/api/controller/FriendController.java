@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -114,7 +113,8 @@ public class FriendController {
 
 	@ApiOperation(value = "친구추가")
 	@PostMapping(value = "/save")
-	public @ResponseBody SingleResult<FriendResDTO> addFriend(@RequestBody MakeFriendReqDTO req) throws Exception {
+	public @ResponseBody
+	SingleResult<FriendResDTO> addFriend(@RequestBody MakeFriendReqDTO req) throws Exception {
 		Friend friend = Friend.builder()
 			.applicant(req.getApplicant())
 			.friendName(req.getFriend_name())

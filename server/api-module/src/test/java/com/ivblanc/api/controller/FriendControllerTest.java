@@ -1,6 +1,5 @@
 package com.ivblanc.api.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -16,15 +15,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
-import com.ivblanc.api.dto.res.FriendResDTO;
-import com.ivblanc.api.service.FriendService;
-import com.ivblanc.api.service.common.ResponseService;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
@@ -53,7 +47,7 @@ class FriendControllerTest {
 	@Test
 	void findAllNotAcceptFriend() throws Exception {
 		mockMvc.perform(get("/api/friend/isnotaccept")
-				.param("applicant","a"))
+				.param("applicant", "a"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":[{\"friend_name\":\"b\"}]}"))
 			.andDo(print());
@@ -76,8 +70,8 @@ class FriendControllerTest {
 	@Test
 	void deleteFriend() throws Exception {
 		mockMvc.perform(delete("/api/friend/delete")
-				.param("applicant","a")
-				.param("friend_name","b"))
+				.param("applicant", "a")
+				.param("friend_name", "b"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"friend_name\":\"b\"}}"))
 			.andDo(print());
@@ -88,7 +82,7 @@ class FriendControllerTest {
 	@Test
 	void findAllFriend() throws Exception {
 		mockMvc.perform(get("/api/friend/all")
-			.param("applicant","a"))
+				.param("applicant", "a"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":[]}"))
 			.andDo(print());
@@ -102,6 +96,5 @@ class FriendControllerTest {
 	@Test
 	void cancelFriend() {
 	}
-
 
 }
