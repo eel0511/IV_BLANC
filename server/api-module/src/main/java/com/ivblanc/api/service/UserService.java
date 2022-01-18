@@ -26,24 +26,12 @@ public class UserService {
 		return userRepository.getUserDetailByEmail(email);
 	}
 
-	public User updatePasswordById(int user_id, String password){
+	public User updatePassword(int user_id, String password){
 		return userRepository.updatePasswordById(user_id, password);
 	}
 
-	public User updatePasswordByEmail(int email, String password){
-		return userRepository.updatePasswordByEmail(email, password);
-	}
-
-	public User updateAge(int user_id, int age){
-		return userRepository.updateAge(user_id, age);
-	}
-
-	public User updateGender(int user_id, int gender){
-		return userRepository.updateGender(user_id, gender);
-	}
-
-	public User updatePhone(int user_id, String phone){
-		return userRepository.updatePhone(user_id, phone);
+	public User updatePersonal(int user_id, int age, int gender, String phone){
+		return userRepository.updatePersonalInfo(user_id, age, gender, phone);
 	}
 
 	public int deleteUser(int user_id){

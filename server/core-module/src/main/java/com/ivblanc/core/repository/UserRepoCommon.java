@@ -25,17 +25,8 @@ public interface UserRepoCommon {
 	@Query("update user set password = :password where user_id = :user_id")
 	User updatePasswordById(int user_id, String password);
 
-	@Query("update user set password = :password where email = :email")
-	User updatePasswordByEmail(int email, String password);
-
-	@Query("update user set age = :age where user_id = :user_id")
-	User updateAge(int user_id, int age);
-
-	@Query("update user set gender = :gender where user_id = :user_id")
-	User updateGender(int user_id, int gender);
-
-	@Query("update user set phone = :phone where user_id = :user_id")
-	User updatePhone(int user_id, String phone);
+	@Query("update user set age = :age, gender = :gender, phone = :phone where user_id = :user_id")
+	User updatePersonalInfo(int user_id, int age, int gender, String phone);
 
 
 	@Query("Delete from user where user_id = :user_id")
