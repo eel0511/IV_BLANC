@@ -10,6 +10,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        val joinFragment = JoinFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_login_container, joinFragment).commit()
     }
 }
