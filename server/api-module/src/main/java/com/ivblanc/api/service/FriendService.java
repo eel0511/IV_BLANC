@@ -41,6 +41,9 @@ public class FriendService {
 	public void deleteFriend(Friend friend){
 		friendRepository.delete(friend);
 	}
+	public void addFriend(Friend friend){
+		friendRepository.save(friend);
+	}
 
 
 }

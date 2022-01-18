@@ -102,4 +102,25 @@ public class FriendController {
 		friendService.deleteFriend(friend);
 		return responseService.getSingleResult(new FriendResDTO(me.getFriendName()));
 	}
+
+	@ApiOperation(value = "친구 요청 취소")
+	@DeleteMapping(value = "/cancel")
+	@ResponseBody
+	SingleResult<FriendResDTO> cancelFriend(@Valid MakeFriendReqDTO req) throws Exception {
+		Friend me = friendService.findUserFreind(req.getApplicant(), req.getFriend_name());
+		friendService.deleteFriend(me);
+		return responseService.getSingleResult(new FriendResDTO(me.getFriendName()));
+	}
+
+	@ApiOperation(value = "친구추가")
+	@PostMapping(value = "/save")
+	public @ResponseBody SingleResult<FriendResDTO> addFriend(@Valid MakeFriendReqDTO req) throws Exception {
+		Friend friend = Friend.builder()
+			.applicant(req.getApplicant())
+			.friendName(req.getFriend_name())
+			.isaccept(YNCode.N)
+			.build();
+		friendService.addFriend(friend);
+		return responseService.getSingleResult(new FriendResDTO(friend.getFriendName()));
+	}
 }
