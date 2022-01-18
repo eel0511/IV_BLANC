@@ -69,7 +69,7 @@ spring:
 server:
   # 프로젝트 환경의 포트 설정
   port: 9999
-  domain: http://127.0.0.1
+  domain: http://192.168.0.7
   servlet:
     session:
       timeout: 1440m
@@ -84,7 +84,7 @@ app:
 
 # swagger에서 테스트 할 때의 host
 swagger:
-  host: localhost:9999
+  host: 192.168.0.7:9999
 
 
 

@@ -22,7 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Friend extends BaseEntity {
+public class Friend {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +31,8 @@ public class Friend extends BaseEntity {
 	@Column(length = 255)
 	private String applicant;
 
-	@Column(length = 255)
-	private String friend;
+	@Column(name = "friend_name", length = 255)
+	private String friendName;
 
 	@Convert(converter = YNCodeConverter.class)
 	@Column(nullable = false, length = 1, columnDefinition = "varchar(1) default 'N'")

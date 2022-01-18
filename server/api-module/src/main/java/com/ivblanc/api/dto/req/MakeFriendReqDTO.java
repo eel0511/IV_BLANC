@@ -22,5 +22,5 @@ public class MakeFriendReqDTO {
 
 	@NotBlank
 	@ApiModelProperty(value = "friend : 친구 이메일",required = true,example = "friend@email.com")
-	private String friend;
+	private String friend_name;
 }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FriendIdResDTO {
-	@ApiModelProperty(value = "친구생성아이디", required = true, example = "1")
-	private int id;
+public class FriendResDTO {
+	@ApiModelProperty(value = "친구아이디", required = true, example = "1")
+	private String friend_name;
 }
