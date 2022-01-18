@@ -47,7 +47,7 @@ import lombok.NoArgsConstructor;
     }
 )
 // 회원 테이블
-public class User extends BaseEntity {
+public class User {
 
     // User 테이블의 키값 = 회원의 고유 키값
     @Id

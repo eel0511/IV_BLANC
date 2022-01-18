@@ -47,7 +47,7 @@ public class SignController {
      * 소셜 가입 여부 체크 : get /exists/social
      */
 
-
+/*
     // 회원가입
     @ApiOperation(value = "dddd", notes = "회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,5 +88,5 @@ public class SignController {
 
         return responseService.getSingleResult(UserIdResDTO.builder().id(userId).build());
     }
-
+*/
 }
