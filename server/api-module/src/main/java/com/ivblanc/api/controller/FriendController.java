@@ -112,7 +112,7 @@ public class FriendController {
 	}
 
 	@ApiOperation(value = "친구추가")
-	@PostMapping(value = "/save")
+	@PostMapping(value = "/request")
 	public @ResponseBody
 	SingleResult<FriendResDTO> addFriend(@RequestBody MakeFriendReqDTO req) throws Exception {
 		Friend friend = Friend.builder()
