@@ -88,7 +88,7 @@ public class FriendController {
 			.isaccept(YNCode.Y)
 			.build();
 		friendService.makeFriend(friend);
-		return responseService.getSingleResult(new FriendResDTO(friend.getFriendName()));
+		return responseService.getSingleResult(new FriendResDTO(me.getFriendName()));
 
 	}
 
