@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,7 +54,7 @@ public class FriendController {
 	@ApiOperation(value = "친구수락한 친구조회")
 	@GetMapping(value = "/isaccept")
 	public ListResult<FriendResDTO>
-	findAllAcceptFriend(String applicant) throws Exception{
+	findAllAcceptFriend(String applicant) throws Exception {
 		List<Friend> friendList = friendService.findUserFriendsIsAccept(applicant);
 		List<FriendResDTO> friendResDTOList = new ArrayList<>();
 		for (Friend f : friendList) {
@@ -65,7 +66,7 @@ public class FriendController {
 	@ApiOperation(value = "친구수락하지 않은 친구조회")
 	@GetMapping(value = "/isnotaccept")
 	public ListResult<FriendResDTO>
-	findAllNotAcceptFriend(String applicant) throws Exception{
+	findAllNotAcceptFriend(String applicant) throws Exception {
 		List<Friend> friendList = friendService.findUserFriendsIsNotAccept(applicant);
 		List<FriendResDTO> friendResDTOList = new ArrayList<>();
 		for (Friend f : friendList) {
@@ -77,10 +78,10 @@ public class FriendController {
 	@ApiOperation(value = "친구수락")
 	@PostMapping(value = "/isaccept")
 	public @ResponseBody
-	SingleResult<FriendResDTO> acceptFriend(@Valid MakeFriendReqDTO req) throws Exception{
-		Friend Me = friendService.findUserFreind(req.getApplicant(),req.getFriend_name());
-		Me.setIsaccept(YNCode.Y);
-		friendService.makeFriend(Me);
+	SingleResult<FriendResDTO> acceptFriend(@Valid MakeFriendReqDTO req) throws Exception {
+		Friend me = friendService.findUserFreind(req.getApplicant(), req.getFriend_name());
+		me.setIsaccept(YNCode.Y);
+		friendService.makeFriend(me);
 		Friend friend = Friend.builder()
 			.applicant(req.getFriend_name())
 			.friendName(req.getApplicant())
@@ -89,5 +90,16 @@ public class FriendController {
 		friendService.makeFriend(friend);
 		return responseService.getSingleResult(new FriendResDTO(friend.getFriendName()));
 
+	}
+
+	@ApiOperation(value = "친구삭제")
+	@DeleteMapping(value = "/delete")
+	public @ResponseBody
+	SingleResult<FriendResDTO> deleteFriend(@Valid MakeFriendReqDTO req) throws Exception {
+		Friend me = friendService.findUserFreind(req.getApplicant(), req.getFriend_name());
+		Friend friend = friendService.findUserFreind(req.getFriend_name(), req.getApplicant());
+		friendService.deleteFriend(me);
+		friendService.deleteFriend(friend);
+		return responseService.getSingleResult(new FriendResDTO(me.getFriendName()));
 	}
 }

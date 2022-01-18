@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class FriendService {
 	private final FriendRepository friendRepository;
 
@@ -35,10 +34,13 @@ public class FriendService {
 	public Friend findUserFreind(String applicant, String friendName) throws Exception{
 		return friendRepository.findByApplicantAndFriendName(applicant, friendName);
 	}
-	@Transactional(readOnly = false)
 	public int makeFriend(Friend friend){
 		Friend newFriend = friendRepository.save(friend);
 		return newFriend.getFriend_id();
 	}
+	public void deleteFriend(Friend friend){
+		friendRepository.delete(friend);
+	}
+
 
 }
