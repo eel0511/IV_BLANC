@@ -84,6 +84,7 @@ public class User {
     private int social;
 
 
+
     public void updateAge(int age){
         this.age = age;
     }

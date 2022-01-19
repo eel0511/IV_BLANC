@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.api.service.SignService;
-import com.ivblanc.api.service.UserService;
 import com.ivblanc.core.entity.User;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,6 @@ public class CustomUserDetailService implements UserDetailsService {
             e.printStackTrace();
         }
 
-        return (UserDetails)user;
+        return user;
     }
-
 }
