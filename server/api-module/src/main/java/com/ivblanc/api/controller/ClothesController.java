@@ -121,7 +121,7 @@ public class ClothesController {
 			.category(req.getCategory())
 			.color(req.getColor())
 			.material(req.getMaterial())
-			.date(new Timestamp(new Date().getTime()))
+			.date((new Date()))
 			.size(req.getSize())
 			.season(req.getSeason())
 			.userId(req.getUserId())

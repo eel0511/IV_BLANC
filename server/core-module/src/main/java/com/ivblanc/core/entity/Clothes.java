@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,8 +39,8 @@ public class Clothes {
 	@Column(length = 10)
 	private String material;
 
-	@Column(nullable = false, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
-	private Timestamp date;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
 	@Column(length = 2000)
 	private String url;
