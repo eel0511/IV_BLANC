@@ -76,6 +76,13 @@ class InputValidUtilTest {
     }
 
     @Test
+    fun `없는 날짜`() {
+        val birth = "931131"
+        val result = InputValidUtil.isValidBirthDay(birth)
+        assertEquals(false, result)
+    }
+
+    @Test
     fun`올바른 휴대전화번호`() {
         val phoneNumber = "01044441111"
         val result = InputValidUtil.isValidPhoneNumber(phoneNumber)
