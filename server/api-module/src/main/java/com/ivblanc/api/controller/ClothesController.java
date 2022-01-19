@@ -51,6 +51,7 @@ public class ClothesController {
 	ListResult<Clothes> findOrderByCreateDate(@RequestParam int userId) throws Exception {
 		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
 	}
+
 	@ApiOperation(value = "최근순으로 자기 옷 조회(수정일기준)")
 	@GetMapping(value = "/updatedate")
 	public @ResponseBody
@@ -155,9 +156,16 @@ public class ClothesController {
 	}
 
 	@ApiOperation(value = "N일 동안 update되지않은 옷 조회")
-	@GetMapping(value = "/notwear")
-	public  @ResponseBody
-	ListResult<Clothes> findNotWear(@RequestParam int days) throws Exception{
+	@GetMapping(value = "/notweardays")
+	public @ResponseBody
+	ListResult<Clothes> findNotWear(@RequestParam int days) throws Exception {
 		return responseService.getListResult(clothesSerivce.findAllByDate(days));
+	}
+
+	@ApiOperation(value = "1년 동안 update되지않은 옷 조회")
+	@GetMapping(value = "/notwearyear")
+	public @ResponseBody
+	ListResult<Clothes> findNotWear() throws Exception {
+		return responseService.getListResult(clothesSerivce.findAllByDate(365));
 	}
 }
