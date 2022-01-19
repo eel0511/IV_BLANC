@@ -1,5 +1,6 @@
 package com.ivblanc.core.repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,5 +33,7 @@ public interface ClothesRepoCommon {
 	List<Clothes> findAllByUserIdOrderByUpdateDateDesc(int userId);
 
 	List<Clothes> findAllByUserId(int userId, Pageable pageable);
+
+	List<Clothes> findAllByUpdateDateBetween(LocalDateTime start, LocalDateTime end);
 
 }

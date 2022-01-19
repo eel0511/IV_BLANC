@@ -1,5 +1,6 @@
 package com.ivblanc.api.service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,8 @@ public class ClothesSerivce {
 	public List<Clothes> findOrderByCreateDate(int userId) {
 		return clothesRepository.findAllByUserIdOrderByCreateDateDesc(userId);
 	}
-	public List<Clothes> findOrderByUpdateDate(int userId){
+
+	public List<Clothes> findOrderByUpdateDate(int userId) {
 		return clothesRepository.findAllByUserIdOrderByUpdateDateDesc(userId);
 	}
 
@@ -77,5 +79,10 @@ public class ClothesSerivce {
 		return clothesRepository.findAllByUserId(userId, pageable);
 	}
 
+	public List<Clothes> findAllByDate(int days) {
+		LocalDateTime start = LocalDateTime.MIN;
+		LocalDateTime end = LocalDateTime.now().minusDays(days * 30L);
+		return clothesRepository.findAllByUpdateDateBetween(start,end);
+	}
 
 }

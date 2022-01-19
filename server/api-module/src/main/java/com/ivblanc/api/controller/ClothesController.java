@@ -154,4 +154,10 @@ public class ClothesController {
 
 	}
 
+	@ApiOperation(value = "N일 동안 update되지않은 옷 조회")
+	@GetMapping(value = "/notwear")
+	public  @ResponseBody
+	ListResult<Clothes> findNotWear(@RequestParam int days) throws Exception{
+		return responseService.getListResult(clothesSerivce.findAllByDate(days));
+	}
 }
