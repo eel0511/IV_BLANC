@@ -16,4 +16,5 @@
     <string name="passwordCheckErrorMessage">입력한 비밀번호와 다릅니다.</string>
     <string name="phoneNumberErrorMessage">올바르지 않은 휴대전화번호입니다.</string>
     <string name="birthdayErrorMessage">올바르지 않은 생년월일입니다.</string>
+    <string name="checkDuplication">중복체크</string>
 </resources>
