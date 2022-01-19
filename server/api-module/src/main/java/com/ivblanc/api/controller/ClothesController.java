@@ -45,11 +45,18 @@ public class ClothesController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 
-	@ApiOperation(value = "최근순으로 자기 옷 조회")
-	@GetMapping(value = "/date")
+	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)")
+	@GetMapping(value = "/createdate")
+	public @ResponseBody
+	ListResult<Clothes> findOrderByCreateDate(@RequestParam int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
+	}
+
+	@ApiOperation(value = "최근순으로 자기 옷 조회(수정일기준)")
+	@GetMapping(value = "/updatedate")
 	public @ResponseBody
 	ListResult<Clothes> findOrderByDate(@RequestParam int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findOrderByDate(userId));
+		return responseService.getListResult(clothesSerivce.findOrderByUpdateDate(userId));
 	}
 
 	@ApiOperation(value = "좋아요순로 자기 옷 조회")
@@ -121,7 +128,6 @@ public class ClothesController {
 			.category(req.getCategory())
 			.color(req.getColor())
 			.material(req.getMaterial())
-			.date(new Timestamp(new Date().getTime()))
 			.size(req.getSize())
 			.season(req.getSeason())
 			.userId(req.getUserId())
@@ -149,4 +155,17 @@ public class ClothesController {
 
 	}
 
+	@ApiOperation(value = "N일 동안 update되지않은 옷 조회")
+	@GetMapping(value = "/notweardays")
+	public @ResponseBody
+	ListResult<Clothes> findNotWear(@RequestParam int days) throws Exception {
+		return responseService.getListResult(clothesSerivce.findAllByDate(days));
+	}
+
+	@ApiOperation(value = "1년 동안 update되지않은 옷 조회")
+	@GetMapping(value = "/notwearyear")
+	public @ResponseBody
+	ListResult<Clothes> findNotWear() throws Exception {
+		return responseService.getListResult(clothesSerivce.findAllByDate(365));
+	}
 }
