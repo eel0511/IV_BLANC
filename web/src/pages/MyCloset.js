@@ -5,7 +5,7 @@ import MyClosetSidebar from "../layouts/MyCloset/MyClosetSidebar";
 
 export default function MyCloset() {
   const [myClothes, setMyClothes] = useState([]);
-  const clothesData = [
+  const clothesDatas = [
     {
       "category": 10,
       "clothesId": 1,
@@ -18,7 +18,7 @@ export default function MyCloset() {
       "season": 0,
       "size": 0,
       "updateDate": "2022-01-19T08:28:17.455Z",
-      "url": "../assets/상의.jfif",
+      "url": "상의.jfif",
       "userId": 1
     },
     {
@@ -33,7 +33,37 @@ export default function MyCloset() {
       "season": 0,
       "size": 0,
       "updateDate": "2022-01-20T08:28:17.455Z",
-      "url": "../assets/하의.jfif",
+      "url": "하의.jfif",
+      "userId": 1
+    },
+    {
+      "category": 20,
+      "clothesId": 3,
+      "color": "red",
+      "count": 0,
+      "createDate": "2022-01-20T08:28:17.455Z",
+      "dislikePoint": 0,
+      "favorite": 0,
+      "material": "string",
+      "season": 0,
+      "size": 0,
+      "updateDate": "2022-01-20T08:28:17.455Z",
+      "url": "logo.png",
+      "userId": 1
+    },
+    {
+      "category": 20,
+      "clothesId": 4,
+      "color": "red",
+      "count": 0,
+      "createDate": "2022-01-20T08:28:17.455Z",
+      "dislikePoint": 0,
+      "favorite": 0,
+      "material": "string",
+      "season": 0,
+      "size": 0,
+      "updateDate": "2022-01-20T08:28:17.455Z",
+      "url": "logo2.png",
       "userId": 1
     }
   ];
@@ -54,9 +84,10 @@ export default function MyCloset() {
     });
   };
 
-  useEffect(() => {
-    setMyClothes(clothesData);
-  }, []);
+  // useEffect(() => {
+  //   setMyClothes(clothesData);
+  //   console.log(myClothes)
+  // }, []);
 
   return (
     <>
@@ -67,7 +98,7 @@ export default function MyCloset() {
             <MyClosetSidebar />
           </div>
           <div className="col-10">
-            <MyClosetClothes myClothes={myClothes}/>
+            <MyClosetClothes clothesDatas={clothesDatas}/>
           </div>
         </div>
       </div>
