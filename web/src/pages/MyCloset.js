@@ -8,10 +8,10 @@ export default function MyCloset() {
       <h1>My Closet</h1>
       <div className="container">
         <div className="row">
-          <div className="col-2" style={{'border-style': 'dashed'}}>
+          <div className="col-2" style={{'borderStyle': 'dashed'}}>
             <MyClosetSidebar />
           </div>
-          <div className="col-10" style={{'border-style': 'dashed'}}>
+          <div className="col-10">
             <MyClosetClothes />
           </div>
         </div>
