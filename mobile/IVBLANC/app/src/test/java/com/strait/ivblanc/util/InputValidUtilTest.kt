@@ -52,6 +52,27 @@ class InputValidUtilTest {
     }
 
     @Test
+    fun `긴 이름`() {
+        val name = "김김김김김김김김김김김김김김김김김김김김김"
+        val result = InputValidUtil.isValidName(name)
+        assertEquals(false, result)
+    }
+
+    @Test
+    fun `숫자 포함 이름`() {
+        val name = "1김민"
+        val result = InputValidUtil.isValidName(name)
+        assertEquals(false, result)
+    }
+
+    @Test
+    fun `특문 포함 이름`() {
+        val name = "@김민"
+        val result = InputValidUtil.isValidName(name)
+        assertEquals(false, result)
+    }
+
+    @Test
     fun `올바른 pwd`() {
         //val pwd = "012345!a"
         val pwd = "0123454!"
