@@ -36,13 +36,13 @@ public class Clothes {
 	@Column(length = 10)
 	private String material;
 
-	@Column(nullable = false,columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+	@Column(nullable = false, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
 	private Timestamp date;
 
 	@Column(length = 2000)
 	private String url;
 
-	@Column(nullable = false,columnDefinition = "int default 0")
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private int favorite;
 
 	@Column
@@ -51,13 +51,13 @@ public class Clothes {
 	@Column
 	private int season;
 
-	@Column(nullable = false,columnDefinition = "int default 0")
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private int count;
 
-	@Column(nullable = false,columnDefinition = "int default 0")
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private int likePoint;
 
-	@Column(nullable = false,columnDefinition = "int default 0")
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private int dislikePoint;
 
 	@Column(name = "user_id")
