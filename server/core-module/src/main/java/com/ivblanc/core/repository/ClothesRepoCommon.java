@@ -11,7 +11,7 @@ import com.ivblanc.core.entity.Clothes;
 @Repository
 public interface ClothesRepoCommon {
 
-	Page<Clothes> findAllByCategoryAndUserId(int category, int userId, Pageable pageable);
+	List<Clothes> findAllByCategoryAndUserId(int category, int userId, Pageable pageable);
 
 	List<Clothes> findAllByColorAndUserId(String color, int userId);
 

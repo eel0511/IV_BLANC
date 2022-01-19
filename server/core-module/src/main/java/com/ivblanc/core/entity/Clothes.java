@@ -24,8 +24,9 @@ import lombok.Setter;
 public class Clothes {
 
 	@Id
+	@Column(name = "clothes_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int clothes_id;
+	private int clothesId;
 
 	@Column
 	private int category;
