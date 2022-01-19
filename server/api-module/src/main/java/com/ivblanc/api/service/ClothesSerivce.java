@@ -1,5 +1,6 @@
 package com.ivblanc.api.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +29,11 @@ public class ClothesSerivce {
 		return clothesRepository.findALLByUserIdOrderByFavoriteDesc(userId);
 	}
 
-	public List<Clothes> findOrderByDate(int userId) {
-		return clothesRepository.findAllByUserIdOrderByDateDesc(userId);
+	public List<Clothes> findOrderByCreateDate(int userId) {
+		return clothesRepository.findAllByUserIdOrderByCreateDateDesc(userId);
+	}
+	public List<Clothes> findOrderByUpdateDate(int userId){
+		return clothesRepository.findAllByUserIdOrderByUpdateDateDesc(userId);
 	}
 
 	public void addClothes(Clothes clothes) {
@@ -72,4 +76,6 @@ public class ClothesSerivce {
 	public List<Clothes> findAll(int userId, Pageable pageable) {
 		return clothesRepository.findAllByUserId(userId, pageable);
 	}
+
+
 }

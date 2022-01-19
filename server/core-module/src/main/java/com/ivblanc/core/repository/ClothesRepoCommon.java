@@ -1,8 +1,8 @@
 package com.ivblanc.core.repository;
 
+import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -27,7 +27,10 @@ public interface ClothesRepoCommon {
 
 	List<Clothes> findAllByUserIdOrderByCountDesc(int userId);
 
-	List<Clothes> findAllByUserIdOrderByDateDesc(int userId);
+	List<Clothes> findAllByUserIdOrderByCreateDateDesc(int userId);
+
+	List<Clothes> findAllByUserIdOrderByUpdateDateDesc(int userId);
 
 	List<Clothes> findAllByUserId(int userId, Pageable pageable);
+
 }

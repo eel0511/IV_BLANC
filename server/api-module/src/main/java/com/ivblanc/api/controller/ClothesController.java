@@ -45,11 +45,17 @@ public class ClothesController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 
-	@ApiOperation(value = "최근순으로 자기 옷 조회")
-	@GetMapping(value = "/date")
+	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)")
+	@GetMapping(value = "/createdate")
+	public @ResponseBody
+	ListResult<Clothes> findOrderByCreateDate(@RequestParam int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
+	}
+	@ApiOperation(value = "최근순으로 자기 옷 조회(수정일기준)")
+	@GetMapping(value = "/updatedate")
 	public @ResponseBody
 	ListResult<Clothes> findOrderByDate(@RequestParam int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findOrderByDate(userId));
+		return responseService.getListResult(clothesSerivce.findOrderByUpdateDate(userId));
 	}
 
 	@ApiOperation(value = "좋아요순로 자기 옷 조회")
@@ -121,7 +127,6 @@ public class ClothesController {
 			.category(req.getCategory())
 			.color(req.getColor())
 			.material(req.getMaterial())
-			.date((new Date()))
 			.size(req.getSize())
 			.season(req.getSeason())
 			.userId(req.getUserId())

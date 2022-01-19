@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Clothes {
+public class Clothes extends BaseEntity{
 
 	@Id
 	@Column(name = "clothes_id")
@@ -38,9 +38,6 @@ public class Clothes {
 
 	@Column(length = 10)
 	private String material;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
 
 	@Column(length = 2000)
 	private String url;
