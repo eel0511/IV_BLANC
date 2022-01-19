@@ -38,7 +38,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
             if (checkInputForm() && isEmailChecked) {
                 //todo: 회원가입 진행
             } else if(!isEmailChecked) {
-                toast(resources.getText(R.string.emailErrorMessage) as String, Toast.LENGTH_LONG)
+                toast(resources.getText(R.string.emailNotCheckedErrorMessage) as String, Toast.LENGTH_LONG)
             }
        }
 
@@ -136,6 +136,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         }
         if(gendersCheckedId == -1) {
             result *= 0
+            toast(resources.getString(R.string.genderNotCheckedErrorMessage), Toast.LENGTH_SHORT)
         }
 
         return when(result) {
