@@ -36,11 +36,11 @@ public class ClothesSerivce {
 		clothesRepository.save(clothes);
 	}
 
-	public void deleteClothesById(int clothes_id) {
-		clothesRepository.deleteById(clothes_id);
+	public void deleteClothesById(int clothesId) {
+		clothesRepository.deleteById(clothesId);
 	}
 
-	public Page<Clothes> findByCategory(final Pageable pageable,int category, int userId) {
+	public List<Clothes> findByCategory(final Pageable pageable,int category, int userId) {
 
 		return clothesRepository.findAllByCategoryAndUserId(category, userId,pageable);
 	}

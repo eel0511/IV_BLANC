@@ -10,6 +10,7 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,27 +67,31 @@ public class ClothesController {
 
 	@ApiOperation(value = "카테고리로 자기 옷 조회")
 	@GetMapping(value = "/category")
-	public Page<Clothes> findClothesCategory(int page,int size,int category,int userId) throws Exception {
-		PageRequest pageRequest = PageRequest.of(page, size);
-		return clothesSerivce.findByCategory(pageRequest,category,userId);
+	public @ResponseBody
+	ListResult<Clothes> findClothesCategory(int page, int category, int userId) throws Exception {
+		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
+		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
+
 	@ApiOperation(value = "색깔로 자기 옷 조회")
 	@GetMapping(value = "/color")
 	public @ResponseBody
-	ListResult<Clothes> findClothesColor(String color,int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findByColor(color,userId));
+	ListResult<Clothes> findClothesColor(String color, int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findByColor(color, userId));
 	}
+
 	@ApiOperation(value = "소재로 자기 옷 조회")
 	@GetMapping(value = "/material")
 	public @ResponseBody
-	ListResult<Clothes> findClothesMaterial(String material,int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findByMaterial(material,userId));
+	ListResult<Clothes> findClothesMaterial(String material, int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findByMaterial(material, userId));
 	}
+
 	@ApiOperation(value = "계절별 자기 옷 조회")
 	@GetMapping(value = "/season")
 	public @ResponseBody
-	ListResult<Clothes> findClothesSeason(int season,int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findBySeason(season,userId));
+	ListResult<Clothes> findClothesSeason(int season, int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findBySeason(season, userId));
 	}
 
 	@ApiOperation(value = "옷 추가")
@@ -104,25 +109,25 @@ public class ClothesController {
 			.userId(req.getUserId())
 			.build();
 		clothesSerivce.addClothes(clothes);
-		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothes_id()));
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
 
 	@ApiOperation(value = "옷 삭제 By Clothes_id")
 	@DeleteMapping(value = "/deleteById")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> deleteClothes(int clothes_id) throws Exception {
-		clothesSerivce.deleteClothesById(clothes_id);
-		return responseService.getSingleResult(new ClothesIdResDTO(clothes_id));
+	SingleResult<ClothesIdResDTO> deleteClothes(int clothesId) throws Exception {
+		clothesSerivce.deleteClothesById(clothesId);
+		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
 	@ApiOperation(value = "url 수정")
 	@PutMapping(value = "/updateurl")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> updateUrl(int clothes_id, String url) throws Exception {
-		Clothes clothes = clothesSerivce.findByClothesId(clothes_id).get();
+	SingleResult<ClothesIdResDTO> updateUrl(int clothesId, String url) throws Exception {
+		Clothes clothes = clothesSerivce.findByClothesId(clothesId).get();
 		clothes.setUrl(url);
 		clothesSerivce.addClothes(clothes);
-		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothes_id()));
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 
 	}
 
