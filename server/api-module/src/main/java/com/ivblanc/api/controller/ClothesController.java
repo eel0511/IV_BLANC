@@ -40,18 +40,50 @@ public class ClothesController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 
-	@ApiOperation(value = "최근순으로 옷 조회")
+	@ApiOperation(value = "최근순으로 자기 옷 조회")
 	@GetMapping(value = "/date")
 	public @ResponseBody
 	ListResult<Clothes> findOrderByDate(int userId) throws Exception {
 		return responseService.getListResult(clothesSerivce.findOrderByDate(userId));
 	}
 
-	@ApiOperation(value = "좋아요순로 옷 조회")
-	@GetMapping(value = "/favorite")
+	@ApiOperation(value = "좋아요순로 자기 옷 조회")
+	@GetMapping(value = "/like")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByFavorite(int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findOrderByFavorite(userId));
+	ListResult<Clothes> findOrderByLike(int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findOrderByLike(userId));
+	}
+
+	@ApiOperation(value = "싫어요순로 자기 옷 조회")
+	@GetMapping(value = "/dislike")
+	public @ResponseBody
+	ListResult<Clothes> findOrderByDisLike(int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findOrderByDisLike(userId));
+	}
+
+	@ApiOperation(value = "카테고리로 자기 옷 조회")
+	@GetMapping(value = "/category")
+	public @ResponseBody
+	ListResult<Clothes> findClothesCategory(int category,int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findByCategory(category,userId));
+	}
+	@ApiOperation(value = "색깔로 자기 옷 조회")
+	@GetMapping(value = "/category")
+	public @ResponseBody
+	ListResult<Clothes> findClothesColor(String color,int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findByColor(color,userId));
+	}
+	@ApiOperation(value = "소재로 자기 옷 조회")
+	@GetMapping(value = "/material")
+	public @ResponseBody
+	ListResult<Clothes> findClothesMaterial(String material,int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findByMaterial(material,userId));
+	}
+	@ApiOperation(value = "계절별 자기 옷 조회")
+	@GetMapping(value = "/season")
+	public @ResponseBody
+	ListResult<Clothes> findClothesSeason(int season,int userId) throws Exception {
+		return responseService.getListResult(clothesSerivce.findBySeason(season,userId));
 	}
 
 	@ApiOperation(value = "옷 추가")
@@ -90,4 +122,5 @@ public class ClothesController {
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothes_id()));
 
 	}
+
 }
