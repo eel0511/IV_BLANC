@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원가입"
+            android:text="@string/join"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="32dp"
             android:textSize="24sp"
@@ -42,25 +42,49 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:gravity="top">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout_joinF_email"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_weight="20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editText_joinF_email"
+                        style="@style/TextInputStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/black"
+                    android:insetBottom="0dp"
+                    android:text="중복체크"
+                    android:textColor="@color/white"
+                    app:cornerRadius="20dp"
+                    app:rippleColor="@color/gray_200" />
+
+            </LinearLayout>
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_joinF_password"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="이메일">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_joinF_email"
-                    style="@style/TextInputStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="비밀번호">
+                android:hint="@string/password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_joinF_password"
@@ -72,10 +96,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_joinF_passwordcheck"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="비밀번호 확인">
+                android:hint="@string/passwordCheck">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_joinF_passwordcheck"
@@ -86,10 +111,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_joinF_name"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="이름">
+                android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editText_joinF_name"
@@ -99,10 +125,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_joinF_phone"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="휴대전화번호"
+                android:hint="@string/phoneNumber"
                 app:placeholderText="01012341234"
                 app:placeholderTextColor="@color/gray_200">
 
@@ -114,10 +141,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout_joinF_birthday"
                 style="@style/TextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="생년월일"
+                android:hint="@string/birthday"
                 app:placeholderText="901231"
                 app:placeholderTextColor="@color/gray_200">
 
@@ -137,40 +165,45 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="성별"
+                    android:text="@string/gender"
                     android:textSize="16sp"
                     android:layout_marginStart="16dp"/>
 
                 <RadioGroup
+                    android:id="@+id/radioGroup_joinF_genders"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="end">
                     <RadioButton
+                        android:id="@+id/radioButton_joinF_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="남자"
+                        android:text="@string/male"
                         android:layout_gravity="end"/>
 
                     <RadioButton
+                        android:id="@+id/radioButton_joinF_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:text="여자" />
+                        android:text="@string/female" />
                 </RadioGroup>
 
             </LinearLayout>
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_joinF_join"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/white"
                 android:insetBottom="0dp"
                 app:cornerRadius="20dp"
                 app:rippleColor="@color/gray_200"
-                android:textColor="@color/white"
-                android:text="회원가입" />
+                android:text="@string/join" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
