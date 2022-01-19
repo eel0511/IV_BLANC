@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Home from './pages/Home';
+import IvblancNavbar from './layouts/IvblancNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <IvblancNavbar />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

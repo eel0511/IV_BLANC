@@ -1,11 +1,11 @@
 import React from 'react';
-import IvblancNavbar from '../layouts/Home/IvblancNavbar';
 
-
-export default function Home() {
+function Home() {
   return (
     <>
-      <IvblancNavbar />
+      <h1>Home</h1>
     </>
   );
 }
+
+export default Home;
