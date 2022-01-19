@@ -40,9 +40,9 @@ public class ClothesSerivce {
 		clothesRepository.deleteById(clothesId);
 	}
 
-	public List<Clothes> findByCategory(final Pageable pageable,int category, int userId) {
+	public List<Clothes> findByCategory(final Pageable pageable, int category, int userId) {
 
-		return clothesRepository.findAllByCategoryAndUserId(category, userId,pageable);
+		return clothesRepository.findAllByCategoryAndUserId(category, userId, pageable);
 	}
 
 	public List<Clothes> findByColor(String color, int userId) {
@@ -56,13 +56,20 @@ public class ClothesSerivce {
 	public List<Clothes> findBySeason(int season, int userId) {
 		return clothesRepository.findAllBySeasonAndUserId(season, userId);
 	}
-	public List<Clothes> findOrderByLike(int userId){
+
+	public List<Clothes> findOrderByLike(int userId) {
 		return clothesRepository.findAllByUserIdOrderByLikePointDesc(userId);
 	}
-	public List<Clothes> findOrderByDisLike(int userId){
+
+	public List<Clothes> findOrderByDisLike(int userId) {
 		return clothesRepository.findAllByUserIdOrderByDislikePointDesc(userId);
 	}
-	public List<Clothes> findOrderByCount(int userId){
+
+	public List<Clothes> findOrderByCount(int userId) {
 		return clothesRepository.findAllByUserIdOrderByCountDesc(userId);
+	}
+
+	public List<Clothes> findAll(int userId, Pageable pageable) {
+		return clothesRepository.findAllByUserId(userId, pageable);
 	}
 }

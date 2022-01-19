@@ -28,4 +28,6 @@ public interface ClothesRepoCommon {
 	List<Clothes> findAllByUserIdOrderByCountDesc(int userId);
 
 	List<Clothes> findAllByUserIdOrderByDateDesc(int userId);
+
+	List<Clothes> findAllByUserId(int userId, Pageable pageable);
 }
