@@ -172,7 +172,7 @@ public class ClothesController {
 	}
 
 	@ApiOperation(value = "즐겨찾기추가")
-	@PostMapping(value = "/addfavorite")
+	@PutMapping(value = "/addfavorite")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addFavorite(@RequestParam int clothesId) throws Exception {
 		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
@@ -185,7 +185,7 @@ public class ClothesController {
 	}
 
 	@ApiOperation(value = "즐겨찾기삭제")
-	@PostMapping(value = "/deletefavorite")
+	@PutMapping(value = "/deletefavorite")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> deleteFavorite(@RequestParam int clothesId) throws Exception {
 		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
