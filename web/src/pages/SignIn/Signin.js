@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import AuthSocial from '../../components/login/AuthSocial';
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -96,9 +97,24 @@ export default function SignInSide() {
               로그인
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus value={email} onChange={(e) => setEmail(e.target.value)} />
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                autoFocus
+                type='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <TextField margin='normal' required fullWidth name='password' label='Password' type='password' id='password' autoComplete='current-password' />
               <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
+
+              <AuthSocial />
+
               <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                 로그인
               </Button>
