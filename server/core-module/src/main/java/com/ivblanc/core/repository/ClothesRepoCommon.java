@@ -9,13 +9,19 @@ import com.ivblanc.core.entity.Clothes;
 @Repository
 public interface ClothesRepoCommon {
 
-	List<Clothes> findAllByCategory(int category);
+	List<Clothes> findAllByCategoryAndUserId(int category, int userId);
 
-	List<Clothes> findAllByColor(String color);
+	List<Clothes> findAllByColorAndUserId(String color, int userId);
 
-	List<Clothes> findAllByMaterial(String material);
+	List<Clothes> findAllByMaterialAndUserId(String material, int userId);
 
-	List<Clothes> findALLByOrderByFavoriteDesc();
+	List<Clothes> findALLByUserIdOrderByFavoriteDesc(int userId);
 
+	List<Clothes> findAllBySeasonAndUserId(int season, int userId);
 
+	List<Clothes> findAllByLikePointAndUserId(int likePoint, int userId);
+
+	List<Clothes> findAllByDislikePointAndUserId(int dislikePoint, int userId);
+
+	List<Clothes> findAllByUserIdOrderByDateDesc(int userId);
 }

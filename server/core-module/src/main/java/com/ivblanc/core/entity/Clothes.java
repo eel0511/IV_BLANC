@@ -55,10 +55,10 @@ public class Clothes {
 	private int count;
 
 	@Column(nullable = false,columnDefinition = "int default 0")
-	private int likepoint;
+	private int likePoint;
 
 	@Column(nullable = false,columnDefinition = "int default 0")
-	private int dislikepoint;
+	private int dislikePoint;
 
 	@Column(name = "user_id")
 	private int userId;
