@@ -19,14 +19,6 @@ public class UserService {
 		return userRepository.findByUid(uid);
 	}
 
-	public User updatePassword(String uid, String password){
-		return userRepository.updatePassword(uid, password);
-	}
-
-	public User updatePersonal(String uid, int age, int gender, String phone){
-		return userRepository.updatePersonalInfo(uid, age, gender, phone);
-	}
-
 	public void deleteUser(long id){
 		userRepository.deleteById(id);
 	}

@@ -44,17 +44,6 @@ public class UserRepoCommonImpl implements UserRepoCommon{
         return result;
     }
 
-    @Override
-    public User updatePassword(String uid, String password) {
-        return null;
-    }
-
-    @Override
-    public User updatePersonalInfo(String uid, int age, int gender, String phone) {
-        return null;
-    }
-
-
 
 }
 

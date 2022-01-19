@@ -14,13 +14,6 @@ public interface UserRepoCommon {
 
 	User findByUid(String uid);
 
-
-	User updatePassword(String uid, String password);
-
-	User updatePersonalInfo(String uid, int age, int gender, String phone);
-
-
-
 }
 
 

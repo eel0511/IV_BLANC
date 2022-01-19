@@ -36,9 +36,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    // 회원이 가입한 타입 (none:일반, sns:소셜회원가입)
-    // @Convert(converter = JoinCodeConverter.class)
-    @Column(nullable = false, length = 5)
+    // 회원이 가입한 타입 (1:일반회원, 2:카카오, 3:구글, 4:네이버)
+    @Column(nullable = false, length = 1, columnDefinition = "int(1) default 0")
     private int social;
 
     // 회원아이디(=이메일)
@@ -55,11 +54,11 @@ public class User implements UserDetails {
     private String name;
 
     // 회원 휴대폰
-    @Column(nullable = true, length = 32)
+    @Column(nullable = false, length = 32)
     private String phone;
 
-    // 성별 (남자 M, 여자 F)
-    @Column(nullable = false, length = 1, columnDefinition = "varchar(1) default ''")
+    // 성별 (남자 1, 여자 2)
+    @Column(nullable = false, length = 1, columnDefinition = "int(1) default 0")
     private int gender;
 
     // 회원 나이
@@ -141,5 +140,24 @@ public class User implements UserDetails {
         this.gender = gender;
     }
 
+    public void updatePhone(String phone){
+        this.phone = phone;
+    }
+
+    public void updateName(String name){
+        this.name = name;
+    }
+
+    public void updatePassword(String password){
+        this.password = password;
+    }
+
+    public void updateTokenJWT(String token_jwt){
+        this.token_jwt = token_jwt;
+    }
+
+    public void updateTokenFCM(String token_fcm){
+        this.token_fcm = token_fcm;
+    }
 
 }
