@@ -32,6 +32,7 @@ class ClothesControllerTest {
 
 	@Autowired
 	private ObjectMapper objectMapper;
+
 	@Order(1)
 	@Test
 	void addClothes() throws Exception {
@@ -43,46 +44,87 @@ class ClothesControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"clothes_id\":1}}"))
 			.andDo(print());
+
 	}
+
 	@Order(2)
 	@Test
-	void updateUrl()  throws Exception{
+	void updateUrl() throws Exception {
 		mockMvc.perform(put("/api/clothes/updateurl")
-			.param("clothes_id","1")
-			.param("url","url"))
+				.param("clothesId", "1")
+				.param("url", "url"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"clothes_id\":1}}"))
 			.andDo(print());
+
 	}
+
 	@Order(3)
 	@Test
 	void findOrderByDate() throws Exception {
-		mockMvc.perform(get("/api/clothes/date")
-				.param("userId","1"))
+		mockMvc.perform(get("/api/clothes/createdate")
+				.param("userId", "1"))
 			.andExpect(status().isOk())
 			.andDo(print());
 	}
+
 	@Order(4)
 	@Test
 	void deleteClothes() throws Exception {
 		mockMvc.perform(delete("/api/clothes/deleteById")
-				.param("clothes_id", "1"))
+				.param("clothesId", "1"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"clothes_id\":1}}"))
 			.andDo(print());
 	}
+
 	@Order(5)
 	@Test
-	void findOrderByFavorite()  throws Exception{
+	void findOrderByLike() throws Exception {
 
-		mockMvc.perform(get("/api/clothes/favorite")
-				.param("userId","1"))
+		mockMvc.perform(get("/api/clothes/like")
+				.param("userId", "1"))
 			.andExpect(status().isOk())
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":[]}"))
 			.andDo(print());
 	}
 
+	@Order(6)
+	@Test
+	void findClothesSeason() throws Exception {
+		String content = objectMapper.writeValueAsString(new MakeClothesReqDTO(1, "검정", "면", 100, 1, 1));
+		mockMvc.perform(post("/api/clothes/add")
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andDo(print());
+		content = objectMapper.writeValueAsString(new MakeClothesReqDTO(1, "검정", "면", 100, 2, 1));
+		mockMvc.perform(post("/api/clothes/add")
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andDo(print());
+		content = objectMapper.writeValueAsString(new MakeClothesReqDTO(1, "검정", "면", 100, 1, 1));
+		mockMvc.perform(post("/api/clothes/add")
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andDo(print());
 
-
+		mockMvc.perform(get("/api/clothes/season")
+				.param("season", "1")
+				.param("userId", "1"))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+	@Order(7)
+	@Test
+	void findNotWear() throws Exception{
+		mockMvc.perform(get("/api/clothes/notweardays")
+				.param("days", "1"))
+			.andExpect(status().isOk())
+			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":[]}"))
+			.andDo(print());
+	}
 
 }
