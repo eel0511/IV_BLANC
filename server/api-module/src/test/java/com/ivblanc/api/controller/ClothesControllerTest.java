@@ -126,5 +126,29 @@ class ClothesControllerTest {
 			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":[]}"))
 			.andDo(print());
 	}
+	@Order(8)
+	@Test
+	void addFavorite() throws Exception{
+		String content = objectMapper.writeValueAsString(new MakeClothesReqDTO(1, "검정", "면", 100, 1, 1));
+		mockMvc.perform(post("/api/clothes/add")
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andDo(print());
+		mockMvc.perform(put("/api/clothes/addfavorite")
+				.param("clothesId", "1"))
+			.andExpect(status().isOk())
+			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"clothes_id\":1}}"))
+			.andDo(print());
+	}
+	@Order(9)
+	@Test
+	void deleteFavorite() throws Exception{
+		mockMvc.perform(put("/api/clothes/deletefavorite")
+				.param("clothesId", "1"))
+			.andExpect(status().isOk())
+			.andExpect(content().string("{\"output\":1,\"msg\":\"성공\",\"data\":{\"clothes_id\":1}}"))
+			.andDo(print());
+	}
 
 }

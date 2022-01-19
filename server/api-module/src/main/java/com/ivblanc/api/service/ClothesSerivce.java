@@ -82,7 +82,10 @@ public class ClothesSerivce {
 	public List<Clothes> findAllByDate(int days) {
 		LocalDateTime start = LocalDateTime.MIN;
 		LocalDateTime end = LocalDateTime.now().minusDays(days * 30L);
-		return clothesRepository.findAllByUpdateDateBetween(start,end);
+		return clothesRepository.findAllByUpdateDateBetween(start, end);
 	}
 
+	public void addFavorite(Clothes clothes) {
+		clothesRepository.save(clothes);
+	}
 }

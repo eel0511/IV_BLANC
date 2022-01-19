@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.gax.rpc.ApiException;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
@@ -29,6 +30,7 @@ import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.Clothes;
+import com.ivblanc.core.exception.ApiMessageException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -167,5 +169,31 @@ public class ClothesController {
 	public @ResponseBody
 	ListResult<Clothes> findNotWear() throws Exception {
 		return responseService.getListResult(clothesSerivce.findAllByDate(365));
+	}
+
+	@ApiOperation(value = "즐겨찾기추가")
+	@PutMapping(value = "/addfavorite")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> addFavorite(@RequestParam int clothesId) throws Exception {
+		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
+		if (!clothes.isPresent()) {
+			throw new ApiMessageException("없는 옷 번호입니다");
+		}
+		clothes.get().setFavorite(1);
+		clothesSerivce.addFavorite(clothes.get());
+		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
+	}
+
+	@ApiOperation(value = "즐겨찾기삭제")
+	@PutMapping(value = "/deletefavorite")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> deleteFavorite(@RequestParam int clothesId) throws Exception {
+		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
+		if (!clothes.isPresent()) {
+			throw new ApiMessageException("없는 옷 번호입니다");
+		}
+		clothes.get().setFavorite(0);
+		clothesSerivce.addFavorite(clothes.get());
+		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 }
