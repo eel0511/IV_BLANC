@@ -16,5 +16,7 @@
     <string name="passwordCheckErrorMessage">입력한 비밀번호와 다릅니다.</string>
     <string name="phoneNumberErrorMessage">올바르지 않은 휴대전화번호입니다.</string>
     <string name="birthdayErrorMessage">올바르지 않은 생년월일입니다.</string>
+    <string name="emailNotCheckedErrorMessage">이메일 중복 검사를 눌러주세요.</string>
+    <string name="genderNotCheckedErrorMessage">성별을 선택해주세요.</string>
     <string name="checkDuplication">중복체크</string>
 </resources>
