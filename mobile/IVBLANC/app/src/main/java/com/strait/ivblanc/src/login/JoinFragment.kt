@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
@@ -15,6 +16,7 @@ import com.strait.ivblanc.databinding.FragmentJoinBinding
 import com.strait.ivblanc.util.InputValidUtil
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind, R.layout.fragment_join) {
+    var isEmailChecked = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,13 +35,24 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
 
     fun initView() {
         binding.buttonJoinFJoin.setOnClickListener {
-            if (checkInputForm()) {
+            if (checkInputForm() && isEmailChecked) {
                 //todo: 회원가입 진행
+            } else if(!isEmailChecked) {
+                toast(resources.getText(R.string.emailErrorMessage) as String, Toast.LENGTH_LONG)
+            }
+       }
+
+        binding.buttonJoinFCheckEmail.setOnClickListener {
+            if(InputValidUtil.isValidEmail(binding.editTextJoinFEmail.text.toString())) {
+                //todo: 중복 검사 실행
+            } else {
+                toast(resources.getText(R.string.emailErrorMessage) as String, Toast.LENGTH_LONG)
             }
         }
 
         // todo: 리팩터링 해야함
         binding.editTextJoinFEmail.addTextChangedListener {
+            isEmailChecked = false
             val input = it.toString()
             if (InputValidUtil.isValidEmail(input)) {
                 binding.textInputLayoutJoinFEmail.error = null
