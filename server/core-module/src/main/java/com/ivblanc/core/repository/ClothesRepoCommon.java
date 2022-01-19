@@ -19,9 +19,11 @@ public interface ClothesRepoCommon {
 
 	List<Clothes> findAllBySeasonAndUserId(int season, int userId);
 
-	List<Clothes> findAllByLikePointAndUserId(int likePoint, int userId);
+	List<Clothes> findAllByUserIdOrderByLikePointDesc(int userId);
 
-	List<Clothes> findAllByDislikePointAndUserId(int dislikePoint, int userId);
+	List<Clothes> findAllByUserIdOrderByDisLikePointDesc(int userId);
+
+	List<Clothes> findAllByUserIdOrderByCountDesc(int userId);
 
 	List<Clothes> findAllByUserIdOrderByDateDesc(int userId);
 }
