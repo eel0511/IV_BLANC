@@ -22,9 +22,8 @@ public class SignUpReqDTO {
     private String uid;
 
     @NotNull
-    @Pattern(regexp = "^(none|sns)$")
-    @ApiModelProperty(value = "회원가입 타입 (none, sns)", required = true, example = "sns")
-    private String type;
+    @ApiModelProperty(value = "회원가입 타입", required = true, example = "0")
+    private int social;
 
     @NotBlank
     @ApiModelProperty(value = "비밀번호", required = true, example = "123")
@@ -33,17 +32,7 @@ public class SignUpReqDTO {
     @ApiModelProperty(value = "이름", required = false, example = "카카오")
     private String name;
 
-    @ApiModelProperty(value = "이메일", required = false, example = "kakao123@test.com")
-    private String email;
-
     @ApiModelProperty(value = "핸드폰번호('-'값 없이 입력)", required = false, example = "01012345678")
     private String phone;
-
-    @ApiModelProperty(value = "주소", required = false, example = "")
-    private String address;
-
-    @ApiModelProperty(value = "상세주소", required = false, example = "")
-    private String addressDetail;
-
     
 }

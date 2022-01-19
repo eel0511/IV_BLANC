@@ -47,36 +47,29 @@ public class SignController {
      * 소셜 가입 여부 체크 : get /exists/social
      */
 
-/*
+
     // 회원가입
     @ApiOperation(value = "dddd", notes = "회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@Valid SignUpReqDTO req) throws Exception{
         // uid 중복되는 값이 존재하는지 확인 (uid = 고유한 값)
-        User uidChk = signService.findByUid(req.getUid(), YNCode.Y);
+        User uidChk = signService.findByUid(req.getUid());
         if(uidChk != null)
             throw new ApiMessageException("중복된 uid값의 회원이 존재합니다.");
 
         // DB에 저장할 User Entity 세팅
         User user = User.builder()
-                .joinType(JoinCode.valueOf(req.getType()))
+                .social(req.getSocial())
                 .uid(req.getUid())
                 .password(passwordEncoder.encode(req.getPassword()))
                 .name(req.getName() == null ? "" : req.getName())
-                .email(req.getEmail() == null ? "" : req.getEmail())
                 .phone(req.getPhone())
-                .address(req.getAddress())
-                .addressDetail(req.getAddressDetail())
 
                 // 가입 후 프로필 등록으로 받을 데이터는 우선 기본값으로 세팅
                 .age(0)
-                .img("")
-                .nickname("")
-                .gender(MFCode.NULL)
+                .gender(0)
 
                 // 기타 필요한 값 세팅
-                .push(YNCode.Y)
-                .isBind(YNCode.Y)
                 .roles(Collections.singletonList("ROLE_USER")) // 인증된 회원인지 확인하기 위한 JWT 토큰에 사용될 데이터
                 .build();
 
@@ -88,5 +81,5 @@ public class SignController {
 
         return responseService.getSingleResult(UserIdResDTO.builder().id(userId).build());
     }
-*/
+
 }
