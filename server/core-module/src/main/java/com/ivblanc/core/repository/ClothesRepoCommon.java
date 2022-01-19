@@ -2,6 +2,8 @@ package com.ivblanc.core.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.ivblanc.core.entity.Clothes;
@@ -9,7 +11,7 @@ import com.ivblanc.core.entity.Clothes;
 @Repository
 public interface ClothesRepoCommon {
 
-	List<Clothes> findAllByCategoryAndUserId(int category, int userId);
+	Page<Clothes> findAllByCategoryAndUserId(int category, int userId, Pageable pageable);
 
 	List<Clothes> findAllByColorAndUserId(String color, int userId);
 
@@ -21,7 +23,7 @@ public interface ClothesRepoCommon {
 
 	List<Clothes> findAllByUserIdOrderByLikePointDesc(int userId);
 
-	List<Clothes> findAllByUserIdOrderByDisLikePointDesc(int userId);
+	List<Clothes> findAllByUserIdOrderByDislikePointDesc(int userId);
 
 	List<Clothes> findAllByUserIdOrderByCountDesc(int userId);
 

@@ -3,6 +3,8 @@ package com.ivblanc.api.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.core.entity.Clothes;
@@ -38,8 +40,9 @@ public class ClothesSerivce {
 		clothesRepository.deleteById(clothes_id);
 	}
 
-	public List<Clothes> findByCategory(int category, int userId) {
-		return clothesRepository.findAllByCategoryAndUserId(category, userId);
+	public Page<Clothes> findByCategory(final Pageable pageable,int category, int userId) {
+
+		return clothesRepository.findAllByCategoryAndUserId(category, userId,pageable);
 	}
 
 	public List<Clothes> findByColor(String color, int userId) {
@@ -57,7 +60,7 @@ public class ClothesSerivce {
 		return clothesRepository.findAllByUserIdOrderByLikePointDesc(userId);
 	}
 	public List<Clothes> findOrderByDisLike(int userId){
-		return clothesRepository.findAllByUserIdOrderByDisLikePointDesc(userId);
+		return clothesRepository.findAllByUserIdOrderByDislikePointDesc(userId);
 	}
 	public List<Clothes> findOrderByCount(int userId){
 		return clothesRepository.findAllByUserIdOrderByCountDesc(userId);

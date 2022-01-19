@@ -7,6 +7,9 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,12 +66,12 @@ public class ClothesController {
 
 	@ApiOperation(value = "카테고리로 자기 옷 조회")
 	@GetMapping(value = "/category")
-	public @ResponseBody
-	ListResult<Clothes> findClothesCategory(int category,int userId) throws Exception {
-		return responseService.getListResult(clothesSerivce.findByCategory(category,userId));
+	public Page<Clothes> findClothesCategory(int page,int size,int category,int userId) throws Exception {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		return clothesSerivce.findByCategory(pageRequest,category,userId);
 	}
 	@ApiOperation(value = "색깔로 자기 옷 조회")
-	@GetMapping(value = "/category")
+	@GetMapping(value = "/color")
 	public @ResponseBody
 	ListResult<Clothes> findClothesColor(String color,int userId) throws Exception {
 		return responseService.getListResult(clothesSerivce.findByColor(color,userId));
