@@ -170,12 +170,13 @@ public class ClothesController {
 	ListResult<Clothes> findNotWear() throws Exception {
 		return responseService.getListResult(clothesSerivce.findAllByDate(365));
 	}
+
 	@ApiOperation(value = "즐겨찾기추가")
 	@PostMapping(value = "/addfavorite")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addFavorite(@RequestParam int clothesId) throws Exception{
+	SingleResult<ClothesIdResDTO> addFavorite(@RequestParam int clothesId) throws Exception {
 		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
-		if(!clothes.isPresent()){
+		if (!clothes.isPresent()) {
 			throw new ApiMessageException("없는 옷 번호입니다");
 		}
 		clothes.get().setFavorite(1);
@@ -183,4 +184,16 @@ public class ClothesController {
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
+	@ApiOperation(value = "즐겨찾기삭제")
+	@PostMapping(value = "/deletefavorite")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> deleteFavorite(@RequestParam int clothesId) throws Exception {
+		Optional<Clothes> clothes = clothesSerivce.findByClothesId(clothesId);
+		if (!clothes.isPresent()) {
+			throw new ApiMessageException("없는 옷 번호입니다");
+		}
+		clothes.get().setFavorite(0);
+		clothesSerivce.addFavorite(clothes.get());
+		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
+	}
 }
