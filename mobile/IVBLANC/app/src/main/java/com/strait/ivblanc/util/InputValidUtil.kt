@@ -8,7 +8,7 @@ import java.util.*
 private const val TAG = "InputValidUtil_strait"
 object InputValidUtil {
     val nameRegex = "^[가-힣a-zA-Z]{2,}+$".toRegex()
-    val emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$".toRegex()
+    val emailRegex = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$".toRegex()
     //영문, 숫자
     val passRegex1 = "^(?=.*[a-zA-Z])(?=.*[0-9]).{8,14}$".toRegex()
     //영문, 특문
