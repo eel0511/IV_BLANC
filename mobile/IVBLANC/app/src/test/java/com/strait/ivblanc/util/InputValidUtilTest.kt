@@ -20,6 +20,18 @@ class InputValidUtilTest {
     }
 
     @Test
+    fun `아이디 없는 이메일`() {
+        val email = "@naver.com"
+        assertEquals(false, InputValidUtil.isValidEmail(email))
+    }
+
+    @Test
+    fun `도메인 불량 이메일`() {
+        val email = "ms@.com"
+        assertEquals(false, InputValidUtil.isValidEmail(email))
+    }
+
+    @Test
     fun `올바른 이름`() {
         val name = "김김김"
         assertEquals(true, InputValidUtil.isValidName(name))
