@@ -1,4 +1,5 @@
 import React from "react";
+import "./MyCloset.css";
 
 export default function MyClosetClothesItem({ clothesData} ) {
   return (
