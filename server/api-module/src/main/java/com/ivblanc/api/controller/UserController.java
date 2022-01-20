@@ -1,13 +1,8 @@
 package com.ivblanc.api.controller;
 
-import java.util.Collections;
-
-import javax.validation.Valid;
-
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,16 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
-import com.ivblanc.api.dto.req.SignUpReqDTO;
-import com.ivblanc.api.dto.req.SignOutReqDTO;
-import com.ivblanc.api.dto.req.UpdatePersonalReqDTO;
-import com.ivblanc.api.dto.res.UserIdResDTO;
-import com.ivblanc.api.service.SignService;
 import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.CommonResult;
 import com.ivblanc.api.service.common.ResponseService;
-import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
@@ -47,7 +35,6 @@ public class UserController {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     // private final PasswordValidate pv;
-
 
     /**
      * 회원정보 변경 : put /update
