@@ -4,12 +4,13 @@ import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseResponse
 import com.strait.ivblanc.data.api.UserApi
 import com.strait.ivblanc.data.model.dto.UserForJoin
+import com.strait.ivblanc.data.model.response.JoinResponse
 import retrofit2.Response
 
 class UserRepository {
     var userApi: UserApi = ApplicationClass.sRetrofit.create(UserApi::class.java)
 
-    suspend fun join(user: UserForJoin): Response<BaseResponse> {
+    suspend fun join(user: UserForJoin): Response<JoinResponse> {
         return userApi.join(user)
     }
 }
