@@ -52,6 +52,7 @@ dependencies {
 
     // For viewModels()
     implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
 
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
