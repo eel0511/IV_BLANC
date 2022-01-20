@@ -1,5 +1,21 @@
 package com.strait.ivblanc.data.model.dto
 
-data class UserForJoin(val email: String, val password: String , val name: String, val gender: Int, val phoneNumber: String, var social: Int = 0) {
+import com.google.gson.annotations.SerializedName
+
+data class UserForJoin(
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("password")
+    val password: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("gender")
+    val gender: Int,
+    @SerializedName("age")
+    val age: Int,
+    @SerializedName("phone")
+    val phoneNumber: String,
+    @SerializedName("social")
+    var social: Int = 0) {
 
 }
