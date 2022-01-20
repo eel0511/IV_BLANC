@@ -41,7 +41,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         observeViewModel()
     }
 
-    fun initView() {
+    private fun initView() {
         binding.buttonJoinFJoin.setOnClickListener {
             if (checkInputForm() && isEmailChecked) {
                 join()
@@ -52,7 +52,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
 
         binding.buttonJoinFCheckEmail.setOnClickListener {
             if(InputValidUtil.isValidEmail(binding.editTextJoinFEmail.text.toString())) {
-                //todo: 중복 검사 실행
+                loginViewModel.emailCheck(binding.editTextJoinFEmail.text.toString())
             } else {
                 toast(resources.getText(R.string.emailErrorMessage) as String, Toast.LENGTH_LONG)
             }
@@ -119,9 +119,25 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
                 }
             }
         }
+
+        loginViewModel.emailCheckRequestLiveData.observe(requireActivity()) {
+            when(it.status) {
+                Status.LOADING -> {
+                    binding.progressBarJoinFLoading.visibility = View.VISIBLE
+                }
+                Status.SUCCESS -> {
+                    isEmailChecked = true
+                    binding.progressBarJoinFLoading.visibility = View.GONE
+                }
+                Status.ERROR -> {
+                    binding.progressBarJoinFLoading.visibility = View.GONE
+                    toast(it.message!!, Toast.LENGTH_SHORT)
+                }
+            }
+        }
     }
 
-    fun join() {
+    private fun join() {
         val email = binding.editTextJoinFEmail.text.toString()
         val password = binding.editTextJoinFPassword.text.toString()
         val name = binding.editTextJoinFName.text.toString()
@@ -138,11 +154,10 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
             else -> 100 - birthYear + currentYear + 1
         }
 
-        loginViewModel.joinRequestLiveData.postValue(Resource.loading(null))
         loginViewModel.join(UserForJoin(email, password, name, gender, age, phoneNumber))
     }
 
-    fun checkInputForm(): Boolean {
+    private fun checkInputForm(): Boolean {
         var result = 1
         val email = binding.editTextJoinFEmail.text.toString()
         val password = binding.editTextJoinFPassword.text.toString()
