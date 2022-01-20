@@ -5,7 +5,6 @@ import com.strait.ivblanc.data.api.UserApi
 import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.response.JoinResponse
 import com.strait.ivblanc.util.Resource
-import retrofit2.Response
 import java.lang.Exception
 
 class UserRepository {
@@ -24,7 +23,7 @@ class UserRepository {
                 Resource.error(null, "알 수 없는 오류입니다.")
             }
         } catch (e: Exception) {
-            Resource.error(null, "네트워크 연결 상태를 확인해 주세요")
+            Resource.error(null, "서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.")
         }
     }
 }
