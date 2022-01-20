@@ -65,7 +65,7 @@ public class StyleController {
 		}
 		styleService.addStyle(style);
 		styleDetailService.addStyleDetails(styleDetailList);
-		return responseService.getSingleResult(style.getStyleId()+"번 스타일 추가완료");
+		return responseService.getSingleResult(style.getStyleId() + "번 스타일 추가완료");
 	}
 
 	@ApiOperation(value = "style 조회(userId로) 개개의 옷정보까지 한방에 다줌")
@@ -110,6 +110,26 @@ public class StyleController {
 		styleDetail.setClothes(clothes);
 		styleDetailService.addStyleDetail(styleDetail);
 		return responseService.getSingleResult(sdId + "번 Style Detail 수정");
+	}
+
+	@ApiOperation(value = "style favorite 추가")
+	@GetMapping(value = "/addfavorite")
+	public @ResponseBody
+	SingleResult<String> addFavorite(@RequestParam int styleId) throws Exception {
+		Style style = styleService.findByStyleId(styleId).orElseThrow(() -> new ApiMessageException("없는 styld_id 입니다"));
+		style.setFavorite(1);
+		styleService.addStyle(style);
+		return responseService.getSingleResult(styleId+"번 Favorite");
+	}
+
+	@ApiOperation(value = "style favorite 추가")
+	@GetMapping(value = "/deletefavorite")
+	public @ResponseBody
+	SingleResult<String> deleteFavorite(@RequestParam int styleId) throws Exception {
+		Style style = styleService.findByStyleId(styleId).orElseThrow(() -> new ApiMessageException("없는 styld_id 입니다"));
+		style.setFavorite(0);
+		styleService.addStyle(style);
+		return responseService.getSingleResult(styleId+"번 Favorite");
 	}
 
 }
