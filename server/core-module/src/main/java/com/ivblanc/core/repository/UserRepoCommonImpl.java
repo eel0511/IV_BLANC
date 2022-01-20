@@ -23,22 +23,22 @@ public class UserRepoCommonImpl implements UserRepoCommon{
 
 
     @Override
-    public User findUserLogin(String uid, int type){
+    public User findUserLogin(String email, int type){
         User result = queryFactory
                 .select(QUser.user)
                 .from(QUser.user)
-                .where(QUser.user.uid.eq(uid), QUser.user.social.eq(type))
+                .where(QUser.user.email.eq(email), QUser.user.social.eq(type))
                 .fetchFirst();
 
         return result;
     }
 
     @Override
-    public User findByUid(String uid){
+    public User findByEmail(String email){
         User result = queryFactory
                 .select(QUser.user)
                 .from(QUser.user)
-                .where(QUser.user.uid.eq(uid))
+                .where(QUser.user.email.eq(email))
                 .fetchOne();
 
         return result;

@@ -16,8 +16,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UpdatePwReqDTO {
 	@NotBlank
-	@ApiModelProperty(value = "uid (이메일)", required = true, example = "123@ssafy.com")
-	private String uid;
+	@ApiModelProperty(value = "이메일", required = true, example = "123@ssafy.com")
+	private String email;
 
 	@NotBlank
 	@ApiModelProperty(value = "기존 비밀번호", required = true, example = "123")

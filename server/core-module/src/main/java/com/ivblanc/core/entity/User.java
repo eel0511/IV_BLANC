@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(name = "user",
     uniqueConstraints = {
         @UniqueConstraint(
-            columnNames={"uid"}
+            columnNames={"email"}
         )
     }
 )
@@ -34,7 +34,8 @@ public class User implements UserDetails {
     // User 테이블의 키값 = 회원의 고유 키값
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "user_id")
+    private int userId;
 
     // 회원이 가입한 타입 (1:일반회원, 2:카카오, 3:구글, 4:네이버)
     @Column(nullable = false, length = 1, columnDefinition = "int(1) default 0")
@@ -42,7 +43,7 @@ public class User implements UserDetails {
 
     // 회원아이디(=이메일)
     @Column(nullable = false, unique = true, length = 120)
-    private String uid;
+    private String email;
 
     // 비밀번호
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -120,7 +121,7 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return this.uid;
+        return this.email;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userPk){
         User user = null;
         try {
-            user =signService.findUserById(Long.valueOf(userPk));
+            user =signService.findUserById(Integer.valueOf(userPk));
         } catch (Exception e){
             e.printStackTrace();
         }

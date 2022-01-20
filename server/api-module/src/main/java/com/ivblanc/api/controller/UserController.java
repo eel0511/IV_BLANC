@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,7 +50,7 @@ public class UserController {
     @PutMapping(value = "/update/pw", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody CommonResult userUpdatePw(@Valid UpdatePwReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(req.getUid());
+        User user = userService.findByEmail(req.getEmail());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 아이디입니다.");
 
@@ -80,7 +79,7 @@ public class UserController {
     @PutMapping(value = "/update/personal", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody CommonResult userUpdatePersonal(@Valid UpdatePersonalReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(req.getUid());
+        User user = userService.findByEmail(req.getEmail());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 회원입니다.");
 
@@ -102,7 +101,7 @@ public class UserController {
     @DeleteMapping(value = "/signOut", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody CommonResult userSignOut(@Valid SignOutReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(req.getUid());
+        User user = userService.findByEmail(req.getEmail());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 회원입니다.");
 
@@ -110,7 +109,7 @@ public class UserController {
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
-        userRepository.deleteById(user.getId());
+        userRepository.deleteById((long)user.getUserId());
 
         return responseService.getSuccessResult("탈퇴 성공");
     }

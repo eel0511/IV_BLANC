@@ -2,7 +2,6 @@ package com.ivblanc.api.dto.req;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -19,10 +18,10 @@ import lombok.Setter;
 public class SignUpReqDTO {
     @NotBlank
     @ApiModelProperty(value = "uid (일반회원:아이디, sns로그인:uid값)", required = true, example = "kakao123")
-    private String uid;
+    private String email;
 
     @NotNull
-    @ApiModelProperty(value = "회원가입 타입", required = true, example = "0")
+    @ApiModelProperty(value = "회원가입 타입(1:일반회원, 2:카카오, 3:구글, 4:네이버)", required = true, example = "0")
     private int social;
 
     @NotBlank
@@ -34,5 +33,11 @@ public class SignUpReqDTO {
 
     @ApiModelProperty(value = "핸드폰번호('-'값 없이 입력)", required = false, example = "01012345678")
     private String phone;
+
+    @ApiModelProperty(value = "나이", required = false, example = "26")
+    private int age;
+
+    @ApiModelProperty(value = "성별(남자 1, 여자 2)", required = false, example = "1")
+    private int gender;
     
 }

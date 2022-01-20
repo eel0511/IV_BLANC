@@ -3,7 +3,6 @@ package com.ivblanc.api.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
@@ -35,7 +34,7 @@ public class SignService {
      * @throws Exception
      */
     public User findByUid(String uid) throws Exception{
-        return userRepository.findByUid(uid);
+        return userRepository.findByEmail(uid);
     }
 
 
@@ -47,7 +46,7 @@ public class SignService {
     @Transactional(readOnly = false)
     public long userSignUp(User user){
         User signUpUser = userRepository.save(user);
-        return signUpUser.getId();
+        return signUpUser.getUserId();
     }
 
     /**
