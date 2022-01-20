@@ -22,6 +22,8 @@ import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
+import com.ivblanc.core.utils.CheckValidate;
+import com.ivblanc.core.utils.PasswordValidate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,7 +57,25 @@ public class SignController {
         if(emailChk != null)
             throw new ApiMessageException("중복된 이메일의 회원이 존재합니다.");
 
-        System.out.print("=== 이메일 중복체크 완료 ===");
+        if(!CheckValidate.checkEmailForm(req.getEmail())){
+            throw new ApiMessageException("이메일 형식을 확인해주세요.");
+        }
+
+        if(!PasswordValidate.checkPwForm(req.getPassword())){
+            throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
+        }
+
+        if(!PasswordValidate.checkPwMatch(req.getPassword(), req.getPassword_chk())){
+            throw new ApiMessageException("비밀번호를 확인해주세요.");
+        }
+
+        if(!CheckValidate.isOnlyNum(req.getPhone())){
+            throw new ApiMessageException("전화번호는 -를 빼고 입력해주세요.");
+        }
+
+        if(!CheckValidate.checkPhoneForm(req.getPhone())){
+            throw new ApiMessageException("전화번호 형식을 확인해주세요");
+        }
 
         // DB에 저장할 User Entity 세팅
         User user = User.builder()
@@ -70,8 +90,6 @@ public class SignController {
                 // 기타 필요한 값 세팅
                 .roles(Collections.singletonList("ROLE_USER")) // 인증된 회원인지 확인하기 위한 JWT 토큰에 사용될 데이터
                 .build();
-
-        System.out.print("=== user entity 세팅 완료 ===");
 
         // 회원가입 (User Entity 저장)
         long userId = signService.userSignUp(user);
@@ -89,6 +107,11 @@ public class SignController {
     @ApiOperation(value = "일반 로그인", notes = "일반 로그인")
     @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody SingleResult<LoginUserResDTO> login(@Valid LoginUserReqDTO req) throws Exception{
+
+        if(!CheckValidate.checkEmailForm(req.getEmail())){
+            throw new ApiMessageException("이메일 형식을 확인해주세요.");
+        }
+
         // Email값과 회원가입 타입으로 해당되는 회원정보 조회
         User user = signService.findUserByEmailType(req.getEmail(), req.getSocial());
 

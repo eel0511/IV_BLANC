@@ -1,5 +1,8 @@
 package com.ivblanc.api.controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
@@ -22,6 +25,7 @@ import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
+import com.ivblanc.core.utils.PasswordValidate;
 // import com.ivblanc.core.utils.PasswordValidate;
 
 import io.swagger.annotations.Api;
@@ -40,7 +44,7 @@ public class UserController {
     private final ResponseService responseService;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-    // private final PasswordValidate pv;
+    //private final PasswordValidate pv;
 
     /**
      * 회원정보 변경 : put /update
@@ -61,14 +65,13 @@ public class UserController {
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
-        // 빈 어쩌구 에러나는데 비밀번호 검사는 프론트에서 해서 보내줄거라 그냥 빼버림
-        // if(!pv.checkPwForm(req.getPassword_new()) ){
-        //     throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
-        // }
-        //
-        // if(!pv.checkPwMatch(req.getPassword_new(), req.getPassword_check())){
-        //     throw new ApiMessageException("비밀번호를 확인해주세요.");
-        // }
+        if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
+            throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
+        }
+
+        if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
+            throw new ApiMessageException("비밀번호를 확인해주세요.");
+        }
 
         user.updatePassword(passwordEncoder.encode(req.getPw_new()));
         userRepository.save(user);

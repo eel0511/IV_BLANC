@@ -28,6 +28,10 @@ public class SignUpReqDTO {
     @ApiModelProperty(value = "비밀번호", required = true, example = "123")
     private String password;
 
+    @NotBlank
+    @ApiModelProperty(value = "비밀번호 확인", required = true, example = "123")
+    private String password_chk;
+
     @ApiModelProperty(value = "이름", required = false, example = "카카오")
     private String name;
 
