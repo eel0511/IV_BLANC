@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useState, useEffect, useCallback } from 'react';
+import '../../styles/signup.scss';
 
 function Copyright(props) {
   return (
