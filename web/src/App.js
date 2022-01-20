@@ -1,17 +1,17 @@
 import './App.css';
+import IvblancNavbar from './layouts/IvblancNavbar';
+import MyCloset from './pages/MyCloset/MyCloset';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignIn from './pages/SignIn/Signin';
 import KakaoAuth from './components/login/kakaoOAuth';
 import NaverAuth from './components/login/naverOAuth';
-
-import IvblancNavbar from './layouts/IvblancNavbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className='App'>
-      {/* <IvblancNavbar /> */}
-
+    <div className="App">
+      <IvblancNavbar />
+      <MyCloset />
       <Router>
         <Routes>
           <Route path='/' exact element={<SignIn />}></Route>
