@@ -74,6 +74,26 @@ export default function SignUp() {
     }
   }, []);
 
+  // 이메일 중복 체크
+  const checkEmail = useCallback(async (e) => {
+    try {
+      await axios
+        .post('http://119.56.162.61:8888', {
+          email: email,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200) {
+            alert('사용가능한 이메일입니다.');
+          } else {
+            alert('중복된 이메일입니다. 다시 입력해주세요.');
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
   // 비밀번호
   const onChangePassword = useCallback((e) => {
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
@@ -225,6 +245,12 @@ export default function SignUp() {
                 <TextField required fullWidth id='email' label='이메일' name='email' autoComplete='email' value={email} onChange={onChangeEmail} />
                 {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
               </Grid>
+              <Grid item xs={12}>
+                <Button onClick={checkEmail} variant='outlined' align='left'>
+                  중복 확인
+                </Button>
+              </Grid>
+
               <Grid item xs={12}>
                 <TextField required fullWidth name='password' label='비밀번호' type='password' id='password' autoComplete='new-password' onChange={onChangePassword} />
                 {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
