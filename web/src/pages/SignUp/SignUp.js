@@ -138,11 +138,11 @@ export default function SignUp() {
     const nameCurrent = e.target.value;
     setName(nameCurrent);
 
-    if (nameCurrent === '') {
-      setNameMessage('이름을 입력해 주세요.');
+    if (nameCurrent.length < 2 || nameCurrent.length > 10) {
+      setNameMessage('2글자 이상 10글자 미만으로 입력해주세요.');
       setIsName(false);
     } else {
-      setNameMessage('입력 되었습니다 :)');
+      setNameMessage('올바른 이름 형식입니다 :)');
       setIsName(true);
     }
   }, []);
@@ -210,7 +210,7 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' onChange={onChangeName} />
-                {name.length === 0 && <span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
+                {name.length > 0 && <span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
               </Grid>
               <Grid item xs={12} align='left'>
                 <FormLabel id='demo-row-radio-buttons-group-label'>성별</FormLabel>
