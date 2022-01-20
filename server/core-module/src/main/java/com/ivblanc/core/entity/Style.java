@@ -40,10 +40,10 @@ public class Style extends BaseEntity {
 	@Column(nullable = false, columnDefinition = "int default 0")
 	private int favorite;
 
-	@Column(length = 2000)
+	@Column(length = 2000, columnDefinition = "varchar(2000) default 'None'")
 	private String url;
 
-	@Column(name = "photo_name", length = 2000)
+	@Column(name = "photo_name", length = 2000,columnDefinition = "varchar(2000) default 'None'")
 	private String photoName;
 
 	@Column(name = "user_id")

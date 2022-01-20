@@ -47,13 +47,11 @@ public class StyleController {
 	@ApiOperation(value = "Style 추가")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails, String madeby, String url,
-		String photoname, int userId) throws Exception {
+	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails, String madeby,
+		int userId) throws Exception {
 		List<StyleDetail> styleDetailList = new ArrayList<>();
 		Style style = Style.builder()
 			.madeby(madeby)
-			.url(url)
-			.photoName(photoname)
 			.userId(userId)
 			.build();
 		for (MakeStyleDetailReqDTO m : styleDetails) {
@@ -67,7 +65,7 @@ public class StyleController {
 		}
 		styleService.addStyle(style);
 		styleDetailService.addStyleDetails(styleDetailList);
-		return responseService.getSingleResult("aa");
+		return responseService.getSingleResult(style.getStyleId()+"번 스타일 추가완료");
 	}
 
 	@ApiOperation(value = "style 조회(userId로) 개개의 옷정보까지 한방에 다줌")
@@ -111,7 +109,7 @@ public class StyleController {
 			.orElseThrow(() -> new ApiMessageException("없는 옷 번호입니다"));
 		styleDetail.setClothes(clothes);
 		styleDetailService.addStyleDetail(styleDetail);
-		return responseService.getSingleResult(sdId+"번 Style Detail 수정");
+		return responseService.getSingleResult(sdId + "번 Style Detail 수정");
 	}
 
 }

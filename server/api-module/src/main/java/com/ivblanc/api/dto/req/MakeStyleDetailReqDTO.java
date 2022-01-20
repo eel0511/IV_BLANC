@@ -19,5 +19,4 @@ public class MakeStyleDetailReqDTO {
 	@NotBlank
 	@ApiModelProperty(value = "clothes_id", required = true, example = "1")
 	private int clothes_id;
-
 }
