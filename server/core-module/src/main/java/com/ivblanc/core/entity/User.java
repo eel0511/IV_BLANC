@@ -1,37 +1,19 @@
 package com.ivblanc.core.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ivblanc.core.code.JoinCode;
-import com.ivblanc.core.code.MFCode;
-import com.ivblanc.core.code.YNCode;
-import com.ivblanc.core.converter.JoinCodeConverter;
-import com.ivblanc.core.converter.MFCodeConverter;
-import com.ivblanc.core.converter.YNCodeConverter;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Builder
@@ -41,27 +23,27 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "user",
     uniqueConstraints = {
-            @UniqueConstraint(
-                    columnNames={"uid"}
-            )
+        @UniqueConstraint(
+            columnNames={"email"}
+        )
     }
 )
 // 회원 테이블
-public class User extends BaseEntity implements UserDetails {
+public class User implements UserDetails {
 
     // User 테이블의 키값 = 회원의 고유 키값
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "user_id")
+    private int userId;
 
-    // 회원이 가입한 타입 (none:일반, sns:소셜회원가입)
-    @Convert(converter = JoinCodeConverter.class)
-    @Column(nullable = false, length = 5)
-    private JoinCode joinType;
+    // 회원이 가입한 타입 (1:일반회원, 2:카카오, 3:구글, 4:네이버)
+    @Column(nullable = false, length = 1, columnDefinition = "int(1) default 0")
+    private int social;
 
-    // 회원아이디(일반:아이디, 소셜회원가입:발급번호)
+    // 회원아이디(=이메일)
     @Column(nullable = false, unique = true, length = 120)
-    private String uid;
+    private String email;
 
     // 비밀번호
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -72,52 +54,27 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false, length = 32)
     private String name;
 
-    // 회원 닉네임
-    @Column(nullable = false, length = 64)
-    private String nickname;
-
-    // 회원 이메일
-    @Column(nullable = false, length = 255)
-    private String email;
-
     // 회원 휴대폰
-    @Column(nullable = true, length = 32)
+    @Column(nullable = false, length = 32)
     private String phone;
 
-    // 성별 (남자 M, 여자 F)
-    @Convert(converter = MFCodeConverter.class)
-    @Column(nullable = false, length = 1, columnDefinition = "varchar(1) default ''")
-    private MFCode gender;
+    // 성별 (남자 1, 여자 2)
+    @Column(nullable = false, length = 1, columnDefinition = "int(1) default 0")
+    private int gender;
 
     // 회원 나이
     @Column(nullable = false, length = 3, columnDefinition = "int(3) default 0")
     private int age;
 
-    // 회원 프로필 이미지
-    @Column(nullable = false, length = 255)
-    private String img;
-
-    // 주소
-    @Column(length = 255)
-    private String address;
-
-    // 상세주소
-    @Column(length = 255)
-    private String addressDetail;
-
-    // 푸쉬알림 설정 (Y:on, N:off)
-    @Convert(converter = YNCodeConverter.class)
-    @Column(nullable = false, length = 1, columnDefinition = "varchar(1) default 'Y'")
-    private YNCode push;
-
     // 장비 푸시용 토큰
     @Column(length = 255)
-    private String token;
+    private String token_jwt;
 
-    // 사용 여부
-    @Convert(converter = YNCodeConverter.class)
-    @Column(nullable = false, length = 1, columnDefinition = "varchar(1) default 'Y'")
-    private YNCode isBind;
+    @Column(length = 255)
+    private String token_fcm;
+
+    @Column(length = 255)
+    private String code;
 
 
 
@@ -164,7 +121,7 @@ public class User extends BaseEntity implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return this.uid;
+        return this.email;
     }
 
     @Override
@@ -176,32 +133,32 @@ public class User extends BaseEntity implements UserDetails {
 
 
 
-    public void updateImg(String img){
-        this.img = img;
-    }
-
-    public void updateNickname(String nickname){
-        this.nickname = nickname;
-    }
-
     public void updateAge(int age){
         this.age = age;
     }
 
-    public void updateGender(MFCode gender){
+    public void updateGender(int gender){
         this.gender = gender;
     }
 
-    public void updateIsBind(YNCode isBind){
-        this.isBind = isBind;
+    public void updatePhone(String phone){
+        this.phone = phone;
     }
 
-    public void updatePush(YNCode push){
-        this.push = push;
+    public void updateName(String name){
+        this.name = name;
     }
 
-    public void updateToken(String token){
-        this.token = token;
+    public void updatePassword(String password){
+        this.password = password;
+    }
+
+    public void updateTokenJWT(String token_jwt){
+        this.token_jwt = token_jwt;
+    }
+
+    public void updateTokenFCM(String token_fcm){
+        this.token_fcm = token_fcm;
     }
 
 }

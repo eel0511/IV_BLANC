@@ -17,9 +17,6 @@ import com.ivblanc.api.dto.res.UserIdResDTO;
 import com.ivblanc.api.service.SignService;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.code.JoinCode;
-import com.ivblanc.core.code.MFCode;
-import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 
@@ -48,35 +45,26 @@ public class SignController {
      */
 
 
-    // 회원가입
-    @ApiOperation(value = "dddd", notes = "회원가입")
+    // 일반 회원가입
+    @ApiOperation(value = "일반 회원가입", notes = "일반 회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@Valid SignUpReqDTO req) throws Exception{
-        // uid 중복되는 값이 존재하는지 확인 (uid = 고유한 값)
-        User uidChk = signService.findByUid(req.getUid(), YNCode.Y);
+        // uid 중복되는 값이 존재하는지 확인 (uid = 고유한 값, 이메일)
+        User uidChk = signService.findByUid(req.getEmail());
         if(uidChk != null)
-            throw new ApiMessageException("중복된 uid값의 회원이 존재합니다.");
+            throw new ApiMessageException("중복된 이메일의 회원이 존재합니다.");
 
         // DB에 저장할 User Entity 세팅
         User user = User.builder()
-                .joinType(JoinCode.valueOf(req.getType()))
-                .uid(req.getUid())
+                .social(req.getSocial())
+                .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))
                 .name(req.getName() == null ? "" : req.getName())
-                .email(req.getEmail() == null ? "" : req.getEmail())
                 .phone(req.getPhone())
-                .address(req.getAddress())
-                .addressDetail(req.getAddressDetail())
-
-                // 가입 후 프로필 등록으로 받을 데이터는 우선 기본값으로 세팅
-                .age(0)
-                .img("")
-                .nickname("")
-                .gender(MFCode.NULL)
+                .age(req.getAge())
+                .gender(req.getGender())
 
                 // 기타 필요한 값 세팅
-                .push(YNCode.Y)
-                .isBind(YNCode.Y)
                 .roles(Collections.singletonList("ROLE_USER")) // 인증된 회원인지 확인하기 위한 JWT 토큰에 사용될 데이터
                 .build();
 
