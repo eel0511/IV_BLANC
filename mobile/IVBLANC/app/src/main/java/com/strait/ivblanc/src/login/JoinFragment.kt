@@ -13,10 +13,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
+import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentJoinBinding
 import com.strait.ivblanc.util.InputValidUtil
+import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
+import java.util.*
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind, R.layout.fragment_join) {
     val loginViewModel: LoginViewModel by activityViewModels()
@@ -41,7 +44,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
     fun initView() {
         binding.buttonJoinFJoin.setOnClickListener {
             if (checkInputForm() && isEmailChecked) {
-                //todo: 회원가입 진행
+                join()
             } else if(!isEmailChecked) {
                 toast(resources.getText(R.string.emailNotCheckedErrorMessage) as String, Toast.LENGTH_LONG)
             }
@@ -107,12 +110,36 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
                 Status.LOADING -> {
                     binding.progressBarJoinFLoading.visibility = View.VISIBLE
                 }
-                else -> {
-                    binding.progressBarJoinFLoading.visibility = View.VISIBLE
+                Status.SUCCESS -> {
+                    binding.progressBarJoinFLoading.visibility = View.GONE
                 }
-
+                Status.ERROR -> {
+                    binding.progressBarJoinFLoading.visibility = View.GONE
+                    toast(it.message!!, Toast.LENGTH_SHORT)
+                }
             }
         }
+    }
+
+    fun join() {
+        val email = binding.editTextJoinFEmail.text.toString()
+        val password = binding.editTextJoinFPassword.text.toString()
+        val name = binding.editTextJoinFName.text.toString()
+        val birthYear = binding.editTextJoinFBirthday.text.toString().substring(0, 2).toInt()
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
+        val phoneNumber = binding.editTextJoinFPhone.text.toString()
+        val gender:Int = when(binding.radioGroupJoinFGenders.checkedRadioButtonId) {
+            (R.id.radioButton_joinF_male) -> 1
+            (R.id.radioButton_joinF_female) -> 2
+            else -> return
+        }
+        val age = when(currentYear - birthYear >= 0) {
+            true -> currentYear - birthYear + 1
+            else -> 100 - birthYear + currentYear + 1
+        }
+
+        loginViewModel.joinRequestLiveData.postValue(Resource.loading(null))
+        loginViewModel.join(UserForJoin(email, password, name, gender, age, phoneNumber))
     }
 
     fun checkInputForm(): Boolean {
