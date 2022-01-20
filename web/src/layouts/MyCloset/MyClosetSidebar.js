@@ -15,13 +15,19 @@ export default function MyClosetSidebar() {
   ];
 
   return (
-    <div>
-      <h1>사이드 바</h1>
-        {menus.map((menu, index) => {
-          return (
-            <MyClosetSidebarItem menu={menu} key={index}/>
-          );
-        })}
+    <div className="MyClosetSidebar">
+      <div className="MyClosetSidebarWrapper">
+        <h1>사이드 바</h1>
+        <ul className="MyClosetSidebarList">
+          {menus.map((menu, index) => {
+            return (
+              <li className="MyClosetSidebarListItem">
+                <MyClosetSidebarItem menu={menu} key={index}/>
+              </li>
+            );
+          })}
+        </ul>
+        </div>
     </div>
   );
 }

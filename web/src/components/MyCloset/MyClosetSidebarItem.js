@@ -6,16 +6,14 @@ export default function MyClosetSidebarItem({ menu }) {
   };
 
   return (
-    <div>
-      <div className="d-grid gap-2">
-        <button
-          type="button"
-          className="btn btn-outline-secondary btn-lg"
-          onClick={showItem}
-        >
-          {menu.name}
-        </button>
-      </div>
+    <div className="MyClosetSidebarItemButton d-grid gap-2">
+      <button
+        type="button"
+        className="btn btn-outline-secondary btn-lg"
+        onClick={showItem}
+      >
+        {menu.name}
+      </button>
     </div>
   );
 }
