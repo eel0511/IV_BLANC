@@ -40,7 +40,7 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
-  const [gender, setGender] = useState('female');
+  const [gender, setGender] = useState('female'); // 성별 문자로 저장
   const [age, setAge] = useState(0);
   const [phoneNum, setphoneNum] = useState('');
 
@@ -147,27 +147,61 @@ export default function SignUp() {
     }
   }, []);
 
-  const handleChange = (e) => {
+  // 성별 확인
+  const onChangeGender = (e) => {
     setGender(e.target.value);
   };
+
+  // 나이 확인
+  const onChangeAge = useCallback((e) => {
+    const ageRegex = /^[0-9]+$/;
+    const ageCurrent = e.target.value;
+    setAge(ageCurrent);
+
+    if (!ageRegex.test(ageCurrent)) {
+      setAgeMessage('숫자를 입력해주세요.');
+      setIsAge(false);
+    } else {
+      setAgeMessage('올바른 나이 형식입니다 :)');
+      setIsAge(true);
+    }
+  }, []);
+
+  // 전화번호 확인
+  const onChangePhoneNum = useCallback((e) => {
+    const phoneNumRegex = /^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/;
+    const phoneNumCurrent = e.target.value;
+    setphoneNum(phoneNumCurrent);
+
+    if (phoneNumCurrent.indexOf('-') !== -1) {
+      setphoneNumMessage('-를 제외하고 입력해주세요.');
+      setIsPhoneNum(false);
+    } else if (!phoneNumRegex.test(phoneNumCurrent)) {
+      setphoneNumMessage('휴대전화 형식에 맞춰주세요.');
+      setIsPhoneNum(false);
+    } else {
+      setphoneNumMessage('');
+      setIsPhoneNum(true);
+    }
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    if (email === '') alert('이메일을 입력해주세요');
-    if (passwordConfirm === '') alert('비밀번호를 입력해주세요');
-    if (name === '') alert('이름을 확인해주세요');
-    if (age === '') alert('나이를 입력해주세요');
-    if (phoneNum === '') alert('전화번호를 입력해주세요');
+    if (email === '') return alert('이메일을 입력해주세요');
+    if (passwordConfirm === '') return alert('비밀번호를 입력해주세요');
+    if (name === '') return alert('이름을 확인해주세요');
+    if (age === '') return alert('나이를 입력해주세요');
+    if (phoneNum === '') return alert('전화번호를 입력해주세요');
 
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
       password: data.get('password'),
       name: data.get('name'),
-      gender: data.get('gender'),
-      age: data.get('age'),
+      gender: data.get('gender') === 'male' ? 1 : 2,
+      age: Number(data.get('age')),
       phoneNum: data.get('phoneNum'),
     });
   };
@@ -214,16 +248,18 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} align='left'>
                 <FormLabel id='demo-row-radio-buttons-group-label'>성별</FormLabel>
-                <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='gender' value={gender} onChange={handleChange}>
+                <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='gender' value={gender} onChange={onChangeGender}>
                   <FormControlLabel value='female' control={<Radio />} label='Female' />
                   <FormControlLabel value='male' control={<Radio />} label='Male' />
                 </RadioGroup>
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='age' label='나이' name='age' autoComplete='age' />
+                <TextField required fullWidth id='age' label='나이' name='age' autoComplete='age' onChange={onChangeAge} />
+                {isNaN(age) && <span className={`message ${isAge ? 'success' : 'error'}`}>{ageMessage}</span>}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='phoneNum' label='전화번호' name='phoneNum' autoComplete='phoneNumber' />
+                <TextField required fullWidth id='phoneNum' label='전화번호' name='phoneNum' autoComplete='phoneNumber' onChange={onChangePhoneNum} />
+                {phoneNum.length > 0 && <span className={`message ${isPhoneNum ? 'success' : 'error'}`}>{phoneNumMessage}</span>}
               </Grid>
             </Grid>
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
@@ -232,7 +268,7 @@ export default function SignUp() {
             <Grid container justifyContent='flex-end'>
               <Grid item>
                 <Link href='#' variant='body2'>
-                  Already have an account? Sign in
+                  이미 계정이 있으신가요? 로그인
                 </Link>
               </Grid>
             </Grid>
