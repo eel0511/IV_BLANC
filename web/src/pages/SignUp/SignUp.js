@@ -123,15 +123,29 @@ export default function SignUp() {
       setPasswordConfirm(passwordConfirmCurrent);
 
       if (password === passwordConfirmCurrent) {
-        setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 : )');
+        setPasswordConfirmMessage('비밀번호를 똑같이 입력했어요 :)');
         setIsPasswordConfirm(true);
       } else {
-        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요 ㅜ ㅜ');
+        setPasswordConfirmMessage('비밀번호가 틀려요. 다시 확인해주세요.');
         setIsPasswordConfirm(false);
       }
     },
     [password]
   );
+
+  // 이름 확인
+  const onChangeName = useCallback((e) => {
+    const nameCurrent = e.target.value;
+    setName(nameCurrent);
+
+    if (nameCurrent === '') {
+      setNameMessage('이름을 입력해 주세요.');
+      setIsName(false);
+    } else {
+      setNameMessage('입력 되었습니다 :)');
+      setIsName(true);
+    }
+  }, []);
 
   const handleChange = (e) => {
     setGender(e.target.value);
@@ -140,6 +154,13 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    if (email === '') alert('이메일을 입력해주세요');
+    if (passwordConfirm === '') alert('비밀번호를 입력해주세요');
+    if (name === '') alert('이름을 확인해주세요');
+    if (age === '') alert('나이를 입력해주세요');
+    if (phoneNum === '') alert('전화번호를 입력해주세요');
+
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
@@ -188,7 +209,8 @@ export default function SignUp() {
                 {passwordConfirm.length > 0 && <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' />
+                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' onChange={onChangeName} />
+                {name.length === 0 && <span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
               </Grid>
               <Grid item xs={12} align='left'>
                 <FormLabel id='demo-row-radio-buttons-group-label'>성별</FormLabel>
