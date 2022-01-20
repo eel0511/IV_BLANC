@@ -43,8 +43,6 @@ public class SignController {
     /**
      * 로그인 : get /login
      * 회원가입 일반 : post /signup
-     * 회원가입 후 프로필등록 : post /regProfile
-     * 소셜 가입 여부 체크 : get /exists/social
      */
 
 
@@ -56,6 +54,8 @@ public class SignController {
         User emailChk = signService.findByEmail(req.getEmail());
         if(emailChk != null)
             throw new ApiMessageException("중복된 이메일의 회원이 존재합니다.");
+
+        System.out.print("=== 이메일 중복체크 완료 ===");
 
         // DB에 저장할 User Entity 세팅
         User user = User.builder()
@@ -71,8 +71,13 @@ public class SignController {
                 .roles(Collections.singletonList("ROLE_USER")) // 인증된 회원인지 확인하기 위한 JWT 토큰에 사용될 데이터
                 .build();
 
+        System.out.print("=== user entity 세팅 완료 ===");
+
         // 회원가입 (User Entity 저장)
         long userId = signService.userSignUp(user);
+
+        System.out.print("=== user entity 저장 완료 ===");
+
         // 저장된 User Entity의 PK가 없을 경우 (저장 실패)
         if(userId <= 0)
             throw new ApiMessageException("회원가입에 실패했습니다. 다시 시도해 주세요.");

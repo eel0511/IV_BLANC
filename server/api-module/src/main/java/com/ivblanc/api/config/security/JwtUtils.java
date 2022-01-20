@@ -20,10 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtUtils {
 
-	@Value("${chandler.jwtSecret}")
 	private String jwtSecret;
 
-	@Value("${chandler.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {
