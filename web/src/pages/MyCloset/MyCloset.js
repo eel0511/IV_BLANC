@@ -74,20 +74,19 @@ export default function MyCloset() {
       {
         url: 'api/clothes/all',
         method: 'get',
-        baseURL: 'http://119.56.162.61:9999',
-        data: {
+        baseURL: 'http://119.56.162.61:8888',
+        params: {
           "page": 1,
           "userId": 1
         }
       }
     ).then((response) => {
-      console.log(response.data)
+      console.log(response)
     });
   };
 
   // useEffect(() => {
-  //   setMyClothes(clothesData);
-  //   console.log(myClothes)
+  //   testAxios()
   // }, []);
 
   return (

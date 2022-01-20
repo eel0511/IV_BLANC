@@ -21,8 +21,8 @@ export default function MyClosetSidebar() {
         <ul className="MyClosetSidebarList">
           {menus.map((menu, index) => {
             return (
-              <li className="MyClosetSidebarListItem">
-                <MyClosetSidebarItem menu={menu} key={index}/>
+              <li className="MyClosetSidebarListItem" key={index}>
+                <MyClosetSidebarItem menu={menu}/>
               </li>
             );
           })}

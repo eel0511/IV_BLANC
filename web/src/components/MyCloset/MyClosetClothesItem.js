@@ -24,7 +24,10 @@ export default function MyClosetClothesItem({ clothesData } ) {
           <Modal.Header closeButton>
             <Modal.Title>옷 상세정보 제목</Modal.Title>
           </Modal.Header>
-          <Modal.Body>옷 상세정보 보여주기</Modal.Body>
+          <Modal.Body>
+            옷 상세정보 보여주기
+            <p>{clothesData.clothesId}</p>
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
