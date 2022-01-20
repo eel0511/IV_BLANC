@@ -5,12 +5,14 @@ import javax.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
+import com.ivblanc.api.dto.req.CheckEmailReqDTO;
 import com.ivblanc.api.dto.req.SignOutReqDTO;
 import com.ivblanc.api.dto.req.UpdatePersonalReqDTO;
 import com.ivblanc.api.dto.req.UpdatePwReqDTO;
@@ -43,6 +45,7 @@ public class UserController {
     /**
      * 회원정보 변경 : put /update
      * 회원탈퇴 : delete /signOut
+     * 이메일 중복체크 : get /checkEmail
      */
 
     // 회원 정보 변경 - 비밀번호
@@ -109,11 +112,21 @@ public class UserController {
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
-        userRepository.deleteById((long)user.getUserId());
+        userRepository.deleteById(user.getUserId());
 
         return responseService.getSuccessResult("탈퇴 성공");
     }
 
+    // 이메일 중복체크
+    @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
+    @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
+        // 존재하는 회원인지 확인
+        User user = userService.findByEmail(req.getEmail());
+        if(user != null)
+            throw new ApiMessageException("이미 등록된 회원입니다.");
 
+        return responseService.getSuccessResult("사용 가능한 이메일입니다.");
+    }
 
 }
