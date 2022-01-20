@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StyleService {
 	private final StyleRepository styleRepository;
 
-	public List<Style> findAll(int userId, Pageable pageable){
+	public List<Style> findAllByUserId(int userId, Pageable pageable){
 		return styleRepository.findAllByUserId(userId,pageable);
 	}
 	public Optional<Style> findByStyleId(int styleId){

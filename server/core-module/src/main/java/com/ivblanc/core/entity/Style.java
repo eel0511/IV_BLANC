@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Style extends BaseEntity{
+public class Style extends BaseEntity {
 	@Id
 	@Column(name = "style_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,17 +41,18 @@ public class Style extends BaseEntity{
 	@Column(length = 2000)
 	private String url;
 
-	@Column(name = "photo_name",length = 2000)
+	@Column(name = "photo_name", length = 2000)
 	private String photoName;
 
 	@Column(name = "user_id")
 	private int userId;
 
 	@Builder.Default
-	@OneToMany(mappedBy = "style",cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "style", cascade = CascadeType.ALL)
 	private List<StyleDetail> styleDetails = new ArrayList<>();
 
-	public void add(StyleDetail styleDetail){
+	public void add(StyleDetail styleDetail) {
 		styleDetail.setStyle(this);
 		this.styleDetails.add(styleDetail);
 	}
