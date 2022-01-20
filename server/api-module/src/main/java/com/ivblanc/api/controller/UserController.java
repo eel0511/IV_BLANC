@@ -1,5 +1,7 @@
 package com.ivblanc.api.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
+import com.ivblanc.api.dto.req.SignOutReqDTO;
+import com.ivblanc.api.dto.req.UpdatePersonalReqDTO;
+import com.ivblanc.api.dto.req.UpdatePwReqDTO;
 import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.CommonResult;
 import com.ivblanc.api.service.common.ResponseService;
@@ -44,13 +49,13 @@ public class UserController {
     // 회원 정보 변경 - 비밀번호
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호 변경")
     @PutMapping(value = "/update/pw", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userUpdatePw(@RequestParam String uid, @RequestParam String pw, @RequestParam String pw_new, @RequestParam String pw_check) throws Exception{
+    public @ResponseBody CommonResult userUpdatePw(@Valid UpdatePwReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(uid);
+        User user = userService.findByUid(req.getUid());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 아이디입니다.");
 
-        if(!passwordEncoder.matches(pw, user.getPassword())){
+        if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
@@ -63,7 +68,7 @@ public class UserController {
         //     throw new ApiMessageException("비밀번호를 확인해주세요.");
         // }
 
-        user.updatePassword(passwordEncoder.encode(pw_new));
+        user.updatePassword(passwordEncoder.encode(req.getPw_new()));
         userRepository.save(user);
 
         return responseService.getSuccessResult("비밀번호 변경 성공.");
@@ -73,19 +78,19 @@ public class UserController {
     // 회원 정보 변경 - 개인정보
     @ApiOperation(value = "개인정보 변경", notes = "개인정보 변경")
     @PutMapping(value = "/update/personal", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userUpdatePersonal(@RequestParam String uid, @RequestParam String pw, @RequestParam int age, @RequestParam int gender, @RequestParam String phone) throws Exception{
+    public @ResponseBody CommonResult userUpdatePersonal(@Valid UpdatePersonalReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(uid);
+        User user = userService.findByUid(req.getUid());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 회원입니다.");
 
-        if(!passwordEncoder.matches(pw, user.getPassword())){
+        if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
-        user.updateAge(age);
-        user.updateGender(gender);
-        user.updatePhone(phone);
+        user.updateAge(req.getAge());
+        user.updateGender(req.getGender());
+        user.updatePhone(req.getPhone());
         userRepository.save(user);
 
         return responseService.getSuccessResult("개인정보 변경 성공.");
@@ -95,13 +100,13 @@ public class UserController {
     // 회원 탈퇴
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @DeleteMapping(value = "/signOut", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userSignOut(@RequestParam String uid, @RequestParam String pw) throws Exception{
+    public @ResponseBody CommonResult userSignOut(@Valid SignOutReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
-        User user = userService.findByUid(uid);
+        User user = userService.findByUid(req.getUid());
         if(user == null)
             throw new ApiMessageException("등록되지 않은 회원입니다.");
 
-        if(!passwordEncoder.matches(pw, user.getPassword())){
+        if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
