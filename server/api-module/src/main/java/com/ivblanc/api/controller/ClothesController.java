@@ -26,10 +26,12 @@ import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
 import com.ivblanc.api.service.ClothesSerivce;
+import com.ivblanc.api.service.StyleDetailService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.Clothes;
+import com.ivblanc.core.entity.StyleDetail;
 import com.ivblanc.core.exception.ApiMessageException;
 
 import io.swagger.annotations.Api;
@@ -44,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value = "/api/clothes")
 public class ClothesController {
 	private final ClothesSerivce clothesSerivce;
+	private final StyleDetailService styleDetailService;
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 
@@ -142,6 +145,12 @@ public class ClothesController {
 	@DeleteMapping(value = "/deleteById")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> deleteClothes(@RequestParam int clothesId) throws Exception {
+
+		//clothes 에서 style에 이용되고있으면 삭제안되게 추가 - 22.01.20 suhyeong
+		List<StyleDetail> styleDetailList =styleDetailService.findAllByclothesId(clothesId);
+		if(styleDetailList.size()!=0){
+			throw new ApiMessageException("이 옷은 스타일에 이용되고있습니다");
+		}
 		clothesSerivce.deleteClothesById(clothesId);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
