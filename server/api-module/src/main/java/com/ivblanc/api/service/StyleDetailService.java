@@ -30,4 +30,7 @@ public class StyleDetailService {
 	public Optional<StyleDetail> findBySdId(int sdId){
 		return styleDetailRepository.findById(sdId);
 	}
+	public List<StyleDetail> findAllByclothesId(int clothesId){
+		return styleDetailRepository.findClothesId(clothesId);
+	}
 }
