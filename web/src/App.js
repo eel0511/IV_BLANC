@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import IvblancNavbar from './layouts/IvblancNavbar';
-import MyCloset from './pages/MyCloset';
+import MyCloset from './pages/MyCloset/MyCloset';
 
 function App() {
   return (

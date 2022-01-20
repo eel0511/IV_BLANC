@@ -1,5 +1,6 @@
 import React from "react";
 import MyClosetSidebarItem from "../../components/MyCloset/MyClosetSidebarItem";
+import "./MyCloset.css";
 
 export default function MyClosetSidebar() {
   const menus = [
@@ -14,15 +15,15 @@ export default function MyClosetSidebar() {
   ];
 
   return (
-    <>
-    <h1>사이드 바</h1>
-    <div>
-      {menus.map((menu, index) => {
-        return (
-          <MyClosetSidebarItem menu={menu} key={index}/>
-        );
-      })}
+    <div className="MyClosetSidebar">
+      <h1>사이드 바</h1>
+      <div>
+        {menus.map((menu, index) => {
+          return (
+            <MyClosetSidebarItem menu={menu} key={index}/>
+          );
+        })}
+      </div>
     </div>
-    </>
   );
 }

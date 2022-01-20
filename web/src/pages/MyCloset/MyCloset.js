@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import MyClosetClothes from "../layouts/MyCloset/MyClosetClothes";
-import MyClosetSidebar from "../layouts/MyCloset/MyClosetSidebar";
+import MyClosetClothes from "../../layouts/MyCloset/MyClosetClothes";
+import MyClosetSidebar from "../../layouts/MyCloset/MyClosetSidebar";
+import "./MyCloset.css";
 
 export default function MyCloset() {
   const [myClothes, setMyClothes] = useState([]);
@@ -92,15 +93,9 @@ export default function MyCloset() {
   return (
     <>
       <h1>My Closet</h1>
-      <div className="container">
-        <div className="row">
-          <div className="col-2" style={{'borderStyle': 'dashed'}}>
-            <MyClosetSidebar />
-          </div>
-          <div className="col-10">
-            <MyClosetClothes clothesDatas={clothesDatas}/>
-          </div>
-        </div>
+      <div className="MyClosetContainer">
+        <MyClosetSidebar />
+        <MyClosetClothes clothesDatas={clothesDatas}/>
       </div>
     </>
   );
