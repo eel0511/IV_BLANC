@@ -8,14 +8,18 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
+import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentJoinBinding
 import com.strait.ivblanc.util.InputValidUtil
+import com.strait.ivblanc.util.Status
 
 class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind, R.layout.fragment_join) {
+    val loginViewModel: LoginViewModel by activityViewModels()
     var isEmailChecked = false
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +35,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeViewModel()
     }
 
     fun initView() {
@@ -92,6 +97,20 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
             val input = it.toString()
             if (InputValidUtil.isValidBirthDay(input)) {
                 binding.textInputLayoutJoinFBirthday.error = null
+            }
+        }
+    }
+
+    fun observeViewModel() {
+        loginViewModel.joinRequestLiveData.observe(requireActivity()) {
+            when(it.status) {
+                Status.LOADING -> {
+                    binding.progressBarJoinFLoading.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.progressBarJoinFLoading.visibility = View.VISIBLE
+                }
+
             }
         }
     }
