@@ -29,7 +29,7 @@ public class StyleDetail {
 
 	@Id
 	@Column(name = "sd_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sdId;
 
 	@Column(name="clothes_id")

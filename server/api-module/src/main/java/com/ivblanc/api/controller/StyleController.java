@@ -50,12 +50,13 @@ public class StyleController {
 			.userId(userId)
 			.build();
 		styleService.addStyle(style);
+
 		for (MakeStyleDetailReqDTO m : styleDetails) {
 			StyleDetail styleDetail = StyleDetail.builder().clothesId(m.getClothes_id()).build();
+			styleDetailList.add(styleDetail);
 			style.add(styleDetail);
-			styleDetailService.addStyle(styleDetail);
 		}
-
+		styleDetailService.addStyleDetails(styleDetailList);
 		return responseService.getSingleResult("aa");
 	}
 

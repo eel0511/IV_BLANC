@@ -1,5 +1,7 @@
 package com.ivblanc.api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.core.entity.Style;
@@ -14,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class StyleDetailService {
 	private final StyleDetailRepository styleDetailRepository;
-	public void addStyle(StyleDetail styleDetail){
-		styleDetailRepository.save(styleDetail);
+	public void addStyleDetails(List<StyleDetail> styleDetails){
+		styleDetailRepository.saveAll(styleDetails);
 	}
 }
