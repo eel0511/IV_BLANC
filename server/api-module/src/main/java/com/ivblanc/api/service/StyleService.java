@@ -1,10 +1,8 @@
 package com.ivblanc.api.service;
 
-
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.core.entity.Style;
@@ -19,17 +17,19 @@ import lombok.extern.slf4j.Slf4j;
 public class StyleService {
 	private final StyleRepository styleRepository;
 
-	public List<Style> findAllByUserId(int userId, Pageable pageable){
-		return styleRepository.findAllByUserId(userId,pageable);
+	public List<Style> findAllByUserId(int userId) {
+		return styleRepository.findAllByUserId(userId);
 	}
-	public Optional<Style> findByStyleId(int styleId){
+
+	public Optional<Style> findByStyleId(int styleId) {
 		return styleRepository.findById(styleId);
 	}
 
-	public void addStyle(Style style){
+	public void addStyle(Style style) {
 		styleRepository.save(style);
 	}
-	public void deleteStyleById(int styleId){
+
+	public void deleteStyleById(int styleId) {
 		styleRepository.deleteById(styleId);
 	}
 }

@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.BatchSize;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
@@ -49,6 +51,7 @@ public class Style extends BaseEntity {
 
 	@Builder.Default
 	@JsonManagedReference
+	@BatchSize(size = 10)
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "style", cascade = CascadeType.ALL)
 	private List<StyleDetail> styleDetails = new ArrayList<>();
 

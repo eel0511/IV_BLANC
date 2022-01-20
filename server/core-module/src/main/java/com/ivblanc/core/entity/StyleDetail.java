@@ -1,6 +1,5 @@
 package com.ivblanc.core.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -32,12 +30,12 @@ public class StyleDetail {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sdId;
 
-	@Column(name="clothes_id")
-	private int clothesId;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
 	@JoinColumn(name = "style_id")
 	private Style style;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "clothes_id")
+	private Clothes clothes;
 }
