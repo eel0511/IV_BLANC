@@ -53,7 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                     // permitAll() 처리한 경로의 API는 JWT 값이 없어도 실행 가능
-                    .antMatchers("/com/ivblanc/api/sign/**", "/com/ivblanc/api/auth/**").permitAll()
+
+            //01.19 수정 이부분인가??
+                    .antMatchers("/com/ivblanc/api/**", "/com/ivblanc/api/auth/**").permitAll()
                     .antMatchers("/docs/**").permitAll()
                     .anyRequest().hasRole("USER")
                 .and()
