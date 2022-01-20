@@ -76,7 +76,7 @@ class UserControllerTest {
 	@Order(4)
 	@Test
 	void userSignOut() throws Exception {
-		mockMvc.perform(delete("/api/user/signout")
+		mockMvc.perform(delete("/api/user/signOut")
 				.param("uid", "a@a.com")
 				.param("pw", "456"))
 			.andExpect(status().isOk())

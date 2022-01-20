@@ -117,7 +117,8 @@ public class UserController {
         if(!passwordEncoder.matches(pw, user.getPassword())){
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
-        userService.deleteUser(user.getId());
+
+        userRepository.deleteById(user.getId());
 
         return responseService.getSuccessResult("탈퇴 성공");
     }
