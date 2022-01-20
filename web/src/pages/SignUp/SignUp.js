@@ -81,7 +81,7 @@ export default function SignUp() {
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!');
+      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 16자리 이하로 입력해주세요!');
       setIsPassword(false);
     } else {
       setPasswordMessage('안전한 비밀번호에요 : )');
