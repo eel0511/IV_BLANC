@@ -1,10 +1,15 @@
 package com.ivblanc.core.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,16 +23,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Style {
+public class Style extends BaseEntity{
 	@Id
 	@Column(name = "style_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int style_id;
+	private int styleId;
 
 	@Column(length = 20)
 	private String madeby;
 
-	@Column
+	@Column(nullable = false, columnDefinition = "int default 0")
 	private int favorite;
 
 	@Column(length = 2000)
@@ -38,4 +43,13 @@ public class Style {
 
 	@Column(name = "user_id")
 	private int userId;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "style",cascade = CascadeType.ALL)
+	private List<StyleDetail> styleDetails = new ArrayList<>();
+
+	public void add(StyleDetail styleDetail){
+		styleDetail.setStyle(this);
+		this.styleDetails.add(styleDetail);
+	}
 }

@@ -25,6 +25,7 @@ public class StyleService {
 	public Optional<Style> findByStyleId(int styleId){
 		return styleRepository.findById(styleId);
 	}
+
 	public void addStyle(Style style){
 		styleRepository.save(style);
 	}
