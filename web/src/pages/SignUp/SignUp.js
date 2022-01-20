@@ -1,14 +1,11 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import '../../styles/signup.scss';
 
 function Copyright(props) {
@@ -60,32 +58,6 @@ export default function SignUp() {
   const [isName, setIsName] = useState(false);
   const [isAge, setIsAge] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
-
-  // 아마도 백엔드 통신일 것.
-  // const router = useRouter();
-
-  // const onSubmit = useCallback(
-  //   async (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault()
-  //     try {
-  //       await axios
-  //         .post(REGISTER_USERS_URL, {
-  //           username: name,
-  //           password: password,
-  //           email: email,
-  //         })
-  //         .then((res) => {
-  //           console.log('response:', res)
-  //           if (res.status === 200) {
-  //             router.push('/sign_up/profile_start')
-  //           }
-  //         })
-  //     } catch (err) {
-  //       console.error(err)
-  //     }
-  //   },
-  //   [email, name, password, router]
-  // )
 
   // 이메일 형식 확인
   const onChangeEmail = useCallback((e) => {
@@ -186,7 +158,7 @@ export default function SignUp() {
     }
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -205,6 +177,30 @@ export default function SignUp() {
       age: Number(data.get('age')),
       phoneNum: data.get('phoneNum'),
     });
+
+    // 백엔드 통신
+    // const router = useRouter();
+
+    try {
+      await axios
+        .post('http://119.56.162.61:8888/api/sign/signup', {
+          email: data.get('email'),
+          password: data.get('password'),
+          name: data.get('name'),
+          gender: data.get('gender') === 'male' ? 1 : 2,
+          age: Number(data.get('age')),
+          phone: data.get('phoneNum'),
+          social: 1,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200) {
+            alert('회원가입 성공!!');
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
