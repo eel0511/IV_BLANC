@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import "./MyCloset.css";
-import { Modal, Button } from "react-bootstrap";
+import React, { useState } from 'react';
+import './MyCloset.css';
+import { Modal, Button } from 'react-bootstrap';
 
-export default function MyClosetClothesItem({ clothesData } ) {
+export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
-    <div className="card h-100">
-      <div className="card-body">
+    <div className='card h-100'>
+      <div className='card-body'>
         <img
-          src={require( `../../assets/${ clothesData.url }` )}
+          src={require(`../../assets/${clothesData.url}`)}
           alt={clothesData.clothesId}
-          style={{'maxWidth': '100%', 'maxHeight': '100%'}}
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
+          data-bs-toggle='modal'
+          data-bs-target='#exampleModal'
           onClick={handleShow}
         />
 
@@ -29,7 +29,7 @@ export default function MyClosetClothesItem({ clothesData } ) {
             <p>{clothesData.clothesId}</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant='secondary' onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

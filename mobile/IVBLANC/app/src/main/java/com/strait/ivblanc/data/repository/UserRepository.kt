@@ -15,7 +15,7 @@ class UserRepository {
         return try {
             val response = userApi.join(user)
             if(response.isSuccessful) {
-                return if(response.code() == 200) {
+                return if(response.code() == 200 && response.body()!!.output == 1) {
                     Resource.success(response.body()!!)
                 } else {
                     Resource.error(null, response.body()!!.message!!)
@@ -32,7 +32,7 @@ class UserRepository {
         return try {
             val response = userApi.emailCheck(email)
             if(response.isSuccessful) {
-                return if(response.code() == 200 && response.body()!!.output == 0) {
+                return if(response.code() == 200 && response.body()!!.output == 1) {
                     Resource.success(response.body()!!)
                 } else {
                     Resource.error(null, response.body()!!.message!!)

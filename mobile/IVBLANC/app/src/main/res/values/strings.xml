@@ -23,4 +23,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">로그인</string>
     <string name="autoLogin">자동 로그인</string>
+    <string name="favoriteClothes">즐겨찾는 옷</string>
+    <string name="recentlyAddedClothes">최근에 추가한 옷</string>
+    <string name="favoriteStyle">즐겨찾는 룩</string>
+    <string name="recentlyAddedStyle">최근에 추가한 룩</string>
 </resources>
