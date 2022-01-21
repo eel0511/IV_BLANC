@@ -15,4 +15,6 @@ public interface FriendRepoCommon {
 	List<Friend> findAllByApplicant(String applicant);
 
 	List<Friend> findAllByApplicantAndIsaccept(String applicant, YNCode isaccept);
+
+	List<Friend> findAllByFriendNameAndIsaccept(String friendName,YNCode isaccept);
 }
