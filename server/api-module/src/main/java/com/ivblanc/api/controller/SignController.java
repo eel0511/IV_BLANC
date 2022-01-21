@@ -2,6 +2,7 @@ package com.ivblanc.api.controller;
 
 import java.util.Collections;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
@@ -119,8 +120,8 @@ public class SignController {
 
     // 일반 로그인
     @ApiOperation(value = "일반 로그인", notes = "일반 로그인")
-    @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<LoginUserResDTO> login(@Valid LoginUserReqDTO req) throws Exception{
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody SingleResult<LoginUserResDTO> login(@Valid @RequestBody LoginUserReqDTO req) throws Exception{
 
         if(!CheckValidate.checkEmailForm(req.getEmail())){
             throw new ApiMessageException("이메일 형식을 확인해주세요.");
