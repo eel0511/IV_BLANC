@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,7 +67,7 @@ public class SignController {
     // 일반 회원가입
     @ApiOperation(value = "일반 회원가입", notes = "일반 회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@Valid SignUpReqDTO req) throws Exception{
+    public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@Valid @RequestBody SignUpReqDTO req) throws Exception{
         // 이메일 중복되는 값이 존재하는지 확인 (uid = 고유한 값, 이메일)
         User emailChk = signService.findByEmail(req.getEmail());
         if(emailChk != null)
