@@ -73,12 +73,6 @@ public class User implements UserDetails {
     @Column(length = 255)
     private String token_fcm;
 
-    @Column(length = 255)
-    private String code;
-
-
-
-
 
     // =================================================================================================
     // JWT
