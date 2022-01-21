@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
+import com.ivblanc.api.dto.req.CheckEmailReqDTO;
 import com.ivblanc.api.dto.req.LoginUserReqDTO;
 import com.ivblanc.api.dto.req.SignUpReqDTO;
 import com.ivblanc.api.dto.res.LoginUserResDTO;
 import com.ivblanc.api.dto.res.UserIdResDTO;
 import com.ivblanc.api.service.SignService;
+import com.ivblanc.api.service.common.CommonResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.User;
@@ -45,8 +47,21 @@ public class SignController {
     /**
      * 로그인 : get /login
      * 회원가입 일반 : post /signup
+     * 이메일 중복체크 : get /checkEmail
      */
 
+    // 이메일 중복체크
+    @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
+    @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
+        // 존재하는 회원인지 확인
+        User user = signService.findByEmail(req.getEmail());
+        if(user != null)
+            throw new ApiMessageException("이미 등록된 회원입니다.");
+
+        return responseService.getSuccessResult("사용 가능한 이메일입니다.");
+    }
 
     // 일반 회원가입
     @ApiOperation(value = "일반 회원가입", notes = "일반 회원가입")
