@@ -24,19 +24,19 @@ public class SwaggerConfig {
 
     private String version;
     private String title;
-
+    private String group;
     @Value("${swagger.host}")
     private String host;
 
     @Bean
     public Docket apiV1() {
         version = "V1";
-        title = "SSAFY API " + version;
-
+        title = "IVBLANC API " + version;
+        group ="GUMI_01_STRAIT";
         return new Docket(DocumentationType.SWAGGER_2)
                 .host(host)
                 .useDefaultResponseMessages(false)
-                .groupName(version)
+                .groupName(group)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ivblanc.api.controller"))
                 .paths(PathSelectors.ant("/api/**"))
@@ -49,10 +49,10 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(String title, String version) {
         return new ApiInfo(
                 title,
-                "SSAFY API",
+                "IVBLANC API",
                 version,
                 "www.example.com",
-                new Contact("Contact Me", "www.example.com", "test@example.com"),
+                new Contact("Contact Me", "https://dreamscometrue.atlassian.net/l/c/p3qV27HU", ""),
                 "Licenses",
                 "www.example.com",
                 new ArrayList<>());
