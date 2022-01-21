@@ -19,4 +19,6 @@
     <string name="emailNotCheckedErrorMessage">이메일 중복 검사를 눌러주세요.</string>
     <string name="genderNotCheckedErrorMessage">성별을 선택해주세요.</string>
     <string name="checkDuplication">중복체크</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
