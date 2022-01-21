@@ -7,6 +7,7 @@ import SignIn from './pages/SignIn/Signin';
 import SignUp from './pages/SignUp/SignUp';
 import KakaoAuth from './components/login/kakaoOAuth';
 import NaverAuth from './components/login/naverOAuth';
+import FindEmail from './pages/FindEmail/FindEmail';
 
 export default [
   {
@@ -44,5 +45,9 @@ export default [
   {
     path: '/oauth/naver/callback',
     component: NaverAuth,
+  },
+  {
+    path: '/findemail',
+    component: FindEmail,
   },
 ];
