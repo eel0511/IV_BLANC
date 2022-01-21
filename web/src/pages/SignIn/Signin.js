@@ -118,13 +118,18 @@ export default function SignInSide() {
               <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                 로그인
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href='#' variant='body2'>
-                    아이디/비밀번호 찾기
+              <Grid container spacing={1}>
+                <Grid item xs={4}>
+                  <Link href='/findemail' variant='body2'>
+                    아이디 찾기
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item xs={4}>
+                  <Link href='#' variant='body2'>
+                    비밀번호 찾기
+                  </Link>
+                </Grid>
+                <Grid item xs={4}>
                   <Link href='/signup' variant='body2'>
                     {'회원가입'}
                   </Link>
