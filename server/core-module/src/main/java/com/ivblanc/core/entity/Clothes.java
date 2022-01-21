@@ -36,8 +36,8 @@ public class Clothes extends BaseEntity{
 	@Column(length = 8)
 	private String color;
 
-	@Column(length = 10)
-	private String material;
+	@Column
+	private int material;
 
 	@Column(length = 2000)
 	private String url;

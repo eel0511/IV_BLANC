@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.api.gax.rpc.ApiException;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
 import com.ivblanc.api.service.ClothesSerivce;
+import com.ivblanc.api.service.FileService;
 import com.ivblanc.api.service.StyleDetailService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
@@ -49,8 +52,9 @@ public class ClothesController {
 	private final StyleDetailService styleDetailService;
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final FileService fileService;
 
-	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)",notes = "옷 생성일 기준으로 빠른순 조회입니다.\n"
+	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)", notes = "옷 생성일 기준으로 빠른순 조회입니다.\n"
 		+ " 정렬 등에 사용가능할거같습니다 back단에서")
 	@GetMapping(value = "/createdate")
 	public @ResponseBody
@@ -58,7 +62,7 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
 	}
 
-	@ApiOperation(value = "최근순으로 자기 옷 조회(수정일기준)",notes = "옷이 style에 포함되거나 하면 updatedate가 갱신됩니다. \n"
+	@ApiOperation(value = "최근순으로 자기 옷 조회(수정일기준)", notes = "옷이 style에 포함되거나 하면 updatedate가 갱신됩니다. \n"
 		+ "이것으로 오랫동안 안입은옷 등의 판별을 할수있을것입니다")
 	@GetMapping(value = "/updatedate")
 	public @ResponseBody
@@ -108,7 +112,7 @@ public class ClothesController {
 	@ApiOperation(value = "소재로 자기 옷 조회")
 	@GetMapping(value = "/material")
 	public @ResponseBody
-	ListResult<Clothes> findClothesMaterial(@RequestParam String material, @RequestParam int userId) throws Exception {
+	ListResult<Clothes> findClothesMaterial(@RequestParam int material, @RequestParam int userId) throws Exception {
 		return responseService.getListResult(clothesSerivce.findByMaterial(material, userId));
 	}
 
@@ -126,11 +130,36 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findOrderByCount(userId));
 	}
 
-	@ApiOperation(value = "옷 추가")
+	@ApiOperation(value = "firebase Storage에 업로드", notes = "정상업로드되면 url 반환")
+	@PostMapping("/upload")
+	public String upload(@RequestParam("file") MultipartFile multipartFile) {
+		return fileService.upload(multipartFile);
+	}
+
+	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에",notes = "swagger는 안되는데 postman은 정상적입니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addClothes(@RequestBody MakeClothesReqDTO req) throws Exception {
-
+	SingleResult<ClothesIdResDTO> addClothes(MakeClothesReqDTO req) throws Exception {
+		String url = fileService.upload(req.getFile());
+		if(url.equals("error")){
+			throw new ApiMessageException("파일 올리기 실패");
+		}
+		Clothes clothes = Clothes.builder()
+			.category(req.getCategory())
+			.color(req.getColor())
+			.material(req.getMaterial())
+			.size(req.getSize())
+			.season(req.getSeason())
+			.userId(req.getUserId())
+			.url(url)
+			.build();
+		clothesSerivce.addClothes(clothes);
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
+	}
+	@ApiOperation(value = "사진없이 그냥 test용입니다")
+	@PostMapping(value = "/addtest")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> addtestClothes(MakeClothesReqDTO req) throws Exception {
 		Clothes clothes = Clothes.builder()
 			.category(req.getCategory())
 			.color(req.getColor())
@@ -143,21 +172,21 @@ public class ClothesController {
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
 
-	@ApiOperation(value = "옷 삭제 By Clothes_id",notes = "일반적인 옷 삭제이나 , 이 옷이 style에 활용되고있으면 삭제가 되지않습니다 Exception을 발생시킵니다")
+	@ApiOperation(value = "옷 삭제 By Clothes_id", notes = "일반적인 옷 삭제이나 , 이 옷이 style에 활용되고있으면 삭제가 되지않습니다 Exception을 발생시킵니다")
 	@DeleteMapping(value = "/deleteById")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> deleteClothes(@RequestParam int clothesId) throws Exception {
 
 		//clothes 에서 style에 이용되고있으면 삭제안되게 추가 - 22.01.20 suhyeong
-		List<StyleDetail> styleDetailList =styleDetailService.findAllByclothesId(clothesId);
-		if(styleDetailList.size()!=0){
+		List<StyleDetail> styleDetailList = styleDetailService.findAllByclothesId(clothesId);
+		if (styleDetailList.size() != 0) {
 			throw new ApiMessageException("이 옷은 스타일에 이용되고있습니다");
 		}
 		clothesSerivce.deleteClothesById(clothesId);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
-	@ApiOperation(value = "url 수정",notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
+	@ApiOperation(value = "url 수정", notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
 		+ "일단 삭제는 없이 유지시키겠습니다")
 	@PutMapping(value = "/updateurl")
 	public @ResponseBody
@@ -169,7 +198,7 @@ public class ClothesController {
 
 	}
 
-	@ApiOperation(value = "N일 동안 update되지않은 옷 조회",notes = "특정 일수만큼 update되지않은 옷입니다 \n"
+	@ApiOperation(value = "N일 동안 update되지않은 옷 조회", notes = "특정 일수만큼 update되지않은 옷입니다 \n"
 		+ "update는 옷으로 style을 만들거나 하면 갱신됩니다. \n"
 		+ "특정일수를 넣어 ex) 2년동안 추가만되어있고 update되지않은옷 찾기 등에 활용할수있습니다")
 	@GetMapping(value = "/notweardays")
@@ -178,14 +207,14 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findAllByDate(days));
 	}
 
-	@ApiOperation(value = "1년 동안 update되지않은 옷 조회",notes = "N일동안 update되지않은 옷 조회의 default 1년 버전입니다")
+	@ApiOperation(value = "1년 동안 update되지않은 옷 조회", notes = "N일동안 update되지않은 옷 조회의 default 1년 버전입니다")
 	@GetMapping(value = "/notwearyear")
 	public @ResponseBody
 	ListResult<Clothes> findNotWear() throws Exception {
 		return responseService.getListResult(clothesSerivce.findAllByDate(365));
 	}
 
-	@ApiOperation(value = "즐겨찾기추가",notes = "즐겨찾기는 favorite 1로 바꾸는것으로 표현됩니다")
+	@ApiOperation(value = "즐겨찾기추가", notes = "즐겨찾기는 favorite 1로 바꾸는것으로 표현됩니다")
 	@PutMapping(value = "/addfavorite")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addFavorite(@RequestParam int clothesId) throws Exception {
@@ -198,7 +227,7 @@ public class ClothesController {
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
-	@ApiOperation(value = "즐겨찾기삭제",notes = "즐겨찾기삭제는 favorite 0으로 만들어줍니다")
+	@ApiOperation(value = "즐겨찾기삭제", notes = "즐겨찾기삭제는 favorite 0으로 만들어줍니다")
 	@PutMapping(value = "/deletefavorite")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> deleteFavorite(@RequestParam int clothesId) throws Exception {
