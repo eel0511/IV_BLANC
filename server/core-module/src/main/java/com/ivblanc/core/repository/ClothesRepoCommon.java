@@ -16,7 +16,7 @@ public interface ClothesRepoCommon {
 
 	List<Clothes> findAllByColorAndUserId(String color, int userId);
 
-	List<Clothes> findAllByMaterialAndUserId(String material, int userId);
+	List<Clothes> findAllByMaterialAndUserId(int material, int userId);
 
 	List<Clothes> findALLByUserIdOrderByFavoriteDesc(int userId);
 

@@ -55,7 +55,7 @@ public class ClothesSerivce {
 		return clothesRepository.findAllByColorAndUserId(color, userId);
 	}
 
-	public List<Clothes> findByMaterial(String material, int userId) {
+	public List<Clothes> findByMaterial(int material, int userId) {
 		return clothesRepository.findAllByMaterialAndUserId(material, userId);
 	}
 
