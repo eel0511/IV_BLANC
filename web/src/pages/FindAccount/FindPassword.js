@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useState, useEffect, useCallback } from 'react';
 
+import UpdatePassword from '../../components/login/UpdatePassword';
+
 function Copyright(props) {
   return (
     <Typography variant='body2' color='text.secondary' align='center' {...props}>
@@ -41,6 +43,9 @@ export default function SignUp() {
   const [isEmail, setIsEmail] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
+  // 이메일 확인 컴포넌트 조건
+  const [isShow, setIsShow] = useState(false);
 
   // 이메일 형식 확인
   const onChangeEmail = useCallback((e) => {
@@ -89,21 +94,17 @@ export default function SignUp() {
     [password]
   );
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     if (email === '') return alert('이메일을 입력해주세요');
-    if (passwordConfirm === '') return alert('비밀번호를 입력해주세요');
+
+    setIsShow(true);
 
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
-      password: data.get('password'),
-      name: data.get('name'),
-      gender: data.get('gender') === 'male' ? 1 : 2,
-      age: Number(data.get('age')),
-      phoneNum: data.get('phoneNum'),
     });
 
     // 백엔드 통신
@@ -131,6 +132,11 @@ export default function SignUp() {
     // }
   };
 
+  let write = null;
+  if (isShow) {
+    write = <UpdatePassword email={email} />;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
@@ -157,6 +163,8 @@ export default function SignUp() {
             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
               비밀번호 찾기
             </Button>
+
+            {write}
 
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
