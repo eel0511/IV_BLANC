@@ -108,6 +108,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
                 }
                 Status.SUCCESS -> {
                     binding.progressBarJoinFLoading.visibility = View.GONE
+                    it.data?.let {
+                        toast(it.message!!, Toast.LENGTH_SHORT)
+                    }
                 }
                 Status.ERROR -> {
                     binding.progressBarJoinFLoading.visibility = View.GONE
