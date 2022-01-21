@@ -7,7 +7,8 @@ import SignIn from './pages/SignIn/Signin';
 import SignUp from './pages/SignUp/SignUp';
 import KakaoAuth from './components/login/kakaoOAuth';
 import NaverAuth from './components/login/naverOAuth';
-import FindEmail from './pages/FindEmail/FindEmail';
+import FindEmail from './pages/FindAccount/FindEmail';
+import FindPassword from './pages/FindAccount/FindPassword';
 
 export default [
   {
@@ -49,5 +50,9 @@ export default [
   {
     path: '/findemail',
     component: FindEmail,
+  },
+  {
+    path: '/findpassword',
+    component: FindPassword,
   },
 ];
