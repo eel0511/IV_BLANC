@@ -55,7 +55,7 @@ public class SignController {
     @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
     @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    CommonResult checkEmail(@RequestBody @Valid CheckEmailReqDTO req) throws Exception{
+    CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
         User user = signService.findByEmail(req.getEmail());
         if(user != null)
@@ -67,7 +67,7 @@ public class SignController {
     // 일반 회원가입
     @ApiOperation(value = "일반 회원가입", notes = "일반 회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@RequestBody @Valid SignUpReqDTO req) throws Exception{
+    public @ResponseBody SingleResult<UserIdResDTO> userSignUp(@Valid @RequestBody SignUpReqDTO req) throws Exception{
         // 이메일 중복되는 값이 존재하는지 확인 (uid = 고유한 값, 이메일)
         User emailChk = signService.findByEmail(req.getEmail());
         if(emailChk != null)
@@ -120,7 +120,7 @@ public class SignController {
     // 일반 로그인
     @ApiOperation(value = "일반 로그인", notes = "일반 로그인")
     @GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<LoginUserResDTO> login(@RequestBody @Valid LoginUserReqDTO req) throws Exception{
+    public @ResponseBody SingleResult<LoginUserResDTO> login(@Valid LoginUserReqDTO req) throws Exception{
 
         if(!CheckValidate.checkEmailForm(req.getEmail())){
             throw new ApiMessageException("이메일 형식을 확인해주세요.");

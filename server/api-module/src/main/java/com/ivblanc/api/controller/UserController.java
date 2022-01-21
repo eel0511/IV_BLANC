@@ -55,7 +55,7 @@ public class UserController {
     // 회원 정보 변경 - 비밀번호
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호 변경")
     @PutMapping(value = "/update/pw", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userUpdatePw(@RequestBody @Valid UpdatePwReqDTO req) throws Exception{
+    public @ResponseBody CommonResult userUpdatePw(@Valid @RequestBody UpdatePwReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
         User user = userService.findByEmail(req.getEmail());
         if(user == null)
@@ -83,7 +83,7 @@ public class UserController {
     // 회원 정보 변경 - 개인정보
     @ApiOperation(value = "개인정보 변경", notes = "개인정보 변경")
     @PutMapping(value = "/update/personal", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userUpdatePersonal(@RequestBody @Valid UpdatePersonalReqDTO req) throws Exception{
+    public @ResponseBody CommonResult userUpdatePersonal(@Valid @RequestBody UpdatePersonalReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
         User user = userService.findByEmail(req.getEmail());
         if(user == null)
@@ -105,7 +105,7 @@ public class UserController {
     // 회원 탈퇴
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @DeleteMapping(value = "/signOut", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult userSignOut(@RequestBody @Valid SignOutReqDTO req) throws Exception{
+    public @ResponseBody CommonResult userSignOut(@Valid @RequestBody SignOutReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
         User user = userService.findByEmail(req.getEmail());
         if(user == null)
