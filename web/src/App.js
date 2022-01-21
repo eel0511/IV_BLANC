@@ -9,17 +9,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <IvblancNavbar />
-      <MyCloset />
       <Router>
-        <Routes>
-          <Route path='/' exact element={<SignIn />}></Route>
-          <Route path='/oauth/kakao/callback' exact element={<KakaoAuth />}></Route>
-          <Route path='/oauth/naver/callback' exact element={<NaverAuth />}></Route>
-        </Routes>
+        <div className="App">
+          <IvblancNavbar />
+            <Routes>
+              <Route path='/mycloset' exact element={<MyCloset />}></Route>
+              <Route path='/styling' exact></Route>
+              <Route path='/history' exact></Route>
+              <Route path='/friends' exact></Route>
+              <Route path='/signin' exact element={<SignIn />}></Route>
+              <Route path='/oauth/kakao/callback' exact element={<KakaoAuth />}></Route>
+              <Route path='/oauth/naver/callback' exact element={<NaverAuth />}></Route>
+            </Routes>
+        </div>
       </Router>
-    </div>
   );
 }
 

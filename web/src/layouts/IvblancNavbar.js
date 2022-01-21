@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function IvblancNavbar() {
   return (
@@ -21,24 +22,24 @@ export default function IvblancNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="/mycloset">
+              <Link className="nav-link active" aria-current="page" to="/mycloset">
                 내 옷장
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/styling">
+              <Link className="nav-link" to="/styling">
                 스타일링
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/history">
+              <Link className="nav-link" to="/history">
                 히스토리
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/friends">
+              <Link className="nav-link" to="/friends">
                 친구 옷장
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
