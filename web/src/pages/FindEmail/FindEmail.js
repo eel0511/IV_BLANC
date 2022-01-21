@@ -42,6 +42,12 @@ export default function SignUp() {
   // 이메일 확인 컴포넌트 조건
   const [isShow, setIsShow] = useState(false);
 
+  // 이름 확인
+  const onChangeName = useCallback((e) => {
+    const nameCurrent = e.target.value;
+    setName(nameCurrent);
+  }, []);
+
   // 전화번호 확인
   const onChangePhoneNum = useCallback((e) => {
     const phoneNumRegex = /^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/;
@@ -97,7 +103,7 @@ export default function SignUp() {
 
   let write = null;
   if (isShow) {
-    write = <ShowEmail name={name} email={''} />;
+    write = <ShowEmail name={name} email={'a@a.com'} />;
   }
 
   return (
@@ -119,7 +125,7 @@ export default function SignUp() {
           <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' />
+                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' onChange={onChangeName} />
               </Grid>
 
               <Grid item xs={12}>
