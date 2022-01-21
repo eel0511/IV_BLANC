@@ -123,4 +123,16 @@ public class FriendController {
 		friendService.addFriend(friend);
 		return responseService.getSingleResult(new FriendResDTO(friend.getFriendName()));
 	}
+
+	@ApiOperation(value = "친구요청 보기")
+	@GetMapping(value = "/friendrequest")
+	public ListResult<FriendResDTO>
+	findRequest(String applicant) throws Exception {
+		List<Friend> friendList = friendService.findRequest(applicant);
+		List<FriendResDTO> friendResDTOList = new ArrayList<>();
+		for (Friend f : friendList) {
+			friendResDTOList.add(new FriendResDTO(f.getApplicant()));
+		}
+		return responseService.getListResult(friendResDTOList);
+	}
 }
