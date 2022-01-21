@@ -4,20 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentJoinBinding
 import com.strait.ivblanc.util.InputValidUtil
-import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
 import java.util.*
 
@@ -48,7 +44,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
             } else if(!isEmailChecked) {
                 toast(resources.getText(R.string.emailNotCheckedErrorMessage) as String, Toast.LENGTH_LONG)
             }
-       }
+        }
 
         binding.buttonJoinFCheckEmail.setOnClickListener {
             if(InputValidUtil.isValidEmail(binding.editTextJoinFEmail.text.toString())) {
@@ -128,6 +124,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
                 Status.SUCCESS -> {
                     isEmailChecked = true
                     binding.progressBarJoinFLoading.visibility = View.GONE
+                    it.data?.let {
+                        toast(it.message!!, Toast.LENGTH_SHORT)
+                    }
                 }
                 Status.ERROR -> {
                     binding.progressBarJoinFLoading.visibility = View.GONE
@@ -140,6 +139,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
     private fun join() {
         val email = binding.editTextJoinFEmail.text.toString()
         val password = binding.editTextJoinFPassword.text.toString()
+        val passwordCheck = binding.editTextJoinFPasswordcheck.text.toString()
         val name = binding.editTextJoinFName.text.toString()
         val birthYear = binding.editTextJoinFBirthday.text.toString().substring(0, 2).toInt()
         val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
@@ -154,7 +154,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
             else -> 100 - birthYear + currentYear + 1
         }
 
-        loginViewModel.join(UserForJoin(email, password, name, gender, age, phoneNumber))
+        loginViewModel.join(UserForJoin(email, password, passwordCheck, name, gender, age, phoneNumber))
     }
 
     private fun checkInputForm(): Boolean {
