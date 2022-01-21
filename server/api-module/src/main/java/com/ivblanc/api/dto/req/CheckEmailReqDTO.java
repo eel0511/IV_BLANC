@@ -1,5 +1,6 @@
 package com.ivblanc.api.dto.req;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -17,6 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CheckEmailReqDTO {
     @NotBlank
+    @Email
     @ApiModelProperty(value = "이메일", required = true, example = "a@a.com")
     private String email;
 }

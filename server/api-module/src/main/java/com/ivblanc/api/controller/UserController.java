@@ -49,7 +49,6 @@ public class UserController {
     /**
      * 회원정보 변경 : put /update
      * 회원탈퇴 : delete /signOut
-     * 이메일 중복체크 : get /checkEmail
      */
 
     // 회원 정보 변경 - 비밀번호
@@ -118,18 +117,6 @@ public class UserController {
         userRepository.deleteById(user.getUserId());
 
         return responseService.getSuccessResult("탈퇴 성공");
-    }
-
-    // 이메일 중복체크
-    @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
-    @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
-        // 존재하는 회원인지 확인
-        User user = userService.findByEmail(req.getEmail());
-        if(user != null)
-            throw new ApiMessageException("이미 등록된 회원입니다.");
-
-        return responseService.getSuccessResult("사용 가능한 이메일입니다.");
     }
 
 }
