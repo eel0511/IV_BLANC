@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.TimeZone;
 
 import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.api.gax.rpc.ApiException;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
 import com.ivblanc.api.service.ClothesSerivce;
+import com.ivblanc.api.service.FileService;
 import com.ivblanc.api.service.StyleDetailService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
@@ -49,7 +52,7 @@ public class ClothesController {
 	private final StyleDetailService styleDetailService;
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
-
+	private final FileService fileService;
 	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)",notes = "옷 생성일 기준으로 빠른순 조회입니다.\n"
 		+ " 정렬 등에 사용가능할거같습니다 back단에서")
 	@GetMapping(value = "/createdate")
@@ -108,7 +111,7 @@ public class ClothesController {
 	@ApiOperation(value = "소재로 자기 옷 조회")
 	@GetMapping(value = "/material")
 	public @ResponseBody
-	ListResult<Clothes> findClothesMaterial(@RequestParam String material, @RequestParam int userId) throws Exception {
+	ListResult<Clothes> findClothesMaterial(@RequestParam int material, @RequestParam int userId) throws Exception {
 		return responseService.getListResult(clothesSerivce.findByMaterial(material, userId));
 	}
 
@@ -126,11 +129,17 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findOrderByCount(userId));
 	}
 
-	@ApiOperation(value = "옷 추가")
+	@ApiOperation(value = "옷 추가",notes = "MakeClothesReqDTO 와 함께 file도 같이 줘야합니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addClothes(@RequestBody MakeClothesReqDTO req) throws Exception {
-
+	SingleResult<ClothesIdResDTO> addClothes(@RequestBody MakeClothesReqDTO req)  throws Exception {
+		if(req.getFile().isEmpty()){
+			throw new ApiMessageException("사진이 없습니다");
+		}
+		String url = fileService.upload(req.getFile());
+		if(url.equals("error")){
+			throw new ApiMessageException("사진 저장 error");
+		}
 		Clothes clothes = Clothes.builder()
 			.category(req.getCategory())
 			.color(req.getColor())
@@ -138,6 +147,7 @@ public class ClothesController {
 			.size(req.getSize())
 			.season(req.getSeason())
 			.userId(req.getUserId())
+			.url(url)
 			.build();
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
