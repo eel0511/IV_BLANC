@@ -9,7 +9,7 @@ data class Clothes(
     val dislikePoint: Int,
     var favorite: Int,
     val likePoint: Int,
-    var material: String,
+    var material: Int,
     var season: Int,
     var size: Int,
     val updateDate: String,
