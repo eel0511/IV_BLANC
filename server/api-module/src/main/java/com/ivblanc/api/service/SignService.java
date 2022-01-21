@@ -22,19 +22,19 @@ public class SignService {
      * @return
      * @throws Exception
      */
-    public User findUserById(long id) throws Exception{
+    public User findUserById(int id) throws Exception{
         User user = userRepository.findById(id).orElseThrow( () -> new ApiMessageException("존재하지 않는 회원정보입니다.") );
         return user;
     }
 
     /**
-     * uid로 user 조회
-     * @param uid
+     * email로 user 조회
+     * @param email
      * @return
      * @throws Exception
      */
-    public User findByUid(String uid) throws Exception{
-        return userRepository.findByEmail(uid);
+    public User findByEmail(String email) throws Exception{
+        return userRepository.findByEmail(email);
     }
 
 
@@ -50,13 +50,13 @@ public class SignService {
     }
 
     /**
-     * uid, type으로 회원정보 조회
-     * @param uid
-     * @param type
+     * email, type으로 회원정보 조회
+     * @param email
+     * @param social
      * @return
      */
-    public User findUserByUidType(String uid, int type){
-        return userRepository.findUserLogin(uid, type);
+    public User findUserByEmailType(String email, int social){
+        return userRepository.findUserLogin(email, social);
     }
 
     /**

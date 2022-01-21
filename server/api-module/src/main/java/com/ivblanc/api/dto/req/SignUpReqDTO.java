@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SignUpReqDTO {
     @NotBlank
-    @ApiModelProperty(value = "uid (일반회원:아이디, sns로그인:uid값)", required = true, example = "kakao123")
+    @ApiModelProperty(value = "이메일", required = true, example = "a@a.com")
     private String email;
 
     @NotNull
@@ -27,6 +27,10 @@ public class SignUpReqDTO {
     @NotBlank
     @ApiModelProperty(value = "비밀번호", required = true, example = "123")
     private String password;
+
+    @NotBlank
+    @ApiModelProperty(value = "비밀번호 확인", required = true, example = "123")
+    private String password_chk;
 
     @ApiModelProperty(value = "이름", required = false, example = "카카오")
     private String name;

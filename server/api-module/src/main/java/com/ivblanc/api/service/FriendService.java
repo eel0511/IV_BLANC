@@ -33,6 +33,9 @@ public class FriendService {
 		return friendRepository.findByApplicantAndFriendName(applicant, friendName);
 	}
 
+	public List<Friend> findRequest(String applicant)throws Exception{
+		return friendRepository.findAllByFriendNameAndIsaccept(applicant, YNCode.N);
+	}
 	public int makeFriend(Friend friend) {
 		Friend newFriend = friendRepository.save(friend);
 		return newFriend.getFriend_id();
