@@ -156,6 +156,21 @@ public class ClothesController {
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
+	@ApiOperation(value = "사진없이 그냥 test용입니다")
+	@PostMapping(value = "/addtest")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> addtestClothes(MakeClothesReqDTO req) throws Exception {
+		Clothes clothes = Clothes.builder()
+			.category(req.getCategory())
+			.color(req.getColor())
+			.material(req.getMaterial())
+			.size(req.getSize())
+			.season(req.getSeason())
+			.userId(req.getUserId())
+			.build();
+		clothesSerivce.addClothes(clothes);
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
+	}
 
 	@ApiOperation(value = "옷 삭제 By Clothes_id", notes = "일반적인 옷 삭제이나 , 이 옷이 style에 활용되고있으면 삭제가 되지않습니다 Exception을 발생시킵니다")
 	@DeleteMapping(value = "/deleteById")
