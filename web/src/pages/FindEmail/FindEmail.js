@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { useState, useEffect, useCallback } from 'react';
-import ShowEmail from './ShowEmail';
+import ShowEmail from '../../components/login/ShowEmail';
 
 function Copyright(props) {
   return (
@@ -95,9 +95,9 @@ export default function SignUp() {
     // }
   };
 
-  let button = null;
+  let write = null;
   if (isShow) {
-    button = <ShowEmail name={name} email={''} />;
+    write = <ShowEmail name={name} email={''} />;
   }
 
   return (
@@ -119,7 +119,7 @@ export default function SignUp() {
           <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' onChange={onChangeName} />
+                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' />
               </Grid>
 
               <Grid item xs={12}>
@@ -131,7 +131,7 @@ export default function SignUp() {
               아이디 찾기
             </Button>
 
-            {button}
+            {write}
 
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
