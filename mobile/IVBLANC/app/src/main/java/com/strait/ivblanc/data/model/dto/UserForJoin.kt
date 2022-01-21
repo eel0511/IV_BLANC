@@ -7,6 +7,8 @@ data class UserForJoin(
     val email: String,
     @SerializedName("password")
     val password: String,
+    @SerializedName("password_chk")
+    val passwordCheck: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("gender")
