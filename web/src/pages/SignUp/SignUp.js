@@ -206,6 +206,7 @@ export default function SignUp() {
         .post('http://119.56.162.61:8888/api/sign/signup', {
           email: data.get('email'),
           password: data.get('password'),
+          password_chk: data.get('password_chk'),
           name: data.get('name'),
           gender: data.get('gender') === 'male' ? 1 : 2,
           age: Number(data.get('age')),
@@ -256,7 +257,7 @@ export default function SignUp() {
                 {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth name='password' label='비밀번호 확인' type='password' id='password' autoComplete='new-password' onChange={onChangePasswordConfirm} />
+                <TextField required fullWidth name='password_chk' label='비밀번호 확인' type='password' id='password' autoComplete='new-password' onChange={onChangePasswordConfirm} />
                 {passwordConfirm.length > 0 && <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>}
               </Grid>
               <Grid item xs={12}>
