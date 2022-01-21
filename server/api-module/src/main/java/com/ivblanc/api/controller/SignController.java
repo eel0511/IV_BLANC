@@ -94,8 +94,6 @@ public class SignController {
         // 회원가입 (User Entity 저장)
         long userId = signService.userSignUp(user);
 
-        System.out.print("=== user entity 저장 완료 ===");
-
         // 저장된 User Entity의 PK가 없을 경우 (저장 실패)
         if(userId <= 0)
             throw new ApiMessageException("회원가입에 실패했습니다. 다시 시도해 주세요.");
@@ -126,13 +124,15 @@ public class SignController {
             .userId(user.getUserId())
             .build();
 
-        dto.setToken_jwt(jwtTokenProvider.createToken(String.valueOf(user.getUserId()), Collections.singletonList("ROLE_USER")));
+        String token = jwtTokenProvider.createToken(String.valueOf(user.getUserId()), Collections.singletonList("ROLE_USER"));
+        dto.setToken_jwt(token);
 
-        // 회원 FCM 토큰값, 디바이스 정보 업데이트
+        // 회원 토큰값, 디바이스 정보 업데이트
         user.updateTokenFCM(req.getToken_fcm());
+        user.updateTokenJWT(token);
         signService.saveUser(user);
 
-        return responseService.getSingleResult(dto, "로그인 성공", 200);
+        return responseService.getSingleResult(dto);
     }
 
 }

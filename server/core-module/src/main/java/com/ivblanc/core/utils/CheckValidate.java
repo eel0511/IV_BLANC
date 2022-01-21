@@ -17,7 +17,7 @@ public class CheckValidate {
 	}
 
 	public static boolean checkPhoneForm(String phone){
-		Matcher matcher = Pattern.compile("^01(?:0|1|[6-9])?(\\d{7}|\\d{8})$").matcher(phone);
+		Matcher matcher = Pattern.compile("^01{1}[016789]{1}[0-9]{7,8}$").matcher(phone);
 
 		if(matcher.find()) {
 			return true;
