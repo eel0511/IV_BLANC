@@ -146,7 +146,7 @@ export default function SignUp() {
                 </Link>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Link href='/' variant='body2'>
+                <Link href='/findpassword' variant='body2'>
                   비밀번호 찾기
                 </Link>
               </Grid>

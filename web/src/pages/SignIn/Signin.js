@@ -125,7 +125,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item xs={4}>
-                  <Link href='#' variant='body2'>
+                  <Link href='/findpassword' variant='body2'>
                     비밀번호 찾기
                   </Link>
                 </Grid>
