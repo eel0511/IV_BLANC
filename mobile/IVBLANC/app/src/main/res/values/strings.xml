@@ -21,4 +21,8 @@
     <string name="checkDuplication">중복체크</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favoriteClothes">즐겨찾는 옷</string>
+    <string name="recentlyAddedClothes">최근에 추가한 옷</string>
+    <string name="favoriteStyle">즐겨찾는 룩</string>
+    <string name="recentlyAddedStyle">최근에 추가한 룩</string>
 </resources>
