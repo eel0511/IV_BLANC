@@ -1,29 +1,27 @@
 import './App.css';
 import IvblancNavbar from './layouts/IvblancNavbar';
-import MyCloset from './pages/MyCloset/MyCloset';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import SignIn from './pages/SignIn/Signin';
-import KakaoAuth from './components/login/kakaoOAuth';
-import NaverAuth from './components/login/naverOAuth';
-import SignUp from './pages/SignUp/SignUp';
-import IvblancNavbar from './layouts/IvblancNavbar';
-
+import routes from './routes'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <IvblancNavbar />
-      <MyCloset />
-      <Router>
+    <Router>
+      <div className='App'>
+        <IvblancNavbar />
         <Routes>
-          <Route path='/' exact element={<SignIn />}></Route>
-          <Route path='/oauth/kakao/callback' exact element={<KakaoAuth />}></Route>
-          <Route path='/oauth/naver/callback' exact element={<NaverAuth />}></Route>
-          <Route path='/signup' exact element={<SignUp />}></Route>
+          {routes.map(route => {
+            return (
+              <Route
+                path={route.path}
+                exact
+                element={<route.component />}
+              ></Route>
+            );
+          })}
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
