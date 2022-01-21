@@ -4,6 +4,7 @@ import MyStyle from './pages/MyStyle/MyStyle';
 import History from './pages/History/History';
 import Friends from './pages/Friends/Friends';
 import SignIn from './pages/SignIn/Signin';
+import SignUp from './pages/SignUp/SignUp';
 import KakaoAuth from './components/login/kakaoOAuth';
 import NaverAuth from './components/login/naverOAuth';
 
@@ -31,6 +32,10 @@ export default [
   {
     path: '/signin',
     component: SignIn,
+  },
+  {
+    path: '/signup',
+    component: SignUp,
   },
   {
     path: '/oauth/kakao/callback',
