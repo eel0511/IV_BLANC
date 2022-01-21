@@ -2,6 +2,7 @@ package com.ivblanc.api.controller;
 
 import java.util.Collections;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -121,7 +122,7 @@ public class SignController {
     // 일반 로그인
     @ApiOperation(value = "일반 로그인", notes = "일반 로그인")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<LoginUserResDTO> login(@Valid @RequestBody LoginUserReqDTO req) throws Exception{
+    public @ResponseBody CommonResult login(@Valid @RequestBody LoginUserReqDTO req, HttpServletResponse response) throws Exception{
 
         if(!CheckValidate.checkEmailForm(req.getEmail())){
             throw new ApiMessageException("이메일 형식을 확인해주세요.");
@@ -136,20 +137,18 @@ public class SignController {
             throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
-        // return data 세팅
-        LoginUserResDTO dto = LoginUserResDTO.builder()
-            .userId(user.getUserId())
-            .build();
-
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUserId()), Collections.singletonList("ROLE_USER"));
-        dto.setToken_jwt(token);
+
+        Cookie cookie = new Cookie("JWT", token);
+        cookie.setMaxAge(1000 * 1000);
+        response.addCookie(cookie);
 
         // 회원 토큰값, 디바이스 정보 업데이트
         user.updateTokenFCM(req.getToken_fcm());
         user.updateTokenJWT(token);
         signService.saveUser(user);
 
-        return responseService.getSingleResult(dto);
+        return responseService.getSuccessResult("로그인 성공");
     }
 
 }
