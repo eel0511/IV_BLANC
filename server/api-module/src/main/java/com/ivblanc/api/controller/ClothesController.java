@@ -129,17 +129,18 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findOrderByCount(userId));
 	}
 
-	@ApiOperation(value = "옷 추가",notes = "MakeClothesReqDTO 와 함께 file도 같이 줘야합니다")
+
+	@ApiOperation(value = "firebase Storage에 업로드",notes = "정상업로드되면 url 반환")
+	@PostMapping("/upload")
+	public String upload(@RequestParam("file") MultipartFile multipartFile) {
+		return fileService.upload(multipartFile);
+	}
+
+	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addClothes(@RequestBody MakeClothesReqDTO req)  throws Exception {
-		if(req.getFile().isEmpty()){
-			throw new ApiMessageException("사진이 없습니다");
-		}
+	SingleResult<ClothesIdResDTO> addClothes(MakeClothesReqDTO req) throws Exception {
 		String url = fileService.upload(req.getFile());
-		if(url.equals("error")){
-			throw new ApiMessageException("사진 저장 error");
-		}
 		Clothes clothes = Clothes.builder()
 			.category(req.getCategory())
 			.color(req.getColor())
