@@ -6,7 +6,7 @@ plugins {
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def kakao_api_key = properties.getProperty('kakao_api_key')
+def kakao_api_key = properties.getProperty('kakao_api_key_meta')
 
 android {
     compileSdk 31
