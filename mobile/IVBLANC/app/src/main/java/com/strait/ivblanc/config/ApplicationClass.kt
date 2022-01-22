@@ -1,8 +1,10 @@
 package com.strait.ivblanc.config
 
 import android.app.Application
+import com.kakao.sdk.common.KakaoSdk
 import com.ssafy.template.config.ReceivedCookiesInterceptor
 import com.ssafy.template.config.XAccessTokenInterceptor
+import com.strait.ivblanc.BuildConfig
 import com.strait.ivblanc.util.SharedPreferencesUtil
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -30,6 +32,7 @@ class ApplicationClass: Application() {
         super.onCreate()
         sSharedPreferences = SharedPreferencesUtil(applicationContext)
         initRetrofit()
+        KakaoSdk.init(this, "${BuildConfig.KAKAO_API_KEY}")
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
