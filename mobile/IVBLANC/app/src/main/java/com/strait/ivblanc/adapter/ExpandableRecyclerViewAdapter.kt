@@ -42,10 +42,10 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
         val item = data[position]
         when(item.type) {
             HEADER -> {
-                holder.bindHeader(item)
+                holder.bindHeader(item, position)
             }
             CHILD -> {
-                holder.bindChild(item)
+                holder.bindChild(item, position)
             }
         }
     }
@@ -63,15 +63,24 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bindHeader(item: PhotoItem<T>) {
-            itemView.findViewById<TextView>(R.id.textView_photo_header).text = item.text
+        fun bindHeader(item: PhotoItem<T>, position: Int) {
+            itemView.findViewById<TextView>(R.id.textView_photo_header).also{
+                it.text = item.text
+                it.setOnClickListener {
+                    itemClickListener.onClick(position, HEADER)
+                }
+            }
         }
 
         // TODO: 2022/01/24 item content 타입에 따른 분기 추가
-        fun bindChild(item: PhotoItem<T>) {
+        fun bindChild(item: PhotoItem<T>, position: Int) {
             when(item.content) {
                 item.content is Clothes -> {
-                    val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes)
+                    val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes).also {
+                        it.setOnClickListener{
+                            itemClickListener.onClick(position, CHILD)
+                        }
+                    }
                     Glide.with(context).load((item.content as Clothes).url).centerCrop().into(imageView)
                 }
             }
