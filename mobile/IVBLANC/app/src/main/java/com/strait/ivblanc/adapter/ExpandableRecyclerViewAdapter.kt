@@ -80,6 +80,10 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
                         it.setOnClickListener{
                             itemClickListener.onClick(position, CHILD)
                         }
+                        it.setOnLongClickListener{
+                            itemLongClickListener.onLongClick(position)
+                            true
+                        }
                     }
                     Glide.with(context).load((item.content as Clothes).url).centerCrop().into(imageView)
                 }
