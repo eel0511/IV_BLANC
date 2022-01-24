@@ -1,6 +1,7 @@
 package com.strait.ivblanc.src.PhotoSelect
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.databinding.FragmentAlbumBinding
+import com.strait.ivblanc.ui.PermissionDialog
 
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -44,6 +46,17 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
     }
 
     fun showReasonForPermission() {
+
+        val dial = Dialog(requireActivity())
+
+        val dialog = PermissionDialog(requireActivity())
+            .setContent("사진을 읽기 위해 필요한 권한입니다.")
+            .setPositiveButtonText("권한 허가하기")
+            .setOnPositiveClickListener(object : View.OnClickListener {
+                override fun onClick(p0: View?) {
+                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),1)
+                }
+            }).build().show()
         Toast.makeText(requireActivity(), "권한 필요 다이얼로그", Toast.LENGTH_SHORT).show()
     }
 
