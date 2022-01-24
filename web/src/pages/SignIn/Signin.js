@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import axios from 'axios';
 import AuthSocial from '../../components/login/AuthSocial';
 
 function Copyright(props) {
@@ -67,7 +68,7 @@ export default function SignInSide() {
     }
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -84,6 +85,29 @@ export default function SignInSide() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    // 백엔드 통신
+    try {
+      await axios
+        .post('http://119.56.162.61:8888/api/sign/login', {
+          email: data.get('email'),
+          pw: data.get('password'),
+          social: 1,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200 && res.data.output === 1) {
+            alert('로그인 성공!!');
+            navigate('/');
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
+          } else {
+            alert(res.data.msg);
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
