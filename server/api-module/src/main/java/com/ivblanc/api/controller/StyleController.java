@@ -44,32 +44,19 @@ public class StyleController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 
-	@ApiOperation(value = "Style 추가",notes = "여기서 madeby와 userId가 있는데 userId는 실 소유주고 \n"
+	@ApiOperation(value = "Style 추가", notes = "여기서 madeby와 userId가 있는데 userId는 실 소유주고 \n"
 		+ "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
 	@PostMapping(value = "/add")
 	public @ResponseBody
 	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails, String madeby,
 		int userId) throws Exception {
-		List<StyleDetail> styleDetailList = new ArrayList<>();
-		Style style = Style.builder()
-			.madeby(madeby)
-			.userId(userId)
-			.build();
-		for (MakeStyleDetailReqDTO m : styleDetails) {
-			Clothes clothes = clothesSerivce.findByClothesId(m.getClothes_id())
-				.orElseThrow(() -> new ApiMessageException("없는 옷 번호입니다"));
-			StyleDetail styleDetail = StyleDetail.builder()
-				.clothes(clothes)
-				.build();
-			styleDetailList.add(styleDetail);
-			style.add(styleDetail);
-		}
+		Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, userId));
 		styleService.addStyle(style);
-		styleDetailService.addStyleDetails(styleDetailList);
+		styleDetailService.addStyleDetails(style.getStyleDetails());
 		return responseService.getSingleResult(style.getStyleId() + "번 스타일 추가완료");
 	}
 
-	@ApiOperation(value = "style 조회(userId로) 개개의 옷정보까지 한방에 다줌",notes = "userId로 자신의 스타일 전부를 볼 수있습니다.\n"
+	@ApiOperation(value = "style 조회(userId로) 개개의 옷정보까지 한방에 다줌", notes = "userId로 자신의 스타일 전부를 볼 수있습니다.\n"
 		+ "여기에는 모든 옷 정보까지 한번에 조회됩니다\n"
 		+ "자신의 룩 보기에서 이를 이용해 style을 띄워주고 그 style을 누르면 styledetail들(옷)들이뜨고 개개의 옷을 누르면 옷 정보도 띄울수있게 한번에 정보를 긁어오는것입니다")
 	@GetMapping(value = "/finduserstyle")
@@ -93,7 +80,7 @@ public class StyleController {
 		return responseService.getSingleResult(styleId + "번 Style 삭제");
 	}
 
-	@ApiOperation(value = "style detail 삭제",notes = "style을 누르면 여러개의 포함된 styledetail들(옷) 이 보일텐데 이것을 하나만 삭제하는것입니다")
+	@ApiOperation(value = "style detail 삭제", notes = "style을 누르면 여러개의 포함된 styledetail들(옷) 이 보일텐데 이것을 하나만 삭제하는것입니다")
 	@DeleteMapping(value = "/detail/delete")
 	public @ResponseBody
 	SingleResult<String> deleteStyleDetail(@RequestParam int sdId) throws Exception {
@@ -102,7 +89,7 @@ public class StyleController {
 		return responseService.getSingleResult(sdId + "번 Style Detail 삭제");
 	}
 
-	@ApiOperation(value = "style detail 수정",notes = "style을 누르면 여러개의 포함된 styledetail들(옷) 이 보일텐데 이것을 하나만 수정하는것입니다")
+	@ApiOperation(value = "style detail 수정", notes = "style을 누르면 여러개의 포함된 styledetail들(옷) 이 보일텐데 이것을 하나만 수정하는것입니다")
 	@PutMapping(value = "/detail/update")
 	public @ResponseBody
 	SingleResult<String> updateStyleDetail(@RequestParam int sdId, @RequestParam int clothesId) throws Exception {
@@ -110,8 +97,7 @@ public class StyleController {
 			.orElseThrow(() -> new ApiMessageException("없는 sd_id 입니다"));
 		Clothes clothes = clothesSerivce.findByClothesId(clothesId)
 			.orElseThrow(() -> new ApiMessageException("없는 옷 번호입니다"));
-		styleDetail.setClothes(clothes);
-		styleDetailService.addStyleDetail(styleDetail);
+		styleDetailService.addStyleDetail(styleDetailService.updateClothes(styleDetail, clothes));
 		return responseService.getSingleResult(sdId + "번 Style Detail 수정");
 	}
 
@@ -120,9 +106,8 @@ public class StyleController {
 	public @ResponseBody
 	SingleResult<String> addFavorite(@RequestParam int styleId) throws Exception {
 		Style style = styleService.findByStyleId(styleId).orElseThrow(() -> new ApiMessageException("없는 styld_id 입니다"));
-		style.setFavorite(1);
-		styleService.addStyle(style);
-		return responseService.getSingleResult(styleId+"번 Favorite");
+		styleService.addStyle(styleService.updateFavorite(style, 1));
+		return responseService.getSingleResult(styleId + "번 Favorite");
 	}
 
 	@ApiOperation(value = "style favorite 추가")
@@ -130,9 +115,8 @@ public class StyleController {
 	public @ResponseBody
 	SingleResult<String> deleteFavorite(@RequestParam int styleId) throws Exception {
 		Style style = styleService.findByStyleId(styleId).orElseThrow(() -> new ApiMessageException("없는 styld_id 입니다"));
-		style.setFavorite(0);
-		styleService.addStyle(style);
-		return responseService.getSingleResult(styleId+"번 Favorite");
+		styleService.addStyle(styleService.updateFavorite(style, 0));
+		return responseService.getSingleResult(styleId + "번 Favorite");
 	}
 
 }

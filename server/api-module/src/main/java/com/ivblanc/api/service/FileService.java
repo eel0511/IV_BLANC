@@ -65,6 +65,7 @@ public class FileService {
 
 		try {
 			String fileName = multipartFile.getOriginalFilename();                        // to get original file name
+			//저장되는 파일이름 랜덤
 			fileName = UUID.randomUUID()
 				.toString()
 				.concat(this.getExtension(fileName));  // to generated random string values for file name.

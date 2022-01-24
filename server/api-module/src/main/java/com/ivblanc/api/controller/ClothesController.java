@@ -93,7 +93,8 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
 
-	@ApiOperation(value = "자기 옷 전체조회")
+	@ApiOperation(value = "자기 옷 전체조회",notes = "기본 10개씩 잘라서 page단위로 있습니다."
+		+ "0page 부터 시작합니다")
 	@GetMapping(value = "/all")
 	public @ResponseBody
 	ListResult<Clothes> findAllClothes(@RequestParam int page,
@@ -136,38 +137,24 @@ public class ClothesController {
 		return fileService.upload(multipartFile);
 	}
 
-	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에",notes = "swagger는 안되는데 postman은 정상적입니다")
+	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addClothes(MakeClothesReqDTO req) throws Exception {
 		String url = fileService.upload(req.getFile());
-		if(url.equals("error")){
+		if (url.equals("error")) {
 			throw new ApiMessageException("파일 올리기 실패");
 		}
-		Clothes clothes = Clothes.builder()
-			.category(req.getCategory())
-			.color(req.getColor())
-			.material(req.getMaterial())
-			.size(req.getSize())
-			.season(req.getSeason())
-			.userId(req.getUserId())
-			.url(url)
-			.build();
+		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
+
 	@ApiOperation(value = "사진없이 그냥 test용입니다")
 	@PostMapping(value = "/addtest")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addtestClothes(MakeClothesReqDTO req) throws Exception {
-		Clothes clothes = Clothes.builder()
-			.category(req.getCategory())
-			.color(req.getColor())
-			.material(req.getMaterial())
-			.size(req.getSize())
-			.season(req.getSeason())
-			.userId(req.getUserId())
-			.build();
+		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
@@ -184,18 +171,6 @@ public class ClothesController {
 		}
 		clothesSerivce.deleteClothesById(clothesId);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
-	}
-
-	@ApiOperation(value = "url 수정", notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
-		+ "일단 삭제는 없이 유지시키겠습니다")
-	@PutMapping(value = "/updateurl")
-	public @ResponseBody
-	SingleResult<ClothesIdResDTO> updateUrl(@RequestParam int clothesId, @RequestParam String url) throws Exception {
-		Clothes clothes = clothesSerivce.findByClothesId(clothesId).get();
-		clothes.setUrl(url);
-		clothesSerivce.addClothes(clothes);
-		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
-
 	}
 
 	@ApiOperation(value = "N일 동안 update되지않은 옷 조회", notes = "특정 일수만큼 update되지않은 옷입니다 \n"
@@ -222,8 +197,7 @@ public class ClothesController {
 		if (!clothes.isPresent()) {
 			throw new ApiMessageException("없는 옷 번호입니다");
 		}
-		clothes.get().setFavorite(1);
-		clothesSerivce.addFavorite(clothes.get());
+		clothesSerivce.addFavorite(clothesSerivce.updateFavorite(clothes.get(), 1));
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
@@ -235,8 +209,20 @@ public class ClothesController {
 		if (!clothes.isPresent()) {
 			throw new ApiMessageException("없는 옷 번호입니다");
 		}
-		clothes.get().setFavorite(0);
-		clothesSerivce.addFavorite(clothes.get());
+		clothesSerivce.addFavorite(clothesSerivce.updateFavorite(clothes.get(), 0));
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
+	}
+
+	// 일단 놔둔것
+	@ApiOperation(value = "url 수정", notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
+		+ "일단 삭제는 없이 유지시키겠습니다")
+	@PutMapping(value = "/updateurl")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> updateUrl(@RequestParam int clothesId, @RequestParam String url) throws Exception {
+		Clothes clothes = clothesSerivce.findByClothesId(clothesId).get();
+		clothes.setUrl(url);
+		clothesSerivce.addClothes(clothes);
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
+
 	}
 }
