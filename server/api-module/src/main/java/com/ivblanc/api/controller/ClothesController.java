@@ -93,7 +93,8 @@ public class ClothesController {
 		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
 
-	@ApiOperation(value = "자기 옷 전체조회")
+	@ApiOperation(value = "자기 옷 전체조회",notes = "기본 10개씩 잘라서 page단위로 있습니다."
+		+ "0page 부터 시작합니다")
 	@GetMapping(value = "/all")
 	public @ResponseBody
 	ListResult<Clothes> findAllClothes(@RequestParam int page,

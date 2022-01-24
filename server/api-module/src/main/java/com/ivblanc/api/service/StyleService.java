@@ -43,5 +43,4 @@ public class StyleService {
 		style.setFavorite(favorite);
 		return style;
 	}
-	public Style update
 }
