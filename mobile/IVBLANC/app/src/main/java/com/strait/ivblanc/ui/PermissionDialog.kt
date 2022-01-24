@@ -13,7 +13,6 @@ class PermissionDialog(val context: Context) {
     lateinit var content: String
     lateinit var positiveClickListener: View.OnClickListener
     lateinit var negativeClickListener: View.OnClickListener
-
     private val dialog = Dialog(context).apply{
         setContentView(R.layout.dialog_permission)
         setCanceledOnTouchOutside(true)
@@ -56,10 +55,20 @@ class PermissionDialog(val context: Context) {
             dialog.findViewById<TextView>(R.id.textView_permissionD_positive).text = this.positiveText
         }
         if(this::positiveClickListener.isInitialized) {
-            dialog.findViewById<TextView>(R.id.textView_permissionD_positive).setOnClickListener(positiveClickListener)
+            dialog.findViewById<TextView>(R.id.textView_permissionD_positive).setOnClickListener {
+                positiveClickListener.onClick(it)
+                dialog.dismiss()
+            }
+        } else {
+            dialog.findViewById<TextView>(R.id.textView_permissionD_positive).setOnClickListener { dialog.dismiss() }
         }
         if(this::negativeClickListener.isInitialized) {
-            dialog.findViewById<TextView>(R.id.textView_permissionD_negative).setOnClickListener(negativeClickListener)
+            dialog.findViewById<TextView>(R.id.textView_permissionD_negative).setOnClickListener{
+                negativeClickListener.onClick(it)
+                dialog.dismiss()
+            }
+        } else {
+            dialog.findViewById<TextView>(R.id.textView_permissionD_negative).setOnClickListener { dialog.dismiss() }
         }
         return dialog
     }
