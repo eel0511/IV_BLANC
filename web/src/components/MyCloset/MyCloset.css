@@ -21,6 +21,10 @@ img:hover {
 }
 
 .RadioForm {
-  display: flex;
+  /* display: flex; */
   width: 100%;
+}
+
+.form-check-input {
+  margin: 4px;
 }
