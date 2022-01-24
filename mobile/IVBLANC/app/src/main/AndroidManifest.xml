@@ -18,7 +18,7 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".src.PhotoSelect.PhotoSelectActivity"
+            android:name=".src.photoSelect.PhotoSelectActivity"
             android:exported="false" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
