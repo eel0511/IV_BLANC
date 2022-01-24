@@ -27,4 +27,6 @@
     <string name="recentlyAddedClothes">최근에 추가한 옷</string>
     <string name="favoriteStyle">즐겨찾는 룩</string>
     <string name="recentlyAddedStyle">최근에 추가한 룩</string>
+    <string name="photo">사진</string>
+    <string name="camera">카메라</string>
 </resources>
