@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/signup.scss';
 
@@ -53,11 +54,14 @@ export default function SignUp() {
 
   // 유효성 검사
   const [isEmail, setIsEmail] = useState(false);
+  const [isEmailCheck, setIsEmailCheck] = useState(false);
   const [isPassword, setIsPassword] = useState(false);
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
   const [isName, setIsName] = useState(false);
   const [isAge, setIsAge] = useState(false);
   const [isPhoneNum, setIsPhoneNum] = useState(false);
+
+  let navigate = useNavigate();
 
   // 이메일 형식 확인
   const onChangeEmail = useCallback((e) => {
@@ -76,15 +80,29 @@ export default function SignUp() {
 
   // 이메일 중복 체크
   const checkEmail = useCallback(async (e) => {
+    e.preventDefault();
+    const tmpEmail = document.getElementById('email').value;
+    console.log(document.getElementById('email').value);
+
     try {
       await axios
-        .post('http://119.56.162.61:8888', {
-          email: email,
+        .get('http://119.56.162.61:8888/api/sign/checkEmail', {
+          params: {
+            email: tmpEmail,
+          },
         })
         .then((res) => {
+          // console.log(res);
           console.log('response:', res.data);
-          if (res.status === 200) {
+          if (res.status === 200 && res.data.output === 1) {
             alert('사용가능한 이메일입니다.');
+            setIsEmailCheck(true);
+            setEmailMessage('사용가능한 이메일입니다.');
+            setIsEmail(true);
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
+            setEmailMessage(res.data.msg);
+            setIsEmail(false);
           } else {
             alert('중복된 이메일입니다. 다시 입력해주세요.');
           }
@@ -188,6 +206,8 @@ export default function SignUp() {
     if (age === '') return alert('나이를 입력해주세요');
     if (phoneNum === '') return alert('전화번호를 입력해주세요');
 
+    if (!isEmailCheck) return alert('이메일 중복 확인을 확인해주세요');
+
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
@@ -199,8 +219,6 @@ export default function SignUp() {
     });
 
     // 백엔드 통신
-    // const router = useRouter();
-
     try {
       await axios
         .post('http://119.56.162.61:8888/api/sign/signup', {
@@ -215,8 +233,11 @@ export default function SignUp() {
         })
         .then((res) => {
           console.log('response:', res.data);
-          if (res.status === 200) {
+          if (res.status === 200 && res.data.output === 1) {
             alert('회원가입 성공!!');
+            navigate('/signin');
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
           }
         });
     } catch (err) {
@@ -242,12 +263,12 @@ export default function SignUp() {
           </Typography>
           <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <TextField required fullWidth id='email' label='이메일' name='email' autoComplete='email' value={email} onChange={onChangeEmail} />
                 {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
               </Grid>
-              <Grid item xs={12}>
-                <Button onClick={checkEmail} variant='outlined' align='left'>
+              <Grid item xs={4}>
+                <Button onClick={checkEmail} variant='outlined' sx={{ mt: 1 }}>
                   중복 확인
                 </Button>
               </Grid>
