@@ -11,9 +11,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import AuthSocial from '../../components/login/AuthSocial';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import AuthSocial from '../../components/login/AuthSocial';
 
 function Copyright(props) {
   return (
@@ -32,8 +33,32 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
+
+  // 오류메시지 상태저장
+  const [emailMessage, setEmailMessage] = useState('');
+
+  // 유효성 검사
+  const [isEmail, setIsEmail] = useState(false);
+
+  let navigate = useNavigate();
+
+  // 이메일 형식 확인
+  const onChangeEmail = useCallback((e) => {
+    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value;
+    setEmail(emailCurrent);
+
+    if (!emailRegex.test(emailCurrent)) {
+      setEmailMessage('이메일 형식이 틀렸어요! 다시 확인해주세요');
+      setIsEmail(false);
+    } else {
+      setEmailMessage('올바른 이메일 형식이에요 :)');
+      setIsEmail(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (cookies.rememberEmail !== undefined) {
@@ -51,6 +76,9 @@ export default function SignInSide() {
     } else {
       removeCookie('rememberEmail');
     }
+
+    if (email === '') return alert('이메일을 입력해주세요');
+    if (password === '') return alert('비밀번호를 입력해주세요');
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
@@ -90,20 +118,21 @@ export default function SignInSide() {
               로그인
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus type='email' value={email} onChange={onChangeEmail} />
+              {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
               <TextField
                 margin='normal'
                 required
                 fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                autoFocus
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
-              <TextField margin='normal' required fullWidth name='password' label='Password' type='password' id='password' autoComplete='current-password' />
               <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
 
               <AuthSocial />
