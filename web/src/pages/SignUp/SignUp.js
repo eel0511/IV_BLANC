@@ -97,8 +97,12 @@ export default function SignUp() {
           if (res.status === 200 && res.data.output === 1) {
             alert('사용가능한 이메일입니다.');
             setIsEmailCheck(true);
+            setEmailMessage('사용가능한 이메일입니다.');
+            setIsEmail(true);
           } else if (res.status === 200 && res.data.output === 0) {
             alert(res.data.msg);
+            setEmailMessage(res.data.msg);
+            setIsEmail(false);
           } else {
             alert('중복된 이메일입니다. 다시 입력해주세요.');
           }
@@ -259,12 +263,12 @@ export default function SignUp() {
           </Typography>
           <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={8}>
                 <TextField required fullWidth id='email' label='이메일' name='email' autoComplete='email' value={email} onChange={onChangeEmail} />
                 {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
               </Grid>
-              <Grid item xs={12}>
-                <Button onClick={checkEmail} variant='outlined' align='left'>
+              <Grid item xs={4}>
+                <Button onClick={checkEmail} variant='outlined' sx={{ mt: 1 }}>
                   중복 확인
                 </Button>
               </Grid>
