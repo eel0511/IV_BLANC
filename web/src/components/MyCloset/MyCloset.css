@@ -19,3 +19,8 @@ img:hover {
   border: 0;
   outline: 0;
 }
+
+.RadioForm {
+  display: flex;
+  width: 100%;
+}
