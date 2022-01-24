@@ -54,6 +54,10 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
         return data.size
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return data[position].type
+    }
+
     interface ItemClickListener {
         fun onClick(position: Int, viewType: Int)
     }
@@ -66,16 +70,16 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
         fun bindHeader(item: PhotoItem<T>, position: Int) {
             itemView.findViewById<TextView>(R.id.textView_photo_header).also{
                 it.text = item.text
-                it.setOnClickListener {
-                    itemClickListener.onClick(position, HEADER)
-                }
+            }
+            itemView.setOnClickListener {
+                itemClickListener.onClick(position, HEADER)
             }
         }
 
         // TODO: 2022/01/24 item content 타입에 따른 분기 추가
         fun bindChild(item: PhotoItem<T>, position: Int) {
             when(item.content) {
-                item.content is Clothes -> {
+                is Clothes -> {
                     val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes).also {
                         it.setOnClickListener{
                             itemClickListener.onClick(position, CHILD)
@@ -85,7 +89,8 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
                             true
                         }
                     }
-                    Glide.with(context).load((item.content as Clothes).url).centerCrop().into(imageView)
+                    // TODO: 2022/01/24 글라이드 에러 이미지 변경
+                    Glide.with(context).load((item.content as Clothes).url).centerCrop().error(R.drawable.circle).into(imageView)
                 }
             }
         }
