@@ -2,6 +2,7 @@ package com.strait.ivblanc.ui
 
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
 import android.view.View
 import android.widget.TextView
 import com.strait.ivblanc.R
@@ -15,6 +16,7 @@ class PermissionDialog(val context: Context) {
     lateinit var negativeClickListener: View.OnClickListener
     private val dialog = Dialog(context).apply{
         setContentView(R.layout.dialog_permission)
+        window?.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_rectangle))
         setCanceledOnTouchOutside(true)
         setCancelable(true)
     }
