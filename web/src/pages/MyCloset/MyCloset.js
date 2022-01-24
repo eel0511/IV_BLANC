@@ -70,21 +70,20 @@ export default function MyCloset() {
   ];
 
   const testAxios = () => {
-    axios({
-      url: 'api/clothes/all',
-      method: 'get',
-      baseURL: 'http://119.56.162.61:8888',
-      params: {
-        page: 1,
-        userId: 1,
-      },
-    }).then((response) => {
-      console.log(response);
-    });
+    axios
+      .get('http://119.56.162.61:8888/api/clothes/all', {
+        params: {
+          page: 1,
+          userId: 1,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   // useEffect(() => {
-  //   testAxios()
+  //   testAxios();
   // }, []);
 
   return (
