@@ -1,7 +1,9 @@
 package com.strait.ivblanc.data.model.dto
 
-class PhotoItem<T>(val type: Int, var text:String? = null, var content: T) {
-    private var invisibleItems: ArrayList<T>? = null
+class PhotoItem<T>(val type: Int, var text:String? = null, var content: T? = null) {
+    var invisibleItems: ArrayList<T>? = null
+    var inVisibleItemsSize = getInvisibleItemsSize()
+
     fun addInvisibleItem(invisibleItem: T) = invisibleItems?.add(invisibleItem)
     fun clearInvisibleItem() = invisibleItems?.clear()
     fun initInvisibleItems() {
@@ -10,4 +12,9 @@ class PhotoItem<T>(val type: Int, var text:String? = null, var content: T) {
     fun setNullInvisibleItems() {
         invisibleItems = null
     }
+    fun isInvisibleItemsNull():Boolean {
+        if(invisibleItems == null) return true
+        return false
+    }
+    private fun getInvisibleItemsSize() = invisibleItems?.size?: 0
 }
