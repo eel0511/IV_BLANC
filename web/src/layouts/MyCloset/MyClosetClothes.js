@@ -1,5 +1,6 @@
 import React from 'react';
 import MyClosetClothesItem from '../../components/MyCloset/MyClosetClothesItem';
+import MyClothesCreateButton from '../../components/MyCloset/MyClothesCreateButton';
 
 export default function MyClosetClothes({ clothesDatas }) {
   return (
@@ -14,6 +15,7 @@ export default function MyClosetClothes({ clothesDatas }) {
           ))}
         </div>
       </div>
+      <MyClothesCreateButton />
     </div>
   );
 }
