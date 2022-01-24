@@ -136,38 +136,24 @@ public class ClothesController {
 		return fileService.upload(multipartFile);
 	}
 
-	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에",notes = "swagger는 안되는데 postman은 정상적입니다")
+	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addClothes(MakeClothesReqDTO req) throws Exception {
 		String url = fileService.upload(req.getFile());
-		if(url.equals("error")){
+		if (url.equals("error")) {
 			throw new ApiMessageException("파일 올리기 실패");
 		}
-		Clothes clothes = Clothes.builder()
-			.category(req.getCategory())
-			.color(req.getColor())
-			.material(req.getMaterial())
-			.size(req.getSize())
-			.season(req.getSeason())
-			.userId(req.getUserId())
-			.url(url)
-			.build();
+		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
+
 	@ApiOperation(value = "사진없이 그냥 test용입니다")
 	@PostMapping(value = "/addtest")
 	public @ResponseBody
 	SingleResult<ClothesIdResDTO> addtestClothes(MakeClothesReqDTO req) throws Exception {
-		Clothes clothes = Clothes.builder()
-			.category(req.getCategory())
-			.color(req.getColor())
-			.material(req.getMaterial())
-			.size(req.getSize())
-			.season(req.getSeason())
-			.userId(req.getUserId())
-			.build();
+		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
@@ -222,8 +208,7 @@ public class ClothesController {
 		if (!clothes.isPresent()) {
 			throw new ApiMessageException("없는 옷 번호입니다");
 		}
-		clothes.get().setFavorite(1);
-		clothesSerivce.addFavorite(clothes.get());
+		clothesSerivce.addFavorite(clothesSerivce.updateFavorite(clothes.get(), 1));
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
@@ -235,8 +220,7 @@ public class ClothesController {
 		if (!clothes.isPresent()) {
 			throw new ApiMessageException("없는 옷 번호입니다");
 		}
-		clothes.get().setFavorite(0);
-		clothesSerivce.addFavorite(clothes.get());
+		clothesSerivce.addFavorite(clothesSerivce.updateFavorite(clothes.get(), 0));
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 }

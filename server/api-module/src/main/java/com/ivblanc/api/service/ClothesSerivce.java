@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.core.entity.Clothes;
 import com.ivblanc.core.repository.ClothesRepository;
 
@@ -22,12 +23,9 @@ public class ClothesSerivce {
 
 	private final ClothesRepository clothesRepository;
 
+
 	public Optional<Clothes> findByClothesId(int clothes_id) {
 		return clothesRepository.findById(clothes_id);
-	}
-
-	public List<Clothes> findOrderByFavorite(int userId) {
-		return clothesRepository.findALLByUserIdOrderByFavoriteDesc(userId);
 	}
 
 	public List<Clothes> findOrderByCreateDate(int userId) {
@@ -47,7 +45,6 @@ public class ClothesSerivce {
 	}
 
 	public List<Clothes> findByCategory(final Pageable pageable, int category, int userId) {
-
 		return clothesRepository.findAllByCategoryAndUserId(category, userId, pageable);
 	}
 
@@ -87,5 +84,32 @@ public class ClothesSerivce {
 
 	public void addFavorite(Clothes clothes) {
 		clothesRepository.save(clothes);
+	}
+
+	public Clothes MakeClothesByReqDTO(MakeClothesReqDTO req) {
+		return Clothes.builder()
+			.category(req.getCategory())
+			.color(req.getColor())
+			.material(req.getMaterial())
+			.size(req.getSize())
+			.season(req.getSeason())
+			.userId(req.getUserId())
+			.build();
+	}
+
+	public Clothes MakeClotehsByReqDToAndUrl(MakeClothesReqDTO req, String url) {
+		return Clothes.builder()
+			.category(req.getCategory())
+			.color(req.getColor())
+			.material(req.getMaterial())
+			.size(req.getSize())
+			.season(req.getSeason())
+			.userId(req.getUserId())
+			.url(url)
+			.build();
+	}
+	public Clothes updateFavorite(Clothes clothes,int favorite){
+		clothes.setFavorite(favorite);
+		return clothes;
 	}
 }
