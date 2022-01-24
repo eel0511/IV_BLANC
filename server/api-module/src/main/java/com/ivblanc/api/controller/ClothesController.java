@@ -172,18 +172,6 @@ public class ClothesController {
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
 	}
 
-	@ApiOperation(value = "url 수정", notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
-		+ "일단 삭제는 없이 유지시키겠습니다")
-	@PutMapping(value = "/updateurl")
-	public @ResponseBody
-	SingleResult<ClothesIdResDTO> updateUrl(@RequestParam int clothesId, @RequestParam String url) throws Exception {
-		Clothes clothes = clothesSerivce.findByClothesId(clothesId).get();
-		clothes.setUrl(url);
-		clothesSerivce.addClothes(clothes);
-		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
-
-	}
-
 	@ApiOperation(value = "N일 동안 update되지않은 옷 조회", notes = "특정 일수만큼 update되지않은 옷입니다 \n"
 		+ "update는 옷으로 style을 만들거나 하면 갱신됩니다. \n"
 		+ "특정일수를 넣어 ex) 2년동안 추가만되어있고 update되지않은옷 찾기 등에 활용할수있습니다")
@@ -222,5 +210,18 @@ public class ClothesController {
 		}
 		clothesSerivce.addFavorite(clothesSerivce.updateFavorite(clothes.get(), 0));
 		return responseService.getSingleResult(new ClothesIdResDTO(clothesId));
+	}
+
+	// 일단 놔둔것
+	@ApiOperation(value = "url 수정", notes = "파이어베이스 스토리지에서 갱신된 url을 넣어주는건데 back에서 한번에 처리할수있을거같습니다. \n"
+		+ "일단 삭제는 없이 유지시키겠습니다")
+	@PutMapping(value = "/updateurl")
+	public @ResponseBody
+	SingleResult<ClothesIdResDTO> updateUrl(@RequestParam int clothesId, @RequestParam String url) throws Exception {
+		Clothes clothes = clothesSerivce.findByClothesId(clothesId).get();
+		clothes.setUrl(url);
+		clothesSerivce.addClothes(clothes);
+		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
+
 	}
 }
