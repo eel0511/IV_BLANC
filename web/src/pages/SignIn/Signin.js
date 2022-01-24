@@ -15,6 +15,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
+import Container from '@mui/material/Container';
 import AuthSocial from '../../components/login/AuthSocial';
 
 function Copyright(props) {
@@ -112,80 +113,84 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component='main' sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+      <Container component='main'>
+        <Grid container component='main' sx={{ height: '100vh' }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundImage: 'url(https://source.unsplash.com/random)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
-          >
-            <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
-            <Typography component='h1' variant='h5'>
-              로그인
-            </Typography>
-            <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField margin='normal' required fullWidth id='email' label='Email Address' name='email' autoComplete='email' autoFocus type='email' value={email} onChange={onChangeEmail} />
-              {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
-
-              <AuthSocial />
-
-              <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+          />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
+              <Typography component='h1' variant='h5'>
                 로그인
-              </Button>
-              <Grid container spacing={1}>
-                <Grid item xs={4}>
-                  <Link href='/findemail' variant='body2'>
-                    아이디 찾기
-                  </Link>
+              </Typography>
+              <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <TextField required fullWidth id='email' label='Email Address' name='email' autoComplete='email' type='email' value={email} onChange={onChangeEmail} />
+                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+
+                <TextField
+                  margin='normal'
+                  required
+                  fullWidth
+                  name='password'
+                  label='Password'
+                  type='password'
+                  id='password'
+                  autoComplete='current-password'
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+
+                <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
+
+                <AuthSocial />
+
+                <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+                  로그인
+                </Button>
+                <Grid container spacing={1}>
+                  <Grid item xs={4}>
+                    <Link href='/findemail' variant='body2'>
+                      아이디 찾기
+                    </Link>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Link href='/findpassword' variant='body2'>
+                      비밀번호 찾기
+                    </Link>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Link href='/signup' variant='body2'>
+                      {'회원가입'}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <Link href='/findpassword' variant='body2'>
-                    비밀번호 찾기
-                  </Link>
-                </Grid>
-                <Grid item xs={4}>
-                  <Link href='/signup' variant='body2'>
-                    {'회원가입'}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </ThemeProvider>
   );
 }
