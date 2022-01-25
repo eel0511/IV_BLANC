@@ -19,7 +19,7 @@ export default function MyClothesCreateModalBody() {
   const [selectColor, setSelectColor] = useState('빨강');
 
   const handleChange = (e) => {
-    console.log('hello');
+    setSelectColor(e.target.value)
   };
 
   return (
@@ -34,7 +34,8 @@ export default function MyClothesCreateModalBody() {
               className='form-check-input'
               type='radio'
               name='colorGroup'
-              onChange={handleChange()}
+              defaultChecked={selectColor === color ? true : false}
+              onChange={handleChange}
             />
             <label className='form-check-label' htmlFor={color}>
               {color}
