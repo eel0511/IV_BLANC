@@ -74,9 +74,29 @@ export default function MyClosetClothesItem({ clothesData }) {
 
     if (window.confirm('진짜 삭제하시겠습니까?')) {
       // 삭제 기능 구현
-
-      alert('삭제되었습니다.');
-      setShow(false);
+      // 토큰 포함 버전으로 바꿔야 함
+      // try {
+      //   await axios
+      //     .put('http://119.56.162.61:8888/api/clothes/deleteById', {
+      //       params: {
+      //         clothesId: 1,
+      //       },
+      //     })
+      //     .then((res) => {
+      //       console.log('response:', res.data);
+      //       if (res.status === 200 && res.data.output === 1) {
+      //         console.log(res.data.msg);
+      //         alert('삭제되었습니다.');
+      //         setShow(false);
+      //       } else if (res.status === 200 && res.data.output === 0) {
+      //         alert(res.data.msg);
+      //       } else {
+      //         alert(res.data.msg);
+      //       }
+      //     });
+      // } catch (err) {
+      //   console.error(err.response.data);
+      // }
     } else {
       alert('취소합니다.');
     }
