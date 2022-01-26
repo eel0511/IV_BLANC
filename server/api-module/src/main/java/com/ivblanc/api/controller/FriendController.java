@@ -38,8 +38,7 @@ public class FriendController {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final FcmService fcmService;
 	private final UserService userService;
-	//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
-	private final UserRepository userRepository;
+
 	@ApiOperation(value = "전체친구조회(수락여부 상관없이)", notes = "수락여부 상관없이 자신이 신청한 모든 목록 return")
 	@GetMapping(value = "/all")
 	public ListResult<FriendResDTO>

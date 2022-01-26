@@ -61,7 +61,7 @@ public class ClothesController {
 		+ " 정렬 등에 사용가능할거같습니다 back단에서")
 	@GetMapping(value = "/createdate")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByCreateDate(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findOrderByCreateDate(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
 	}
@@ -70,7 +70,7 @@ public class ClothesController {
 		+ "이것으로 오랫동안 안입은옷 등의 판별을 할수있을것입니다")
 	@GetMapping(value = "/updatedate")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByDate(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findOrderByDate(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByUpdateDate(userId));
 	}
@@ -78,7 +78,7 @@ public class ClothesController {
 	@ApiOperation(value = "좋아요순로 자기 옷 조회")
 	@GetMapping(value = "/like")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByLike(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findOrderByLike(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByLike(userId));
 	}
@@ -86,7 +86,7 @@ public class ClothesController {
 	@ApiOperation(value = "싫어요순로 자기 옷 조회")
 	@GetMapping(value = "/dislike")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByDisLike(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findOrderByDisLike(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByDisLike(userId));
 	}
@@ -95,18 +95,18 @@ public class ClothesController {
 	@GetMapping(value = "/category")
 	public @ResponseBody
 	ListResult<Clothes> findClothesCategory(@RequestParam int page, @RequestParam int category,
-		@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
 
-	@ApiOperation(value = "자기 옷 전체조회",notes = "기본 10개씩 잘라서 page단위로 있습니다."
+	@ApiOperation(value = "자기 옷 전체조회", notes = "기본 10개씩 잘라서 page단위로 있습니다."
 		+ "0page 부터 시작합니다")
 	@GetMapping(value = "/all")
 	public @ResponseBody
 	ListResult<Clothes> findAllClothes(@RequestParam int page,
-		@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findAll(userId, pageRequest));
@@ -115,7 +115,8 @@ public class ClothesController {
 	@ApiOperation(value = "색깔로 자기 옷 조회")
 	@GetMapping(value = "/color")
 	public @ResponseBody
-	ListResult<Clothes> findClothesColor(@RequestParam String color,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findClothesColor(@RequestParam String color,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findByColor(color, userId));
 	}
@@ -123,7 +124,8 @@ public class ClothesController {
 	@ApiOperation(value = "소재로 자기 옷 조회")
 	@GetMapping(value = "/material")
 	public @ResponseBody
-	ListResult<Clothes> findClothesMaterial(@RequestParam int material, @RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findClothesMaterial(@RequestParam int material,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findByMaterial(material, userId));
 	}
@@ -131,7 +133,8 @@ public class ClothesController {
 	@ApiOperation(value = "계절별 자기 옷 조회")
 	@GetMapping(value = "/season")
 	public @ResponseBody
-	ListResult<Clothes> findClothesSeason(@RequestParam int season,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findClothesSeason(@RequestParam int season,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findBySeason(season, userId));
 	}
@@ -139,7 +142,7 @@ public class ClothesController {
 	@ApiOperation(value = "Count순으로 자기 옷 조회")
 	@GetMapping(value = "/count")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByCount(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Clothes> findOrderByCount(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByCount(userId));
 	}
@@ -153,13 +156,14 @@ public class ClothesController {
 	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addClothes(@Valid @RequestBody MakeClothesReqDTO req,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	SingleResult<ClothesIdResDTO> addClothes(@Valid @RequestBody MakeClothesReqDTO req,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		String url = fileService.upload(req.getFile());
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		if (url.equals("error")) {
 			throw new ApiMessageException("파일 올리기 실패");
 		}
-		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url,userId);
+		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url, userId);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
@@ -167,9 +171,10 @@ public class ClothesController {
 	@ApiOperation(value = "사진없이 그냥 test용입니다")
 	@PostMapping(value = "/addtest")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addtestClothes(@Valid @RequestBody MakeClothesReqDTO req,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	SingleResult<ClothesIdResDTO> addtestClothes(@Valid @RequestBody MakeClothesReqDTO req,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
-		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req,userId);
+		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req, userId);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
