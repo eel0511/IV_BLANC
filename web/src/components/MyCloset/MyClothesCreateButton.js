@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import MyClothesCreateModalBody from './MyClothesCreateModalBody';
 
 export default function MyClothesCreateButton() {
   const [show, setShow] = useState(false);
@@ -17,7 +18,9 @@ export default function MyClothesCreateButton() {
         <Modal.Header closeButton>
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
-        <Modal.Body>등록 정보</Modal.Body>
+        <Modal.Body>
+          <MyClothesCreateModalBody />
+        </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
             Close

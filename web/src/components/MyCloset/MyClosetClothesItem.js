@@ -12,12 +12,12 @@ export default function MyClosetClothesItem({ clothesData }) {
     <div className='card h-100'>
       <div className='card-body'>
         <img
+          className='MyClosetClothesItemImg'
           src={require(`../../assets/${clothesData.url}`)}
           alt={clothesData.clothesId}
           style={{ maxWidth: '100%', maxHeight: '100%' }}
           onClick={handleShow}
         />
-
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>옷 상세정보 제목</Modal.Title>
