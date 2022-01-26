@@ -69,6 +69,16 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             }
         }
 
+        // 아이템 뷰타입이 child일 때만 longClickListener 작동
+        exAdapter.itemLongClickListener = object : ExpandableRecyclerViewAdapter.ItemLongClickListener {
+            override fun onLongClick(position: Int) {
+                val item = exAdapter.data[position]
+                if(item.type == ExpandableRecyclerViewAdapter.CHILD) {
+                    showDeleteDialog(item)
+                }
+            }
+        }
+
         binding.recyclerViewPhotoListF.apply {
             this.adapter = exAdapter
             layoutManager = GridLayoutManager(requireContext(), 3).also {
