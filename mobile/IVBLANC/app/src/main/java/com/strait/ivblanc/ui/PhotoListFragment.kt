@@ -1,10 +1,11 @@
 package com.strait.ivblanc.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
+<<<<<<< HEAD
+=======
 import android.view.ViewGroup
+>>>>>>> develop
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strait.ivblanc.R
@@ -18,6 +19,8 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+<<<<<<< HEAD
+
         exAdapter = ExpandableRecyclerViewAdapter<Clothes>(requireActivity()).apply {
             // TODO: 2022/01/26 기본 테스트 데이터
             val header = PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "최근").apply {
@@ -43,6 +46,40 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             }
         }
 
+        exAdapter.itemClickListener = object : ExpandableRecyclerViewAdapter.ItemClickListener {
+            override fun onClick(position: Int, viewType: Int) {
+                when(viewType) {
+                    ExpandableRecyclerViewAdapter.HEADER -> {
+                        val data = this@PhotoListFragment.exAdapter.data
+                        var count = 0
+                        val item = data[position]
+                        // invisibleItems가 있을 때 펼침
+                        if(!item.isInvisibleItemsNull() && item.invisibleItems?.size?:0 != 0) {
+                            var index = position + 1
+                            for(i in item.invisibleItems!!) {
+                                data.add(index, PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = i))
+                                index++
+                            }
+                            exAdapter.notifyItemRangeInserted(position + 1, index - position - 1)
+                            item.clearInvisibleItem()
+                        }
+                        // invisibleItems가 없을 때 접음
+                        else if(!item.isInvisibleItemsNull() && item.invisibleItems!!.size == 0) { // invisibleItems가 없을 때
+                            while (data.size > position + 1 && data[position + 1].type == ExpandableRecyclerViewAdapter.CHILD) {
+                                item.addInvisibleItem(data.removeAt(position + 1).content!!)
+                                count++
+                            }
+                            exAdapter.notifyItemRangeRemoved(position + 1, count)
+                        }
+                    }
+                    // TODO: 2022/01/24 상세 뷰로 이동
+                    ExpandableRecyclerViewAdapter.CHILD -> {
+
+                    }
+                }
+            }
+        }
+
         binding.recyclerViewPhotoListF.apply {
             this.adapter = exAdapter
             layoutManager = GridLayoutManager(requireContext(), 3).also {
@@ -58,6 +95,5 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                 }
             }
         }
-
     }
 }
