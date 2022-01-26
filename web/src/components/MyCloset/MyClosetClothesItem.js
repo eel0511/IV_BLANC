@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
-import moment from 'moment';
+// import moment from 'moment';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
 import './MyCloset.css';
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(clothesData.createDate);
+  const [favoriteChecked, setFavoriteChecked] = useState(false);
 
-  useEffect(() => {
-    setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
-  }, []);
+  // useEffect(() => {
+  //   setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+  // }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleChange = (e) => {
+    console.log(e.target.checked);
+    setFavoriteChecked(e.target.checked);
+  };
 
   return (
     <div className='card h-100'>
@@ -25,6 +36,7 @@ export default function MyClosetClothesItem({ clothesData }) {
           </Modal.Header>
           <Modal.Body>
             <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} onChange={handleChange} />
             <ListGroup variant='flush'>
               <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
               <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
