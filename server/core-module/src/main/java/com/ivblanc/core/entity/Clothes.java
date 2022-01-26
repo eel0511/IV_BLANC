@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Clothes extends BaseEntity{
 
 	@Id
-	@Column(name = "clothes_id")
+	@Column(name = "clothes_id",columnDefinition = "INT UNSIGNED")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int clothesId;
 

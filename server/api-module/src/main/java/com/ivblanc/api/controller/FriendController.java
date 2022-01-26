@@ -1,8 +1,5 @@
 package com.ivblanc.api.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,8 +17,6 @@ import com.ivblanc.api.service.FriendService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.code.YNCode;
-import com.ivblanc.core.entity.Friend;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
