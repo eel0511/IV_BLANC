@@ -1,18 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap';
+import { Modal, Button, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import axios from 'axios';
 import './MyCloset.css';
+
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(clothesData.createDate);
+  const [favoriteChecked, setFavoriteChecked] = useState(false);
 
   useEffect(() => {
     setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+
+    // 즐겨찾기 데이터를 받아와서 favorite === 1이면 setFavoriteChecked 수정
   }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleChange = async (e) => {
+    console.log(e.target.checked);
+    const favoriteCurrent = e.target.checked;
+    setFavoriteChecked(favoriteCurrent);
+    console.log(favoriteCurrent);
+
+    // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
+    // favoriteChecked===true이면 추가, 아니면 삭제
+    // 추후에 토큰 사용한 백엔드 연동 구현
+    // if (favoriteCurrent) {
+    //   try {
+    //     await axios.put('http://119.56.162.61:8888/api/clothes/addfavorite?clothesId=1').then((res) => {
+    //       console.log('response:', res.data);
+    //       if (res.status === 200 && res.data.output === 1) {
+    //         alert(res.data.msg);
+    //       } else if (res.status === 200 && res.data.output === 0) {
+    //         alert(res.data.msg);
+    //       } else {
+    //         alert(res.data.msg);
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error(err.response.data);
+    //   }
+    // } else {
+    //   try {
+    //     await axios
+    //       .put('http://119.56.162.61:8888/api/clothes/deletefavorite', {
+    //         clothesId: 1,
+    //       })
+    //       .then((res) => {
+    //         console.log('response:', res.data);
+    //         if (res.status === 200 && res.data.output === 1) {
+    //           alert(res.data.msg);
+    //         } else if (res.status === 200 && res.data.output === 0) {
+    //           alert(res.data.msg);
+    //         } else {
+    //           alert(res.data.msg);
+    //         }
+    //       });
+    //   } catch (err) {
+    //     console.error(err.response.data);
+    //   }
+    // }
+  };
 
   return (
     <div className='card h-100'>
@@ -24,7 +79,17 @@ export default function MyClosetClothesItem({ clothesData }) {
             <Modal.Title>옷 상세정보</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+            <Container>
+              <Row>
+                <Col xs={12} md={8}>
+                  <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </Col>
+                <Col xs={6} md={4}>
+                  <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
+                </Col>
+              </Row>
+            </Container>
+
             <ListGroup variant='flush'>
               <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
               <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
