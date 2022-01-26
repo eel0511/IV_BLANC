@@ -1,11 +1,10 @@
-package com.ivblanc.api.config.security;
+package com.ivblanc.api.oauth.info;
 
 import java.util.Map;
 
-import com.ivblanc.api.config.security.dto.GoogleOAuth2UserInfo;
-import com.ivblanc.api.config.security.dto.KakaoOAuth2UserInfo;
-import com.ivblanc.api.config.security.dto.NaverOAuth2UserInfo;
-import com.ivblanc.api.config.security.dto.OAuth2UserInfo;
+import com.ivblanc.api.oauth.info.impl.GoogleOAuth2UserInfo;
+import com.ivblanc.api.oauth.info.impl.KakaoOAuth2UserInfo;
+import com.ivblanc.api.oauth.info.impl.NaverOAuth2UserInfo;
 import com.ivblanc.core.code.ProviderType;
 
 public class OAuth2UserInfoFactory {

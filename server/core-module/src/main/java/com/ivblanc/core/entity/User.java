@@ -168,4 +168,5 @@ public class User implements UserDetails {
     public String getRoleKey() {
         return "ROLE_USER";
     }
+
 }

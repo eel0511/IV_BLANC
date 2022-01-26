@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomOauth2UserService customOauth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .oauth2Login()
             .userInfoEndpoint()
-            .userService(customOAuth2UserService);
+            .userService(customOauth2UserService);
 }
 
 

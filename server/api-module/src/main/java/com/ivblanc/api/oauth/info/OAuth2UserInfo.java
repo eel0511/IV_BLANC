@@ -1,4 +1,4 @@
-package com.ivblanc.api.config.security.dto;
+package com.ivblanc.api.oauth.info;
 
 import java.util.Map;
 
@@ -18,4 +18,10 @@ public abstract class OAuth2UserInfo {
 	public abstract String getName();
 
 	public abstract String getEmail();
+
+	public abstract String getPhone();
+
+	public abstract int getAge();
+
+	public abstract int getGender();
 }

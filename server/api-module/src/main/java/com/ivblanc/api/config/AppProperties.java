@@ -3,9 +3,12 @@ package com.ivblanc.api.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration//(prefix = "app")
+import lombok.Getter;
+
+@ConfigurationProperties(prefix = "app")
 public class AppProperties {
 
 	private final Auth auth = new Auth();
