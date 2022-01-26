@@ -54,7 +54,7 @@ export default function MyClothesCreateModalBody() {
         return (
           <React.Fragment key={colorArray[1]}>
             <input
-              id={colorArray[0]}
+              id={'색상' + colorArray[0]}
               value={colorArray[0]}
               className='form-check-input'
               type='radio'
@@ -62,7 +62,7 @@ export default function MyClothesCreateModalBody() {
               defaultChecked={selectedColor === colorArray[0] ? true : false}
               onChange={colorHandleChange}
             />
-            <label className='form-check-label' htmlFor={colorArray[0]}>
+            <label className='form-check-label' htmlFor={'색상' + colorArray[0]}>
               {colorArray[0]}
             </label>
           </React.Fragment>
@@ -76,7 +76,7 @@ export default function MyClothesCreateModalBody() {
         return (
           <React.Fragment key={materialArray[1]}>
             <input
-              id={materialArray[0]}
+              id={'소재' + materialArray[0]}
               value={materialArray[0]}
               className='form-check-input'
               type='radio'
@@ -84,7 +84,7 @@ export default function MyClothesCreateModalBody() {
               defaultChecked={selectedMaterial === materialArray[0] ? true : false}
               onChange={materialHandleChange}
             />
-            <label className='form-check-label' htmlFor={materialArray[0]}>
+            <label className='form-check-label' htmlFor={'소재' + materialArray[0]}>
               {materialArray[0]}
             </label>
           </React.Fragment>
@@ -98,7 +98,7 @@ export default function MyClothesCreateModalBody() {
         return (
           <React.Fragment key={seasonArray[1]}>
             <input
-              id={seasonArray[0]}
+              id={'시즌' + seasonArray[0]}
               value={seasonArray[0]}
               className='form-check-input'
               type='radio'
@@ -106,7 +106,7 @@ export default function MyClothesCreateModalBody() {
               defaultChecked={selectedSeason === seasonArray[0] ? true : false}
               onChange={seasonHandleChange}
             />
-            <label className='form-check-label' htmlFor={seasonArray[0]}>
+            <label className='form-check-label' htmlFor={'시즌' + seasonArray[0]}>
               {seasonArray[0]}
             </label>
           </React.Fragment>
@@ -131,7 +131,7 @@ export default function MyClothesCreateModalBody() {
         return (
           <React.Fragment key={index}>
             <input
-              id={mainCategoryArray[0]}
+              id={'카테고리' + mainCategoryArray[0]}
               value={mainCategoryArray[0]}
               className='form-check-input'
               type='radio'
@@ -139,7 +139,7 @@ export default function MyClothesCreateModalBody() {
               defaultChecked={selectedMainCategory === mainCategoryArray[0] ? true : false}
               onChange={mainCategoryHandleChange}
             />
-            <label className='form-check-label' htmlFor={mainCategoryArray[0]}>
+            <label className='form-check-label' htmlFor={'카테고리' + mainCategoryArray[0]}>
               {mainCategoryArray[0]}
             </label>
           </React.Fragment>
@@ -155,14 +155,14 @@ export default function MyClothesCreateModalBody() {
                     return (
                       <React.Fragment key={subCategoryArray[1]}>
                         <input
-                          id={subCategoryArray[0]}
+                          id={'카테고리' + subCategoryArray[0]}
                           value={subCategoryArray[0]}
                           className='form-check-input'
                           type='radio'
                           name='subCategoryGroup'
                           onChange={subCategoryHandleChange}
                         />
-                        <label className='form-check-label' htmlFor={subCategoryArray[0]}>
+                        <label className='form-check-label' htmlFor={'카테고리' + subCategoryArray[0]}>
                           {subCategoryArray[0]}
                         </label>
                       </React.Fragment>
