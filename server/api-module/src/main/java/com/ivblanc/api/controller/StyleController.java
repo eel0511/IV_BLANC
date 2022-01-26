@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeStyleDetailReqDTO;
 import com.ivblanc.api.service.ClothesSerivce;
+import com.ivblanc.api.service.FcmService;
 import com.ivblanc.api.service.StyleDetailService;
 import com.ivblanc.api.service.StyleService;
+import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
@@ -26,6 +28,8 @@ import com.ivblanc.core.entity.Clothes;
 import com.ivblanc.core.entity.Style;
 import com.ivblanc.core.entity.StyleDetail;
 import com.ivblanc.core.exception.ApiMessageException;
+import com.ivblanc.core.repository.UserRepoCommon;
+import com.ivblanc.core.repository.UserRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,16 +48,28 @@ public class StyleController {
 	private final StyleDetailService styleDetailService;
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
+	private final UserService userService;
+	private final FcmService fcmService;
+	//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
+	private final UserRepository userRepository;
 
 	@ApiOperation(value = "Style 추가", notes = "여기서 madeby와 userId가 있는데 userId는 실 소유주고 \n"
 		+ "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails, String madeby,
+	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token,
 		int userId) throws Exception {
+		//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
+		String madeby = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token))).get().getEmail();
 		Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, userId));
 		styleService.addStyle(style);
 		styleDetailService.addStyleDetails(style.getStyleDetails());
+		if (userService.findByEmail(madeby).getUserId() != userId) {
+			//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
+			fcmService.sendMessageTo(userRepository.findById(userId).get().getToken_fcm(), "스타일생성 알림",
+				userService.findByEmail(madeby).getName() + "님이 만들었습니다");
+		}
 		return responseService.getSingleResult(style.getStyleId() + "번 스타일 추가완료");
 	}
 
@@ -62,7 +78,7 @@ public class StyleController {
 		+ "자신의 룩 보기에서 이를 이용해 style을 띄워주고 그 style을 누르면 styledetail들(옷)들이뜨고 개개의 옷을 누르면 옷 정보도 띄울수있게 한번에 정보를 긁어오는것입니다")
 	@GetMapping(value = "/finduserstyle")
 	public @ResponseBody
-	ListResult<Style> findStyle(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+	ListResult<Style> findStyle(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		List<Style> styleList = styleService.findAllByUserId(userId);
 		if (styleList.size() == 0) {

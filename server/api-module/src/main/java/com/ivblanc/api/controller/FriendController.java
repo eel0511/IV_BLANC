@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
+import com.ivblanc.api.service.FcmService;
 import com.ivblanc.api.service.FriendService;
+import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
+import com.ivblanc.core.repository.UserRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +36,10 @@ public class FriendController {
 	private final FriendService friendService;
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
-
+	private final FcmService fcmService;
+	private final UserService userService;
+	//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
+	private final UserRepository userRepository;
 	@ApiOperation(value = "전체친구조회(수락여부 상관없이)", notes = "수락여부 상관없이 자신이 신청한 모든 목록 return")
 	@GetMapping(value = "/all")
 	public ListResult<FriendResDTO>
@@ -95,7 +101,10 @@ public class FriendController {
 	@PostMapping(value = "/request")
 	public @ResponseBody
 	SingleResult<FriendResDTO> addFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
+
 		friendService.addFriend(req);
+		fcmService.sendMessageTo(userService.findByEmail(req.getFriendName()).getToken_fcm(), "친구요청 알림",
+			userService.findByEmail(req.getApplicant()).getName() + "님이 친구요청을 보냈습니다.");
 		System.out.println(req.getFriendName());
 		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
 	}
