@@ -23,6 +23,8 @@ export default function MyClosetClothesItem({ clothesData }) {
   const handleChange = (e) => {
     console.log(e.target.checked);
     setFavoriteChecked(e.target.checked);
+
+    // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
   };
 
   return (
@@ -36,7 +38,7 @@ export default function MyClosetClothesItem({ clothesData }) {
           </Modal.Header>
           <Modal.Body>
             <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} onChange={handleChange} />
+            <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} />
             <ListGroup variant='flush'>
               <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
               <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
