@@ -8,5 +8,5 @@ open class BaseResponse {
     @SerializedName("msg")
     val message: String? = null
     @SerializedName("data")
-    val data: Any? = null
+    open val data: Any? = null
 }
