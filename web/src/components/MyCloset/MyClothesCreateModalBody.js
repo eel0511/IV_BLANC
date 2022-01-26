@@ -74,6 +74,50 @@ export default function MyClothesCreateModalBody() {
       })}
       <hr/>
       <div>
+        <h2>시즌</h2>
+      </div>
+      {Object.entries(codeData['material']).map(materialArray => {
+        return (
+          <React.Fragment key={materialArray[1]}>
+            <input
+              id={materialArray[0]}
+              value={materialArray[0]}
+              className='form-check-input'
+              type='radio'
+              name='materialGroup'
+              defaultChecked={selectMaterial === materialArray[0] ? true : false}
+              onChange={materialHandleChange}
+            />
+            <label className='form-check-label' htmlFor={materialArray[0]}>
+              {materialArray[0]}
+            </label>
+          </React.Fragment>
+        );
+      })}
+      <hr/>
+      <div>
+        <h2>사이즈</h2>
+      </div>
+      {Object.entries(codeData['material']).map(materialArray => {
+        return (
+          <React.Fragment key={materialArray[1]}>
+            <input
+              id={materialArray[0]}
+              value={materialArray[0]}
+              className='form-check-input'
+              type='radio'
+              name='materialGroup'
+              defaultChecked={selectMaterial === materialArray[0] ? true : false}
+              onChange={materialHandleChange}
+            />
+            <label className='form-check-label' htmlFor={materialArray[0]}>
+              {materialArray[0]}
+            </label>
+          </React.Fragment>
+        );
+      })}
+      <hr/>
+      <div>
         <h2>카테고리</h2>
       </div>
       {Object.entries(codeData['category']).map((mainCategoryArray, index) => {
