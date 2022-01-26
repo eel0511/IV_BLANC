@@ -5,6 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import axios from 'axios';
+import codeData from '../../codeData.json';
 import './MyCloset.css';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -14,8 +15,43 @@ export default function MyClosetClothesItem({ clothesData }) {
   const [date, setDate] = useState(clothesData.createDate);
   const [favoriteChecked, setFavoriteChecked] = useState(false);
 
+  // 종류, 색깔, 소재, 계절
+  const [category, setCategory] = useState('');
+  const [color, setColor] = useState('');
+  const [material, setMaterial] = useState('');
+  const [season, setSeason] = useState('');
+
   useEffect(() => {
     setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+
+    let mainCategory = '';
+    switch (clothesData.category / 10) {
+      case 1:
+        mainCategory = codeData['category'].상의;
+        break;
+      case 2:
+        mainCategory = codeData['category'].하의;
+        break;
+      case 4:
+        mainCategory = codeData['category'].아우터;
+        break;
+      case 5:
+        mainCategory = codeData['category'].신발;
+        break;
+      case 6:
+        mainCategory = codeData['category'].가방;
+        break;
+      default:
+        mainCategory = codeData['category'].모자;
+        break;
+    }
+
+    console.log(mainCategory);
+    console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
+    setCategory(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
+    setColor(Object.keys(codeData['colors']).find((key) => codeData['colors'][key] === clothesData.color));
+    setMaterial(Object.keys(codeData['material']).find((key) => codeData['material'][key] === clothesData.material));
+    setSeason(Object.keys(codeData['season']).find((key) => codeData['season'][key] === clothesData.season));
 
     // 즐겨찾기 데이터를 받아와서 favorite === 1이면 setFavoriteChecked 수정
   }, []);
@@ -69,6 +105,39 @@ export default function MyClosetClothesItem({ clothesData }) {
     // }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    if (window.confirm('진짜 삭제하시겠습니까?')) {
+      // 삭제 기능 구현
+      // 토큰 포함 버전으로 바꿔야 함
+      // try {
+      //   await axios
+      //     .put('http://119.56.162.61:8888/api/clothes/deleteById', {
+      //       params: {
+      //         clothesId: 1,
+      //       },
+      //     })
+      //     .then((res) => {
+      //       console.log('response:', res.data);
+      //       if (res.status === 200 && res.data.output === 1) {
+      //         console.log(res.data.msg);
+      //         alert('삭제되었습니다.');
+      //         setShow(false);
+      //       } else if (res.status === 200 && res.data.output === 0) {
+      //         alert(res.data.msg);
+      //       } else {
+      //         alert(res.data.msg);
+      //       }
+      //     });
+      // } catch (err) {
+      //   console.error(err.response.data);
+      // }
+    } else {
+      alert('취소합니다.');
+    }
+  };
+
   return (
     <div className='card h-100'>
       <div className='card-body'>
@@ -91,11 +160,11 @@ export default function MyClosetClothesItem({ clothesData }) {
             </Container>
 
             <ListGroup variant='flush'>
-              <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
-              <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
+              <ListGroup.Item>종류 : {category}</ListGroup.Item>
+              <ListGroup.Item>색깔 : {color}</ListGroup.Item>
               <ListGroup.Item>사이즈 : {clothesData.size}</ListGroup.Item>
-              <ListGroup.Item>소재 : {clothesData.material}</ListGroup.Item>
-              <ListGroup.Item>계절 : {clothesData.season}</ListGroup.Item>
+              <ListGroup.Item>소재 : {material}</ListGroup.Item>
+              <ListGroup.Item>계절 : {season}</ListGroup.Item>
               <ListGroup.Item>입은 횟수 : {clothesData.count}</ListGroup.Item>
               <ListGroup.Item>좋아요 : {clothesData.likePoint}</ListGroup.Item>
               <ListGroup.Item>싫어요 : {clothesData.dislikePoint}</ListGroup.Item>
@@ -103,9 +172,21 @@ export default function MyClosetClothesItem({ clothesData }) {
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleClose}>
-              Close
-            </Button>
+            <Container>
+              <Row>
+                <Col>
+                  <Button variant='danger' style={{ float: 'left' }} onClick={handleDelete}>
+                    삭제
+                  </Button>
+                </Col>
+                <Col xs={7}></Col>
+                <Col>
+                  <Button variant='secondary' onClick={handleClose}>
+                    Close
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
           </Modal.Footer>
         </Modal>
       </div>
