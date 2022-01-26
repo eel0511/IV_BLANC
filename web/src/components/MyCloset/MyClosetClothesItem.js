@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
-// import moment from 'moment';
+import moment from 'moment';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
@@ -13,9 +13,9 @@ export default function MyClosetClothesItem({ clothesData }) {
   const [date, setDate] = useState(clothesData.createDate);
   const [favoriteChecked, setFavoriteChecked] = useState(false);
 
-  // useEffect(() => {
-  //   setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
-  // }, []);
+  useEffect(() => {
+    setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
