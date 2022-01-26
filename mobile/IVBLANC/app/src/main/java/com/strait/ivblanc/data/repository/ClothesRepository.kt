@@ -24,6 +24,7 @@ class ClothesRepository {
                 Resource.error(null, "알 수 없는 오류입니다.")
             }
         } catch (e: Exception) {
+            val msg = e.message
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }

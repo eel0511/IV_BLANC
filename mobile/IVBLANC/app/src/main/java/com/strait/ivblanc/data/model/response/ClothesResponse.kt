@@ -6,5 +6,5 @@ import com.strait.ivblanc.data.model.dto.Clothes
 
 class ClothesResponse: BaseResponse() {
     @SerializedName("data")
-    override val dataSet: List<Clothes>? = super.dataSet as? List<Clothes>
+    val dataSet: List<Clothes>? = null
 }
