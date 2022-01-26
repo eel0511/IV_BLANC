@@ -50,8 +50,6 @@ public class StyleController {
 	private final JwtTokenProvider jwtTokenProvider;
 	private final UserService userService;
 	private final FcmService fcmService;
-	//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
-	private final UserRepository userRepository;
 
 	@ApiOperation(value = "Style 추가", notes = "여기서 madeby와 userId가 있는데 userId는 실 소유주고 \n"
 		+ "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
@@ -60,14 +58,12 @@ public class StyleController {
 	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token,
 		int userId) throws Exception {
-		//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
-		String madeby = userRepository.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token))).get().getEmail();
+		String madeby = userService.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token))).getEmail();
 		Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, userId));
 		styleService.addStyle(style);
 		styleDetailService.addStyleDetails(style.getStyleDetails());
 		if (userService.findByEmail(madeby).getUserId() != userId) {
-			//userSerivce에 findById가 없어 일단 Repo에서 당겨썼음 추후 추가되면 수정 - 22.01.26 suhyeong
-			fcmService.sendMessageTo(userRepository.findById(userId).get().getToken_fcm(), "스타일생성 알림",
+			fcmService.sendMessageTo(userService.findById(userId).getToken_fcm(), "스타일생성 알림",
 				userService.findByEmail(madeby).getName() + "님이 만들었습니다");
 		}
 		return responseService.getSingleResult(style.getStyleId() + "번 스타일 추가완료");
