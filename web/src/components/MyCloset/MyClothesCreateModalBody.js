@@ -168,6 +168,9 @@ export default function MyClothesCreateModalBody() {
           );
         })}
       </div>
+      <hr/>
+      <div><h2>사진 등록</h2></div>
+      <input type="file" id="formFile"></input>
     </form>
   );
 }
