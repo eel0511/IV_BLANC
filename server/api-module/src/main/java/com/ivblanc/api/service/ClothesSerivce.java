@@ -86,25 +86,25 @@ public class ClothesSerivce {
 		clothesRepository.save(clothes);
 	}
 
-	public Clothes MakeClothesByReqDTO(MakeClothesReqDTO req) {
+	public Clothes MakeClothesByReqDTO(MakeClothesReqDTO req,int userId) {
 		return Clothes.builder()
 			.category(req.getCategory())
 			.color(req.getColor())
 			.material(req.getMaterial())
 			.size(req.getSize())
 			.season(req.getSeason())
-			.userId(req.getUserId())
+			.userId(userId)
 			.build();
 	}
 
-	public Clothes MakeClotehsByReqDToAndUrl(MakeClothesReqDTO req, String url) {
+	public Clothes MakeClotehsByReqDToAndUrl(MakeClothesReqDTO req, String url,int userId) {
 		return Clothes.builder()
 			.category(req.getCategory())
 			.color(req.getColor())
 			.material(req.getMaterial())
 			.size(req.getSize())
 			.season(req.getSeason())
-			.userId(req.getUserId())
+			.userId(userId)
 			.url(url)
 			.build();
 	}
