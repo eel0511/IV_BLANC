@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, ListGroup } from 'react-bootstrap';
+import { Modal, Button, ListGroup, Container, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
@@ -37,8 +37,17 @@ export default function MyClosetClothesItem({ clothesData }) {
             <Modal.Title>옷 상세정보</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
+            <Container>
+              <Row>
+                <Col xs={12} md={8}>
+                  <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </Col>
+                <Col xs={6} md={4}>
+                  <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
+                </Col>
+              </Row>
+            </Container>
+
             <ListGroup variant='flush'>
               <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
               <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
