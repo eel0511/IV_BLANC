@@ -21,14 +21,16 @@ export default function MyClothesCreateModalBody() {
 
   const handleChange = (e) => {
     // setSelectColor(e.target.value);
-    codeData['colors'].map(a => {
-      console.log(Object.entries(a));
+    Object.entries(codeData['colors']).map((a) => {
+      console.log(a);
     });
   };
 
   return (
     <form className='RadioForm'>
-      <div><h2>색상</h2></div>
+      <div>
+        <h2>색상</h2>
+      </div>
       {colorList.map((color, index) => {
         return (
           <React.Fragment key={index}>
