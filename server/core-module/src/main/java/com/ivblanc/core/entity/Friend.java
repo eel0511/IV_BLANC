@@ -25,8 +25,9 @@ import lombok.Setter;
 public class Friend {
 
 	@Id
+	@Column(name = "friend_id",columnDefinition = "INT UNSIGNED")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int friend_id;
+	private int friendId;
 
 	@Column(length = 255)
 	private String applicant;

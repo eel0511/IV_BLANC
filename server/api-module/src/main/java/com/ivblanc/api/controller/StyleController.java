@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,8 +62,8 @@ public class StyleController {
 		+ "자신의 룩 보기에서 이를 이용해 style을 띄워주고 그 style을 누르면 styledetail들(옷)들이뜨고 개개의 옷을 누르면 옷 정보도 띄울수있게 한번에 정보를 긁어오는것입니다")
 	@GetMapping(value = "/finduserstyle")
 	public @ResponseBody
-	ListResult<Style> findStyle(@RequestParam int userId) throws Exception {
-
+	ListResult<Style> findStyle(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		List<Style> styleList = styleService.findAllByUserId(userId);
 		if (styleList.size() == 0) {
 			throw new ApiMessageException("없는 userId 입니다.");

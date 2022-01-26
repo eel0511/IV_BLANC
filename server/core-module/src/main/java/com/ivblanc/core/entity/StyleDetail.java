@@ -26,7 +26,7 @@ import lombok.Setter;
 public class StyleDetail {
 
 	@Id
-	@Column(name = "sd_id")
+	@Column(name = "sd_id",columnDefinition = "INT UNSIGNED")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sdId;
 
