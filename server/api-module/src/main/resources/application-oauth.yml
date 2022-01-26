@@ -12,14 +12,14 @@ spring:
           naver:
             client-id: nJwquBstqeCg_DTSh9sl
             client-secret: kIZLSsCldb
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: http://localhost:9999/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             scope: name, email, profile_image
             client-name: Naver
 
           kakao:
             client-id: ad93ab5d93038f8404ea527a3451bc55 # REST API Key
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://localhost:9999/login/oauth2/code/kakao
             client-authentication-method: POST
             authorization-grant-type: authorization_code
             scope: profile_nickname, profile_image, account_email
@@ -38,3 +38,7 @@ spring:
             token_uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user_name_attribute: id
+
+app:
+  oauth2:
+    authorized-redirect-uris: http://localhost:9999/oauth2/redirect
