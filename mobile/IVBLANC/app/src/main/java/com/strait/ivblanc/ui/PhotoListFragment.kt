@@ -33,12 +33,6 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
             data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
             data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-
-            itemLongClickListener = object : ExpandableRecyclerViewAdapter.ItemLongClickListener {
-                override fun onLongClick(position: Int) {
-                    Toast.makeText(requireActivity(), "longclick", Toast.LENGTH_SHORT).show()
-                }
-            }
         }
 
         exAdapter.itemClickListener = object : ExpandableRecyclerViewAdapter.ItemClickListener {
@@ -90,5 +84,20 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                 }
             }
         }
+    }
+
+    fun showDeleteDialog(item: PhotoItem<*>) {
+        val content: String = when(item.content) {
+            is Clothes -> "이 옷을 삭제하시겠습니까?"
+            // TODO: 2022/01/26 룩 type으로 변경
+            else -> "이 룩을 삭제하시겠습니까?"
+        }
+        DeleteDialog(requireActivity())
+            .setContent(content)
+            .setOnPositiveClickListener(object : View.OnClickListener {
+                override fun onClick(p0: View?) {
+                    // TODO: 2022/01/26 옷 삭제 함수 invoke
+                }
+            }).build().show()
     }
 }
