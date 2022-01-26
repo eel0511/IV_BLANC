@@ -4,6 +4,7 @@ import moment from 'moment';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
+import axios from 'axios';
 import './MyCloset.css';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -15,16 +16,57 @@ export default function MyClosetClothesItem({ clothesData }) {
 
   useEffect(() => {
     setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+
+    // 즐겨찾기 데이터를 받아와서 favorite === 1이면 setFavoriteChecked 수정
   }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     console.log(e.target.checked);
-    setFavoriteChecked(e.target.checked);
+    const favoriteCurrent = e.target.checked;
+    setFavoriteChecked(favoriteCurrent);
+    console.log(favoriteCurrent);
 
     // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
+    // favoriteChecked===true이면 추가, 아니면 삭제
+    // 추후에 토큰 사용한 백엔드 연동 구현
+    // if (favoriteCurrent) {
+    //   try {
+    //     await axios.put('http://119.56.162.61:8888/api/clothes/addfavorite?clothesId=1').then((res) => {
+    //       console.log('response:', res.data);
+    //       if (res.status === 200 && res.data.output === 1) {
+    //         alert(res.data.msg);
+    //       } else if (res.status === 200 && res.data.output === 0) {
+    //         alert(res.data.msg);
+    //       } else {
+    //         alert(res.data.msg);
+    //       }
+    //     });
+    //   } catch (err) {
+    //     console.error(err.response.data);
+    //   }
+    // } else {
+    //   try {
+    //     await axios
+    //       .put('http://119.56.162.61:8888/api/clothes/deletefavorite', {
+    //         clothesId: 1,
+    //       })
+    //       .then((res) => {
+    //         console.log('response:', res.data);
+    //         if (res.status === 200 && res.data.output === 1) {
+    //           alert(res.data.msg);
+    //         } else if (res.status === 200 && res.data.output === 0) {
+    //           alert(res.data.msg);
+    //         } else {
+    //           alert(res.data.msg);
+    //         }
+    //       });
+    //   } catch (err) {
+    //     console.error(err.response.data);
+    //   }
+    // }
   };
 
   return (
