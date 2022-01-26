@@ -1,11 +1,11 @@
 
 /* MyClosetClothesItem */
 
-img {
+.MyClosetClothesItemImg {
   transition: all 0.2s linear;
 }
 
-img:hover {
+.MyClosetClothesItemImg:hover {
   transform: scale(1.15, 1.15);
 }
 
