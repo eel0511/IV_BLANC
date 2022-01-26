@@ -85,6 +85,8 @@ project(":core-module") {
         implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
 
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+        implementation 'javax.interceptor:javax.interceptor-api:1.2'
     }
 }
 
@@ -134,6 +136,8 @@ project(":api-module") {
         implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
         implementation group: 'commons-io', name: 'commons-io', version: '2.4'
         implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        implementation 'javax.interceptor:javax.interceptor-api:1.2'
 
     }
 }

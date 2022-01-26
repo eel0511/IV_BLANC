@@ -23,8 +23,7 @@ public class JwtTokenUtil implements Serializable {
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-	@Value("${spring.jwt.secret}")
-	private String secret;
+	private String secret = "926D96C90030DD58429D2751AC1BDBBC";
 
 	//retrieve username from jwt token
 	// jwt token으로부터 username을 획득한다.
