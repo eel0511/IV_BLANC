@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,7 +59,8 @@ public class ClothesController {
 		+ " 정렬 등에 사용가능할거같습니다 back단에서")
 	@GetMapping(value = "/createdate")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByCreateDate(@RequestParam int userId) throws Exception {
+	ListResult<Clothes> findOrderByCreateDate(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByCreateDate(userId));
 	}
 
@@ -66,21 +68,24 @@ public class ClothesController {
 		+ "이것으로 오랫동안 안입은옷 등의 판별을 할수있을것입니다")
 	@GetMapping(value = "/updatedate")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByDate(@RequestParam int userId) throws Exception {
+	ListResult<Clothes> findOrderByDate(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByUpdateDate(userId));
 	}
 
 	@ApiOperation(value = "좋아요순로 자기 옷 조회")
 	@GetMapping(value = "/like")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByLike(@RequestParam int userId) throws Exception {
+	ListResult<Clothes> findOrderByLike(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByLike(userId));
 	}
 
 	@ApiOperation(value = "싫어요순로 자기 옷 조회")
 	@GetMapping(value = "/dislike")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByDisLike(@RequestParam int userId) throws Exception {
+	ListResult<Clothes> findOrderByDisLike(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByDisLike(userId));
 	}
 
@@ -88,7 +93,8 @@ public class ClothesController {
 	@GetMapping(value = "/category")
 	public @ResponseBody
 	ListResult<Clothes> findClothesCategory(@RequestParam int page, @RequestParam int category,
-		@RequestParam int userId) throws Exception {
+		@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
@@ -98,7 +104,8 @@ public class ClothesController {
 	@GetMapping(value = "/all")
 	public @ResponseBody
 	ListResult<Clothes> findAllClothes(@RequestParam int page,
-		@RequestParam int userId) throws Exception {
+		@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findAll(userId, pageRequest));
 	}
@@ -106,28 +113,32 @@ public class ClothesController {
 	@ApiOperation(value = "색깔로 자기 옷 조회")
 	@GetMapping(value = "/color")
 	public @ResponseBody
-	ListResult<Clothes> findClothesColor(@RequestParam String color, @RequestParam int userId) throws Exception {
+	ListResult<Clothes> findClothesColor(@RequestParam String color,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findByColor(color, userId));
 	}
 
 	@ApiOperation(value = "소재로 자기 옷 조회")
 	@GetMapping(value = "/material")
 	public @ResponseBody
-	ListResult<Clothes> findClothesMaterial(@RequestParam int material, @RequestParam int userId) throws Exception {
+	ListResult<Clothes> findClothesMaterial(@RequestParam int material, @RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findByMaterial(material, userId));
 	}
 
 	@ApiOperation(value = "계절별 자기 옷 조회")
 	@GetMapping(value = "/season")
 	public @ResponseBody
-	ListResult<Clothes> findClothesSeason(@RequestParam int season, @RequestParam int userId) throws Exception {
+	ListResult<Clothes> findClothesSeason(@RequestParam int season,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findBySeason(season, userId));
 	}
 
 	@ApiOperation(value = "Count순으로 자기 옷 조회")
 	@GetMapping(value = "/count")
 	public @ResponseBody
-	ListResult<Clothes> findOrderByCount(@RequestParam int userId) throws Exception {
+	ListResult<Clothes> findOrderByCount(@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		return responseService.getListResult(clothesSerivce.findOrderByCount(userId));
 	}
 
