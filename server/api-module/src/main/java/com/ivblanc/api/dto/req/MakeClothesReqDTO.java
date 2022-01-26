@@ -2,6 +2,8 @@ package com.ivblanc.api.dto.req;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +27,8 @@ public class MakeClothesReqDTO {
 	private String color;
 
 	@NotBlank
-	@ApiModelProperty(value = "material 옷 소재", required = true, example = "면")
-	private String material;
+	@ApiModelProperty(value = "material 옷 소재", required = true, example = "1")
+	private int material;
 
 	@NotBlank
 	@ApiModelProperty(value = "size 옷 사이즈", required = true, example = "100")
@@ -36,7 +38,6 @@ public class MakeClothesReqDTO {
 	@ApiModelProperty(value = "season 계절 (1:봄, 2:여름, 3:가을, 4:겨울)", required = true, example = "1")
 	private int season;
 
-	@NotBlank
-	@ApiModelProperty(value = "userId 옷 주인", required = true, example = "1")
-	private int userId;
+	@ApiModelProperty(value = "사진")
+	private MultipartFile file;
 }

@@ -1,5 +1,6 @@
 package com.ivblanc.api.dto.req;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -17,10 +18,12 @@ import lombok.Setter;
 public class MakeFriendReqDTO {
 
 	@NotBlank
+	@Email
 	@ApiModelProperty(value = "applicant : 자신 이메일", required = true, example = "user@email.com")
 	private String applicant;
 
 	@NotBlank
+	@Email
 	@ApiModelProperty(value = "friend : 친구 이메일", required = true, example = "friend@email.com")
-	private String friend_name;
+	private String friendName;
 }

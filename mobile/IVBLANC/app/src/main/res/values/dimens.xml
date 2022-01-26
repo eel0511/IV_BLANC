@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="default_text_size">14sp</dimen>
-    <dimen name="logo_size">150dp</dimen>
+    <dimen name="defaultTextSize">14sp</dimen>
+    <dimen name="logoSize">150dp</dimen>
+    <dimen name="defaultPadding">16dp</dimen>
+    <dimen name="dialogWidth">250dp</dimen>
 </resources>

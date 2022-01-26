@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,15 +8,15 @@ import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import AuthSocial from '../../components/login/AuthSocial';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-
-import a from '../../../src/assets/logo2.png';
+import axios from 'axios';
+import Container from '@mui/material/Container';
+import AuthSocial from '../../components/login/AuthSocial';
 
 function Copyright(props) {
   return (
@@ -36,8 +35,32 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
+
+  // 오류메시지 상태저장
+  const [emailMessage, setEmailMessage] = useState('');
+
+  // 유효성 검사
+  const [isEmail, setIsEmail] = useState(false);
+
+  let navigate = useNavigate();
+
+  // 이메일 형식 확인
+  const onChangeEmail = useCallback((e) => {
+    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailCurrent = e.target.value;
+    setEmail(emailCurrent);
+
+    if (!emailRegex.test(emailCurrent)) {
+      setEmailMessage('이메일 형식이 틀렸어요! 다시 확인해주세요');
+      setIsEmail(false);
+    } else {
+      setEmailMessage('올바른 이메일 형식이에요 :)');
+      setIsEmail(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (cookies.rememberEmail !== undefined) {
@@ -46,7 +69,7 @@ export default function SignInSide() {
     }
   }, []);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
@@ -55,86 +78,119 @@ export default function SignInSide() {
     } else {
       removeCookie('rememberEmail');
     }
+
+    if (email === '') return alert('이메일을 입력해주세요');
+    if (password === '') return alert('비밀번호를 입력해주세요');
     // eslint-disable-next-line no-console
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    // 백엔드 통신
+    try {
+      await axios
+        .post('http://119.56.162.61:8888/api/sign/login', {
+          email: data.get('email'),
+          pw: data.get('password'),
+          social: 1,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200 && res.data.output === 1) {
+            alert('로그인 성공!!');
+            navigate('/');
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
+          } else {
+            alert(res.data.msg);
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component='main' sx={{ height: '100vh' }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+      <Container component='main'>
+        <Grid container component='main' sx={{ height: '100vh' }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundImage: 'url(https://source.unsplash.com/random)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
-          >
-            {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar> */}
-            <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
-            <Typography component='h1' variant='h5'>
-              로그인
-            </Typography>
-            <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-                autoFocus
-                type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextField margin='normal' required fullWidth name='password' label='Password' type='password' id='password' autoComplete='current-password' />
-              <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
-
-              <AuthSocial />
-
-              <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+          />
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
+              <Typography component='h1' variant='h5'>
                 로그인
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href='#' variant='body2'>
-                    아이디/비밀번호 찾기
-                  </Link>
+              </Typography>
+              <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                <TextField required fullWidth id='email' label='Email Address' name='email' autoComplete='email' type='email' value={email} onChange={onChangeEmail} />
+                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+
+                <TextField
+                  margin='normal'
+                  required
+                  fullWidth
+                  name='password'
+                  label='Password'
+                  type='password'
+                  id='password'
+                  autoComplete='current-password'
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+
+                <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
+
+                <AuthSocial />
+
+                <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+                  로그인
+                </Button>
+                <Grid container spacing={1}>
+                  <Grid item xs={4}>
+                    <Link href='/findemail' variant='body2'>
+                      아이디 찾기
+                    </Link>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Link href='/findpassword' variant='body2'>
+                      비밀번호 찾기
+                    </Link>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Link href='/signup' variant='body2'>
+                      {'회원가입'}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href='/signup' variant='body2'>
-                    {'회원가입'}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </ThemeProvider>
   );
 }

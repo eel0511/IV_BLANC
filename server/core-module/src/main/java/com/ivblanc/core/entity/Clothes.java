@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Clothes extends BaseEntity{
 
 	@Id
-	@Column(name = "clothes_id")
+	@Column(name = "clothes_id",columnDefinition = "INT UNSIGNED")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int clothesId;
 
@@ -36,8 +36,8 @@ public class Clothes extends BaseEntity{
 	@Column(length = 8)
 	private String color;
 
-	@Column(length = 10)
-	private String material;
+	@Column
+	private int material;
 
 	@Column(length = 2000)
 	private String url;

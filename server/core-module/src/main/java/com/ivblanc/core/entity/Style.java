@@ -30,7 +30,7 @@ import lombok.Setter;
 @Entity
 public class Style extends BaseEntity {
 	@Id
-	@Column(name = "style_id")
+	@Column(name = "style_id",columnDefinition = "INT UNSIGNED")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int styleId;
 
