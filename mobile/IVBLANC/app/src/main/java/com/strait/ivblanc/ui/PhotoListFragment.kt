@@ -79,10 +79,10 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                 }
             }
         }
-        // TODO: 2022/01/26 access token 사용 시 변경
-        viewModel.getAllClothes(0, 14)
-        viewModel.clothesResponseStatus.observe(requireActivity()) {
 
+        // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
+        viewModel.clothesResponseStatus.observe(requireActivity()) {
+            
         }
         viewModel.clothesListLiveData.observe(requireActivity()) {
             exAdapter.data = it as ArrayList<PhotoItem<Clothes>>
