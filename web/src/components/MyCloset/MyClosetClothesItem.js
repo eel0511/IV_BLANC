@@ -69,6 +69,19 @@ export default function MyClosetClothesItem({ clothesData }) {
     // }
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    if (window.confirm('진짜 삭제하시겠습니까?')) {
+      // 삭제 기능 구현
+
+      alert('삭제되었습니다.');
+      setShow(false);
+    } else {
+      alert('취소합니다.');
+    }
+  };
+
   return (
     <div className='card h-100'>
       <div className='card-body'>
@@ -103,9 +116,21 @@ export default function MyClosetClothesItem({ clothesData }) {
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary' onClick={handleClose}>
-              Close
-            </Button>
+            <Container>
+              <Row>
+                <Col>
+                  <Button variant='danger' style={{ float: 'left' }} onClick={handleDelete}>
+                    삭제
+                  </Button>
+                </Col>
+                <Col xs={7}></Col>
+                <Col>
+                  <Button variant='secondary' onClick={handleClose}>
+                    Close
+                  </Button>
+                </Col>
+              </Row>
+            </Container>
           </Modal.Footer>
         </Modal>
       </div>
