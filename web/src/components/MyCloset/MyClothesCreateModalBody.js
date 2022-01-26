@@ -5,6 +5,8 @@ export default function MyClothesCreateModalBody() {
   const [selectColor, setSelectColor] = useState('빨강');
   const [selectMaterial, setSelectMaterial] = useState('면');
   const [selectMainCategory, setSelectMainCategory] = useState('상의');
+  const [selectSeason, setSelectSeason] = useState('봄');
+  const [selectSize, setSelectSize] = useState();
   const [selectSubCategory, setSelectSubCategory] = useState();
 
   const colorHandleChange = (e) => {
@@ -14,6 +16,16 @@ export default function MyClothesCreateModalBody() {
 
   const materialHandleChange = (e) => {
     setSelectMaterial(e.target.value);
+    // console.log(e.target.value);
+  };
+
+  const seasonHandleChange = (e) => {
+    setSelectSeason(e.target.value);
+    // console.log(e.target.value);
+  };
+
+  const sizeHandleChange = (e) => {
+    setSelectSize(e.target.value);
     // console.log(e.target.value);
   };
 
@@ -76,20 +88,20 @@ export default function MyClothesCreateModalBody() {
       <div>
         <h2>시즌</h2>
       </div>
-      {Object.entries(codeData['material']).map(materialArray => {
+      {Object.entries(codeData['season']).map(seasonArray => {
         return (
-          <React.Fragment key={materialArray[1]}>
+          <React.Fragment key={seasonArray[1]}>
             <input
-              id={materialArray[0]}
-              value={materialArray[0]}
+              id={seasonArray[0]}
+              value={seasonArray[0]}
               className='form-check-input'
               type='radio'
-              name='materialGroup'
-              defaultChecked={selectMaterial === materialArray[0] ? true : false}
-              onChange={materialHandleChange}
+              name='seasonGroup'
+              defaultChecked={selectSeason === seasonArray[0] ? true : false}
+              onChange={seasonHandleChange}
             />
-            <label className='form-check-label' htmlFor={materialArray[0]}>
-              {materialArray[0]}
+            <label className='form-check-label' htmlFor={seasonArray[0]}>
+              {seasonArray[0]}
             </label>
           </React.Fragment>
         );
@@ -98,24 +110,13 @@ export default function MyClothesCreateModalBody() {
       <div>
         <h2>사이즈</h2>
       </div>
-      {Object.entries(codeData['material']).map(materialArray => {
-        return (
-          <React.Fragment key={materialArray[1]}>
+          <React.Fragment>
             <input
-              id={materialArray[0]}
-              value={materialArray[0]}
-              className='form-check-input'
-              type='radio'
-              name='materialGroup'
-              defaultChecked={selectMaterial === materialArray[0] ? true : false}
-              onChange={materialHandleChange}
+              type={'number'}
+              placeholder='사이즈를 입력해주세요'
+              onChange={sizeHandleChange}
             />
-            <label className='form-check-label' htmlFor={materialArray[0]}>
-              {materialArray[0]}
-            </label>
           </React.Fragment>
-        );
-      })}
       <hr/>
       <div>
         <h2>카테고리</h2>
