@@ -38,10 +38,6 @@ public class MakeClothesReqDTO {
 	@ApiModelProperty(value = "season 계절 (1:봄, 2:여름, 3:가을, 4:겨울)", required = true, example = "1")
 	private int season;
 
-	@NotBlank
-	@ApiModelProperty(value = "userId 옷 주인", required = true, example = "1")
-	private int userId;
-
 	@ApiModelProperty(value = "사진")
 	private MultipartFile file;
 }
