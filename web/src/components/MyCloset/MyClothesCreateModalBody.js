@@ -2,41 +2,47 @@ import React, { useState } from 'react';
 import codeData from '../../codeData.json';
 
 export default function MyClothesCreateModalBody() {
-  const [selectColor, setSelectColor] = useState('빨강');
-  const [selectMaterial, setSelectMaterial] = useState('면');
-  const [selectMainCategory, setSelectMainCategory] = useState('상의');
-  const [selectSeason, setSelectSeason] = useState('봄');
-  const [selectSize, setSelectSize] = useState();
-  const [selectSubCategory, setSelectSubCategory] = useState();
+  const [selectedColor, setselectedColor] = useState('빨강');
+  const [selectedMaterial, setselectedMaterial] = useState('면');
+  const [selectedMainCategory, setselectedMainCategory] = useState('상의');
+  const [selectedSeason, setselectedSeason] = useState('봄');
+  const [selectedSize, setselectedSize] = useState();
+  const [selectedSubCategory, setselectedSubCategory] = useState();
+  const [selectedImg, setselectedImg] = useState();
 
   const colorHandleChange = (e) => {
-    setSelectColor(e.target.value);
+    setselectedColor(e.target.value);
     // console.log(e.target.value);
   };
 
   const materialHandleChange = (e) => {
-    setSelectMaterial(e.target.value);
+    setselectedMaterial(e.target.value);
     // console.log(e.target.value);
   };
 
   const seasonHandleChange = (e) => {
-    setSelectSeason(e.target.value);
+    setselectedSeason(e.target.value);
     // console.log(e.target.value);
   };
 
   const sizeHandleChange = (e) => {
-    setSelectSize(e.target.value);
+    setselectedSize(e.target.value);
     // console.log(e.target.value);
   };
 
   const mainCategoryHandleChange = (e) => {
-    setSelectMainCategory(e.target.value);
+    setselectedMainCategory(e.target.value);
     // console.log(e.target.value);
   };
 
   const subCategoryHandleChange = (e) => {
-    setSelectSubCategory(e.target.value);
+    setselectedSubCategory(e.target.value);
     // console.log(e.target.value);
+  };
+
+  const imgHandleChange = (e) => {
+    // setselectedImg(e.target.file[0])
+    console.log(e.target.files[0])
   };
 
   return (
@@ -53,7 +59,7 @@ export default function MyClothesCreateModalBody() {
               className='form-check-input'
               type='radio'
               name='colorGroup'
-              defaultChecked={selectColor === colorArray[0] ? true : false}
+              defaultChecked={selectedColor === colorArray[0] ? true : false}
               onChange={colorHandleChange}
             />
             <label className='form-check-label' htmlFor={colorArray[0]}>
@@ -75,7 +81,7 @@ export default function MyClothesCreateModalBody() {
               className='form-check-input'
               type='radio'
               name='materialGroup'
-              defaultChecked={selectMaterial === materialArray[0] ? true : false}
+              defaultChecked={selectedMaterial === materialArray[0] ? true : false}
               onChange={materialHandleChange}
             />
             <label className='form-check-label' htmlFor={materialArray[0]}>
@@ -97,7 +103,7 @@ export default function MyClothesCreateModalBody() {
               className='form-check-input'
               type='radio'
               name='seasonGroup'
-              defaultChecked={selectSeason === seasonArray[0] ? true : false}
+              defaultChecked={selectedSeason === seasonArray[0] ? true : false}
               onChange={seasonHandleChange}
             />
             <label className='form-check-label' htmlFor={seasonArray[0]}>
@@ -130,7 +136,7 @@ export default function MyClothesCreateModalBody() {
               className='form-check-input'
               type='radio'
               name='mainCategoryGroup'
-              defaultChecked={selectMainCategory === mainCategoryArray[0] ? true : false}
+              defaultChecked={selectedMainCategory === mainCategoryArray[0] ? true : false}
               onChange={mainCategoryHandleChange}
             />
             <label className='form-check-label' htmlFor={mainCategoryArray[0]}>
@@ -144,7 +150,7 @@ export default function MyClothesCreateModalBody() {
           return (
             <React.Fragment key={index}>
               {
-                selectMainCategory === mainCategoryArray[0] && (
+                selectedMainCategory === mainCategoryArray[0] && (
                   Object.entries(mainCategoryArray[1]).map(subCategoryArray => {
                     return (
                       <React.Fragment key={subCategoryArray[1]}>
@@ -170,7 +176,7 @@ export default function MyClothesCreateModalBody() {
       </div>
       <hr/>
       <div><h2>사진 등록</h2></div>
-      <input type="file" id="formFile"></input>
+      <input type="file" id="inputImg" accept="image/*" onChange={imgHandleChange}></input>
     </form>
   );
 }
