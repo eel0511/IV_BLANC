@@ -11,6 +11,7 @@ public interface UserRepoCommon {
 
 	User findByEmail(String email);
 
+	User findByUserId(int userId);
 }
 
 

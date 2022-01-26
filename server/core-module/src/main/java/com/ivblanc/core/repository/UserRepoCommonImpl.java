@@ -44,6 +44,16 @@ public class UserRepoCommonImpl implements UserRepoCommon{
         return result;
     }
 
+    @Override
+    public User findByUserId(int userId) {
+        User result = queryFactory
+            .select(QUser.user)
+            .from(QUser.user)
+            .where(QUser.user.userId.eq(userId))
+            .fetchOne();
+
+        return result;
+    }
 
 }
 

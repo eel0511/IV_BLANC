@@ -14,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	private final UserRepository userRepository;
 
+	public User findById(int userId){
+		return userRepository.findByUserId(userId);
+	}
 
 	public User findByEmail(String email){
 		return userRepository.findByEmail(email);
