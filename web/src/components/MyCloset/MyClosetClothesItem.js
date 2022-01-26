@@ -19,12 +19,13 @@ export default function MyClosetClothesItem({ clothesData }) {
           </Modal.Header>
           <Modal.Body>
             <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-            <ListGroup variant='flush' mx>
+            <ListGroup variant='flush'>
               <ListGroup.Item>종류 : {clothesData.category}</ListGroup.Item>
               <ListGroup.Item>색깔 : {clothesData.color}</ListGroup.Item>
               <ListGroup.Item>사이즈 : {clothesData.size}</ListGroup.Item>
               <ListGroup.Item>소재 : {clothesData.material}</ListGroup.Item>
               <ListGroup.Item>계절 : {clothesData.season}</ListGroup.Item>
+              <ListGroup.Item>입은 횟수 : {clothesData.count}</ListGroup.Item>
               <ListGroup.Item>싫어요 : {clothesData.dislikePoint}</ListGroup.Item>
               <ListGroup.Item>등록날짜 : {clothesData.createDate}</ListGroup.Item>
             </ListGroup>
