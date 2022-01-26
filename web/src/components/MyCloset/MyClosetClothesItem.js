@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './MyCloset.css';
 import { Modal, Button } from 'react-bootstrap';
+import './MyCloset.css';
 
 export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
@@ -15,8 +15,6 @@ export default function MyClosetClothesItem({ clothesData }) {
           src={require(`../../assets/${clothesData.url}`)}
           alt={clothesData.clothesId}
           style={{ maxWidth: '100%', maxHeight: '100%' }}
-          data-bs-toggle='modal'
-          data-bs-target='#exampleModal'
           onClick={handleShow}
         />
 

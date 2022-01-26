@@ -32,4 +32,15 @@ public class StyleService {
 	public void deleteStyleById(int styleId) {
 		styleRepository.deleteById(styleId);
 	}
+
+	public Style makeStyle(String madeby, int userId){
+		return Style.builder()
+			.madeby(madeby)
+			.userId(userId)
+			.build();
+	}
+	public Style updateFavorite(Style style,int favorite){
+		style.setFavorite(favorite);
+		return style;
+	}
 }
