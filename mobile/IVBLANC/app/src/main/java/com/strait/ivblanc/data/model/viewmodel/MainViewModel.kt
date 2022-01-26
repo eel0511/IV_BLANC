@@ -41,7 +41,6 @@ class MainViewModel: ViewModel() {
     /**
      * @param result
      * clothesRepository에서 받은 response
-     * response의 status에 따라 _clothesResponseStatus post
      */
     private fun updateResult(result: Resource<ClothesResponse>) {
         //
