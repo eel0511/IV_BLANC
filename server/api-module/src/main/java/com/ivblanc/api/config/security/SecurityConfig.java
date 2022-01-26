@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -63,7 +64,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .exceptionHandling().accessDeniedPage("/user/denied")
                 .and()
                     .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
-    }
+        http.logout()
+            .logoutSuccessUrl("/")
+            .and()
+            .oauth2Login()
+            .userInfoEndpoint()
+            .userService(customOAuth2UserService);
+}
 
 
     @Override

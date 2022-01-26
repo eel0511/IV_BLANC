@@ -7,4 +7,5 @@ import com.ivblanc.core.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>, UserRepoCommon{
+
 }

@@ -2,5 +2,6 @@
 spring:
   profiles:
     active: alpha
+    include : oauth
   freemarker:
     check-template-location: false

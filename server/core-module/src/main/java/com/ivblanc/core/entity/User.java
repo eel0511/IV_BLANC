@@ -1,6 +1,8 @@
 package com.ivblanc.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ivblanc.core.code.ProviderType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -78,7 +80,8 @@ public class User implements UserDetails {
     // JWT
     // =================================================================================================
     @Column(length = 100)
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -155,4 +158,14 @@ public class User implements UserDetails {
         this.token_fcm = token_fcm;
     }
 
+    public User update(String name, int social){
+        this.name = name;
+        this.social = social;
+
+        return this;
+    }
+
+    public String getRoleKey() {
+        return "ROLE_USER";
+    }
 }
