@@ -80,6 +80,9 @@ project(":core-module") {
         implementation 'com.querydsl:querydsl-jpa'
         //querydsl 추가
         implementation 'com.querydsl:querydsl-apt'
+
+        // spring security
+        implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
     }
 }
 

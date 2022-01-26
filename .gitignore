@@ -221,3 +221,4 @@ hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,intellij+iml
 /.metadata/
+server/api-module/src/main/resources/application-alpha.yml

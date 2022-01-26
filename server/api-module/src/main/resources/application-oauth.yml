@@ -40,5 +40,5 @@ spring:
             user_name_attribute: id
 
 app:
-  oauth2:
+  oauth2: # 서버에서 인증을 마치고 프론트엔드로 돌아가는 redirect uri 정보
     authorized-redirect-uris: http://localhost:9999/oauth2/redirect
