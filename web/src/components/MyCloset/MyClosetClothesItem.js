@@ -32,14 +32,10 @@ export default function MyClosetClothesItem({ clothesData }) {
               <ListGroup.Item>소재 : {clothesData.material}</ListGroup.Item>
               <ListGroup.Item>계절 : {clothesData.season}</ListGroup.Item>
               <ListGroup.Item>입은 횟수 : {clothesData.count}</ListGroup.Item>
+              <ListGroup.Item>좋아요 : {clothesData.likePoint}</ListGroup.Item>
               <ListGroup.Item>싫어요 : {clothesData.dislikePoint}</ListGroup.Item>
               <ListGroup.Item>등록날짜 : {date}</ListGroup.Item>
             </ListGroup>
-            {/* <p>{clothesData.clothesId}</p>
-            <p>{clothesData.category}</p>
-            <p>{clothesData.color}</p>
-            <p>{clothesData.createDate}</p>
-            <p>{clothesData.material}</p> */}
           </Modal.Body>
           <Modal.Footer>
             <Button variant='secondary' onClick={handleClose}>
