@@ -19,7 +19,7 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
         const val CHILD = 1
     }
 
-    val data = arrayListOf<PhotoItem<T>>()
+    var data = arrayListOf<PhotoItem<T>>()
     lateinit var itemClickListener: ItemClickListener
     lateinit var itemLongClickListener: ItemLongClickListener
 

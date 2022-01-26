@@ -3,38 +3,23 @@ package com.strait.ivblanc.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
+import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 
 class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
+    private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exAdapter = ExpandableRecyclerViewAdapter<Clothes>(requireActivity()).apply {
-            // TODO: 2022/01/26 기본 테스트 데이터
-            val header = PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "최근").apply {
-                initInvisibleItems()
-            }
-            data.add(header)
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER, "즐겨찾기"))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-            data.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = Clothes(0, 0, "black", 0, "yy", 0, 0, 0, 0, 0, 0, "dd", "url", 0)))
-        }
-
+        exAdapter = ExpandableRecyclerViewAdapter(requireActivity())
         exAdapter.itemClickListener = object : ExpandableRecyclerViewAdapter.ItemClickListener {
             override fun onClick(position: Int, viewType: Int) {
                 when(viewType) {
@@ -94,6 +79,16 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                 }
             }
         }
+
+        // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
+        viewModel.clothesResponseStatus.observe(requireActivity()) {
+            
+        }
+        viewModel.clothesListLiveData.observe(requireActivity()) {
+            exAdapter.data = it as ArrayList<PhotoItem<Clothes>>
+            exAdapter.notifyDataSetChanged()
+        }
+
     }
 
     fun showDeleteDialog(item: PhotoItem<*>) {
