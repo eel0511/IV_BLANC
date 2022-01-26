@@ -27,10 +27,12 @@ class MainViewModel: ViewModel() {
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
 
-    fun getAllClothes(page: Int) = viewModelScope.launch {
+    // TODO: 2022/01/26 access token 사용시 변경
+//    fun getAllClothes(page: Int) = viewModelScope.launch {
+    fun getAllClothes(page: Int, userId: Int) = viewModelScope.launch {
         _clothesResponseStatus.postValue(Resource.loading(null))
         CoroutineScope(Dispatchers.IO).launch {
-            val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
+            val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page, userId)
             _clothesResponseStatus.postValue(result)
             updateResult(result)
         }
@@ -44,7 +46,7 @@ class MainViewModel: ViewModel() {
     private fun updateResult(result: Resource<ClothesResponse>) {
         //
         if(result.status == Status.SUCCESS) {
-            result.data?.data?.let {
+            result.data?.dataSet?.let {
                 // 서버에서 받은 옷 목록이 비어있지 않을 때, _clothesListLiveData 내부의 list에 옷 목록 추가하여 post
                 if(it.isNotEmpty()) {
                     val mutableList = getPhotoItemListFromLiveData()
