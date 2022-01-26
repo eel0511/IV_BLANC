@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import codeData from '../../codeData.json';
 
 export default function MyClothesCreateModalBody() {
   const colorList = [
@@ -19,7 +20,10 @@ export default function MyClothesCreateModalBody() {
   const [selectColor, setSelectColor] = useState('빨강');
 
   const handleChange = (e) => {
-    setSelectColor(e.target.value)
+    // setSelectColor(e.target.value);
+    codeData['colors'].map(a => {
+      console.log(Object.entries(a));
+    });
   };
 
   return (
