@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, ListGroup } from 'react-bootstrap';
+import moment from 'moment';
 import './MyCloset.css';
 
 export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
+  const [date, setDate] = useState(clothesData.createDate);
+
+  useEffect(() => {
+    setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+  }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -27,7 +33,7 @@ export default function MyClosetClothesItem({ clothesData }) {
               <ListGroup.Item>계절 : {clothesData.season}</ListGroup.Item>
               <ListGroup.Item>입은 횟수 : {clothesData.count}</ListGroup.Item>
               <ListGroup.Item>싫어요 : {clothesData.dislikePoint}</ListGroup.Item>
-              <ListGroup.Item>등록날짜 : {clothesData.createDate}</ListGroup.Item>
+              <ListGroup.Item>등록날짜 : {date}</ListGroup.Item>
             </ListGroup>
             {/* <p>{clothesData.clothesId}</p>
             <p>{clothesData.category}</p>
