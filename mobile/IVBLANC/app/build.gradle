@@ -87,8 +87,7 @@ dependencies {
 
     // naver
     def android_x_version = "1.0.0"
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.naver.nid:naveridlogin-android-sdk:4.2.6'
+    implementation 'com.navercorp.nid:oauth:5.0.0'
     implementation "androidx.appcompat:appcompat:$android_x_version"
     implementation "androidx.legacy:legacy-support-core-utils:$android_x_version"
     implementation "androidx.browser:browser:$android_x_version"
