@@ -123,7 +123,8 @@ project(":api-module") {
         testImplementation("org.junit.vintage:junit-vintage-engine") {
             exclude group: "org.hamcrest", module: "hamcrest-core"
         }
-
+        implementation("com.squareup.okhttp3:okhttp:4.9.0")
+        implementation 'org.json:json:20171018'
         implementation('org.springframework.boot:spring-boot-starter-cache')
         implementation group: 'org.apache.poi', name: 'poi', version: '3.11'
         implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
