@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
 
+import javax.validation.Valid;
+
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -151,12 +153,13 @@ public class ClothesController {
 	@ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addClothes(MakeClothesReqDTO req) throws Exception {
+	SingleResult<ClothesIdResDTO> addClothes(@Valid @RequestBody MakeClothesReqDTO req,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
 		String url = fileService.upload(req.getFile());
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		if (url.equals("error")) {
 			throw new ApiMessageException("파일 올리기 실패");
 		}
-		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url);
+		Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url,userId);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
@@ -164,8 +167,9 @@ public class ClothesController {
 	@ApiOperation(value = "사진없이 그냥 test용입니다")
 	@PostMapping(value = "/addtest")
 	public @ResponseBody
-	SingleResult<ClothesIdResDTO> addtestClothes(MakeClothesReqDTO req) throws Exception {
-		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req);
+	SingleResult<ClothesIdResDTO> addtestClothes(@Valid @RequestBody MakeClothesReqDTO req,@RequestHeader(value = "X-AUTH-TOKEN")String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
+		Clothes clothes = clothesSerivce.MakeClothesByReqDTO(req,userId);
 		clothesSerivce.addClothes(clothes);
 		return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 	}
