@@ -2,10 +2,6 @@ package com.strait.ivblanc.ui
 
 import android.os.Bundle
 import android.view.View
-<<<<<<< HEAD
-=======
-import android.view.ViewGroup
->>>>>>> develop
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strait.ivblanc.R
@@ -19,7 +15,6 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-<<<<<<< HEAD
 
         exAdapter = ExpandableRecyclerViewAdapter<Clothes>(requireActivity()).apply {
             // TODO: 2022/01/26 기본 테스트 데이터
