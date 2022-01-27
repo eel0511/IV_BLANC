@@ -46,8 +46,11 @@ public class History extends BaseEntity{
 	@Column(length = 10)
 	private String weather;
 
-	@Column(length = 10)
-	private String temperature;
+	@Column
+	private int temperature_low;
+
+	@Column
+	private int temperature_high;
 
 	@Column(length = 2000)
 	private String text;
