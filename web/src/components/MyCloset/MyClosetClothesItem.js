@@ -151,10 +151,10 @@ export default function MyClosetClothesItem({ clothesData }) {
           <Modal.Body>
             <Container>
               <Row>
-                <Col xs={12} md={8}>
+                <Col md={{ span: 7, offset: 2 }}>
                   <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
                 </Col>
-                <Col xs={6} md={4}>
+                <Col md={{ span: 1, offset: 1 }}>
                   <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
                 </Col>
               </Row>
