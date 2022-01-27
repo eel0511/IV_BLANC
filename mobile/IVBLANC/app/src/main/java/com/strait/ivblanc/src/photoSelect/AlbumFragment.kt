@@ -64,6 +64,10 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         }
     }
 
+    fun init() {
+        setImageUrisFromCursor(getPhotoCursor())
+    }
+
     // 권한이 필요한 이유를 설명하는 다이얼로그 제공
     // positive button에 권한 설정으로 이동하는 클릭리스너 세팅
     private fun showReasonForPermission() {
@@ -81,6 +85,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
             }).build().show()
     }
 
+    // 이미지 커서에서 image 경로 리스트로 받기
     fun setImageUrisFromCursor(cursor: Cursor):List<Uri> {
         val list = mutableListOf<Uri>()
         cursor.use {
@@ -94,6 +99,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         return list
     }
 
+    // content resolver로 이미지 커서 가져오기
     fun getPhotoCursor(): Cursor {
         val resolver = requireActivity().contentResolver
         var queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
@@ -109,6 +115,4 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         queryUri = queryUri.buildUpon().build()
         return resolver.query(queryUri, img, null, null, orderBy)!!
     }
-
-
 }
