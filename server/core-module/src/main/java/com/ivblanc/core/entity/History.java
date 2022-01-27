@@ -1,6 +1,7 @@
 package com.ivblanc.core.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -39,9 +40,8 @@ public class History extends BaseEntity{
 	private BigDecimal field;
 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private Date date;
+	private LocalDateTime date;
 
 	@Column(length = 10)
 	private String weather;

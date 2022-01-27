@@ -1,6 +1,7 @@
 package com.ivblanc.core.repository;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Pageable;
@@ -21,7 +22,7 @@ public interface HistoryRepoCommon {
 
 	History findByDateAndUserId(LocalDateTime date, int userId);
 
-	List<History> findAllByCreateDateBetweenAndUserId(LocalDateTime start, LocalDateTime end, int userId);
+	List<History> findAllByDateBetweenAndUserId(LocalDateTime start, LocalDateTime end, int userId);
 
 	List<History> findAllByWeatherAndUserId(String weather, int userId);
 
