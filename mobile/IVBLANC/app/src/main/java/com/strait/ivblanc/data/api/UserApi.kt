@@ -4,6 +4,7 @@ import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.dto.UserForLogin
 import com.strait.ivblanc.data.model.response.EmailCheckResponse
 import com.strait.ivblanc.data.model.response.JoinResponse
+import com.strait.ivblanc.data.model.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
