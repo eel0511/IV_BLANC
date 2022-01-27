@@ -3,6 +3,7 @@ package com.ivblanc.api.config.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -28,9 +29,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomOauth2UserService customOauth2UserService;
+
     private OAuth2SuccessHandler oAuth2SuccessHandler;
+
     private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
+    @Autowired
+    public SecurityConfig(@Lazy OAuth2SuccessHandler oAuth2SuccessHandler, CustomOauth2UserService customOauth2UserService, JwtTokenProvider jwtTokenProvider) {
+        this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+        this.customOauth2UserService = customOauth2UserService;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -93,7 +103,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .userService(customOauth2UserService)
             .and()
             .successHandler(oAuth2SuccessHandler)
-            .failureHandler((AuthenticationFailureHandler) oAuth2AuthenticationFailureHandler);
+            .failureHandler(oAuth2AuthenticationFailureHandler);
 
 
         //http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
