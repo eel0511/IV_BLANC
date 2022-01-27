@@ -38,8 +38,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                // TODO: 2022/01/27 사진 정보 요청 하기
-                setImageUrisFromCursor(getPhotoCursor())
+                init()
             } else {
                 showReasonForPermission()
             }
@@ -56,8 +55,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         when {
             // 권한이 있을 때 사진 정보 요청
             ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
-                // TODO: 2022/01/27 사진 정보 요청 하기
-                setImageUrisFromCursor(getPhotoCursor())
+                init()
                 return
             }
             //사용자가 명시적으로 권한을 거부했을 때 -> true
