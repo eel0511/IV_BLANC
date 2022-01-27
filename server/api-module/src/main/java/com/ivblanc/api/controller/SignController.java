@@ -154,6 +154,9 @@ public class SignController {
             .build();
 
         response.setHeader("Set-Cookie", rCookie.toString());
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Method", "GET, POST, OPTIONS, PUT");
+        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
 
         // 회원 토큰값, 디바이스 정보 업데이트
         user.updateTokenFCM(req.getToken_fcm());
