@@ -15,9 +15,9 @@ public interface HistoryRepoCommon {
 
 	List<History> findAllByUserId(int userId, Pageable pageable);
 
-	List<History> findAllByUserIdOrderByCreateDateDesc(int userId, Pageable pageable);
+	List<History> findAllByUserIdOrderByDateDesc(int userId, Pageable pageable);
 
-	List<History> findAllByUserIdOrderByCreateDateAsc(int userId, Pageable pageable);
+	List<History> findAllByUserIdOrderByDateAsc(int userId, Pageable pageable);
 
 	History findByDateAndUserId(LocalDateTime date, int userId);
 
