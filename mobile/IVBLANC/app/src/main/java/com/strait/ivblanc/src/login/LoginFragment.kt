@@ -1,20 +1,27 @@
 package com.strait.ivblanc.src.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
+import com.strait.ivblanc.data.model.dto.UserForLogin
 import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentLoginBinding
+import com.strait.ivblanc.src.main.MainActivity
 import com.strait.ivblanc.util.InputValidUtil
+import com.strait.ivblanc.util.Status
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
+    private val loginViewModel: LoginViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -23,7 +30,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     private fun initView() {
         binding.buttonLoginFLogin.setOnClickListener {
             if(isValidForm()) {
-                // request login
+                loginViewModel.emailLogin(
+                    UserForLogin(binding.editTextLoginFEmail.text.toString(),
+                    binding.editTextLoginFPassword.text.toString(),
+                    fcmToken = null)
+                )
             }
         }
         binding.editTextLoginFEmail.addTextChangedListener {
@@ -38,6 +49,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                 dismissErrorOnPassword()
             }
         }
+        loginViewModel.loginRequestLiveData.observe(requireActivity()) {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    dismissLoading()
+                }
+                Status.ERROR -> {
+                    toast(it.message!!, Toast.LENGTH_SHORT)
+                    dismissLoading()
+                }
+                Status.LOADING -> {
+                    setLoading()
+                }
+            }
+        }
+    }
+
+    private fun setLoading() {
+
+    }
+
+    private fun dismissLoading() {
+
     }
 
     private fun isValidForm(): Boolean {
