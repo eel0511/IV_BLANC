@@ -17,7 +17,7 @@ class PhotoRecyclerViewAdapter(private var data: List<Uri>): RecyclerView.Adapte
             val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes)
             Glide.with(imageView).load(item).centerCrop().into(imageView)
             itemView.setOnClickListener{
-                itemClickListener.onClick(adapterPosition)
+                itemClickListener.onClick(item)
             }
         }
     }
@@ -30,6 +30,6 @@ class PhotoRecyclerViewAdapter(private var data: List<Uri>): RecyclerView.Adapte
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
-        fun onClick(position: Int)
+        fun onClick(uri: Uri)
     }
 }
