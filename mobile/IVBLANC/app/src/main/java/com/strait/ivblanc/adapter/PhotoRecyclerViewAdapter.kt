@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 
 class PhotoRecyclerViewAdapter(private var data: List<Uri>): RecyclerView.Adapter<PhotoRecyclerViewAdapter.ViewHolder>() {
@@ -13,7 +14,8 @@ class PhotoRecyclerViewAdapter(private var data: List<Uri>): RecyclerView.Adapte
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: Uri) {
-            itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes).setImageURI(item)
+            val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes)
+            Glide.with(imageView).load(item).centerCrop().into(imageView)
             itemView.setOnClickListener{
                 itemClickListener.onClick(adapterPosition)
             }
