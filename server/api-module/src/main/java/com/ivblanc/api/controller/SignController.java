@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,9 +140,20 @@ public class SignController {
 
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUserId()), Collections.singletonList("ROLE_USER"));
 
-        Cookie cookie = new Cookie("JWT", token);
-        cookie.setMaxAge(1000 * 1000);
-        response.addCookie(cookie);
+        // Cookie cookie = new Cookie("JWT", token);
+        // cookie.setMaxAge(1000 * 1000);
+        // response.addCookie(cookie);
+
+        ResponseCookie rCookie = ResponseCookie.from("JWT", token)
+            .path("/")
+            .secure(true)
+            .sameSite("None")
+            .httpOnly(false)
+            .domain("localhost")
+            .maxAge(1000 * 1000)
+            .build();
+
+        response.setHeader("Set-Cookie", rCookie.toString());
 
         // 회원 토큰값, 디바이스 정보 업데이트
         user.updateTokenFCM(req.getToken_fcm());
