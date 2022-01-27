@@ -1,7 +1,6 @@
 package com.strait.ivblanc.src.photoSelect
 
 import android.Manifest
-import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -9,10 +8,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
-import android.view.MenuInflater
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -28,11 +26,13 @@ import com.strait.ivblanc.ui.PermissionDialog
 private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private var scaleFactor = 1.0F
     private val itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
         override fun onClick(uri: Uri) {
             Glide.with(requireActivity()).load(uri).into(binding.imageViewAlbumF)
         }
     }
+    lateinit var scaleGestureDetector: ScaleGestureDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestPermissionLauncher = registerForActivityResult(
@@ -72,11 +72,35 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
     }
 
     fun init() {
+        // 사진 pinch 제스처 감지 후 이미지 사이즈 스케일 적용
+        scaleGestureDetector = ScaleGestureDetector(requireActivity(), object: ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector?): Boolean {
+                scaleFactor *= detector!!.scaleFactor
+                binding.imageViewAlbumF.scaleY = scaleFactor
+                binding.imageViewAlbumF.scaleX = scaleFactor
+                return true
+            }
+        })
+
         val uris = setImageUrisFromCursor(getPhotoCursor())
         binding.recyclerViewAlbumF.apply {
             adapter = PhotoRecyclerViewAdapter(uris).apply { itemClickListener = this@AlbumFragment.itemClickListener }
             layoutManager = GridLayoutManager(requireActivity(), 4, RecyclerView.VERTICAL, false)
         }
+        //선택 이미지 pinch zoom in, out 동작 중, viewpager 작동 멈추기
+        binding.constraintLayoutAlbumFContainer.setOnTouchListener(object: View.OnTouchListener {
+            override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+                (requireActivity() as PhotoSelectActivity).viewPager.isUserInputEnabled = false
+                scaleGestureDetector.onTouchEvent(p1)
+                p1?.let {
+                    if(it.action == MotionEvent.ACTION_UP || it.action == MotionEvent.ACTION_POINTER_UP) {
+                        (requireActivity() as PhotoSelectActivity).viewPager.isUserInputEnabled = true
+                    }
+                }
+                return true
+            }
+        })
+
     }
 
     // 권한이 필요한 이유를 설명하는 다이얼로그 제공
@@ -106,7 +130,6 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
                 list.add(Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString()))
             }
         }
-        Log.d(TAG, "setImageUrisFromCursor: ${list.toString()}")
         return list
     }
 
