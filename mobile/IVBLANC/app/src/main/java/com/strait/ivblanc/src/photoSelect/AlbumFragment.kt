@@ -1,11 +1,16 @@
 package com.strait.ivblanc.src.photoSelect
 
 import android.Manifest
+import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
+import android.view.MenuInflater
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -16,6 +21,7 @@ import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.databinding.FragmentAlbumBinding
 import com.strait.ivblanc.ui.PermissionDialog
 
+private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
@@ -24,7 +30,8 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                getPhoto()
+                // TODO: 2022/01/27 사진 정보 요청 하기
+                setImageUrisFromCursor(getPhotoCursor())
             } else {
                 showReasonForPermission()
             }
@@ -41,7 +48,8 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         when {
             // 권한이 있을 때 사진 정보 요청
             ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
-                getPhoto()
+                // TODO: 2022/01/27 사진 정보 요청 하기
+                setImageUrisFromCursor(getPhotoCursor())
                 return
             }
             //사용자가 명시적으로 권한을 거부했을 때 -> true
@@ -73,8 +81,33 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
             }).build().show()
     }
 
-    fun getPhoto() {
-        Toast.makeText(requireActivity(), "사진 요청", Toast.LENGTH_SHORT).show()
+    fun setImageUrisFromCursor(cursor: Cursor):List<Uri> {
+        val list = mutableListOf<Uri>()
+        cursor.use {
+            val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            while(cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                list.add(Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString()))
+            }
+        }
+        Log.d(TAG, "setImageUrisFromCursor: ${list.toString()}")
+        return list
+    }
+
+    fun getPhotoCursor(): Cursor {
+        val resolver = requireActivity().contentResolver
+        var queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+        val img = arrayOf(
+            MediaStore.Images.ImageColumns._ID,
+            MediaStore.Images.ImageColumns.TITLE,
+            MediaStore.Images.ImageColumns.DATE_TAKEN
+        )
+
+        val orderBy = MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
+
+        queryUri = queryUri.buildUpon().build()
+        return resolver.query(queryUri, img, null, null, orderBy)!!
     }
 
 
