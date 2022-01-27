@@ -1,6 +1,5 @@
 package com.strait.ivblanc.src.login
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.strait.ivblanc.R
@@ -14,6 +13,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         super.onCreate(savedInstanceState)
 
         val joinFragment = JoinFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_login_container, joinFragment).commit()
+        val loginFragment = LoginFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_login_container, loginFragment).commit()
     }
 }
