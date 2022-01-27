@@ -53,6 +53,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
             when(it.status) {
                 Status.SUCCESS -> {
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    requireActivity().finish()
                     dismissLoading()
                 }
                 Status.ERROR -> {
@@ -67,11 +68,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     }
 
     private fun setLoading() {
-
+        binding.progressBarLoginFLoading.visibility = View.VISIBLE
     }
 
     private fun dismissLoading() {
-
+        binding.progressBarLoginFLoading.visibility = View.GONE
     }
 
     private fun isValidForm(): Boolean {
