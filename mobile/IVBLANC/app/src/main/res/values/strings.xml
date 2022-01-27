@@ -18,6 +18,8 @@
     <string name="birthdayErrorMessage">올바르지 않은 생년월일입니다.</string>
     <string name="emailNotCheckedErrorMessage">이메일 중복 검사를 눌러주세요.</string>
     <string name="genderNotCheckedErrorMessage">성별을 선택해주세요.</string>
+    <string name="networkErrorMessage">네트워크 연결이 불안정합니다.</string>
+    <string name="unknownErrorMessage">알 수 없는 에러입니다.</string>
     <string name="checkDuplication">중복체크</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
