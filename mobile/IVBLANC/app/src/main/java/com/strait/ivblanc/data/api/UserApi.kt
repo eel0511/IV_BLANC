@@ -16,4 +16,7 @@ interface UserApi {
     @GET("/api/sign/checkEmail")
     suspend fun emailCheck(@Query("email") email: String): Response<EmailCheckResponse>
 
+    @POST("/api/sign/login")
+    suspend fun emailLogin(@Body user: UserForLogin): Response<LoginResponse>
+
 }
