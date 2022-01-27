@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import MyClothesCreateModalBody from './MyClothesCreateModalBody';
 
 export default function MyClothesCreateButton() {
@@ -7,9 +7,6 @@ export default function MyClothesCreateButton() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const getClothesData = (clothesData) => {
-    console.log(clothesData)
-  };
 
   return (
     <>
@@ -22,13 +19,8 @@ export default function MyClothesCreateButton() {
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MyClothesCreateModalBody getClothesData={getClothesData}/>
+          <MyClothesCreateModalBody />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
