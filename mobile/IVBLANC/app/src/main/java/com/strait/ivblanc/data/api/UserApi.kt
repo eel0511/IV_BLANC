@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.api
 
 import com.strait.ivblanc.data.model.dto.UserForJoin
+import com.strait.ivblanc.data.model.dto.UserForLogin
 import com.strait.ivblanc.data.model.response.EmailCheckResponse
 import com.strait.ivblanc.data.model.response.JoinResponse
 import retrofit2.Response
