@@ -144,6 +144,7 @@
 
     <ProgressBar
         android:id="@+id/progressBar_loginF_loading"
+        android:visibility="gone"
         android:layout_width="@dimen/loadingProgressSize"
         android:layout_height="@dimen/loadingProgressSize"
         app:layout_constraintBottom_toBottomOf="parent"
