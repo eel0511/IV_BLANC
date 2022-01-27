@@ -7,6 +7,9 @@ export default function MyClothesCreateButton() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const getClothesData = (clothesData) => {
+    console.log(clothesData)
+  };
 
   return (
     <>
@@ -19,7 +22,7 @@ export default function MyClothesCreateButton() {
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MyClothesCreateModalBody />
+          <MyClothesCreateModalBody getClothesData={getClothesData}/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import codeData from '../../codeData.json';
 
-export default function MyClothesCreateModalBody() {
+export default function MyClothesCreateModalBody({ getClothesData }) {
   const [selectedColor, setselectedColor] = useState('빨강');
   const [selectedMaterial, setselectedMaterial] = useState('면');
   const [selectedMainCategory, setselectedMainCategory] = useState('상의');
@@ -44,6 +44,18 @@ export default function MyClothesCreateModalBody() {
     setselectedImg(e.target.file[0]);
     // console.log(e.target.files[0]);
   };
+
+  useEffect(() => {
+    getClothesData({
+      'category': selectedSubCategory,
+      'color': selectedColor,
+      'file': selectedImg,
+      'material': selectedMaterial,
+      'season': selectedSeason,
+      'size': selectedSize,
+      'userId': 1
+    });
+  });
 
   return (
     <form className='RadioForm'>
