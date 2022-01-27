@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.PhotoRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
@@ -28,8 +29,8 @@ private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private val itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
-        override fun onClick(position: Int) {
-            // TODO: 2022/01/28 container로 사진 setting
+        override fun onClick(uri: Uri) {
+            Glide.with(requireActivity()).load(uri).into(binding.imageViewAlbumF)
         }
     }
 
