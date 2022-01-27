@@ -7,7 +7,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-private const val TAG = "AddCoIncep_싸피"
+private const val TAG = "AddCoIncep_해협"
 class AddCookiesInterceptor : Interceptor{
 
     @Throws(IOException::class)

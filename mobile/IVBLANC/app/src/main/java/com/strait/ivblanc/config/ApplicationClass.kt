@@ -19,7 +19,7 @@ class ApplicationClass: Application() {
     companion object {
 
         // JWT Token Header 키 값
-        const val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
+        const val X_AUTH_TOKEN = "X-AUTH-TOKEN"
         const val SHARED_PREFERENCES_NAME = "IV_BLANC"
         const val COOKIES_KEY_NAME = "cookies"
         const val AUTO_LOGIN = "auto_login_flag"
