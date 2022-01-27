@@ -16,7 +16,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
+import com.strait.ivblanc.adapter.PhotoRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.databinding.FragmentAlbumBinding
 import com.strait.ivblanc.ui.PermissionDialog
@@ -24,6 +27,11 @@ import com.strait.ivblanc.ui.PermissionDialog
 private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
     lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
+        override fun onClick(position: Int) {
+            // TODO: 2022/01/28 container로 사진 setting
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestPermissionLauncher = registerForActivityResult(
@@ -65,7 +73,11 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
     }
 
     fun init() {
-        setImageUrisFromCursor(getPhotoCursor())
+        val uris = setImageUrisFromCursor(getPhotoCursor())
+        binding.recyclerViewAlbumF.apply {
+            adapter = PhotoRecyclerViewAdapter(uris).apply { itemClickListener = this@AlbumFragment.itemClickListener }
+            layoutManager = GridLayoutManager(requireActivity(), 4, RecyclerView.VERTICAL, false)
+        }
     }
 
     // 권한이 필요한 이유를 설명하는 다이얼로그 제공
