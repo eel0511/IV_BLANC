@@ -5,4 +5,5 @@
     <dimen name="defaultPadding">16dp</dimen>
     <dimen name="dialogWidth">250dp</dimen>
     <dimen name="loadingProgressSize">48dp</dimen>
+    <dimen name="photoBoxSize">300dp</dimen>
 </resources>

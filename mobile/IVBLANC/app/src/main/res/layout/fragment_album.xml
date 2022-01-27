@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".src.photoSelect.AlbumFragment" >
+
+    tools:context=".src.photoSelect.AlbumFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_albumF_container"
@@ -13,26 +14,44 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/black_trans"
+        android:clipChildren="false">
 
-        <ImageView
-            android:id="@+id/imageView_albumF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:src="@drawable/naver"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_albumF_photoBox"
+            android:layout_width="@dimen/photoBoxSize"
+            android:layout_height="@dimen/photoBoxSize"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout_albumF_container"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout_albumF_container"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_albumF_container"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayout_albumF_container"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageView_albumF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/naver" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_albumF"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout_albumF_container"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_albumF_container" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
