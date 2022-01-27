@@ -22,6 +22,16 @@ import com.strait.ivblanc.adapter.PhotoRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.databinding.FragmentAlbumBinding
 import com.strait.ivblanc.ui.PermissionDialog
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.os.Environment
+import android.text.format.DateFormat
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.*
+
 
 private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
@@ -100,7 +110,6 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
                 return true
             }
         })
-
     }
 
     // 권한이 필요한 이유를 설명하는 다이얼로그 제공
@@ -148,5 +157,38 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
 
         queryUri = queryUri.buildUpon().build()
         return resolver.query(queryUri, img, null, null, orderBy)!!
+    }
+
+    // photoBox만큼 screen capture
+    fun screenshot(): File? {
+        val date = Date()
+        // 이미지 파일 이름을 시간으로 초기화
+        val format: CharSequence = DateFormat.format("yyyy-MM-dd_hh:mm:ss", date)
+        try {
+            // 저장소 directory 경로 초기화
+            val dirpath: String = Environment.getExternalStorageDirectory().toString()
+            val file = File(dirpath)
+            if (!file.exists()) {
+                val mkdir: Boolean = file.mkdir()
+            }
+
+            val path = "$dirpath/temp-$format.jpeg" // 파일 이름 설정
+            val view = binding.constraintLayoutAlbumFPhotoBox //포토박스 만큼만 비트맵 생성
+            val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+            var canvas = Canvas(bitmap)
+            view.draw(canvas)
+
+            val imageurl = File(path)
+            val outputStream = FileOutputStream(imageurl)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream) // Jpeg로 압축
+            outputStream.flush()
+            outputStream.close()
+            return imageurl // 이미지 외부 저장소에 저장
+        } catch (io: FileNotFoundException) {
+            io.printStackTrace()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }
