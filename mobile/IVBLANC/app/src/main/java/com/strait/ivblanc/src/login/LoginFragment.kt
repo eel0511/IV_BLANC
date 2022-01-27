@@ -10,6 +10,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.UserForLogin
@@ -30,11 +32,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
     private fun initView() {
         binding.buttonLoginFLogin.setOnClickListener {
             if(isValidForm()) {
-                loginViewModel.emailLogin(
-                    UserForLogin(binding.editTextLoginFEmail.text.toString(),
-                    binding.editTextLoginFPassword.text.toString(),
-                    fcmToken = null)
-                )
+                login()
             }
         }
         binding.editTextLoginFEmail.addTextChangedListener {
@@ -64,6 +62,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::b
                     setLoading()
                 }
             }
+        }
+    }
+
+    private fun login() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(!it.isSuccessful) return@addOnCompleteListener
+            val token = it.result
+            loginViewModel.emailLogin(
+                UserForLogin(binding.editTextLoginFEmail.text.toString(),
+                    binding.editTextLoginFPassword.text.toString(),
+                    fcmToken = token)
+            )
         }
     }
 
