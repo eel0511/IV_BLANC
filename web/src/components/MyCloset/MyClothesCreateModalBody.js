@@ -41,8 +41,8 @@ export default function MyClothesCreateModalBody() {
   };
 
   const imgHandleChange = (e) => {
-    // setselectedImg(e.target.file[0])
-    console.log(e.target.files[0])
+    setselectedImg(e.target.file[0]);
+    // console.log(e.target.files[0]);
   };
 
   return (
