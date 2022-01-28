@@ -2,18 +2,13 @@ package com.ivblanc.api.service;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.tomcat.jni.Local;
-import org.joda.time.LocalDate;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.core.entity.History;
-import com.ivblanc.core.entity.Style;
 import com.ivblanc.core.repository.HistoryRepository;
 
 import lombok.RequiredArgsConstructor;

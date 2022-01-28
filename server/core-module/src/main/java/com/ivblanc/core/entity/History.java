@@ -2,17 +2,22 @@ package com.ivblanc.core.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.BatchSize;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -63,4 +68,15 @@ public class History extends BaseEntity{
 
 	@Column(name = "user_id")
 	private int userId;
+
+	@Builder.Default
+	@JsonManagedReference
+	@BatchSize(size = 10)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "history", cascade = CascadeType.ALL)
+	private List<Photo> photos = new ArrayList<>();
+
+	public void add(Photo photo) {
+		photo.setHistory(this);
+		this.photos.add(photo);
+	}
 }
