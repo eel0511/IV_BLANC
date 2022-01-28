@@ -39,4 +39,5 @@
     <string name="color">색상</string>
     <string name="representativeColor">대표 색</string>
     <string name="before">이전</string>
+    <string name="size">사이즈</string>
 </resources>
