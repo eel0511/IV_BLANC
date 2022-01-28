@@ -32,7 +32,7 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> AlbumFragment()
-                else -> AlbumFragment()
+                else -> CameraFragment()
             }
         }
     }
