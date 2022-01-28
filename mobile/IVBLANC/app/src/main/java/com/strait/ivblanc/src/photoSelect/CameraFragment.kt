@@ -53,6 +53,9 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkReadStoragePermission()
+        binding.buttonCameraFShot.setOnClickListener {
+            takePicture()
+        }
     }
 
     //권한 체크가 되어있지 않다면 권한 체크 실행
@@ -107,10 +110,8 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
     //권한 관련 함수 끝
 
     //카메라 관련 함수 시작
+    private var imageCapture: ImageCapture? = null
     private fun startCamera() {
-        binding.buttonCameraFShot.setOnClickListener {
-            takePicture()
-        }
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
 
@@ -135,14 +136,12 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
                 cameraProvider.unbindAll()
 
                 // 카메라와 라이프사이클 바인딩
-                cameraProvider.bindToLifecycle(requireActivity(), cameraSelector, preview)
+                cameraProvider.bindToLifecycle(requireActivity(), cameraSelector, preview, imageCapture)
             } catch (e: Exception) {
                 Log.d(TAG, "Use case binding failed: ", e)
             }
         }, ContextCompat.getMainExecutor(requireActivity()))
     }
-
-    private var imageCapture: ImageCapture? = null
 
     private fun takePicture() {
         val imageCapture = this.imageCapture?: return
@@ -153,6 +152,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/IVBLANC")
             }
         }
