@@ -51,13 +51,13 @@
         style="@style/Text.Base"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/season"
+        android:text="@string/size"
         android:layout_marginTop="@dimen/defaultPadding"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_categoryF_small" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout_categoryF_season"
+        android:id="@+id/textInputLayout_categoryF_size"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_categoryF_season">
 
         <AutoCompleteTextView
-            android:id="@+id/autoComplete_categoryF_season"
+            android:id="@+id/autoComplete_categoryF_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
