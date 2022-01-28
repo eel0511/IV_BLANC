@@ -33,4 +33,13 @@
     <string name="camera">카메라</string>
     <string name="cancel">취소</string>
     <string name="ok">확인</string>
+    <string name="category">종류</string>
+    <string name="season">계절</string>
+    <string name="next">다음</string>
+    <string name="color">색상</string>
+    <string name="representativeColor">대표 색</string>
+    <string name="before">이전</string>
+    <string name="size">사이즈</string>
+    <string name="material">소재</string>
+    <string name="upload">업로드</string>
 </resources>
