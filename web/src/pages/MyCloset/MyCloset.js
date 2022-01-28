@@ -73,9 +73,13 @@ export default function MyCloset() {
     axios
       .get('http://119.56.162.61:8888/api/clothes/all', {
         params: {
-          page: 1,
-          userId: 1,
-        },
+          page: 0,
+        }
+      },
+      {
+        headers: {
+          'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDMzNTc2MzUsImV4cCI6MTY0NTk0OTYzNX0.7EaSVoRJPxS1D0wXepQQ3siiwNsZ0zy86DGE5OQJmx4'
+        }
       })
       .then((response) => {
         console.log(response.data);
