@@ -86,12 +86,12 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Text.base" parent="android:TextAppearance">
+    <style name="Text.Base" parent="android:TextAppearance">
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/app_font</item>
     </style>
 
-    <style name="Text.Title" parent="Text.base">
+    <style name="Text.Title" parent="Text.Base">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">22sp</item>
     </style>

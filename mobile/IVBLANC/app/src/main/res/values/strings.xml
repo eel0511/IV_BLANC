@@ -33,4 +33,7 @@
     <string name="camera">카메라</string>
     <string name="cancel">취소</string>
     <string name="ok">확인</string>
+    <string name="category">종류</string>
+    <string name="season">계절</string>
+    <string name="next">다음</string>
 </resources>
