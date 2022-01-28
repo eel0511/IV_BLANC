@@ -108,6 +108,10 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
 
     //카메라 관련 함수 시작
     private fun startCamera() {
+        binding.buttonCameraFShot.setOnClickListener {
+            takePicture()
+        }
+
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
 
         cameraProviderFuture.addListener({
@@ -119,6 +123,9 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
                 .also {
                     it.setSurfaceProvider(binding.previewViewCameraF.surfaceProvider)
                 }
+
+            imageCapture = ImageCapture.Builder()
+                .build()
 
             //후면 카메라 기본으로 세팅
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
