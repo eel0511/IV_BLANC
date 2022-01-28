@@ -36,4 +36,7 @@
     <string name="category">종류</string>
     <string name="season">계절</string>
     <string name="next">다음</string>
+    <string name="color">색상</string>
+    <string name="representativeColor">대표 색</string>
+    <string name="before">이전</string>
 </resources>
