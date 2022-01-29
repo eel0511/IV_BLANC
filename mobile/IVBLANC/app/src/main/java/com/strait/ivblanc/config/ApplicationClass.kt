@@ -23,6 +23,7 @@ class ApplicationClass: Application() {
         const val SHARED_PREFERENCES_NAME = "IV_BLANC"
         const val COOKIES_KEY_NAME = "cookies"
         const val AUTO_LOGIN = "auto_login_flag"
+        const val JWT = "JWT"
 
         lateinit var sRetrofit: Retrofit
         lateinit var sSharedPreferences: SharedPreferencesUtil
@@ -42,7 +43,7 @@ class ApplicationClass: Application() {
             .readTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
             .connectTimeout(TIME_OUT, TimeUnit.MILLISECONDS)
             // 로그캣에 okhttp.OkHttpClient로 검색하면 http 통신 내용을 보여줍니다.
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS).setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(AddCookiesInterceptor())  //쿠키 전송
             .addInterceptor(ReceivedCookiesInterceptor()) //쿠키 추출

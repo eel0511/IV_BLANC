@@ -17,6 +17,12 @@ class SharedPreferencesUtil(context: Context) {
         return preferences.getStringSet(ApplicationClass.COOKIES_KEY_NAME, HashSet())
     }
 
+    fun setString(key: String, value: String) {
+        val editor = preferences.edit()
+        editor.putString(key, value)
+        editor.apply()
+    }
+
     fun getString(key:String): String? {
         return preferences.getString(key, null)
     }

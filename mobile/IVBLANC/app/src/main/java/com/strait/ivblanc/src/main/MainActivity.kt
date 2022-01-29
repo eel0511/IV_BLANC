@@ -15,7 +15,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onCreate(savedInstanceState)
 
         // TODO: 2022/01/26 모든 옷 받기 테스트 
-        mainViewModel.getAllClothes(0, 14)
+        mainViewModel.getAllClothes(0)
 
         supportFragmentManager.beginTransaction().replace(R.id.frame, PhotoListFragment()).commit()
     }

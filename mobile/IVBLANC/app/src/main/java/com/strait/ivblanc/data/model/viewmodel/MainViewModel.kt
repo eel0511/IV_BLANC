@@ -28,11 +28,11 @@ class MainViewModel: ViewModel() {
         get() = _clothesListLiveData
 
     // TODO: 2022/01/26 access token 사용시 변경
-//    fun getAllClothes(page: Int) = viewModelScope.launch {
-    fun getAllClothes(page: Int, userId: Int) = viewModelScope.launch {
+    fun getAllClothes(page: Int) = viewModelScope.launch {
+//    fun getAllClothes(page: Int, userId: Int) = viewModelScope.launch {
         _clothesResponseStatus.postValue(Resource.loading(null))
         CoroutineScope(Dispatchers.IO).launch {
-            val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page, userId)
+            val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
             _clothesResponseStatus.postValue(result)
             updateResult(result)
         }
