@@ -15,8 +15,8 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
 
-class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
-    lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
+class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
+    lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,9 +48,15 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                             exAdapter.notifyItemRangeRemoved(position + 1, count)
                         }
                     }
+                    // TODO: 2022/01/30 data.content type에 따라 분기
                     ExpandableRecyclerViewAdapter.CHILD -> {
-                        exAdapter.data[position].content?.let { clothes: Clothes ->
-                            val intent = Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", clothes)
+                        exAdapter.data[position].content?.let { item ->
+                            val intent = when(item) {
+                                is Clothes -> {
+                                    Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
+                                }
+                                else -> null
+                            }
                             startActivity(intent)
                         }
                     }
@@ -89,7 +95,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             
         }
         viewModel.clothesListLiveData.observe(requireActivity()) {
-            exAdapter.data = it as ArrayList<PhotoItem<Clothes>>
+            exAdapter.data = it as ArrayList<PhotoItem<T>>
             exAdapter.notifyDataSetChanged()
         }
 
