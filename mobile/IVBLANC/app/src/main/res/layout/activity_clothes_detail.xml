@@ -56,10 +56,12 @@
         android:layout_marginTop="@dimen/defaultPadding">
 
         <TextView
+            android:id="@+id/textView_clothesDetail_categoryLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="상의"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_categorySmall"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,8 +72,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="대표색"/>
+            android:text="@string/representativeColor"/>
         <ImageView
+            android:id="@+id/imageView_clothesDetail_color"
             android:layout_width="24dp"
             android:layout_height="24dp"
             tools:background="@drawable/circle"
@@ -83,8 +86,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="소재"/>
+            android:text="@string/material"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_material"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,8 +99,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="사이즈"/>
+            android:text="@string/size"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_size"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -107,8 +112,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="계절"/>
+            android:text="@string/season"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_season"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,6 +136,7 @@
             android:layout_height="24dp"
             android:background="@drawable/ic_like"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_like"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -141,6 +148,7 @@
             android:layout_height="@dimen/smallIconSize"
             android:background="@drawable/ic_dislike"/>
         <TextView
+            android:id="@+id/textView_clothesDetail_dislike"
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
