@@ -89,10 +89,15 @@
     <style name="Text.Base" parent="android:TextAppearance">
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/app_font</item>
+        <item name="android:textSize">@dimen/defaultTextSize</item>
+    </style>
+
+    <style name="Text.Subtitle" parent="Text.Base">
+        <item name="android:textSize">@dimen/subtitleTextSize</item>
     </style>
 
     <style name="Text.Title" parent="Text.Base">
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/titleTextSize</item>
     </style>
 </resources>
