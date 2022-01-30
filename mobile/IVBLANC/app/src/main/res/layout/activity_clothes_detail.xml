@@ -58,24 +58,24 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="상의"/>
+            tools:text="상의"/>
         <TextView
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아우터" />
+            tools:text="아우터" />
         <Space
             android:layout_width="wrap_content"
             android:layout_height="@dimen/defaultPadding"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="대표색"/>
+            tools:text="대표색"/>
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/circle"
-            android:backgroundTint="@color/red_300"
+            tools:background="@drawable/circle"
+            tools:backgroundTint="@color/red_300"
             android:layout_marginTop="@dimen/smallMargin"/>
         <Space
             android:layout_width="wrap_content"
@@ -83,36 +83,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소재"/>
+            tools:text="소재"/>
         <TextView
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="가죽"/>
+            tools:text="가죽"/>
         <Space
             android:layout_width="wrap_content"
             android:layout_height="@dimen/defaultPadding"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="사이즈"/>
+            tools:text="사이즈"/>
         <TextView
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"/>
+            tools:text="100"/>
         <Space
             android:layout_width="wrap_content"
             android:layout_height="@dimen/defaultPadding"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="계절"/>
+            tools:text="계절"/>
         <TextView
             style="@style/Text.Subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="겨울"/>
+            tools:text="겨울"/>
     </LinearLayout>
 
     <LinearLayout
