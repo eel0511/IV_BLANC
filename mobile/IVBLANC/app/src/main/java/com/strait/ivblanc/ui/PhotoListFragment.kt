@@ -1,5 +1,6 @@
 package com.strait.ivblanc.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
+import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
 
 class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
@@ -46,9 +48,11 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                             exAdapter.notifyItemRangeRemoved(position + 1, count)
                         }
                     }
-                    // TODO: 2022/01/24 상세 뷰로 이동
                     ExpandableRecyclerViewAdapter.CHILD -> {
-
+                        exAdapter.data[position].content?.let { clothes: Clothes ->
+                            val intent = Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", clothes)
+                            startActivity(intent)
+                        }
                     }
                 }
             }
