@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
+import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.ui.PhotoListFragment
@@ -17,6 +18,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         // TODO: 2022/01/26 모든 옷 받기 테스트 
         mainViewModel.getAllClothes(0)
 
-        supportFragmentManager.beginTransaction().replace(R.id.frame, PhotoListFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.frame, PhotoListFragment<Clothes>()).commit()
     }
 }
