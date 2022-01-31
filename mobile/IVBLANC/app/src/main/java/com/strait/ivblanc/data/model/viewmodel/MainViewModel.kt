@@ -104,6 +104,11 @@ class MainViewModel: ViewModel() {
 
     }
 
+    // 즐겨찾기 한 옷
+    private fun getFavoriteClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
+        return list.filter { clothes -> clothes.favorite == 1 }.toMutableList()
+    }
+
     // 최근 일주일 간 생성된 옷
     private fun getCreatedRecentlyClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
         val today = System.currentTimeMillis()
