@@ -34,6 +34,7 @@ class MainViewModel: ViewModel() {
     val clothesResponseStatus: LiveData<Resource<ClothesResponse>>
         get() = _clothesResponseStatus
 
+    // ExpandableRecyclerView에서 observe하는 리스트
     private val _clothesListLiveData = MutableLiveData<List<PhotoItem<Clothes>>>()
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
@@ -64,6 +65,7 @@ class MainViewModel: ViewModel() {
                         mutableList.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = clothes))
                     }
                     _clothesListLiveData.postValue(mutableList)
+                    totalClothesList.addAll(it.toMutableList())
                 }
             }
         }
