@@ -82,4 +82,19 @@
     <string name="shoulderBag">숄더백</string>
     <string name="handbag">핸드백</string>
     <string name="hat">모자</string>
+    <string name="cotton">면</string>
+    <string name="linen">린넨</string>
+    <string name="polyester">폴리에스테르</string>
+    <string name="wool">니트/울</string>
+    <string name="fur">퍼</string>
+    <string name="tweed">트위드</string>
+    <string name="nylon">나일론</string>
+    <string name="denim">데님</string>
+    <string name="leather">가죽</string>
+    <string name="suede">스웨이드</string>
+    <string name="velvet">벨벳</string>
+    <string name="chiffon">쉬폰</string>
+    <string name="silk">실크</string>
+    <string name="cordeDuRoi">코듀로이</string>
+    <string name="metalic">메탈릭</string>
 </resources>
