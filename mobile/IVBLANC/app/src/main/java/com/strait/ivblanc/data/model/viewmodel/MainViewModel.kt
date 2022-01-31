@@ -5,20 +5,26 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
-import com.strait.ivblanc.config.ApplicationClass
-import com.strait.ivblanc.data.api.ClothesApi
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.response.ClothesResponse
 import com.strait.ivblanc.data.repository.ClothesRepository
+import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * 네트워크에서 받은 모든 정보는 id를 키로 HashMap에 저장?
+ * 문제점: 변경이 있을 때만 네트워크에 요청, 어떻게 변경을 감지?
+ */
 class MainViewModel: ViewModel() {
-    val clothesRepository = ClothesRepository()
+    private val clothesRepository = ClothesRepository()
+    var currentCategory = CategoryCode.TOTAL
+    private val totalClothesList = mutableListOf<Clothes>()
+
     private val _clothesResponseStatus = MutableLiveData<Resource<ClothesResponse>>()
     val clothesResponseStatus: LiveData<Resource<ClothesResponse>>
         get() = _clothesResponseStatus
@@ -27,10 +33,9 @@ class MainViewModel: ViewModel() {
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
 
-    // TODO: 2022/01/26 access token 사용시 변경
+    // TODO: 2022/01/31 page 삭제
     fun getAllClothes(page: Int) = viewModelScope.launch {
-//    fun getAllClothes(page: Int, userId: Int) = viewModelScope.launch {
-        _clothesResponseStatus.postValue(Resource.loading(null))
+        setLoading()
         CoroutineScope(Dispatchers.IO).launch {
             val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
             _clothesResponseStatus.postValue(result)
@@ -42,6 +47,7 @@ class MainViewModel: ViewModel() {
      * @param result
      * clothesRepository에서 받은 response
      */
+    // TODO: 2022/01/31 paging이 사라져서 필요 없어짐
     private fun updateResult(result: Resource<ClothesResponse>) {
         //
         if(result.status == Status.SUCCESS) {
@@ -58,10 +64,28 @@ class MainViewModel: ViewModel() {
         }
     }
 
+    // 대분류 카테고리로 전체 옷 필터링
+    private fun getClothesListWithLargeCategory(category: Int): MutableList<Clothes> {
+        val largeCategory = category.toString()[0].digitToInt()
+        return totalClothesList.filter { clothes -> clothes.category.toString()[0].digitToInt() == largeCategory }.toMutableList()
+    }
+
+    // 라이브 데이터가 비어있으면 빈 리스트 반환
     private fun getPhotoItemListFromLiveData():MutableList<PhotoItem<Clothes>> {
         _clothesListLiveData.value?.let { it ->
             return it.toMutableList()
         }
         return mutableListOf()
     }
+
+    /**
+     * 대분류로 분류 후, 소분류로 분류
+     * _clothesListLiveData 업데이트
+     */
+    // View에서 호출하는 카테고리 별 조회
+    fun getClothesByCategory(category: Int) {
+
+    }
+
+    private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
 }
