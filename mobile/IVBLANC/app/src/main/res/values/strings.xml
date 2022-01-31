@@ -21,6 +21,7 @@
     <string name="networkErrorMessage">네트워크 연결이 불안정합니다.</string>
     <string name="unknownErrorMessage">알 수 없는 에러입니다.</string>
     <string name="checkDuplication">중복체크</string>
+    <string name="invalidClothesErrorMessage">존재하지 않는 옷입니다.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="login">로그인</string>
