@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import MyClosetSidebar from '../../layouts/MyCloset/MyClosetSidebar';
+import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
 
 export default function MyStyle() {
   return (
@@ -9,7 +9,9 @@ export default function MyStyle() {
       <div className='MyStyleContanier'>
         <Container fluid='md'>
           <Row>
-            <Col sm={4}>1of2</Col>
+            <Col sm={4}>
+              <MyStyleTopbar />
+            </Col>
             <Col sm={8}>2of2</Col>
           </Row>
         </Container>
