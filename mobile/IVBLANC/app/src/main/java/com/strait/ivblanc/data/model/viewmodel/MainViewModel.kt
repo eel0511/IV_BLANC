@@ -15,6 +15,8 @@ import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 네트워크에서 받은 모든 정보는 id를 키로 HashMap에 저장?
@@ -85,12 +87,49 @@ class MainViewModel: ViewModel() {
     }
 
     /**
+     * 최근에 추가한 옷이 있으면
+     * 최근에 추가한 옷 헤더 추가
+     * 최근에 추가한 옷 child 추가
+     *
+     * 즐겨찾기한 옷이 있으면
+     * 즐겨찾기한 옷 헤더 추가
+     * 즐겨찾기한 옷 child 추가
+     *
+     * 최근에 추가한 옷, 즐겨찾기한 옷 둘중에 하나라도 있으면
+     * -> 카테고리 별 옷 헤더 추가
+     *
+     * 카테고리 별 옷 child 추가
+     */
+    private fun makePhotoItemList(filteredList: MutableList<Clothes>): List<PhotoItem<Clothes>> {
+
+    }
+
+    // 최근 일주일 간 생성된 옷
+    private fun getCreatedRecentlyClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
+        val today = System.currentTimeMillis()
+        val oneWeekMillis = 1000 * 7 * 24 * 60 * 60
+        return list.filter { clothes -> dateStringToMillis(clothes.createDate) > (today - oneWeekMillis)}.toMutableList()
+    }
+
+    // string to millis
+    private fun dateStringToMillis(dateString: String): Long {
+        val stringFormat = SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss", Locale.KOREA)
+        val date = stringFormat.parse(dateString)
+        return date.time
+    }
+
+    /**
      * 대분류로 분류 후, 소분류로 분류
+     * List<PhotoItem<Clothes>> 생성 후
      * _clothesListLiveData 업데이트
      */
     // View에서 호출하는 카테고리 별 조회
-    fun getClothesByCategory(category: Int) {
+    fun updateClothesByCategory(category: Int) {
+        if(category == CategoryCode.TOTAL) {
 
+        } else {
+
+        }
     }
 
     private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
