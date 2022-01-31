@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Nav } from 'react-bootstrap';
-import MyClosetSidebarItem from '../../components/MyCloset/MyClosetSidebarItem';
+import { Nav, NavDropdown } from 'react-bootstrap';
+
+import Upper from '../../components/MyStyle/Upper';
+import Down from '../../components/MyStyle/Down';
+import Outer from '../../components/MyStyle/Outer';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -14,30 +17,46 @@ export default function MyStyleTopbar() {
     { name: '룩' },
   ];
 
+  const obj = {
+    0: <Upper />,
+    1: <Down />,
+    2: <Outer />,
+  };
+
+  const [tab, setTab] = useState(0);
+  const [title, setTitle] = useState('전체');
+
+  const handleSelect = (e) => {
+    console.log(e);
+    setTab(e);
+  };
+
+  const handleClick = (e) => {
+    console.log(e);
+    setTitle(e.target.outerText);
+  };
+
   return (
-    <div className='MyStyleTopbar'>
-      <div className='MyStyleTopbarWrapper'>
-        <Nav className='mt-5 mb-3' variant='tabs' defaultActiveKey='link-0'>
-          <Nav.Item>
-            <Nav.Link eventKey='link-0'>Tab 1</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey='link-1'>Tab 2</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey='link-2'>Tab 3</Nav.Link>
-          </Nav.Item>
-        </Nav>
-        {/* <ul className='tabs'>
+    <div className='wrapper'>
+      <Nav
+        className='mt-5 mb-3'
+        variant='tabs'
+        defaultActiveKey='link-0'
+        onSelect={handleSelect}
+      >
+        <NavDropdown title={title} id='nav-dropdown'>
           {menus.map((menu, index) => {
             return (
-              <li className='MyClosetSidebarListItem' key={index}>
-                <MyClosetSidebarItem menu={menu} />
-              </li>
+              <Nav.Item offset='10px'>
+                <Nav.Link eventKey={index} key={index} onClick={handleClick}>
+                  {menu.name}
+                </Nav.Link>
+              </Nav.Item>
             );
           })}
-        </ul> */}
-      </div>
+        </NavDropdown>
+      </Nav>
+      {obj[tab]}
     </div>
   );
 }
