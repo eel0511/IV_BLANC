@@ -153,8 +153,10 @@ class MainViewModel: ViewModel() {
         return date.time
     }
 
+
     /**
      * 대분류로 분류 후, 소분류로 분류
+     * (대분류 전체인 경우 code는 10보다 작음)
      * List<PhotoItem<Clothes>> 생성 후
      * _clothesListLiveData 업데이트
      */
@@ -162,6 +164,8 @@ class MainViewModel: ViewModel() {
     fun updateClothesByCategory(category: Int) {
         if(category == CategoryCode.TOTAL) {
             _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
+        } else if(category < 10) {
+            _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
         } else {
             _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
         }
