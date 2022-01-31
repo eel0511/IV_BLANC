@@ -70,6 +70,12 @@ class MainViewModel: ViewModel() {
         return totalClothesList.filter { clothes -> clothes.category.toString()[0].digitToInt() == largeCategory }.toMutableList()
     }
 
+    // 소분류 카테고리로 옷 필터링
+    private fun getClothesListWithSmallCategory(category: Int): MutableList<Clothes> {
+        val filteredList = getClothesListWithLargeCategory(category)
+        return filteredList.filter { clothes -> clothes.category == category }.toMutableList()
+    }
+
     // 라이브 데이터가 비어있으면 빈 리스트 반환
     private fun getPhotoItemListFromLiveData():MutableList<PhotoItem<Clothes>> {
         _clothesListLiveData.value?.let { it ->
