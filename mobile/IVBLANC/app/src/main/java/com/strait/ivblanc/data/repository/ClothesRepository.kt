@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.ClothesApi
+import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.StatusCode
@@ -13,6 +14,7 @@ class ClothesRepository {
     val clothesApi = ApplicationClass.sRetrofit.create(ClothesApi::class.java)
     private val resource = Resources.getSystem()
 
+    // TODO: 2022/01/31 page 삭제
     suspend fun getAllClothes(page: Int): Resource<ClothesResponse> {
         return try {
             val response = clothesApi.getAllClothes(page)
@@ -31,14 +33,16 @@ class ClothesRepository {
         }
     }
 
-    suspend fun getClothesByCategory(category: Int, page: Int): Resource<ClothesResponse> {
+    suspend fun deleteClothesById(clothesId: Int): Resource<ClothesDeleteResponse> {
         return try {
-            val response = clothesApi.getClothesByCategory(category, page)
+            val response = clothesApi.deleteClothesById(clothesId)
             if(response.isSuccessful) {
-                return if(response.code() == StatusCode.OK && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1 && response.body()!!.dataSet!!.containsKey("clothes_id")) {
                     Resource.success(response.body()!!)
+                } else if(response.code() == StatusCode.UNDOCUMENT) {
+                    Resource.error(null, resource.getString(R.string.invalidClothesErrorMessage))
                 } else {
-                    Resource.error(null, resource.getString(R.string.noClothesErrorMessage))
+                    Resource.error(null, resource.getString(R.string.unknownErrorMessage))
                 }
             } else {
                 Resource.error(null, resource.getString(R.string.unknownErrorMessage))
@@ -47,6 +51,4 @@ class ClothesRepository {
             Resource.error(null, resource.getString(R.string.networkErrorMessage))
         }
     }
-
-
 }
