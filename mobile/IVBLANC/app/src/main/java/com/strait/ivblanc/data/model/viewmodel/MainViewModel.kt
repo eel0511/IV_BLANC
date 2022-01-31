@@ -1,6 +1,8 @@
 package com.strait.ivblanc.data.model.viewmodel
 
+import android.app.Application
 import android.content.res.Resources
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,15 +24,10 @@ import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * 네트워크에서 받은 모든 정보는 id를 키로 HashMap에 저장?
- * 문제점: 변경이 있을 때만 네트워크에 요청, 어떻게 변경을 감지?
- */
 class MainViewModel: ViewModel() {
     private val clothesRepository = ClothesRepository()
     var currentCategory = CategoryCode.TOTAL
     private val totalClothesList = mutableListOf<Clothes>()
-    private val resource = Resources.getSystem()
 
     private val _clothesResponseStatus = MutableLiveData<Resource<*>>()
     val clothesResponseStatus: LiveData<Resource<*>>
@@ -42,13 +39,18 @@ class MainViewModel: ViewModel() {
         get() = _clothesListLiveData
 
     // TODO: 2022/01/31 page 삭제
-    fun getAllClothes(page: Int) = viewModelScope.launch {
+    suspend fun getAllClothes(page: Int) = withContext(Dispatchers.IO) {
         setLoading()
-        CoroutineScope(Dispatchers.IO).launch {
-            val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
-            _clothesResponseStatus.postValue(result)
-            updateResult(result)
+        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
+        _clothesResponseStatus.postValue(result)
+        if(result.status == Status.SUCCESS) {
+            totalClothesList.addAll(result.data!!.dataSet!!)
         }
+    }
+
+    fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
+        getAllClothes(0)
+        updateClothesByCategory(category)
     }
 
     /**
@@ -91,7 +93,6 @@ class MainViewModel: ViewModel() {
                         )
                     }
                     _clothesListLiveData.postValue(mutableList)
-                    totalClothesList.addAll(it.toMutableList())
                 }
             }
         }
@@ -131,18 +132,23 @@ class MainViewModel: ViewModel() {
      *
      * 카테고리 별 옷 child 추가
      */
+    // TODO: 2022/01/31 ExpandableRecyclerViewAdapter 뷰타입 Divider 추가
     private fun makePhotoItemList(filteredList: MutableList<Clothes>): List<PhotoItem<Clothes>> {
         val photoItemList = mutableListOf<PhotoItem<Clothes>>()
         val recentlyCreatedClothesList = getCreatedRecentlyClothesList(filteredList)
         val favoriteClothesList = getFavoriteClothesList(filteredList)
         // 주석의 첫번째 조건
         if(recentlyCreatedClothesList.size != 0) {
-            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER, resource.getString(R.string.recentlyAddedClothes)))
+            photoItemList.add(PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "최근에 추가한 옷").apply{
+                initInvisibleItems()
+            })
             photoItemList.addAll(getPhotoItemList(recentlyCreatedClothesList))
         }
         // 주석의 두번째 조건
         if(favoriteClothesList.size != 0) {
-            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER, resource.getString(R.string.favoriteClothes)))
+            photoItemList.add(PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "즐겨찾기한 옷").apply {
+                initInvisibleItems()
+            })
             photoItemList.addAll(getPhotoItemList(favoriteClothesList))
         }
         // 주석의 마지막 조건
