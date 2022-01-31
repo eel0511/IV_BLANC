@@ -33,7 +33,6 @@ class ClothesRepository {
         }
     }
 
-    // TODO: 2022/01/31 스타일에 사용되는 옷의 경우 예외 확인 필요 
     suspend fun deleteClothesById(clothesId: Int): Resource<ClothesDeleteResponse> {
         return try {
             val response = clothesApi.deleteClothesById(clothesId)
@@ -52,6 +51,4 @@ class ClothesRepository {
             Resource.error(null, resource.getString(R.string.networkErrorMessage))
         }
     }
-
-
 }
