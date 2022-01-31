@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
+import com.strait.ivblanc.config.BaseResponse
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.response.ClothesResponse
@@ -19,6 +20,7 @@ import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,8 +29,8 @@ class MainViewModel: ViewModel() {
     var currentCategory = CategoryCode.TOTAL
     private val totalClothesList = mutableListOf<Clothes>()
 
-    private val _clothesResponseStatus = MutableLiveData<Resource<ClothesResponse>>()
-    val clothesResponseStatus: LiveData<Resource<ClothesResponse>>
+    private val _clothesResponseStatus = MutableLiveData<Resource<*>>()
+    val clothesResponseStatus: LiveData<Resource<*>>
         get() = _clothesResponseStatus
 
     // ExpandableRecyclerView에서 observe하는 리스트
@@ -52,19 +54,43 @@ class MainViewModel: ViewModel() {
     }
 
     /**
+     * 삭제 성공 시,
+     *  전체 TotalClothesList에서 해당 옷 삭제,
+     *  현재 카테고리에 따라 _clothesListLiveDate 업데이트,
+     */
+    fun deleteClothesById(clothesId: Int) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = clothesRepository.deleteClothesById(clothesId)
+            if(result.status == Status.SUCCESS) {
+                totalClothesList.remove(totalClothesList.find { clothes -> clothes.clothesId == clothesId })
+                updateClothesByCategory(currentCategory)
+                _clothesResponseStatus.postValue(Resource.success(result.data!!))
+            } else {
+                _clothesResponseStatus.postValue(result)
+            }
+        }
+    }
+
+    /**
      * @param result
      * clothesRepository에서 받은 response
      */
     // TODO: 2022/01/31 paging이 사라져서 필요 없어짐
     private fun updateResult(result: Resource<ClothesResponse>) {
         //
-        if(result.status == Status.SUCCESS) {
+        if (result.status == Status.SUCCESS) {
             result.data?.dataSet?.let {
                 // 서버에서 받은 옷 목록이 비어있지 않을 때, _clothesListLiveData 내부의 list에 옷 목록 추가하여 post
-                if(it.isNotEmpty()) {
+                if (it.isNotEmpty()) {
                     val mutableList = getPhotoItemListFromLiveData()
-                    for(clothes in it) {
-                        mutableList.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = clothes))
+                    for (clothes in it) {
+                        mutableList.add(
+                            PhotoItem(
+                                ExpandableRecyclerViewAdapter.CHILD,
+                                content = clothes
+                            )
+                        )
                     }
                     _clothesListLiveData.postValue(mutableList)
                 }
@@ -168,12 +194,17 @@ class MainViewModel: ViewModel() {
      */
     // View에서 호출하는 카테고리 별 조회
     fun updateClothesByCategory(category: Int) {
-        if(category == CategoryCode.TOTAL) {
-            _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
-        } else if(category < 10) {
-            _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
-        } else {
-            _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
+        currentCategory = category
+        when {
+            category == CategoryCode.TOTAL -> {
+                _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
+            }
+            category < 10 -> {
+                _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
+            }
+            else -> {
+                _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
+            }
         }
     }
 
