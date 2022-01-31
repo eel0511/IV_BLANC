@@ -159,9 +159,9 @@ class MainViewModel: ViewModel() {
     // View에서 호출하는 카테고리 별 조회
     fun updateClothesByCategory(category: Int) {
         if(category == CategoryCode.TOTAL) {
-
+            _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
         } else {
-
+            _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
         }
     }
 
