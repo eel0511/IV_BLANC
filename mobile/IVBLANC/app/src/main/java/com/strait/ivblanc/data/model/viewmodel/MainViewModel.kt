@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
+import com.strait.ivblanc.config.BaseResponse
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.response.ClothesResponse
@@ -31,8 +32,8 @@ class MainViewModel: ViewModel() {
     private val totalClothesList = mutableListOf<Clothes>()
     private val resource = Resources.getSystem()
 
-    private val _clothesResponseStatus = MutableLiveData<Resource<ClothesResponse>>()
-    val clothesResponseStatus: LiveData<Resource<ClothesResponse>>
+    private val _clothesResponseStatus = MutableLiveData<Resource<*>>()
+    val clothesResponseStatus: LiveData<Resource<*>>
         get() = _clothesResponseStatus
 
     // ExpandableRecyclerView에서 observe하는 리스트
@@ -60,9 +61,11 @@ class MainViewModel: ViewModel() {
         withContext(Dispatchers.IO) {
             val result = clothesRepository.deleteClothesById(clothesId)
             if(result.status == Status.SUCCESS) {
-
+                totalClothesList.remove(totalClothesList.find { clothes -> clothes.clothesId == clothesId })
+                updateClothesByCategory(currentCategory)
+                _clothesResponseStatus.postValue(Resource.success(result.data!!))
             } else {
-
+                _clothesResponseStatus.postValue(result)
             }
         }
     }
