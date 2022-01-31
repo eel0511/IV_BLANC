@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 
-import Upper from '../../components/MyStyle/Upper';
-import Down from '../../components/MyStyle/Down';
+import AllClothes from '../../components/MyStyle/AllClothes';
+import Top from '../../components/MyStyle/Top';
+import Pants from '../../components/MyStyle/Pants';
 import Outer from '../../components/MyStyle/Outer';
+import Shoes from '../../components/MyStyle/Shoes';
+import Bag from '../../components/MyStyle/Bag';
+import Hat from '../../components/MyStyle/Hat';
+import Other from '../../components/MyStyle/Other';
+import StyleLook from '../../components/MyStyle/StyleLook';
 
 export default function MyStyleTopbar() {
   const menus = [
+    { name: '전체' },
     { name: '상의' },
     { name: '하의' },
     { name: '아우터' },
@@ -18,13 +25,19 @@ export default function MyStyleTopbar() {
   ];
 
   const obj = {
-    0: <Upper />,
-    1: <Down />,
-    2: <Outer />,
+    0: <AllClothes />,
+    1: <Top />,
+    2: <Pants />,
+    3: <Outer />,
+    4: <Shoes />,
+    5: <Bag />,
+    6: <Hat />,
+    7: <Other />,
+    8: <StyleLook />,
   };
 
   const [tab, setTab] = useState(0);
-  const [title, setTitle] = useState('전체');
+  const [title, setTitle] = useState('선택');
 
   const handleSelect = (e) => {
     console.log(e);
