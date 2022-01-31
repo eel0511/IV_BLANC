@@ -1,9 +1,11 @@
 package com.strait.ivblanc.data.model.viewmodel
 
+import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
@@ -26,6 +28,7 @@ class MainViewModel: ViewModel() {
     private val clothesRepository = ClothesRepository()
     var currentCategory = CategoryCode.TOTAL
     private val totalClothesList = mutableListOf<Clothes>()
+    private val resource = Resources.getSystem()
 
     private val _clothesResponseStatus = MutableLiveData<Resource<ClothesResponse>>()
     val clothesResponseStatus: LiveData<Resource<ClothesResponse>>
@@ -101,7 +104,32 @@ class MainViewModel: ViewModel() {
      * 카테고리 별 옷 child 추가
      */
     private fun makePhotoItemList(filteredList: MutableList<Clothes>): List<PhotoItem<Clothes>> {
+        val photoItemList = mutableListOf<PhotoItem<Clothes>>()
+        val recentlyCreatedClothesList = getCreatedRecentlyClothesList(filteredList)
+        val favoriteClothesList = getFavoriteClothesList(filteredList)
+        // 주석의 첫번째 조건
+        if(recentlyCreatedClothesList.size != 0) {
+            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER, resource.getString(R.string.recentlyAddedClothes)))
+            photoItemList.addAll(getPhotoItemList(recentlyCreatedClothesList))
+        }
+        // 주석의 두번째 조건
+        if(favoriteClothesList.size != 0) {
+            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER, resource.getString(R.string.favoriteClothes)))
+            photoItemList.addAll(getPhotoItemList(favoriteClothesList))
+        }
+        // 주석의 마지막 조건
+        if(favoriteClothesList.size != 0 || recentlyCreatedClothesList.size != 0) {
+            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER))
+        }
+        photoItemList.addAll(getPhotoItemList(filteredList))
+        return photoItemList
+    }
 
+    // List<Clothes>를 List<PhotoItem<Clothes>>로 변환
+    private fun <T> getPhotoItemList(list: MutableList<T>):List<PhotoItem<T>> {
+        val result = mutableListOf<PhotoItem<T>>()
+        list.forEach { clothes -> result.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = clothes)) }
+        return result
     }
 
     // 즐겨찾기 한 옷
