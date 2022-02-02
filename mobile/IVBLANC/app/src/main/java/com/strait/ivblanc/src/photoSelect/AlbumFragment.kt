@@ -35,50 +35,17 @@ import java.util.*
 
 private const val TAG = "AlbumFragment_해협"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
-    lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private var scaleFactor = 1.0F
+    lateinit var scaleGestureDetector: ScaleGestureDetector
     private val itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
         override fun onClick(uri: Uri) {
             Glide.with(requireActivity()).load(uri).into(binding.imageViewAlbumF)
         }
     }
-    lateinit var scaleGestureDetector: ScaleGestureDetector
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        requestPermissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-                init()
-            } else {
-                showReasonForPermission()
-            }
-        }
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkReadStoragePermission()
-    }
-
-    private fun checkReadStoragePermission() {
-        when {
-            // 권한이 있을 때 사진 정보 요청
-            ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
-                init()
-                return
-            }
-            //사용자가 명시적으로 권한을 거부했을 때 -> true
-            shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-                showReasonForPermission()
-            }
-            //사용자가 권한요청을 처음 보거나, 다시 묻지 않음, 권한요청을 허용한 경우 -> false
-            // requestPermissionLauncher는 수 회 이상 권한을 거부했을 경우 launch 되지 않음
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-            }
-        }
+        init()
     }
 
     fun init() {
@@ -112,23 +79,6 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         })
     }
 
-    // 권한이 필요한 이유를 설명하는 다이얼로그 제공
-    // positive button에 권한 설정으로 이동하는 클릭리스너 세팅
-    private fun showReasonForPermission() {
-        PermissionDialog(requireActivity())
-            .setContent("사진을 읽기 위해 필요한 권한입니다.")
-            .setPositiveButtonText("권한 설정하기")
-            .setOnPositiveClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${requireActivity().packageName}")).apply {
-                        this.addCategory(Intent.CATEGORY_DEFAULT)
-                        this.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                    requireActivity().startActivity(intent)
-                }
-            }).build().show()
-    }
-
     // 이미지 커서에서 image 경로 리스트로 받기
     fun setImageUrisFromCursor(cursor: Cursor):List<Uri> {
         val list = mutableListOf<Uri>()
@@ -159,7 +109,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         return resolver.query(queryUri, img, null, null, orderBy)!!
     }
 
-    // photoBox만큼 screen capture
+    // 확인 버튼 누르면 photoBox만큼 screen capture
     fun screenshot(): File? {
         val date = Date()
         // 이미지 파일 이름을 시간으로 초기화
