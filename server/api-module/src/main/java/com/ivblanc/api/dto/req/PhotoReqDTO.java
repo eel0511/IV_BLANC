@@ -1,8 +1,5 @@
 package com.ivblanc.api.dto.req;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -17,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MakePhotoReqDTO {
+public class PhotoReqDTO {
 
 	@ApiModelProperty(value = "사진")
 	private MultipartFile file;

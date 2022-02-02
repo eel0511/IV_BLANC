@@ -1,12 +1,12 @@
 package com.ivblanc.api.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.ivblanc.api.dto.req.MakePhotoReqDTO;
+import com.ivblanc.api.dto.req.PhotoReqDTO;
 import com.ivblanc.core.entity.History;
 import com.ivblanc.core.entity.Photo;
 import com.ivblanc.core.exception.ApiMessageException;
@@ -42,8 +42,15 @@ public class PhotoService {
 		return photoRepository.findPhotoByHistoryId(historyId);
 	}
 
-	public History MakePhotoByUrl(List<MakePhotoReqDTO> reqDTOList, History history) {
-		for (MakePhotoReqDTO m : reqDTOList) {
+	public Photo updatePhoto(Photo photo, MultipartFile file){
+		String url = fileService.upload(file);
+		photo.setUrl(url);
+
+		return photo;
+	}
+
+	public History MakePhoto(List<PhotoReqDTO> reqDTOList, History history) {
+		for (PhotoReqDTO m : reqDTOList) {
 
 			String url = fileService.upload(m.getFile());
 			if (url.equals("error")) {

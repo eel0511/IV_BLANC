@@ -8,7 +8,11 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.ivblanc.api.dto.req.HistoryReqDTO;
+import com.ivblanc.api.dto.req.PhotoReqDTO;
 import com.ivblanc.core.entity.History;
+import com.ivblanc.core.entity.Style;
+import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.HistoryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -17,9 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class HistorySerivce {
+public class HistoryService {
 
 	private final HistoryRepository historyRepository;
+	private final StyleService styleService;
 
 	public Optional<History> findByHistoryId(int history_id) {
 		return historyRepository.findById(history_id);
@@ -37,7 +42,9 @@ public class HistorySerivce {
 		return historyRepository.findAllByUserIdOrderByDateAsc(userId, pageable);
 	}
 
-	public History findByDate(LocalDateTime date, int userId) {
+	public History findByDate(String dateStr, int userId) {
+		String[] dateArr = dateStr.split("-");
+		LocalDateTime date = LocalDateTime.of(Integer.parseInt(dateArr[0]), Integer.parseInt(dateArr[1]), Integer.parseInt(dateArr[2]), 0, 0, 0);
 		return historyRepository.findByDateAndUserId(date, userId);
 	}
 
@@ -74,12 +81,65 @@ public class HistorySerivce {
 		return historyRepository.findAllByDateBetweenAndUserId(date_start, date_end, userId);
 	}
 
+	public History makeHistory(HistoryReqDTO req, int userId){
+		String[] date = req.getDate().split("-");
+		LocalDateTime dt = LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0);
+
+		String url = null;
+		Optional<Style> style = styleService.findByStyleId(req.getStyleId());
+		if(style == null){
+			throw new ApiMessageException("존재하지 않는 style id입니다.");
+		} else {
+			url = style.get().getUrl();
+		}
+
+		History history = History.builder()
+			.location(req.getLocation())
+			.field(req.getField())
+			.date(dt)
+			.weather(req.getWeather())
+			.temperature_low(req.getTemperature_low())
+			.temperature_high(req.getTemperature_high())
+			.text(req.getText())
+			.subject(req.getSubject())
+			.styleUrl(url)
+			.userId(userId)
+		.build();
+
+		return history;
+	}
+
 	public void addHistory(History history) {
 		historyRepository.save(history);
 	}
 
 	public void deleteHistoryById(int historyId) {
 		historyRepository.deleteById(historyId);
+	}
+
+	public void updateHistory(History history, HistoryReqDTO req){
+		String[] date = req.getDate().split("-");
+		LocalDateTime dt = LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0);
+
+		String url = null;
+		Optional<Style> style = styleService.findByStyleId(req.getStyleId());
+		if(style == null){
+			throw new ApiMessageException("존재하지 않는 style id입니다.");
+		} else {
+			url = style.get().getUrl();
+		}
+
+		history.setLocation(req.getLocation());
+		history.setField(req.getField());
+		history.setDate(dt);
+		history.setWeather(req.getWeather());
+		history.setTemperature_low(req.getTemperature_low());
+		history.setTemperature_high(req.getTemperature_high());
+		history.setText(req.getText());
+		history.setSubject(req.getSubject());
+		history.setStyleUrl(url);
+
+		historyRepository.save(history);
 	}
 
 }
