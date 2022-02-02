@@ -14,6 +14,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/previewView_cameraF"
+        android:background="@drawable/photo_box" />
+
     <ImageView
         android:id="@+id/button_cameraF_shot"
         android:layout_width="@dimen/cameraButtonSize"
