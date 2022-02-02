@@ -1,32 +1,5 @@
 package com.ivblanc.api.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.TimeZone;
-
-import javax.validation.Valid;
-
-import org.apache.poi.ss.formula.functions.T;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.google.api.gax.rpc.ApiException;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
@@ -39,11 +12,18 @@ import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.Clothes;
 import com.ivblanc.core.entity.StyleDetail;
 import com.ivblanc.core.exception.ApiMessageException;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Api(tags = {"CLOTHES"})
 @Slf4j
@@ -56,6 +36,7 @@ public class ClothesController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final FileService fileService;
+	private final int PAGE_SIZE = 30;
 
 	@ApiOperation(value = "최근순으로 자기 옷 조회(생성일기준)", notes = "옷 생성일 기준으로 빠른순 조회입니다.\n"
 		+ " 정렬 등에 사용가능할거같습니다 back단에서")
@@ -97,18 +78,18 @@ public class ClothesController {
 	ListResult<Clothes> findClothesCategory(@RequestParam int page, @RequestParam int category,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
-		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
+		PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findByCategory(pageRequest, category, userId));
 	}
 
-	@ApiOperation(value = "자기 옷 전체조회", notes = "기본 10개씩 잘라서 page단위로 있습니다."
+	@ApiOperation(value = "자기 옷 전체조회", notes = "기본 30개씩 잘라서 page단위로 있습니다."
 		+ "0page 부터 시작합니다")
 	@GetMapping(value = "/all")
 	public @ResponseBody
 	ListResult<Clothes> findAllClothes(@RequestParam int page,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
-		PageRequest pageRequest = PageRequest.of(page, 10, Sort.by("clothesId").descending());
+		PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, Sort.by("clothesId").descending());
 		return responseService.getListResult(clothesSerivce.findAll(userId, pageRequest));
 	}
 
