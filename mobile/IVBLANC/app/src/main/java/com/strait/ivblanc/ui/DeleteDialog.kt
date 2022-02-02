@@ -15,7 +15,7 @@ class DeleteDialog(val context: Context) {
     lateinit var negativeClickListener: View.OnClickListener
     private val dialog = Dialog(context).apply{
         setContentView(R.layout.dialog_permission)
-        window?.setBackgroundDrawable(context.resources.getDrawable(R.drawable.rounded_rectangle))
+        window?.setBackgroundDrawable(context.getDrawable(R.drawable.rounded_rectangle))
         findViewById<TextView>(R.id.textView_permissionD_positive).setTextColor(ContextCompat.getColor(context, R.color.red_300))
         setCanceledOnTouchOutside(true)
         setCancelable(true)

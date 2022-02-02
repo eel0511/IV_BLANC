@@ -19,6 +19,12 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.clothesDetail.ClothesDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".src.process.ProcessActivity"
+            android:exported="false" />
+        <activity
             android:name=".src.photoSelect.PhotoSelectActivity"
             android:exported="false" />
         <activity
@@ -48,6 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".src.fcm.FcmService"
             android:exported="false">

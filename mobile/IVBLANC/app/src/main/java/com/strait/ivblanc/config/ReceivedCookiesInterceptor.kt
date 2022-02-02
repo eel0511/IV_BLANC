@@ -1,6 +1,7 @@
 package com.ssafy.template.config
 
 import android.util.Log
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.ApplicationClass.Companion.sSharedPreferences
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -14,15 +15,14 @@ class ReceivedCookiesInterceptor : Interceptor {
         val originalResponse: Response = chain.proceed(chain.request())
 
         if (originalResponse.headers("Set-Cookie").isNotEmpty()) {
-
-            val cookies = HashSet<String>()
             for (cookie in originalResponse.headers("Set-Cookie")) {
-                cookies.add(cookie)
-                Log.d(TAG, "intercept: $cookie")
+                val cookieSplit = cookie.split(";")
+                val cookieStrings = cookieSplit[0].split("=")
+                val cookieKey = cookieStrings[0]
+                val cookieValue = cookieStrings[1]
+                // 쿠키 key, value로 저장
+                sSharedPreferences.setString(cookieKey, cookieValue)
             }
-            
-            // cookie 내부 데이터에 저장
-            sSharedPreferences.addUserCookie(cookies)
         }
         return originalResponse
     }

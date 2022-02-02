@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="defaultTextSize">14sp</dimen>
+    <dimen name="subtitleTextSize">18sp</dimen>
+    <dimen name="titleTextSize">22sp</dimen>
     <dimen name="logoSize">150dp</dimen>
     <dimen name="defaultPadding">16dp</dimen>
+    <dimen name="defaultMargin">8dp</dimen>
+    <dimen name="smallMargin">4dp</dimen>
     <dimen name="dialogWidth">250dp</dimen>
     <dimen name="loadingProgressSize">48dp</dimen>
+    <dimen name="defaultIconSize">32dp</dimen>
+    <dimen name="smallIconSize">24dp</dimen>
     <dimen name="photoBoxSize">300dp</dimen>
     <dimen name="cameraButtonSize">48dp</dimen>
+    <dimen name="colorPickSize">32dp</dimen>
 </resources>

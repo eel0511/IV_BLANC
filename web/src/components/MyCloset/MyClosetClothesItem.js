@@ -7,6 +7,7 @@ import Favorite from '@mui/icons-material/Favorite';
 import axios from 'axios';
 import codeData from '../../codeData.json';
 import './MyCloset.css';
+import DetailClothes from './MyClosetDetailItem';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -150,25 +151,24 @@ export default function MyClosetClothesItem({ clothesData }) {
           <Modal.Body>
             <Container>
               <Row>
-                <Col xs={12} md={8}>
+                <Col md={{ span: 7, offset: 2 }}>
                   <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
                 </Col>
-                <Col xs={6} md={4}>
+                <Col md={{ span: 1, offset: 1 }}>
                   <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
                 </Col>
               </Row>
             </Container>
 
             <ListGroup variant='flush'>
-              <ListGroup.Item>종류 : {category}</ListGroup.Item>
-              <ListGroup.Item>색깔 : {color}</ListGroup.Item>
-              <ListGroup.Item>사이즈 : {clothesData.size}</ListGroup.Item>
-              <ListGroup.Item>소재 : {material}</ListGroup.Item>
-              <ListGroup.Item>계절 : {season}</ListGroup.Item>
-              <ListGroup.Item>입은 횟수 : {clothesData.count}</ListGroup.Item>
-              <ListGroup.Item>좋아요 : {clothesData.likePoint}</ListGroup.Item>
-              <ListGroup.Item>싫어요 : {clothesData.dislikePoint}</ListGroup.Item>
-              <ListGroup.Item>등록날짜 : {date}</ListGroup.Item>
+              <DetailClothes item='종류' value={category} />
+              <DetailClothes item='색깔' value={color} />
+              <DetailClothes item='소재' value={material} />
+              <DetailClothes item='계절' value={season} />
+              <DetailClothes item='입은 횟수' value={clothesData.count} />
+              <DetailClothes item='좋아요' value={clothesData.likePoint} />
+              <DetailClothes item='싫어요' value={clothesData.dislikePoint} />
+              <DetailClothes item='등록날짜' value={date} />
             </ListGroup>
           </Modal.Body>
           <Modal.Footer>

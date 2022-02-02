@@ -1,5 +1,7 @@
 package com.ssafy.template.config
 
+import android.util.Log
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.ApplicationClass.Companion.X_AUTH_TOKEN
 import com.strait.ivblanc.config.ApplicationClass.Companion.sSharedPreferences
 import okhttp3.Interceptor
@@ -12,9 +14,9 @@ class XAccessTokenInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
-        val jwtToken: String? = sSharedPreferences.getString(X_AUTH_TOKEN)
-        if (jwtToken != null) {
-            builder.addHeader("X-AUTH-TOKEN", jwtToken)
+        val token: String? = sSharedPreferences.getString(ApplicationClass.JWT)
+        token?.let {
+            builder.addHeader(X_AUTH_TOKEN, token)
         }
         return chain.proceed(builder.build())
     }
