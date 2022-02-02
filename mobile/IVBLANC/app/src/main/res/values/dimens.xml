@@ -12,5 +12,6 @@
     <dimen name="defaultIconSize">32dp</dimen>
     <dimen name="smallIconSize">24dp</dimen>
     <dimen name="photoBoxSize">300dp</dimen>
+    <dimen name="cameraButtonSize">48dp</dimen>
     <dimen name="colorPickSize">32dp</dimen>
 </resources>

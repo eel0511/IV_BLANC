@@ -27,6 +27,11 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
 
     private fun init() {
         permissionUtil = PermissionUtil(this)
+        permissionUtil.permissionListener = object : PermissionUtil.PermissionListener {
+            override fun run() {
+                initView()
+            }
+        }
     }
 
     private fun initView() {
@@ -49,7 +54,7 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> AlbumFragment()
-                else -> AlbumFragment()
+                else -> CameraFragment()
             }
         }
     }

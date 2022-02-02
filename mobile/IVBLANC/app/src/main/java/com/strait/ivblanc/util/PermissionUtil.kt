@@ -15,6 +15,7 @@ import com.strait.ivblanc.ui.PermissionDialog
 class PermissionUtil(val activity: AppCompatActivity) {
     private lateinit var requestPermissionsLauncher: ActivityResultLauncher<Array<String>>
     private val notGrantedPermissions = mutableListOf<String>()
+    lateinit var permissionListener: PermissionListener
 
     init {
         registerPermissionLauncher()
@@ -51,13 +52,17 @@ class PermissionUtil(val activity: AppCompatActivity) {
             // 요청 결과에 notGrantedPermission이 있다면 다이얼로그 띄우기
             if(notGrantedPermissions.size > 0) {
                 showReasonForPermission()
+            } else {
+                if(this::permissionListener.isInitialized) {
+                    permissionListener.run()
+                }
             }
         }
     }
 
     private fun addToNotGrantedPermission(list: List<String>) {
+        notGrantedPermissions.clear()
         if(list.isNotEmpty()) {
-            notGrantedPermissions.clear()
             notGrantedPermissions.addAll(list)
         }
     }
@@ -82,5 +87,9 @@ class PermissionUtil(val activity: AppCompatActivity) {
                 }
             })
             .build().show()
+    }
+
+    interface PermissionListener {
+        fun run()
     }
 }
