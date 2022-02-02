@@ -27,6 +27,11 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
 
     private fun init() {
         permissionUtil = PermissionUtil(this)
+        permissionUtil.permissionListener = object : PermissionUtil.PermissionListener {
+            override fun run() {
+                initView()
+            }
+        }
     }
 
     private fun initView() {
