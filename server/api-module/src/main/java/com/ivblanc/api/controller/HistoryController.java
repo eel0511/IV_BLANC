@@ -53,7 +53,7 @@ public class HistoryController {
 	private final UserService userService;
 	private final FcmService fcmService;
 
-	@ApiOperation(value = "History 추가")
+	@ApiOperation(value = "History 추가", notes = "사진도 동시에 추가됨. Weather은 (맑음|흐림|비|눈) 중 하나로 입력")
 	@PostMapping(value = "/add")
 	public @ResponseBody
 	SingleResult<String> addHistory(@RequestBody List<PhotoReqDTO> photos, @Valid @RequestBody HistoryReqDTO historyReqDTO,
@@ -136,7 +136,7 @@ public class HistoryController {
 		return responseService.getListResult(historyList);
 	}
 
-	@ApiOperation(value = "기온별 히스토리 조회", notes = "userId로 기온별 히스토리 조회")
+	@ApiOperation(value = "기온별 히스토리 조회", notes = "userId로 기온별 히스토리 조회.\n 최저기온, 최고기온 입력하면 그 범위 내에 있는 날의 히스토리를 보여준다.")
 	@GetMapping(value = "/find/temperature")
 	public @ResponseBody
 	ListResult<History> findHistoryByTemperature(@RequestParam(value = "최저기온") int temp_low, @RequestParam(value = "최고기온") int temp_high, @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
@@ -149,7 +149,7 @@ public class HistoryController {
 		return responseService.getListResult(historyList);
 	}
 
-	@ApiOperation(value = "제목으로 히스토리 조회", notes = "userId, 제목으로 히스토리 조회")
+	@ApiOperation(value = "제목으로 히스토리 조회", notes = "userId, 제목으로 히스토리 조회\n 지금은 입력한 제목이랑 정확히 일치하는 히스토리만 반환하는데 필요시 입력한 제목을 포함하는 히스트리를 반환하게끔 수정하겠습니다.")
 	@GetMapping(value = "/find/subject")
 	public @ResponseBody
 	ListResult<History> findHistoryBySubject(@RequestParam String subject, @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
