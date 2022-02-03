@@ -38,10 +38,9 @@ class MainViewModel: ViewModel() {
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
 
-    // TODO: 2022/01/31 page 삭제
-    suspend fun getAllClothes(page: Int) = withContext(Dispatchers.IO) {
+    suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()
-        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
+        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
         _clothesResponseStatus.postValue(result)
         if(result.status == Status.SUCCESS) {
             totalClothesList.addAll(result.data!!.dataSet!!)
