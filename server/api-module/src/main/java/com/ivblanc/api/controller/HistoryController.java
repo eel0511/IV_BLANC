@@ -71,14 +71,14 @@ public class HistoryController {
 		return responseService.getSingleResult(history.getHistoryId() + "번 히스토리 추가완료");
 	}
 
-	@ApiOperation(value = "전체 히스토리 조회", notes = "userId로 전체 히스토리 조회, 한 페이지에 10개씩")
+	@ApiOperation(value = "전체 히스토리 조회", notes = "userId로 전체 히스토리 조회")
 	@GetMapping(value = "/find/all")
 	public @ResponseBody
 	ListResult<History> findAllHistory(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		List<History> historyList = historyService.findAll(userId);
 		if (historyList.size() == 0) {
-			throw new ApiMessageException("존재하지 않는 userId 입니다.");
+			throw new ApiMessageException("등록된 히스토리가 없습니다.");
 		}
 
 		return responseService.getListResult(historyList);
@@ -91,7 +91,7 @@ public class HistoryController {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		List<History> historyList = historyService.findByYearAndMonth(LocalDateTime.now(), userId);
 		if (historyList.size() == 0) {
-			throw new ApiMessageException("존재하지 않는 userId 입니다.");
+			throw new ApiMessageException("이번 달에 등록된 히스토리가 없습니다.");
 		}
 
 		return responseService.getListResult(historyList);
@@ -104,7 +104,7 @@ public class HistoryController {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		List<History> historyList = historyService.findByYearAndMonth(year, month, userId);
 		if (historyList.size() == 0) {
-			throw new ApiMessageException("존재하지 않는 userId 입니다.");
+			throw new ApiMessageException("해당 기간에 등록된 히스토리가 없습니다.");
 		}
 
 		return responseService.getListResult(historyList);
@@ -117,7 +117,7 @@ public class HistoryController {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		History history = historyService.findByDate(date, userId);
 		if (history == null) {
-			throw new ApiMessageException("존재하지 않는 userId 입니다.");
+			throw new ApiMessageException("해당 일에 등록된 히스토리가 없습니다.");
 		}
 
 		return responseService.getSingleResult(history);
