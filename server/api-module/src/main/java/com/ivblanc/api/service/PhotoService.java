@@ -49,10 +49,10 @@ public class PhotoService {
 		return photo;
 	}
 
-	public History MakePhoto(List<PhotoReqDTO> reqDTOList, History history) {
-		for (PhotoReqDTO m : reqDTOList) {
+	public History MakePhoto(List<MultipartFile> list, History history) {
+		for (MultipartFile m : list) {
 
-			String url = fileService.upload(m.getFile());
+			String url = fileService.upload(m);
 			if (url.equals("error")) {
 				throw new ApiMessageException("파일 올리기 실패");
 			}

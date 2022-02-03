@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.HistoryReqDTO;
 import com.ivblanc.api.dto.req.PhotoReqDTO;
-import com.ivblanc.api.service.FcmService;
 import com.ivblanc.api.service.HistoryService;
 import com.ivblanc.api.service.PhotoService;
 import com.ivblanc.api.service.UserService;
@@ -51,19 +50,20 @@ public class HistoryController {
 	private final ResponseService responseService;
 	private final JwtTokenProvider jwtTokenProvider;
 	private final UserService userService;
-	private final FcmService fcmService;
 
 	@ApiOperation(value = "History 추가", notes = "사진도 동시에 추가됨. Weather은 (맑음|흐림|비|눈) 중 하나로 입력")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<String> addHistory(@RequestBody List<PhotoReqDTO> photos, @Valid @RequestBody HistoryReqDTO historyReqDTO,
+	SingleResult<String> addHistory(@Valid @RequestBody HistoryReqDTO historyReqDTO,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		if(userService.findById(userId) == null){
 			throw new ApiMessageException("존재하지 않는 userId 입니다.");
 		}
 		History history = historyService.makeHistory(historyReqDTO, userId);
-		history = photoService.MakePhoto(photos, history);
+		if(historyReqDTO.getPhotoList() != null && historyReqDTO.getPhotoList().size() > 0) {
+			history = photoService.MakePhoto(historyReqDTO.getPhotoList(), history);
+		}
 		historyService.addHistory(history);
 		photoService.addPhotos(history.getPhotos());
 

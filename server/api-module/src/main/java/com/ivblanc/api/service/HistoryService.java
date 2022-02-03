@@ -87,7 +87,7 @@ public class HistoryService {
 
 		String url = null;
 		Optional<Style> style = styleService.findByStyleId(req.getStyleId());
-		if(style == null){
+		if(!style.isPresent()){
 			throw new ApiMessageException("존재하지 않는 style id입니다.");
 		} else {
 			url = style.get().getUrl();

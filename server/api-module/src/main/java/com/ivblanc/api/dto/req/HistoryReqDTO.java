@@ -1,8 +1,11 @@
 package com.ivblanc.api.dto.req;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.validation.constraints.Pattern;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -45,5 +48,8 @@ public class HistoryReqDTO {
 
 	@ApiModelProperty(value = "해당 히스토리에서 실착한 스타일의 아이디", example = "1")
 	private int styleId;
+
+	@ApiModelProperty(value = "해당 히스토리에 넣을 사진 리스트", example = "")
+	private List<MultipartFile> photoList;
 
 }
