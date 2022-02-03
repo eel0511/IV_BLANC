@@ -15,12 +15,14 @@ export default function FriendsCreateButton() {
     // console.log(friendName)
   };
 
+  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
   const friendRequest = () => {
     axios
-      .post('http://i6d104.p.ssafy.io:9999/v2/api-docs?group=GUMI_01_STRAIT/api/friend/request',
+      .post('http://i6d104.p.ssafy.io:9999/api/friend/request',
       {
         headers: {
-          Authorization: `Bearer token`
+          "Access-Control-Allow-origin": "*",
+          "Authorization": `Bearer ${token}`
         },
         data: {
           applicant: 'user',
