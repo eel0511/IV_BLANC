@@ -15,10 +15,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        init()
         // TODO: 2022/01/26 모든 옷 받기 테스트
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
 
         supportFragmentManager.beginTransaction().replace(R.id.frame, PhotoListFragment<Clothes>()).commit()
+    }
+
+    private fun init() {
+        setSupportActionBar(binding.toolbarMain)
     }
 }
