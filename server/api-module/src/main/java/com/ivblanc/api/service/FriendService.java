@@ -1,18 +1,16 @@
 package com.ivblanc.api.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
 import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.Friend;
 import com.ivblanc.core.repository.FriendRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -49,7 +47,15 @@ public class FriendService {
 			.build();
 		friendRepository.save(friend);
 	}
-
+	public boolean isRealFriend(String applicant,String friendName){
+		List<Friend> friendList = friendRepository.findAllByApplicantAndIsaccept(applicant,YNCode.Y);
+		for(Friend f:friendList){
+			if(f.getFriendName().equals(friendName)){
+				return true;
+			}
+		}
+		return false;
+	}
 	public void deleteFriend(Friend friend) {
 		friendRepository.delete(friend);
 	}
