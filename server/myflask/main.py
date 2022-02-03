@@ -21,7 +21,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 PROJECT_ID = "iv-blanc"
 db = pymysql.connect(host="i6d104.p.ssafy.io", user="ivblanc", passwd="ivblancgumi104", db="ivblanc", charset="utf8")
 cur = db.cursor()
-cred = credentials.Certificate("/Users/suhyeonglee/Downloads/iv-blanc-firebase-adminsdk-l6zca-ba0836f40e.json")
+cred = credentials.Certificate("iv-blanc-firebase-adminsdk-l6zca-ba0836f40e.json")
 default_app = firebase_admin.initialize_app(cred, {
     'storageBucket': f"{PROJECT_ID}.appspot.com"
 })
