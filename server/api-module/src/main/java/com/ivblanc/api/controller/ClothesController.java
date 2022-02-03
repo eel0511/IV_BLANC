@@ -173,12 +173,7 @@ public class ClothesController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        ByteArrayResource fileResource = new ByteArrayResource(photo.getBytes()){
-            @Override
-            public String getFilename() {
-                return photo.getName();
-            }
-        };
+        ByteArrayResource fileResource = new ByteArrayResource(photo.getBytes());
         body.add("file",fileResource);
         body.add("clothId",clothes.getClothesId()+"");
 
