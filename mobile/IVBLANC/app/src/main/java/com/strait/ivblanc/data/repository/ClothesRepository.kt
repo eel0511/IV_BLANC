@@ -14,10 +14,9 @@ class ClothesRepository {
     val clothesApi = ApplicationClass.sRetrofit.create(ClothesApi::class.java)
     private val resource = Resources.getSystem()
 
-    // TODO: 2022/01/31 page 삭제
-    suspend fun getAllClothes(page: Int): Resource<ClothesResponse> {
+    suspend fun getAllClothes(): Resource<ClothesResponse> {
         return try {
-            val response = clothesApi.getAllClothes(page)
+            val response = clothesApi.getAllClothes()
             if(response.isSuccessful) {
                 return if(response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
                     Resource.success(response.body()!!)
