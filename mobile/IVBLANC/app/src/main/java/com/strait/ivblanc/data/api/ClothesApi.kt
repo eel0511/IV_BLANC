@@ -8,9 +8,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ClothesApi {
-    // TODO: 2022/01/31 page 삭제
     @GET("/api/clothes/all")
-    suspend fun getAllClothes(@Query("page") page: Int): Response<ClothesResponse>
+    suspend fun getAllClothes(): Response<ClothesResponse>
 
     @DELETE("/api/clothes/deleteById")
     suspend fun deleteClothesById(@Query("clothesId") clothesId: Int): Response<ClothesDeleteResponse>
