@@ -17,6 +17,11 @@ import pymysql
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+if __name__ == '__main__':
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 PROJECT_ID = "iv-blanc"
 db = pymysql.connect(host="i6d104.p.ssafy.io", user="ivblanc", passwd="ivblancgumi104", db="ivblanc", charset="utf8")
