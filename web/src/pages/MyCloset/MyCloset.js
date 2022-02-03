@@ -68,10 +68,11 @@ export default function MyCloset() {
       userId: 1,
     },
   ];
-
+  
   const testAxios = () => {
     axios
-      .get('http://119.56.162.61:8888/api/clothes/all', {
+      .get('http://119.56.162.61:8888/api/clothes/all', 
+      {
         params: {
           page: 1,
           userId: 1,
