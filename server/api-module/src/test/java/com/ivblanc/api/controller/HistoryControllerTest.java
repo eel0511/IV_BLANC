@@ -47,5 +47,14 @@ class HistoryControllerTest {
 			.andDo(print());
 	}
 
-
+	@Order(2)
+	@Test
+	void findAllHistory() throws Exception {
+		mockMvc.perform(get("/api/history/find/all")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
 }

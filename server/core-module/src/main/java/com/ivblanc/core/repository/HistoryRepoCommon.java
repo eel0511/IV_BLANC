@@ -14,11 +14,11 @@ import com.ivblanc.core.entity.History;
 @Repository
 public interface HistoryRepoCommon {
 
-	List<History> findAllByUserId(int userId, Pageable pageable);
+	List<History> findAllByUserId(int userId);
 
-	List<History> findAllByUserIdOrderByDateDesc(int userId, Pageable pageable);
+	List<History> findAllByUserIdOrderByDateDesc(int userId);
 
-	List<History> findAllByUserIdOrderByDateAsc(int userId, Pageable pageable);
+	List<History> findAllByUserIdOrderByDateAsc(int userId);
 
 	History findByDateAndUserId(LocalDateTime date, int userId);
 

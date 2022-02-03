@@ -30,16 +30,16 @@ public class HistoryService {
 		return historyRepository.findById(history_id);
 	}
 
-	public List<History> findAll(int userId, Pageable pageable) {
-		return historyRepository.findAllByUserId(userId, pageable);
+	public List<History> findAll(int userId) {
+		return historyRepository.findAllByUserId(userId);
 	}
 
-	public List<History> findOrderByDateDesc(int userId, Pageable pageable) {
-		return historyRepository.findAllByUserIdOrderByDateDesc(userId, pageable);
+	public List<History> findOrderByDateDesc(int userId) {
+		return historyRepository.findAllByUserIdOrderByDateDesc(userId);
 	}
 
-	public List<History> findOrderByDateAsc(int userId, Pageable pageable) {
-		return historyRepository.findAllByUserIdOrderByDateAsc(userId, pageable);
+	public List<History> findOrderByDateAsc(int userId) {
+		return historyRepository.findAllByUserIdOrderByDateAsc(userId);
 	}
 
 	public History findByDate(String dateStr, int userId) {
