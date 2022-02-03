@@ -50,6 +50,7 @@ public class FriendService {
 	public boolean isRealFriend(String applicant,String friendName){
 		List<Friend> friendList = friendRepository.findAllByApplicant(applicant);
 		for(Friend f:friendList){
+			System.out.println(f.getFriendName());
 			if(f.getFriendName().equals(friendName)){
 				return true;
 			}

@@ -62,7 +62,7 @@ public class FriendController {
 	@PostMapping(value = "/isaccept")
 	public @ResponseBody
 	SingleResult<FriendResDTO> acceptFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
-		friendService.makeFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
+		friendService.makeFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
 		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
 
 	}
