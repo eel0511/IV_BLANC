@@ -162,7 +162,7 @@ public class ClothesController {
     public @ResponseBody
     SingleResult<ClothesIdResDTO> addClothes(@Valid MakeClothesReqDTO req, final MultipartFile photo,
                                              @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
-        String url = fileService.upload(req.getFile());
+        String url = fileService.upload(photo);
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         if (url.equals("error")) {
             throw new ApiMessageException("파일 올리기 실패");
