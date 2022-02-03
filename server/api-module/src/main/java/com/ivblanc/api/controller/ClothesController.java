@@ -177,7 +177,7 @@ public class ClothesController {
             // 기존 ByteArrayResource의 getFilename 메서드 override
             @Override
             public String getFilename() {
-                return "requestFile.wav";
+                return req.getFile().getName();
             }
         };
         body.add("file",fileResource);
