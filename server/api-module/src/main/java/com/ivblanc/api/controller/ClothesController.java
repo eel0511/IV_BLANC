@@ -170,7 +170,7 @@ public class ClothesController {
         RestTemplate restTemplate = new RestTemplate();
         String sendurl ="http://i6d104.p.ssafy.io:5000/";
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file",req.getFile());
         body.add("clothId",clothes.getClothesId()+"");
