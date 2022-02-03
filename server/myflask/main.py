@@ -67,5 +67,4 @@ def removebg():
     cur.execute("UPDATE clothes set url = %s where clothes_id = %s", [newpath,clothId])
     cur.fetchall()
     db.commit()
-    db.close()
     return "finish remove bg url is " + newpath

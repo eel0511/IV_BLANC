@@ -160,7 +160,7 @@ public class ClothesController {
     @ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
     @PostMapping(value = "/add")
     public @ResponseBody
-    SingleResult<ClothesIdResDTO> addClothes(@Valid MakeClothesReqDTO req,
+    SingleResult<ClothesIdResDTO> addClothes(@Valid MakeClothesReqDTO req, final MultipartFile photo,
                                              @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
         String url = fileService.upload(req.getFile());
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
@@ -175,7 +175,7 @@ public class ClothesController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", new MultipartInputStreamFileResource(req.getFile().getInputStream(), req.getFile().getOriginalFilename()));
+        body.add("file", new MultipartInputStreamFileResource(photo.getInputStream(), photo.getOriginalFilename()));
         body.add("clothId",clothes.getClothesId()+"");
 
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
