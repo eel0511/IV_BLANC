@@ -1,13 +1,11 @@
 package com.ivblanc.core.repository;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-
+import com.ivblanc.core.entity.Clothes;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.ivblanc.core.entity.Clothes;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface ClothesRepoCommon {
@@ -32,7 +30,7 @@ public interface ClothesRepoCommon {
 
 	List<Clothes> findAllByUserIdOrderByUpdateDateDesc(int userId);
 
-	List<Clothes> findAllByUserId(int userId, Pageable pageable);
+	List<Clothes> findAllByUserId(int userId);
 
 	List<Clothes> findAllByUpdateDateBetween(LocalDateTime start, LocalDateTime end);
 
