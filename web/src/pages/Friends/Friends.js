@@ -6,7 +6,7 @@ export default function Friends() {
   return (
     <>
       <h1>Friends</h1>
-      <body><FriendsList /></body>
+      <div><FriendsList /></div>
       <footer><FriendsCreateButton /></footer>
     </>
   );
