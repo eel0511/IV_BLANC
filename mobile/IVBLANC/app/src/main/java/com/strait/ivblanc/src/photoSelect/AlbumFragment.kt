@@ -30,6 +30,8 @@ import android.os.Environment
 import android.text.format.DateFormat
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import com.strait.ivblanc.data.model.viewmodel.PhotoSelectViewModel
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -37,6 +39,7 @@ import java.util.*
 
 private const val TAG = "AlbumFragment_debuk"
 class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::bind, R.layout.fragment_album) {
+    private val photoSelectViewModel: PhotoSelectViewModel by activityViewModels()
     private var scaleFactor = 1.0F
     lateinit var scaleGestureDetector: ScaleGestureDetector
     lateinit var photoRecyclerViewAdapter: PhotoRecyclerViewAdapter
@@ -55,6 +58,8 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         super.onResume()
         Log.d(TAG, "onResume: ")
         reloadImages()
+        photoSelectViewModel.setToolbarTitle("사진 선택")
+        photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
     }
 
     fun reloadImages() {

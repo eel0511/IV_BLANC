@@ -14,6 +14,7 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.viewmodel.PhotoSelectViewModel
 import com.strait.ivblanc.databinding.ActivityPhotoSelectBinding
 import com.strait.ivblanc.util.PermissionUtil
+import java.lang.Exception
 
 private const val TAG = "PhotoSelectActivity_해협"
 class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPhotoSelectBinding::inflate) {
@@ -76,12 +77,16 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
     }
 
     private fun setLeadingIcon(resId: Int, clickListener: View.OnClickListener) {
-        binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
+        try {
+            binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
+        } catch (e: Exception) {}
         binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.setOnClickListener(clickListener)
     }
 
     private fun setTrailingIcon(resId: Int, clickListener: View.OnClickListener) {
-        binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
+        try {
+            binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
+        } catch (e: Exception) {}
         binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.setOnClickListener(clickListener)
     }
 

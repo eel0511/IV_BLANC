@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.strait.ivblanc.util.ClickListener
 
 class PhotoSelectViewModel: ViewModel() {
     private val _toolbarTitle = MutableLiveData<String>()

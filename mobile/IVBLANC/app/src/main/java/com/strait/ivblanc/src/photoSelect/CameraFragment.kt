@@ -22,8 +22,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
+import com.strait.ivblanc.data.model.viewmodel.PhotoSelectViewModel
 import com.strait.ivblanc.databinding.FragmentCameraBinding
 import com.strait.ivblanc.ui.PermissionDialog
 import java.lang.Exception
@@ -32,7 +34,7 @@ import java.util.*
 
 private const val TAG = "CameraFragment_해협"
 class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding::bind, R.layout.fragment_camera) {
-
+    private val photoSelectViewModel: PhotoSelectViewModel by activityViewModels()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
@@ -42,12 +44,13 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
         binding.buttonCameraFShot.setOnClickListener {
             takePicture()
         }
-
     }
 
     override fun onResume() {
         super.onResume()
         startCamera()
+        photoSelectViewModel.setToolbarTitle("카메라")
+        photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
     }
 
     //카메라 관련 함수 시작
