@@ -57,4 +57,65 @@ class HistoryControllerTest {
 			.andExpect(status().isOk())
 			.andDo(print());
 	}
+
+	@Order(3)
+	@Test
+	void findHistoryThisMonth() throws Exception {
+		mockMvc.perform(get("/api/history/find/thisMonth")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(4)
+	@Test
+	void findHistorySelectedMonth() throws Exception {
+		mockMvc.perform(get("/api/history/find/month")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("year", "2022")
+				.param("month", "3")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(5)
+	@Test
+	void findHistoryByDate() throws Exception {
+		mockMvc.perform(get("/api/history/find/date")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("date", "2022-02-04")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(6)
+	@Test
+	void findHistoryByWeather() throws Exception {
+		mockMvc.perform(get("/api/history/find/weather")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("weather", "맑음")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(7)
+	@Test
+	void findHistoryByTemperature() throws Exception {
+		mockMvc.perform(get("/api/history/find/temperature")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("temp_low", "-7")
+				.param("temp_high", "2")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
 }
