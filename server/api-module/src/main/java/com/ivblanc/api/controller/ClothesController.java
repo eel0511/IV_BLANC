@@ -175,7 +175,7 @@ public class ClothesController {
         body.add("file",req.getFile());
         body.add("clothId",clothes.getClothesId()+"");
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
-        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
+        HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
         //
         return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
     }
