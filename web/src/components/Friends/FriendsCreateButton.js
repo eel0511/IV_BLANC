@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Friends.css';
 import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 export default function FriendsCreateButton() {
   const [friendName, setFriendName] = useState('');
@@ -12,6 +13,24 @@ export default function FriendsCreateButton() {
   const friendNameHandleChange = (e) => {
     setFriendName(e.target.value);
     // console.log(friendName)
+  };
+
+  const friendRequest = () => {
+    axios
+      .post('http://i6d104.p.ssafy.io:9999/v2/api-docs?group=GUMI_01_STRAIT/api/friend/request',
+      {
+        headers: {
+          Authorization: `Bearer token`
+        },
+        data: {
+          applicant: 'user',
+          friendName: {friendName}
+        }
+      })
+      .then((response) => {
+        console.log(response.data);
+        handleClose();
+      });
   };
 
   return (
@@ -39,7 +58,7 @@ export default function FriendsCreateButton() {
               placeholder='name@example.com'
               onChange={friendNameHandleChange}
             />
-            <Button>요청</Button>
+            <Button onClick={friendRequest}>요청</Button>
           </form>
         </Modal.Body>
       </Modal>
