@@ -1,22 +1,19 @@
 package com.ivblanc.api.dto.req;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class MakeClothesReqDTO {
 
 	@NotNull
@@ -39,6 +36,7 @@ public class MakeClothesReqDTO {
 	@ApiModelProperty(value = "season 계절 (1:봄, 2:여름, 3:가을, 4:겨울)", required = true, example = "1")
 	private int season;
 
+	@JsonProperty("file")
 	@ApiModelProperty(value = "사진")
 	private MultipartFile file;
 }
