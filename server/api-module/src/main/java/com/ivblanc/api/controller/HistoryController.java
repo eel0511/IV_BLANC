@@ -1,6 +1,7 @@
 package com.ivblanc.api.controller;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,15 +55,15 @@ public class HistoryController {
 	@ApiOperation(value = "History 추가", notes = "사진도 동시에 추가됨. Weather은 (맑음|흐림|비|눈) 중 하나로 입력")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<String> addHistory(@Valid @RequestBody HistoryReqDTO historyReqDTO,
+	SingleResult<String> addHistory(@Valid HistoryReqDTO historyReqDTO,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		if(userService.findById(userId) == null){
 			throw new ApiMessageException("존재하지 않는 userId 입니다.");
 		}
 		History history = historyService.makeHistory(historyReqDTO, userId);
-		if(historyReqDTO.getPhotoList() != null && historyReqDTO.getPhotoList().size() > 0) {
-			history = photoService.MakePhoto(historyReqDTO.getPhotoList(), history);
+		if(historyReqDTO.getPhotoList() != null && historyReqDTO.getPhotoList().length > 0) {
+			history = photoService.MakePhoto(Arrays.asList(historyReqDTO.getPhotoList()), history);
 		}
 		historyService.addHistory(history);
 		photoService.addPhotos(history.getPhotos());

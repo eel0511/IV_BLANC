@@ -50,6 +50,6 @@ public class HistoryReqDTO {
 	private int styleId;
 
 	@ApiModelProperty(value = "해당 히스토리에 넣을 사진 리스트", example = "")
-	private List<MultipartFile> photoList;
+	private MultipartFile[] photoList;
 
 }
