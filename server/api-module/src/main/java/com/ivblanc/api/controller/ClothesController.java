@@ -173,15 +173,10 @@ public class ClothesController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        ByteArrayResource fileResource = new ByteArrayResource(req.getFile().getBytes()) {
-            // 기존 ByteArrayResource의 getFilename 메서드 override
-            @Override
-            public String getFilename() {
-                return req.getFile().getName();
-            }
-        };
+        ByteArrayResource fileResource = new ByteArrayResource(req.getFile().getBytes());
         body.add("file",fileResource);
         body.add("clothId",clothes.getClothesId()+"");
+
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
         HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
         //
