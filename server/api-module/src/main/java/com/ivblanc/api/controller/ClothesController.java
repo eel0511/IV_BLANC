@@ -17,7 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -160,6 +166,17 @@ public class ClothesController {
         }
         Clothes clothes = clothesSerivce.MakeClotehsByReqDToAndUrl(req, url, userId);
         clothesSerivce.addClothes(clothes);
+        // flask 연동
+        RestTemplate restTemplate = new RestTemplate();
+        String sendurl ="http://i6d104.p.ssafy.io:5000/";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file",req.getFile());
+        body.add("clothId",clothes.getClothesId()+"");
+        HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> response = restTemplate.postForEntity(url, requestMessage, String.class);
+        //
         return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
     }
 
