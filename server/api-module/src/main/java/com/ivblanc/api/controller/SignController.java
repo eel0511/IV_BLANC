@@ -149,12 +149,12 @@ public class SignController {
             .secure(true)
             .sameSite("None")
             .httpOnly(false)
-            .domain("localhost")
+            .domain("i6d104.p.ssafy.io:9999")
             .maxAge(1000 * 1000)
             .build();
 
         response.setHeader("Set-Cookie", rCookie.toString());
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Origin", "http://i6d104.p.ssafy.io:9999");
         response.setHeader("Access-Control-Allow-Method", "GET, POST, OPTIONS, PUT");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
 
