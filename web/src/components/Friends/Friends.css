@@ -1,0 +1,10 @@
+/* FriendsCreateButton */
+.friedsCreateButton{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 50px;
+  border-style: solid;
+  border-color: gray;
+  border-radius: 50%;
+}
