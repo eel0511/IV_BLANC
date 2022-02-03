@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.api
 
 import com.strait.ivblanc.config.BaseResponse
+import com.strait.ivblanc.data.model.dto.ClothesForUpload
 import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
 import okhttp3.MultipartBody
@@ -14,13 +15,10 @@ interface ClothesApi {
     @DELETE("/api/clothes/deleteById")
     suspend fun deleteClothesById(@Query("clothesId") clothesId: Int): Response<ClothesDeleteResponse>
 
+    // TODO: 2022/02/03 ClothesDeleteResponse 이름 바꾸기 
     @Multipart
         @POST("/api/clothes/add")
-    suspend fun addClothes(@Query("category") category: Int
-                           , @Query("color") color: String
-                           , @Query("material") material: Int
-                           , @Query("season") season: Int
-                           , @Query("size") size: Int
-                           , @Part("file") image: MultipartBody.Part): Response<BaseResponse>
+    suspend fun addClothes(@Body clothes: ClothesForUpload
+                           , @Part("file") image: MultipartBody.Part): Response<ClothesDeleteResponse>
 
 }
