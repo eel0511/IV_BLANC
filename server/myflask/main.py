@@ -17,6 +17,12 @@ import pymysql
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+if __name__ == '__main__':
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
+app = Flask(__name__)
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 PROJECT_ID = "iv-blanc"
 db = pymysql.connect(host="i6d104.p.ssafy.io", user="ivblanc", passwd="ivblancgumi104", db="ivblanc", charset="utf8")
@@ -40,7 +46,7 @@ def fileUpload(file):
     print(blob.public_url)
 
 
-@app.route("/",methods=['POST'])
+@app.route("/", methods=['POST'])
 def removebg():
     f = request.files['file']
     fname = secure_filename(f.filename)
@@ -58,7 +64,8 @@ def removebg():
     fileUpload(output_path)
 
     newpath = "https://storage.googleapis.com/iv-blanc.appspot.com/" + output_path
-    cur.execute("UPDATE clothes set url = %s where clothes_id = %s", (newpath, clothId,))
+    cur.execute("UPDATE clothes set url = %s where clothes_id = %s", [newpath,clothId])
     cur.fetchall()
     db.commit()
+    db.close()
     return "finish remove bg url is " + newpath
