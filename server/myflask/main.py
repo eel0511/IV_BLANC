@@ -40,7 +40,7 @@ def fileUpload(file):
     print(blob.public_url)
 
 
-@app.route("/")
+@app.route("/",methods=['POST'])
 def removebg():
     f = request.files['file']
     fname = secure_filename(f.filename)
