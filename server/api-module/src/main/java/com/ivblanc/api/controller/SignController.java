@@ -140,23 +140,24 @@ public class SignController {
 
         String token = jwtTokenProvider.createToken(String.valueOf(user.getUserId()), Collections.singletonList("ROLE_USER"));
 
-        // Cookie cookie = new Cookie("JWT", token);
-        // cookie.setMaxAge(1000 * 1000);
-        // response.addCookie(cookie);
+        Cookie cookie = new Cookie("JWT", token);
+        cookie.setMaxAge(1000 * 1000);
+        response.addCookie(cookie);
 
         ResponseCookie rCookie = ResponseCookie.from("JWT", token)
             .path("/")
             .secure(true)
             .sameSite("None")
             .httpOnly(false)
-            .domain("i6d104.p.ssafy.io:9999")
+            .domain("i6d104.p.ssafy.io")
             .maxAge(1000 * 1000)
             .build();
 
         response.setHeader("Set-Cookie", rCookie.toString());
-        response.setHeader("Access-Control-Allow-Origin", "http://i6d104.p.ssafy.io:9999");
+        response.setHeader("Access-Control-Allow-Origin", "http://i6d104.p.ssafy.io");
         response.setHeader("Access-Control-Allow-Method", "GET, POST, OPTIONS, PUT");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
+        response.addCookie(cookie);
 
         // 회원 토큰값, 디바이스 정보 업데이트
         user.updateTokenFCM(req.getToken_fcm());
