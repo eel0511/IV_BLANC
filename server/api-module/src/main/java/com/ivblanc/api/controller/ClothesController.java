@@ -15,7 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
@@ -28,6 +28,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -173,8 +175,7 @@ public class ClothesController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        ByteArrayResource fileResource = new ByteArrayResource(photo.getBytes());
-        body.add("file",fileResource);
+        body.add("file", new MultipartInputStreamFileResource(photo.getInputStream(), photo.getOriginalFilename()));
         body.add("clothId",clothes.getClothesId()+"");
 
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
@@ -259,5 +260,24 @@ public class ClothesController {
         clothesSerivce.addClothes(clothes);
         return responseService.getSingleResult(new ClothesIdResDTO(clothes.getClothesId()));
 
+    }
+}
+class MultipartInputStreamFileResource extends InputStreamResource {
+
+    private final String filename;
+
+    MultipartInputStreamFileResource(InputStream inputStream, String filename) {
+        super(inputStream);
+        this.filename = filename;
+    }
+
+    @Override
+    public String getFilename() {
+        return this.filename;
+    }
+
+    @Override
+    public long contentLength() throws IOException {
+        return -1; // we do not want to generally read the whole stream into memory ...
     }
 }
