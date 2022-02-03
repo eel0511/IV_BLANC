@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
@@ -172,8 +173,14 @@ public class ClothesController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        MultipartFile file = req.getFile();
-        body.add("file",file);
+        ByteArrayResource fileResource = new ByteArrayResource(req.getFile().getBytes()) {
+            // 기존 ByteArrayResource의 getFilename 메서드 override
+            @Override
+            public String getFilename() {
+                return "requestFile.wav";
+            }
+        };
+        body.add("file",fileResource);
         body.add("clothId",clothes.getClothesId()+"");
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
         HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
