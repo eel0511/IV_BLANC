@@ -171,8 +171,9 @@ public class ClothesController {
         String sendurl ="http://i6d104.p.ssafy.io:5000/";
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file",req.getFile());
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();\
+        MultipartFile file = req.getFile();
+        body.add("file",file);
         body.add("clothId",clothes.getClothesId()+"");
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
         HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
