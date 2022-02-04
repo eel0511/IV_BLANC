@@ -14,5 +14,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class FriendResDTO {
 	@ApiModelProperty(value = "친구아이디", required = true, example = "1")
+	private String friendEmail;
+
+	@ApiModelProperty(value = "친구이름",required = true,example = "1")
 	private String friendName;
 }

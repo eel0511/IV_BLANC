@@ -64,7 +64,8 @@ public class FriendController {
 	public @ResponseBody
 	SingleResult<FriendResDTO> acceptFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
 		friendService.makeFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 
 	}
 
@@ -75,7 +76,8 @@ public class FriendController {
 
 		friendService.deleteFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
 		friendService.deleteFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구 요청 취소", notes = "N인 친구신청 목록에 대해 취소를 할 수 있습니다.\n"
@@ -84,7 +86,8 @@ public class FriendController {
 	@ResponseBody
 	SingleResult<FriendResDTO> cancelFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
 		friendService.deleteFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구추가", notes = "친구 email을 등록하여 상태 N으로 단방향 연결합니다.\n"
@@ -97,13 +100,15 @@ public class FriendController {
 		User friend = userService.findByEmail(req.getFriendName());
 		//fcm 없을시 추가만됨
 		if(friend.getToken_fcm()==null||friend.getToken_fcm().length()<10){
-			return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+			User user = userService.findByEmail(req.getFriendName());
+			return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 		}
 
 		fcmService.sendMessageTo(userService.findByEmail(req.getFriendName()).getToken_fcm(), "친구요청 알림",
 			userService.findByEmail(req.getApplicant()).getName() + "님이 친구요청을 보냈습니다.");
 		System.out.println(req.getFriendName());
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구요청 보기", notes = "자신이 받은 상태 N인 요청을 모두 볼수있습니다.\n"
@@ -111,6 +116,6 @@ public class FriendController {
 	@GetMapping(value = "/friendrequest")
 	public ListResult<FriendResDTO>
 	findRequest(@RequestParam String applicant) throws Exception {
-		return responseService.getListResult(friendService.MakeFriendToResDTO(friendService.findRequest(applicant)));
+		return responseService.getListResult(friendService.MakeApplicantToResDTO(friendService.findRequest(applicant)));
 	}
 }

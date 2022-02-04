@@ -4,8 +4,10 @@ import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
 import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.Friend;
+import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.FriendRepository;
+import com.ivblanc.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FriendService {
 	private final FriendRepository friendRepository;
-
+	private final UserRepository userRepository;
 	public List<Friend> findUserFriends(String applicant) throws Exception {
 		return friendRepository.findAllByApplicant(applicant);
 	}
@@ -80,7 +82,16 @@ public class FriendService {
 	public List<FriendResDTO> MakeFriendToResDTO(List<Friend> friendList){
 		List<FriendResDTO> friendResDTOList = new ArrayList<>();
 		for (Friend f : friendList) {
-			friendResDTOList.add(new FriendResDTO(f.getFriendName()));
+			User user = userRepository.findByEmail(f.getFriendName());
+			friendResDTOList.add(new FriendResDTO(f.getFriendName(),user.getName()));
+		}
+		return friendResDTOList;
+	}
+	public List<FriendResDTO> MakeApplicantToResDTO(List<Friend> friendList){
+		List<FriendResDTO> friendResDTOList = new ArrayList<>();
+		for (Friend f : friendList) {
+			User user = userRepository.findByEmail(f.getApplicant());
+			friendResDTOList.add(new FriendResDTO(f.getApplicant(), user.getName()));
 		}
 		return friendResDTOList;
 	}
