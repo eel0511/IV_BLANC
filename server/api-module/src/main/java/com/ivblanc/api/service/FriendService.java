@@ -63,15 +63,18 @@ public class FriendService {
 
 	public void addFriend(MakeFriendReqDTO req) {
 		Friend conn = friendRepository.findByApplicantAndFriendName(req.getApplicant(), req.getFriendName());
-		if(conn.getFriendName().equals(req.getFriendName())&&conn.getApplicant().equals(req.getApplicant())){
+		if(conn==null){
+			Friend friend = Friend.builder()
+					.applicant(req.getApplicant())
+					.friendName(req.getFriendName())
+					.isaccept(YNCode.N)
+					.build();
+			friendRepository.save(friend);
+		}
+		else{
 			throw new ApiMessageException("이미 요청보낸 친구입니다.");
 		}
-		Friend friend = Friend.builder()
-			.applicant(req.getApplicant())
-			.friendName(req.getFriendName())
-			.isaccept(YNCode.N)
-			.build();
-		friendRepository.save(friend);
+
 	}
 
 	public List<FriendResDTO> MakeFriendToResDTO(List<Friend> friendList){
