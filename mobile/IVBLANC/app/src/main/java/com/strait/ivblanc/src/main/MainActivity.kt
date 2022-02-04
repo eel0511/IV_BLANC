@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
@@ -30,15 +31,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     // TODO: 2022/02/03 nav fragment 추가 및 style generic 추가
     private fun init() {
         setToolbar()
+        // 첫 화면 세팅
+        setFragment(PhotoListFragment<Clothes>())
 
+        // nav click 시 fragment 변경
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.nav_clothes -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout_main_container, PhotoListFragment<Clothes>()).commit()
+                    setFragment(PhotoListFragment<Clothes>())
                     true
                 }
+                // Style로 변경
                 R.id.nav_style -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.frameLayout_main_container, PhotoListFragment<Clothes>()).commit()
+                    setFragment(PhotoListFragment<Clothes>())
                     true
                 }
                 R.id.nav_history -> {
@@ -51,6 +56,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         }
     }
+
+    private fun setFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_main_container, fragment).commit()
+    }
+
+
 
     // TODO: 2022/02/04 툴바가 있는 액티비티 마다 반복되는 코드
     private fun setToolbar() {
