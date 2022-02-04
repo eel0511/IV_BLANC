@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
+import SelectedImage from '../../components/MyStyle/SelectedImage';
 
 export default function MyStyle() {
   return (
@@ -13,9 +14,9 @@ export default function MyStyle() {
               <MyStyleTopbar />
             </Col>
             <Col sm={8}>아바타</Col>
-            <Col sm={4}>선택한 이미지</Col>
           </Row>
         </Container>
+        <SelectedImage />
       </div>
     </>
   );
