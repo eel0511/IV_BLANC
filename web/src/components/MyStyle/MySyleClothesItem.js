@@ -46,6 +46,7 @@ export default function MyClosetClothesItem({ clothesData }) {
           }}
           onClick={imageRenderer}
         />
+        {/* <p>{clothesData.url}</p> */}
       </div>
     </div>
   );
