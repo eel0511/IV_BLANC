@@ -19,7 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ivblanc.api.dto.req.HistoryReqDTO;
+import com.ivblanc.api.dto.req.MakeHistoryReqDTO;
+import com.ivblanc.api.dto.req.UpdateHistoryReqDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -37,7 +38,7 @@ class HistoryControllerTest {
 	@Order(1)
 	@Test
 	void addHistory() throws Exception {
-		String content = objectMapper.writeValueAsString(new HistoryReqDTO(BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), "2022-02-03", "맑음", -5, 5, "test text", "subject", 1,  null));
+		String content = objectMapper.writeValueAsString(new MakeHistoryReqDTO(BigDecimal.valueOf(0.0), BigDecimal.valueOf(0.0), "2022-02-03", "맑음", -5, 5, "test text", "subject", 1,  null));
 		mockMvc.perform(post("/api/history/add")
 				.header("X-AUTH-TOKEN", TOKEN)
 				.content(content)
@@ -134,10 +135,10 @@ class HistoryControllerTest {
 	@Order(9)
 	@Test
 	void updateHistory() throws Exception {
-		String content = objectMapper.writeValueAsString(new HistoryReqDTO(BigDecimal.valueOf(0.001), BigDecimal.valueOf(0.002), "2022-02-03", "비", -3, 7, "test text", "subject", 1,  null));
+		String content = objectMapper.writeValueAsString(new UpdateHistoryReqDTO(BigDecimal.valueOf(1.11), BigDecimal.valueOf(2.22), "2022-02-01", "흐림", -1, 3, "text", "subject2", 1));
 		mockMvc.perform(put("/api/history/update")
 				.header("X-AUTH-TOKEN", TOKEN)
-				.param("historyId", "2")
+				.param("historyId", "4")
 				.content(content)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
@@ -150,6 +151,17 @@ class HistoryControllerTest {
 	void deleteHistory() throws Exception {
 		mockMvc.perform(delete("/api/history/delete")
 				.param("historyId", "3")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(11)
+	@Test
+	void deleteHistoryPhoto() throws Exception {
+		mockMvc.perform(delete("/api/history/photo/delete")
+				.param("photoId", "4")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())

@@ -7,8 +7,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
-import com.ivblanc.api.dto.req.HistoryReqDTO;
-import com.ivblanc.api.dto.req.PhotoReqDTO;
+import com.ivblanc.api.dto.req.MakeHistoryReqDTO;
+import com.ivblanc.api.dto.req.UpdateHistoryReqDTO;
 import com.ivblanc.api.service.HistoryService;
 import com.ivblanc.api.service.PhotoService;
 import com.ivblanc.api.service.UserService;
@@ -43,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping(value = "/api/history")
 public class HistoryController {
 
@@ -56,15 +56,15 @@ public class HistoryController {
 	@ApiOperation(value = "History 추가", notes = "사진도 동시에 추가됨. Weather은 (맑음|흐림|비|눈) 중 하나로 입력")
 	@PostMapping(value = "/add")
 	public @ResponseBody
-	SingleResult<String> addHistory(@Valid HistoryReqDTO historyReqDTO,
+	SingleResult<String> addHistory(@Valid MakeHistoryReqDTO makeHistoryReqDTO,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		if(userService.findById(userId) == null){
 			throw new ApiMessageException("존재하지 않는 userId 입니다.");
 		}
-		History history = historyService.makeHistory(historyReqDTO, userId);
-		if(historyReqDTO.getPhotoList() != null && historyReqDTO.getPhotoList().length > 0) {
-			history = photoService.MakePhoto(Arrays.asList(historyReqDTO.getPhotoList()), history);
+		History history = historyService.makeHistory(makeHistoryReqDTO, userId);
+		if(makeHistoryReqDTO.getPhotoList() != null && makeHistoryReqDTO.getPhotoList().length > 0) {
+			history = photoService.MakePhoto(Arrays.asList(makeHistoryReqDTO.getPhotoList()), history);
 		}
 		historyService.addHistory(history);
 		photoService.addPhotos(history.getPhotos());
@@ -175,7 +175,7 @@ public class HistoryController {
 	@ApiOperation(value = "히스토리 수정")
 	@PutMapping(value = "/update")
 	public @ResponseBody
-	SingleResult<String> updateHistory(@RequestParam int historyId, @Valid @RequestBody HistoryReqDTO historyReqDTO,
+	SingleResult<String> updateHistory(@RequestParam int historyId, @Valid @RequestBody UpdateHistoryReqDTO dto,
 		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
 
 		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
@@ -186,12 +186,12 @@ public class HistoryController {
 		if(!history.isPresent()){
 			throw new ApiMessageException("존재하지 않는 historyId 입니다.");
 		}
-		historyService.updateHistory(history.get(), historyReqDTO);
+		historyService.updateHistory(history.get(), dto);
 
 		return responseService.getSingleResult(historyId + "번 히스토리 수정 완료");
 	}
 
-	@ApiOperation(value = "히스토리 사진 추가", notes = "history에 사진 추가")
+	@ApiOperation(value = "히스토리 사진 추가", notes = "history에 사진 추가. 단건/여러건 모두 가능")
 	@PostMapping(value = "/photo/add")
 	public @ResponseBody
 	SingleResult<String> addHistoryPhotos(@RequestParam int historyId, @RequestParam MultipartFile[] photoList,
@@ -224,14 +224,14 @@ public class HistoryController {
 		return responseService.getSingleResult(photoId + "번 사진이 삭제 되었습니다.");
 	}
 
-	@ApiOperation(value = "히스토리 사진 수정", notes = "history에 포함된 사진들 중 하나 수정")
+	@ApiOperation(value = "히스토리 사진 변경", notes = "history에 포함된 사진들 중 하나 변경")
 	@PutMapping(value = "/photo/update")
 	public @ResponseBody
-	SingleResult<String> updateHistoryPhoto(@RequestParam int photoId, @RequestBody PhotoReqDTO newPhoto) throws Exception {
+	SingleResult<String> updateHistoryPhoto(@RequestParam int photoId, @RequestParam MultipartFile newPhoto) throws Exception {
 		Photo photo = photoService.findByPhotoId(photoId)
 			.orElseThrow(() -> new ApiMessageException("없는 photo_id 입니다"));
-		photoService.addPhoto(photoService.updatePhoto(photo, newPhoto.getFile()));
-		return responseService.getSingleResult(photoId + "번 photo 수정");
+		photoService.addPhoto(photoService.updatePhoto(photo, newPhoto));
+		return responseService.getSingleResult(photoId + "번 photo 변경");
 	}
 
 }

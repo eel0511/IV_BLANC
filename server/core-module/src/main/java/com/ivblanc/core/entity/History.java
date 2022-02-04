@@ -44,7 +44,7 @@ public class History extends BaseEntity{
 	@Column(precision = 11, scale = 7)
 	private BigDecimal field;
 
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime date;
 

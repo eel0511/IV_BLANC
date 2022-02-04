@@ -5,11 +5,10 @@ import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.ivblanc.api.dto.req.HistoryReqDTO;
-import com.ivblanc.api.dto.req.PhotoReqDTO;
+import com.ivblanc.api.dto.req.MakeHistoryReqDTO;
+import com.ivblanc.api.dto.req.UpdateHistoryReqDTO;
 import com.ivblanc.core.entity.History;
 import com.ivblanc.core.entity.Style;
 import com.ivblanc.core.exception.ApiMessageException;
@@ -81,7 +80,7 @@ public class HistoryService {
 		return historyRepository.findAllByDateBetweenAndUserId(date_start, date_end, userId);
 	}
 
-	public History makeHistory(HistoryReqDTO req, int userId){
+	public History makeHistory(MakeHistoryReqDTO req, int userId){
 		String[] date = req.getDate().split("-");
 		LocalDateTime dt = LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0);
 
@@ -117,7 +116,7 @@ public class HistoryService {
 		historyRepository.deleteById(historyId);
 	}
 
-	public void updateHistory(History history, HistoryReqDTO req){
+	public void updateHistory(History history, UpdateHistoryReqDTO req){
 		String[] date = req.getDate().split("-");
 		LocalDateTime dt = LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0);
 

@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ivblanc.api.dto.req.PhotoReqDTO;
 import com.ivblanc.core.entity.History;
 import com.ivblanc.core.entity.Photo;
 import com.ivblanc.core.exception.ApiMessageException;
