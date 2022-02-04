@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -15,6 +16,8 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.photoSelect.AlbumFragment
 import com.strait.ivblanc.src.photoSelect.CameraFragment
+import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
+import com.strait.ivblanc.src.process.ProcessActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 import java.lang.Exception
@@ -32,18 +35,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun init() {
         setToolbar()
         // 첫 화면 세팅
-        setFragment(PhotoListFragment<Clothes>())
+        setFragment(PhotoListFragment<Clothes>(), "clothes")
 
         // nav click 시 fragment 변경
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.nav_clothes -> {
-                    setFragment(PhotoListFragment<Clothes>())
+                    setFragment(PhotoListFragment<Clothes>(), "clothes")
                     true
                 }
                 // Style로 변경
                 R.id.nav_style -> {
-                    setFragment(PhotoListFragment<Clothes>())
+                    setFragment(PhotoListFragment<Clothes>(), "style")
                     true
                 }
                 R.id.nav_history -> {
@@ -57,8 +60,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
     }
 
-    private fun setFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_main_container, fragment).commit()
+    private fun setFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_main_container, fragment, tag).commit()
     }
 
 
@@ -87,9 +90,33 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     this@MainActivity.onBackPressed()
                 }
             }
+            // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설정
+            R.drawable.ic_add -> {
+                when(getCurrentFragmentTag()) {
+                    "clothes" -> {
+                        object: View.OnClickListener {
+                            override fun onClick(v: View?) {
+                                startActivity(Intent(this@MainActivity, PhotoSelectActivity::class.java))
+                            }
+                        }
+                    }
+                    "style" -> {
+                        object: View.OnClickListener {
+                            override fun onClick(v: View?) {
+                                toast("스타일 생성 Activity로 이동", Toast.LENGTH_SHORT)
+                            }
+                        }
+                    }
+                    else -> View.OnClickListener{}
+                }
+
+
+            }
             else -> View.OnClickListener { }
         }
     }
+
+    private fun getCurrentFragmentTag(): String? = supportFragmentManager.findFragmentById(R.id.frameLayout_main_container)?.tag
 
     private fun setToolbarTitle(title: String) {
         binding.toolbarMain.textViewToolbar.text = title

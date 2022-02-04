@@ -2,6 +2,7 @@ package com.strait.ivblanc.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -15,9 +16,24 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
 
+private const val TAG = "PhotoListFragment_debuk"
 class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
+
+    override fun onResume() {
+        super.onResume()
+        when(tag) {
+            "clothes" -> {
+                viewModel.setToolbarTitle("옷")
+            }
+            "style" -> {
+                viewModel.setToolbarTitle("스타일")
+            }
+        }
+        viewModel.setLeadingIcon(R.drawable.ic_add)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

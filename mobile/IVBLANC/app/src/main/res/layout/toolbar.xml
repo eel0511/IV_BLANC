@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingEnd="@dimen/defaultPadding">
 
         <ImageView
             android:id="@+id/imageView_toolbar_leadingIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/smallIconSize"
+            android:layout_height="@dimen/smallIconSize"
             tools:background="@drawable/ic_close"/>
 
         <TextView
@@ -21,8 +22,8 @@
 
         <ImageView
             android:id="@+id/imageView_toolbar_trailingIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/smallIconSize"
+            android:layout_height="@dimen/smallIconSize"
             android:layout_gravity="end"
             tools:background="@drawable/ic_close"/>
 
