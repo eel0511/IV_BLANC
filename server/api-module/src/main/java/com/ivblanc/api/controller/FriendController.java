@@ -1,5 +1,7 @@
 package com.ivblanc.api.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
@@ -22,6 +24,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping(value = "/api/friend")
 public class FriendController {
 	private final FriendService friendService;

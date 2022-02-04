@@ -1,5 +1,7 @@
 package com.ivblanc.api.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeClothesReqDTO;
 import com.ivblanc.api.dto.res.ClothesIdResDTO;
@@ -36,6 +38,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping(value = "/api/clothes")
 public class ClothesController {
     private final ClothesSerivce clothesSerivce;
