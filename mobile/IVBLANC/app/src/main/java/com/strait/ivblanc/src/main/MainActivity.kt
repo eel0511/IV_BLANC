@@ -96,7 +96,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     "clothes" -> {
                         object: View.OnClickListener {
                             override fun onClick(v: View?) {
-                                startActivity(Intent(this@MainActivity, PhotoSelectActivity::class.java))
+                                startActivity(Intent(this@MainActivity, PhotoSelectActivity::class.java).apply {
+                                    putExtra("intend", PhotoSelectActivity.CLOTHES)
+                                })
                             }
                         }
                     }
