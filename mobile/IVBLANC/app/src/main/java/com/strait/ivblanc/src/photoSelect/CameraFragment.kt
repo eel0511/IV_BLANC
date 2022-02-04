@@ -51,6 +51,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
         startCamera()
         photoSelectViewModel.setToolbarTitle("카메라")
         photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
+        photoSelectViewModel.setTrailingIcon(-1)
     }
 
     //카메라 관련 함수 시작
@@ -111,6 +112,8 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(requireActivity()), object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    photoSelectViewModel.selectedImgUri = outputFileResults.savedUri
+                    Log.d(TAG, "onImageSaved: ${photoSelectViewModel.selectedImgUri}")
                     toast("이미지가 저장되었습니다.", Toast.LENGTH_SHORT)
                 }
 

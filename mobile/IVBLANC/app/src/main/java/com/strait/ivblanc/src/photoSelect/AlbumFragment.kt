@@ -60,6 +60,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         reloadImages()
         photoSelectViewModel.setToolbarTitle("사진 선택")
         photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
+        photoSelectViewModel.setTrailingIcon(R.drawable.ic_checked)
     }
 
     fun reloadImages() {
@@ -141,26 +142,28 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
 
         val name = "ivblanc${SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.KOREA).format(System.currentTimeMillis())}.jpg"
         var fos : OutputStream?
+        var imageUri: Uri?
 
-            requireActivity().contentResolver.also { resolver ->
-                val contentValues = ContentValues().apply {
-                    put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-                    put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
-                    put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
-                    }
-                }
-
-                val imageUri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-
-                fos = imageUri?.let {
-                    resolver.openOutputStream(it)
+        requireActivity().contentResolver.also { resolver ->
+            val contentValues = ContentValues().apply {
+                put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
+                put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
                 }
             }
-            fos?.use {
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, it)
-                toast("이미지 저장 완료", Toast.LENGTH_SHORT)
+
+            imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+            fos = imageUri?.let {
+                resolver.openOutputStream(it)
             }
+        }
+        fos?.use {
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, it)
+            toast("이미지 저장 완료", Toast.LENGTH_SHORT)
+            photoSelectViewModel.selectedImgUri = imageUri
+        }
     }
 }
