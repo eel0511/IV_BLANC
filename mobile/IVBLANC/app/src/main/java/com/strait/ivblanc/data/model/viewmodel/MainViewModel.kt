@@ -25,6 +25,31 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainViewModel: ViewModel() {
+    // 툴바 관련 필드
+    private val _toolbarTitle = MutableLiveData<String>()
+    val toolbarTitle: LiveData<String> get() = _toolbarTitle
+    private val _leadingIconDrawable = MutableLiveData<Int>()
+    val leadingIconDrawable: LiveData<Int> get() = _leadingIconDrawable
+
+    private val _trailingIconDrawable = MutableLiveData<Int>()
+    val trailingIconDrawable: LiveData<Int> get() = _trailingIconDrawable
+    // 툴바 관련 필드 끝
+
+    // 툴바 관련 메서드
+    fun setToolbarTitle(title: String) {
+        _toolbarTitle.postValue(title)
+    }
+
+    fun setLeadingIcon(resId: Int) {
+        _leadingIconDrawable.postValue(resId)
+    }
+
+    fun setTrailingIcon(resId: Int) {
+        _trailingIconDrawable.postValue(resId)
+    }
+    // 툴바 관련 메서드 끝
+
+    // 옷관련 필드
     private val clothesRepository = ClothesRepository()
     var currentCategory = CategoryCode.TOTAL
     private val totalClothesList = mutableListOf<Clothes>()
@@ -37,6 +62,7 @@ class MainViewModel: ViewModel() {
     private val _clothesListLiveData = MutableLiveData<List<PhotoItem<Clothes>>>()
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
+    // 옷관련 필드 끝
 
     suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()

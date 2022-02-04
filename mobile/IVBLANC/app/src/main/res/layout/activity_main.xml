@@ -2,41 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".src.main.MainActivity" >
 
-    <androidx.appcompat.widget.Toolbar
+    <include
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:contentInsetEnd="@dimen/defaultPadding"
         app:layout_constraintTop_toTopOf="parent"
-        android:elevation="8dp">
-
-        <ImageView
-            android:id="@+id/imageView_main_toolbarLeadingIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:background="@drawable/ic_close"/>
-
-        <TextView
-            style="@style/Text.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:text="제목"/>
-
-        <ImageView
-            android:id="@+id/imageView_main_toolbarTrailingIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            tools:background="@drawable/ic_close"/>
-
-    </androidx.appcompat.widget.Toolbar>
+        layout="@layout/toolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
