@@ -96,7 +96,7 @@ public class FriendController {
 		friendService.addFriend(req);
 		User friend = userService.findByEmail(req.getFriendName());
 		//fcm 없을시 추가만됨
-		if(friend.getToken_fcm().length()<10){
+		if(friend.getToken_fcm()==null||friend.getToken_fcm().length()<10){
 			return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
 		}
 
