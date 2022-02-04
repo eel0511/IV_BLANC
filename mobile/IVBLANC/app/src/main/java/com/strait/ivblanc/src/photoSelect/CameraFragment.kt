@@ -51,6 +51,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
         startCamera()
         photoSelectViewModel.setToolbarTitle("카메라")
         photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
+        photoSelectViewModel.setTrailingIcon(-1)
     }
 
     //카메라 관련 함수 시작

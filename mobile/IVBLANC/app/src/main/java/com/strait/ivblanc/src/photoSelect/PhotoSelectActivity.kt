@@ -80,6 +80,7 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
                 }
             }
             R.drawable.ic_checked -> object: View.OnClickListener {
+                // Activity를 호출 하는 의도에 따라 checked 버튼 동작 분기
                 override fun onClick(v: View?) {
                     when(intend) {
                         CLOTHES -> {
@@ -102,18 +103,22 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
     private fun setLeadingIcon(resId: Int, clickListener: View.OnClickListener) {
         try {
             binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.background = null
+        }
         binding.toolbarPhotoSelect.imageViewToolbarLeadingIcon.setOnClickListener(clickListener)
     }
 
     private fun setTrailingIcon(resId: Int, clickListener: View.OnClickListener) {
         try {
             binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.background = ResourcesCompat.getDrawable(resources, resId, null)
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+            binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.background = null
+        }
         binding.toolbarPhotoSelect.imageViewToolbarTrailingIcon.setOnClickListener(clickListener)
     }
 
-    // tablayout과 뷰페이저 세팅 및 연결
+   // tablayout과 뷰페이저 세팅 및 연결
     private fun setViewPager() {
         viewPager = binding.viewpagerPhotoSelectA
         val viewPagerAdapter = ScreenSlidePagerAdapter(this)
