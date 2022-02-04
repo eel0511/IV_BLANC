@@ -83,9 +83,9 @@ export default function MyCloset() {
       });
   };
 
-  useEffect(() => {
-    testAxios();
-  }, []);
+  // useEffect(() => {
+  //   testAxios();
+  // }, []);
 
   return (
     <>
