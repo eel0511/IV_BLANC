@@ -97,4 +97,6 @@
     <string name="silk">실크</string>
     <string name="cordeDuRoi">코듀로이</string>
     <string name="metalic">메탈릭</string>
+    <string name="calendar">캘린더</string>
+    <string name="map">지도</string>
 </resources>

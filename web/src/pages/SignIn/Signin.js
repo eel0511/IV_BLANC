@@ -20,7 +20,12 @@ import AuthSocial from '../../components/login/AuthSocial';
 
 function Copyright(props) {
   return (
-    <Typography variant='body2' color='text.secondary' align='center' {...props}>
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
+    >
       {'Copyright © '}
       <Link color='inherit' href='https://mui.com/'>
         Your Website
@@ -49,7 +54,8 @@ export default function SignInSide() {
 
   // 이메일 형식 확인
   const onChangeEmail = useCallback((e) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -90,7 +96,7 @@ export default function SignInSide() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://119.56.162.61:8888/api/sign/login', {
+        .post('http://i6d104.p.ssafy.io:9999/api/sign/login', {
           email: data.get('email'),
           pw: data.get('password'),
           social: 1,
@@ -124,12 +130,23 @@ export default function SignInSide() {
             sx={{
               backgroundImage: 'url(https://source.unsplash.com/random)',
               backgroundRepeat: 'no-repeat',
-              backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+              backgroundColor: (t) =>
+                t.palette.mode === 'light'
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
             <Box
               sx={{
                 my: 8,
@@ -139,13 +156,36 @@ export default function SignInSide() {
                 alignItems: 'center',
               }}
             >
-              <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
+              <img
+                src={require('../../assets/logo2.png')}
+                alt='우리로고'
+                width={'300px'}
+              ></img>
               <Typography component='h1' variant='h5'>
                 로그인
               </Typography>
-              <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                <TextField required fullWidth id='email' label='Email Address' name='email' autoComplete='email' type='email' value={email} onChange={onChangeEmail} />
-                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+              <Box
+                component='form'
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  required
+                  fullWidth
+                  id='email'
+                  label='Email Address'
+                  name='email'
+                  autoComplete='email'
+                  type='email'
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+                {email.length > 0 && (
+                  <span className={`message ${isEmail ? 'success' : 'error'}`}>
+                    {emailMessage}
+                  </span>
+                )}
 
                 <TextField
                   margin='normal'
@@ -161,11 +201,26 @@ export default function SignInSide() {
                   }}
                 />
 
-                <FormControlLabel control={<Checkbox value='remember' color='primary' onChange={(e) => setIsRemember(e.target.checked)} checked={isRemember} />} label='아이디 저장' />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value='remember'
+                      color='primary'
+                      onChange={(e) => setIsRemember(e.target.checked)}
+                      checked={isRemember}
+                    />
+                  }
+                  label='아이디 저장'
+                />
 
                 <AuthSocial />
 
-                <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+                <Button
+                  type='submit'
+                  fullWidth
+                  variant='contained'
+                  sx={{ mt: 3, mb: 2 }}
+                >
                   로그인
                 </Button>
                 <Grid container spacing={1}>

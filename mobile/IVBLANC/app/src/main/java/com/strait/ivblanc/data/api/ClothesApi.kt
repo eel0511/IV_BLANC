@@ -1,17 +1,24 @@
 package com.strait.ivblanc.data.api
 
+import com.strait.ivblanc.config.BaseResponse
+import com.strait.ivblanc.data.model.dto.ClothesForUpload
 import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ClothesApi {
-    // TODO: 2022/01/31 page 삭제
     @GET("/api/clothes/all")
-    suspend fun getAllClothes(@Query("page") page: Int): Response<ClothesResponse>
+    suspend fun getAllClothes(): Response<ClothesResponse>
 
     @DELETE("/api/clothes/deleteById")
     suspend fun deleteClothesById(@Query("clothesId") clothesId: Int): Response<ClothesDeleteResponse>
+
+    // TODO: 2022/02/03 ClothesDeleteResponse 이름 바꾸기 
+    @Multipart
+        @POST("/api/clothes/add")
+    suspend fun addClothes(@Body clothes: ClothesForUpload
+                           , @Part("file") image: MultipartBody.Part): Response<ClothesDeleteResponse>
+
 }

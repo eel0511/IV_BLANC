@@ -25,6 +25,31 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainViewModel: ViewModel() {
+    // 툴바 관련 필드
+    private val _toolbarTitle = MutableLiveData<String>()
+    val toolbarTitle: LiveData<String> get() = _toolbarTitle
+    private val _leadingIconDrawable = MutableLiveData<Int>()
+    val leadingIconDrawable: LiveData<Int> get() = _leadingIconDrawable
+
+    private val _trailingIconDrawable = MutableLiveData<Int>()
+    val trailingIconDrawable: LiveData<Int> get() = _trailingIconDrawable
+    // 툴바 관련 필드 끝
+
+    // 툴바 관련 메서드
+    fun setToolbarTitle(title: String) {
+        _toolbarTitle.postValue(title)
+    }
+
+    fun setLeadingIcon(resId: Int) {
+        _leadingIconDrawable.postValue(resId)
+    }
+
+    fun setTrailingIcon(resId: Int) {
+        _trailingIconDrawable.postValue(resId)
+    }
+    // 툴바 관련 메서드 끝
+
+    // 옷관련 필드
     private val clothesRepository = ClothesRepository()
     var currentCategory = CategoryCode.TOTAL
     private val totalClothesList = mutableListOf<Clothes>()
@@ -37,11 +62,11 @@ class MainViewModel: ViewModel() {
     private val _clothesListLiveData = MutableLiveData<List<PhotoItem<Clothes>>>()
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
+    // 옷관련 필드 끝
 
-    // TODO: 2022/01/31 page 삭제
-    suspend fun getAllClothes(page: Int) = withContext(Dispatchers.IO) {
+    suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()
-        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes(page)
+        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
         _clothesResponseStatus.postValue(result)
         if(result.status == Status.SUCCESS) {
             totalClothesList.addAll(result.data!!.dataSet!!)
@@ -49,7 +74,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
-        getAllClothes(0)
+        getAllClothes()
         updateClothesByCategory(category)
     }
 
@@ -72,32 +97,6 @@ class MainViewModel: ViewModel() {
         }
     }
 
-    /**
-     * @param result
-     * clothesRepository에서 받은 response
-     */
-    // TODO: 2022/01/31 paging이 사라져서 필요 없어짐
-    private fun updateResult(result: Resource<ClothesResponse>) {
-        //
-        if (result.status == Status.SUCCESS) {
-            result.data?.dataSet?.let {
-                // 서버에서 받은 옷 목록이 비어있지 않을 때, _clothesListLiveData 내부의 list에 옷 목록 추가하여 post
-                if (it.isNotEmpty()) {
-                    val mutableList = getPhotoItemListFromLiveData()
-                    for (clothes in it) {
-                        mutableList.add(
-                            PhotoItem(
-                                ExpandableRecyclerViewAdapter.CHILD,
-                                content = clothes
-                            )
-                        )
-                    }
-                    _clothesListLiveData.postValue(mutableList)
-                }
-            }
-        }
-    }
-
     // 대분류 카테고리로 전체 옷 필터링
     private fun getClothesListWithLargeCategory(category: Int): MutableList<Clothes> {
         val largeCategory = category.toString()[0].digitToInt()
@@ -108,14 +107,6 @@ class MainViewModel: ViewModel() {
     private fun getClothesListWithSmallCategory(category: Int): MutableList<Clothes> {
         val filteredList = getClothesListWithLargeCategory(category)
         return filteredList.filter { clothes -> clothes.category == category }.toMutableList()
-    }
-
-    // 라이브 데이터가 비어있으면 빈 리스트 반환
-    private fun getPhotoItemListFromLiveData():MutableList<PhotoItem<Clothes>> {
-        _clothesListLiveData.value?.let { it ->
-            return it.toMutableList()
-        }
-        return mutableListOf()
     }
 
     /**

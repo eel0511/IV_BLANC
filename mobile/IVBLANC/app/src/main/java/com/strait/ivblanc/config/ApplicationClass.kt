@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApplicationClass: Application() {
-    val BASE_URL = "http://119.56.162.61:8888"
+    val BASE_URL = "http://i6d104.p.ssafy.io:9999"
     val TIME_OUT = 5000L
 
     companion object {

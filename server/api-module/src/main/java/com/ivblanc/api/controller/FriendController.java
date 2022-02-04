@@ -1,16 +1,5 @@
 package com.ivblanc.api.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
@@ -20,12 +9,14 @@ import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.repository.UserRepository;
-
+import com.ivblanc.core.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Api(tags = {"FRIEND"})
 @Slf4j
@@ -71,7 +62,7 @@ public class FriendController {
 	@PostMapping(value = "/isaccept")
 	public @ResponseBody
 	SingleResult<FriendResDTO> acceptFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
-		friendService.makeFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
+		friendService.makeFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
 		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
 
 	}
@@ -102,6 +93,11 @@ public class FriendController {
 	SingleResult<FriendResDTO> addFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
 
 		friendService.addFriend(req);
+		User friend = userService.findByEmail(req.getFriendName());
+		//fcm 없을시 추가만됨
+		if(friend.getToken_fcm().equals("string")){
+			return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		}
 		fcmService.sendMessageTo(userService.findByEmail(req.getFriendName()).getToken_fcm(), "친구요청 알림",
 			userService.findByEmail(req.getApplicant()).getName() + "님이 친구요청을 보냈습니다.");
 		System.out.println(req.getFriendName());

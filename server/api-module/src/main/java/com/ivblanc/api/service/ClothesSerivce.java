@@ -72,8 +72,8 @@ public class ClothesSerivce {
 		return clothesRepository.findAllByUserIdOrderByCountDesc(userId);
 	}
 
-	public List<Clothes> findAll(int userId, Pageable pageable) {
-		return clothesRepository.findAllByUserId(userId, pageable);
+	public List<Clothes> findAll(int userId) {
+		return clothesRepository.findAllByUserId(userId);
 	}
 
 	public List<Clothes> findAllByDate(int days) {
