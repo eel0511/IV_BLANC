@@ -50,4 +50,16 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
             }
         }
     }
+
+    fun goNext() {
+        if(viewPager.currentItem < 4) {
+            viewPager.currentItem += 1
+        }
+    }
+
+    fun goBefore() {
+        if(viewPager.currentItem > 0) {
+            viewPager.currentItem -= 1
+        }
+    }
 }
