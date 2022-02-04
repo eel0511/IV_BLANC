@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import axios from 'axios';
 
-import AllClothes from '../../components/MyStyle/AllClothes';
+import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 export default function MyStyleTopbar() {
   const menus = [
@@ -21,31 +21,13 @@ export default function MyStyleTopbar() {
   const [title, setTitle] = useState('선택');
 
   const [isData, setIsData] = useState(false);
-  const [inputs, setInputs] = useState([
-    {
-      category: 0,
-      clothesId: 0,
-      color: '빨강',
-      count: 0,
-      createDate: '',
-      dislikePoint: 0,
-      favorite: 0,
-      likePoint: 0,
-      material: 0,
-      season: 0,
-      size: 0,
-      updateDate: '',
-      url: '',
-      userId: 0,
-    },
-  ]);
   const [clothes, setClothes] = useState([]);
 
   const handleSelect = async (e) => {
     const category = e;
     console.log(category);
     setTab(e);
-
+    /*
     if (Number(category) === 0) {
       try {
         await axios
@@ -91,14 +73,9 @@ export default function MyStyleTopbar() {
               alert(`${category} 조회`);
               setIsData(true);
               setClothes([]);
-              resData.map(
-                // (clothesData) => console.log(clothesData)
-
-                // (clothesData) => setInputs((inputs) => [...inputs, clothesData])
-                (clothesData) =>
-                  setClothes((clothes) => [...clothes, clothesData])
+              resData.map((clothesData) =>
+                setClothes((clothes) => [...clothes, clothesData])
               );
-              // setClothes((clothes)=>[...clothes, res.data.data]);
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
@@ -108,7 +85,7 @@ export default function MyStyleTopbar() {
       } catch (err) {
         console.error(err);
       }
-    }
+    }*/
   };
 
   const handleClick = (e) => {
@@ -152,25 +129,8 @@ export default function MyStyleTopbar() {
           ))}
         </div>
       </div> */}
-      {isData && <AllClothes clothes={clothes} />}
-      {/* {isData && <Top clothes={clothes} />} */}
-      {/* {isData && <p>{inputs}</p>} */}
-      {/* <div>
-        {clothes.map((clothesData) => (
-          // <img
-          //   className='MyStyleClothesItemImg'
-          //   key={clothesData.clothesId}
-          //   src={require(`${clothesData.url}`)}
-          //   alt={clothesData.clothesId}
-          //   style={{
-          //     width: '100px',
-          //     height: '100px',
-          //   }}
-          // />
-          <p>{clothesData.url}</p>
-        ))}
-      </div> */}
-      {/* {obj[tab]} */}
+      <Clothes />
+      {/* {isData && <Clothes clothes={clothes} />} */}
     </div>
   );
 }
