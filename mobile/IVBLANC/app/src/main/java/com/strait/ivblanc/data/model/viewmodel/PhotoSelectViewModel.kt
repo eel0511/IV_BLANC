@@ -11,6 +11,7 @@ class PhotoSelectViewModel: ViewModel() {
     val toolbarTitle: LiveData<String> get() = _toolbarTitle
     private val _leadingIconDrawable = MutableLiveData<Int>()
     val leadingIconDrawable: LiveData<Int> get() = _leadingIconDrawable
+    var selectedImgUri: String? = null
 
     private val _trailingIconDrawable = MutableLiveData<Int>()
     val trailingIconDrawable: LiveData<Int> get() = _trailingIconDrawable
