@@ -135,11 +135,10 @@ class HistoryControllerTest {
 	@Order(9)
 	@Test
 	void updateHistory() throws Exception {
-		String content = objectMapper.writeValueAsString(new UpdateHistoryReqDTO(BigDecimal.valueOf(1.11), BigDecimal.valueOf(2.22), "2022-02-01", "흐림", -1, 3, "text", "subject2", 1));
+		UpdateHistoryReqDTO dto = new UpdateHistoryReqDTO(BigDecimal.valueOf(1.11), BigDecimal.valueOf(2.22), "2022-02-01", "흐림", -1, 3, "text", "subject2", 1);
 		mockMvc.perform(put("/api/history/update")
 				.header("X-AUTH-TOKEN", TOKEN)
 				.param("historyId", "4")
-				.content(content)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())
