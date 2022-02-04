@@ -62,6 +62,12 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
         binding.editTextCategoryFSize.addTextChangedListener {
             processViewModel.setSize(it.toString().toInt())
         }
+
+        // 다음 버튼 화면 이동
+        // TODO: 2022/02/04 ProcessActivity에 의존성이 걸린다. 리팩터링 필요 
+        binding.buttonCategoryFNext.setOnClickListener {
+            (requireActivity() as ProcessActivity).goNext()
+        }
     }
 
     private fun getLargeCategoryString(): List<String> {
