@@ -118,4 +118,41 @@ class HistoryControllerTest {
 			.andExpect(status().isOk())
 			.andDo(print());
 	}
+
+	@Order(8)
+	@Test
+	void findHistoryBySubject() throws Exception {
+		mockMvc.perform(get("/api/history/find/subject")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("subject", "subject")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(9)
+	@Test
+	void updateHistory() throws Exception {
+		String content = objectMapper.writeValueAsString(new HistoryReqDTO(BigDecimal.valueOf(0.001), BigDecimal.valueOf(0.002), "2022-02-03", "비", -3, 7, "test text", "subject", 1,  null));
+		mockMvc.perform(put("/api/history/update")
+				.header("X-AUTH-TOKEN", TOKEN)
+				.param("historyId", "2")
+				.content(content)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
+
+	@Order(10)
+	@Test
+	void deleteHistory() throws Exception {
+		mockMvc.perform(delete("/api/history/delete")
+				.param("historyId", "3")
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andDo(print());
+	}
 }

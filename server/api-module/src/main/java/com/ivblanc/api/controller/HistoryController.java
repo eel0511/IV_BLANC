@@ -167,7 +167,7 @@ public class HistoryController {
 	public @ResponseBody
 	SingleResult<String> deleteHistory(@RequestParam int historyId) throws Exception {
 		historyService.findByHistoryId(historyId).orElseThrow(() -> new ApiMessageException("존재하지 않는 history_id 입니다"));
-		historyService.deleteHistoryById(historyId); // 히스토리 삭제 시 해당 히스토리의 포토 튜플도 삭제되는지 확인 필요
+		historyService.deleteHistoryById(historyId); // 히스토리 삭제 시 해당 히스토리의 포토 튜플도 삭제되는지 확인 필요 - 02.04 확인완료
 		return responseService.getSingleResult(historyId + "번 히스토리가 삭제 되었습니다.");
 	}
 
