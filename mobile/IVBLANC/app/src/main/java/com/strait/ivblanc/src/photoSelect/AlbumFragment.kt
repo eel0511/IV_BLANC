@@ -60,6 +60,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
         reloadImages()
         photoSelectViewModel.setToolbarTitle("사진 선택")
         photoSelectViewModel.setLeadingIcon(R.drawable.ic_close)
+        photoSelectViewModel.setTrailingIcon(R.drawable.ic_checked)
     }
 
     fun reloadImages() {
