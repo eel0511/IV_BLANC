@@ -70,7 +70,7 @@ function AllClothes({ clothes }) {
     <div className='container-fluid'>
       모든 옷
       <div className='row'>
-        {clothes.map((clothesData) => (
+        {clothesDatas.map((clothesData) => (
           <div className='col-4 mt-3' key={clothesData.clothesId}>
             {/* <div className='card h-100'>
               <div className='card-body'>
