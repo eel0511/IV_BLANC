@@ -84,9 +84,13 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
                 override fun onClick(v: View?) {
                     when(intend) {
                         CLOTHES -> {
-                            startActivity(Intent(this@PhotoSelectActivity, ProcessActivity::class.java).apply {
-                                // TODO: 2022/02/04 viewmodel에서 imgUri putExtra
-                            })
+                            photoSelectViewModel.selectedImgUri?.let{
+                                val intent = Intent(this@PhotoSelectActivity, ProcessActivity::class.java).apply {
+                                    putExtra("uri", photoSelectViewModel.selectedImgUri)
+                                }
+                                startActivity(intent)
+                            }
+
                         }
                         HISTORY -> {}
                     }
