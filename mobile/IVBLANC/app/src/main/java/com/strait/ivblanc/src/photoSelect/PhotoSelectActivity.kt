@@ -84,9 +84,11 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
                 override fun onClick(v: View?) {
                     when(intend) {
                         CLOTHES -> {
+                            val albumFragment = supportFragmentManager.findFragmentByTag("f0") as AlbumFragment // viewpager에서는 f0, f1 .. 태그로 fragment 관리
+                            albumFragment.screenshot()
                             photoSelectViewModel.selectedImgUri?.let{
                                 val intent = Intent(this@PhotoSelectActivity, ProcessActivity::class.java).apply {
-                                    putExtra("uri", photoSelectViewModel.selectedImgUri)
+                                    putExtra("uri", photoSelectViewModel.selectedImgUri.toString())
                                 }
                                 startActivity(intent)
                             }
