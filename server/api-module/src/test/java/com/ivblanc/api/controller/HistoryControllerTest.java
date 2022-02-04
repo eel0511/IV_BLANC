@@ -111,8 +111,8 @@ class HistoryControllerTest {
 	void findHistoryByTemperature() throws Exception {
 		mockMvc.perform(get("/api/history/find/temperature")
 				.header("X-AUTH-TOKEN", TOKEN)
-				.param("temp_low", "-7")
-				.param("temp_high", "2")
+				.param("최저기온", "-7")
+				.param("최고기온", "2")
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isOk())

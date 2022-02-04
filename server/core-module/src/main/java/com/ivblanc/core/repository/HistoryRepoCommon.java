@@ -26,7 +26,7 @@ public interface HistoryRepoCommon {
 
 	List<History> findAllByWeatherAndUserId(String weather, int userId);
 
-	@Query(value = "select h from History h where h.userId = :id and h.temperature_low <= :templow and h.temperature_high >= :temphigh")
+	@Query(value = "select h from History h where h.userId = :id and h.temperature_low >= :templow and h.temperature_high <= :temphigh")
 	List<History> findAllByTemperatureAndUserId(@Param("templow") int temperature_low, @Param("temphigh") int temperature_high, @Param("id") int userId);
 
 	List<History> findAllBySubjectAndUserId(String subject, int userId);
