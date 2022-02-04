@@ -69,23 +69,23 @@ export default function MyCloset() {
     },
   ];
   
+  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
   const testAxios = () => {
     axios
-      .get('http://119.56.162.61:8888/api/clothes/all', 
+      .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', 
       {
-        params: {
-          page: 1,
-          userId: 1,
-        },
+        headers: {
+          'X-AUTH-TOKEN': `${token}`
+        }
       })
       .then((response) => {
         console.log(response.data);
       });
   };
 
-  // useEffect(() => {
-  //   testAxios();
-  // }, []);
+  useEffect(() => {
+    testAxios();
+  }, []);
 
   return (
     <>

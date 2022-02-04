@@ -21,7 +21,6 @@ export default function FriendsCreateButton() {
       .post('http://i6d104.p.ssafy.io:9999/api/friend/request',
       {
         headers: {
-          "Access-Control-Allow-origin": "*",
           "Authorization": `Bearer ${token}`
         },
         data: {
