@@ -34,7 +34,7 @@
         app:menu="@menu/bottom_nav_menu"
         app:itemRippleColor="@color/gray_100"
         app:itemTextColor="@color/black"
-        app:labelVisibilityMode="labeled"/>
+        app:itemIconTint="@color/black"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
