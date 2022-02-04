@@ -30,7 +30,7 @@ class ProcessViewModel: ViewModel() {
     val categorySet = CategoryCode().codeSet
     val materialSet = MaterialCode().codeSet
 
-    private val _largeCategory = MutableLiveData<Int>(CategoryCode.TOP) // CategoryCode 0 ~ 7까지
+    private val _largeCategory = MutableLiveData<Int>(CategoryCode.TOP) // CategoryCode 1 ~ 7까지
     private val _smallCategory = MutableLiveData<Int>(CategoryCode.T_SHIRT) // CategoryCode 대분류에서 가져오기
     private val _season = MutableLiveData<Int>(1) // 1 - 4
     private val _color = MutableLiveData<String>("#ffffff") // hex code
@@ -73,7 +73,7 @@ class ProcessViewModel: ViewModel() {
 
     val largeCategorySet = getLargeCategories()
 
-    // 전체를 제외한 대분류만 나타낸다
+    // 전체를 제외한 대분류만 나타낸다. 전체 카테고리 셋을 순회하며 1부터 9사이의 값을 취한다.
     private fun getLargeCategories(): List<Pair<Int, Int>> {
         val result = mutableListOf<Pair<Int, Int>>()
         categorySet.forEach { entry ->
@@ -82,12 +82,13 @@ class ProcessViewModel: ViewModel() {
         return result
     }
 
-    // 대분류로부터 소분류 카테고리 분류
+    // 대분류로부터 소분류 카테고리 분류, 대분류의 값과 소분류의 맨 앞자리가 같다.
+    // 모든 소분류는 10 이상이며, -1은 전체를 나타낸다.
     fun getSmallCategoriesByLargeCategory(largeCategory: Int): List<Pair<Int, Int>> {
         val result = mutableListOf<Pair<Int, Int>>()
 
         categorySet.forEach { entry ->
-            if(entry.key.toString()[0] == largeCategory.toString()[0]) {
+            if(entry.key.toString()[0] == largeCategory.toString()[0] && entry.key >= 10) {
                 result.add(entry.toPair())
             }
         }
