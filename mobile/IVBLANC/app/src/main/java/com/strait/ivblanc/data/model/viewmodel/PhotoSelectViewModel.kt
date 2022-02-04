@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.model.viewmodel
 
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.net.Uri
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +12,7 @@ class PhotoSelectViewModel: ViewModel() {
     val toolbarTitle: LiveData<String> get() = _toolbarTitle
     private val _leadingIconDrawable = MutableLiveData<Int>()
     val leadingIconDrawable: LiveData<Int> get() = _leadingIconDrawable
-    var selectedImgUri: String? = null
+    var selectedImgUri: Uri? = null
 
     private val _trailingIconDrawable = MutableLiveData<Int>()
     val trailingIconDrawable: LiveData<Int> get() = _trailingIconDrawable
