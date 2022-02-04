@@ -23,10 +23,8 @@ export default function FriendsCreateButton() {
         headers: {
           'X-AUTH-TOKEN': `${token}`
         },
-        data: {
-          applicant: 'user',
-          friendName: {friendName}
-        }
+        applicant: 'abc@naver.com',
+        friendName: `${friendName}`
       })
       .then((response) => {
         console.log(response.data);
