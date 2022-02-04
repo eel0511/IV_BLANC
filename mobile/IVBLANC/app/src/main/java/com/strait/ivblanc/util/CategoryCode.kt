@@ -4,6 +4,7 @@ import com.strait.ivblanc.R
 
 class CategoryCode {
     companion object {
+        val TOTAL_SMALL = -1
         val TOTAL = 0
         val TOP = 1
         val T_SHIRT = 10
@@ -44,10 +45,11 @@ class CategoryCode {
         val SHOULDER_BAG = 52
         val HANDBAG = 53
         val BAG_ETC = 54
-        val HAT = 60
-        val ETC = 70
+        val HAT = 6
+        val ETC = 7
     }
     private val _codeSet = mutableMapOf<Int, Int>().apply {
+        put(TOTAL_SMALL, R.string.total)
         put(TOTAL, R.string.total)
         put(TOP, R.string.top)
         put(T_SHIRT, R.string.tShirt)
