@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.HistoryReqDTO;
@@ -188,6 +189,30 @@ public class HistoryController {
 		historyService.updateHistory(history.get(), historyReqDTO);
 
 		return responseService.getSingleResult(historyId + "번 히스토리 수정 완료");
+	}
+
+	@ApiOperation(value = "히스토리 사진 추가", notes = "history에 사진 추가")
+	@PostMapping(value = "/photo/add")
+	public @ResponseBody
+	SingleResult<String> addHistoryPhotos(@RequestParam int historyId, @RequestParam MultipartFile[] photoList,
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
+		Optional<History> op = historyService.findByHistoryId(historyId);
+		if(userService.findById(userId) == null){
+			throw new ApiMessageException("존재하지 않는 userId 입니다.");
+		} else if (!op.isPresent()) {
+			throw new ApiMessageException("존재하지 않는 historyId 입니다.");
+		}
+
+		History history = op.get();
+		if (history.getUserId() != userId) {
+			throw new ApiMessageException("해당 회원의 history가 아닙니다.");
+		}
+
+		history = photoService.MakePhoto(Arrays.asList(photoList), history);
+		historyService.addHistory(history);
+
+		return responseService.getSingleResult(historyId + "번 히스토리에 " + photoList.length + "개의 사진이 추가되었습니다.");
 	}
 
 	@ApiOperation(value = "히스토리 사진 삭제", notes = "history에 포함된 사진들 중 하나 삭제")
