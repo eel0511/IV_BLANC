@@ -1,7 +1,7 @@
 import React from 'react';
 import MyStyleClothesItem from './MySyleClothesItem';
 
-function AllClothes() {
+function AllClothes({ clothes }) {
   // const [myClothes, setMyClothes] = useState([]);
   const clothesDatas = [
     {
@@ -70,8 +70,21 @@ function AllClothes() {
     <div className='container-fluid'>
       모든 옷
       <div className='row'>
-        {clothesDatas.map((clothesData) => (
+        {clothes.map((clothesData) => (
           <div className='col-4 mt-3' key={clothesData.clothesId}>
+            {/* <div className='card h-100'>
+              <div className='card-body'>
+                <img
+                  className='MyClosetClothesItemImg'
+                  src={require(`${clothesData.url}`)}
+                  alt={clothesData.clothesId}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                />
+              </div>
+            </div> */}
             <MyStyleClothesItem clothesData={clothesData} />
           </div>
         ))}
