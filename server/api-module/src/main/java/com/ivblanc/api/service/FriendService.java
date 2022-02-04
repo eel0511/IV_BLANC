@@ -4,6 +4,7 @@ import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
 import com.ivblanc.core.code.YNCode;
 import com.ivblanc.core.entity.Friend;
+import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.FriendRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +62,10 @@ public class FriendService {
 	}
 
 	public void addFriend(MakeFriendReqDTO req) {
+		Friend conn = friendRepository.findByApplicantAndFriendName(req.getApplicant(), req.getFriendName());
+		if(conn.getFriendName().equals(req.getFriendName())&&conn.getApplicant().equals(req.getApplicant())){
+			throw new ApiMessageException("이미 요청보낸 친구입니다.");
+		}
 		Friend friend = Friend.builder()
 			.applicant(req.getApplicant())
 			.friendName(req.getFriendName())

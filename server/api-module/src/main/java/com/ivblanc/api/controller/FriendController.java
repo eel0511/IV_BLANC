@@ -1,7 +1,5 @@
 package com.ivblanc.api.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
@@ -98,9 +96,10 @@ public class FriendController {
 		friendService.addFriend(req);
 		User friend = userService.findByEmail(req.getFriendName());
 		//fcm 없을시 추가만됨
-		if(friend.getToken_fcm().equals("string")){
+		if(friend.getToken_fcm().length()<10){
 			return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
 		}
+
 		fcmService.sendMessageTo(userService.findByEmail(req.getFriendName()).getToken_fcm(), "친구요청 알림",
 			userService.findByEmail(req.getApplicant()).getName() + "님이 친구요청을 보냈습니다.");
 		System.out.println(req.getFriendName());
