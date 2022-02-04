@@ -90,7 +90,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     this@MainActivity.onBackPressed()
                 }
             }
-            // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설
+            // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설정
             R.drawable.ic_add -> {
                 when(getCurrentFragmentTag()) {
                     "clothes" -> {
