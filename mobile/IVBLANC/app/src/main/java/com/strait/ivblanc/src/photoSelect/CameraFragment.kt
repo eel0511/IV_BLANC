@@ -112,6 +112,8 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(FragmentCameraBinding
         imageCapture.takePicture(
             outputOptions, ContextCompat.getMainExecutor(requireActivity()), object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    photoSelectViewModel.selectedImgUri = outputFileResults.savedUri
+                    Log.d(TAG, "onImageSaved: ${photoSelectViewModel.selectedImgUri}")
                     toast("이미지가 저장되었습니다.", Toast.LENGTH_SHORT)
                 }
 
