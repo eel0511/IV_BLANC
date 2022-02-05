@@ -29,6 +29,10 @@ class SeasonFragment : BaseFragment<FragmentSeasonBinding>(FragmentSeasonBinding
         binding.autoCompleteSeasonF.addTextChangedListener {
             processViewModel.setSeason(getSeasonCode(it.toString()))
         }
+        binding.buttonSeasonFBefore.setOnClickListener {
+            (requireActivity() as ProcessActivity).goBefore()
+        }
+        
     }
 
     // SeasonCode에서 찾지 못한다면 0 리턴
