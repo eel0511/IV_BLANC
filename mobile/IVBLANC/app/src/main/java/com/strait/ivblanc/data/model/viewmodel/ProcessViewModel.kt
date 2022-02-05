@@ -27,11 +27,12 @@ class ProcessViewModel: ViewModel() {
     private val _clothesResponseStatus = MutableLiveData<Resource<ClothesDeleteResponse>>()
     val clothesResponseStatus: LiveData<Resource<ClothesDeleteResponse>> get() = _clothesResponseStatus
 
+    var imgUri: Uri? = null
     val categorySet = CategoryCode().codeSet
     val materialSet = MaterialCode().codeSet
 
-    private val _largeCategory = MutableLiveData<Int>(CategoryCode.TOP) // CategoryCode 1 ~ 7까지
-    private val _smallCategory = MutableLiveData<Int>(CategoryCode.T_SHIRT) // CategoryCode 대분류에서 가져오기
+    private val _largeCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 1 ~ 7까지
+    private val _smallCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 대분류에서 가져오기
     private val _season = MutableLiveData<Int>(1) // 1 - 4
     private val _color = MutableLiveData<String>("#ffffff") // hex code
     private val _size = MutableLiveData<Int>(0) // 모든 숫자
@@ -51,16 +52,41 @@ class ProcessViewModel: ViewModel() {
     fun setMaterial(material: Int) = _material.postValue(material)
     fun setSize(size: Int) = _size.postValue(size)
 
-    fun addClothes(clothes: ClothesForUpload, imgUri: Uri) = viewModelScope.launch {
-        setLoading()
-        withContext(Dispatchers.IO) {
-            val result = clothesRepository.addClothes(clothes, makeMultiPart(imgUri))
-            if(result.status == Status.SUCCESS) {
-                _clothesResponseStatus.postValue(Resource.success(result.data!!))
-            } else {
-                _clothesResponseStatus.postValue(result)
+    // 서버에 옷 업로드
+    fun addClothes() = viewModelScope.launch {
+        val clothes = makeClothesForUpload()
+        if (clothes != null && imgUri != null) {
+            setLoading()
+            withContext(Dispatchers.IO) {
+                val result = clothesRepository.addClothes(clothes, makeMultiPart(imgUri!!))
+                if(result.status == Status.SUCCESS) {
+                    _clothesResponseStatus.postValue(Resource.success(result.data!!))
+                } else {
+                    _clothesResponseStatus.postValue(result)
+                }
             }
+        } else {
+            _clothesResponseStatus.postValue(Resource.error(null, "분류를 하지 않은 항목이 있습니다."))
         }
+    }
+
+    private fun makeClothesForUpload(): ClothesForUpload? {
+        val category = getCategoryFromLiveData()
+        val season = _season.value
+        val material = _material.value
+        val color = _color.value
+        val size = _size.value
+        category?.let {
+            return ClothesForUpload(it, color!!, material!!, season!!, size!!)
+        }
+        return null
+    }
+
+    //
+    private fun getCategoryFromLiveData(): Int? {
+        val smallCategory = _smallCategory.value
+        if(smallCategory == CategoryCode.UNSELECTED) return null
+        return smallCategory
     }
 
     private fun makeMultiPart(imgUri: Uri): MultipartBody.Part {
