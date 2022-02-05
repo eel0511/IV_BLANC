@@ -46,7 +46,9 @@ class CategoryCode {
         val HANDBAG = 53
         val BAG_ETC = 54
         val HAT = 6
+        val HAT_TOTAL= 60
         val ETC = 7
+        val ETC_TOTAL = 70
     }
     private val _codeSet = mutableMapOf<Int, Int>().apply {
         put(TOTAL_SMALL, R.string.total)
@@ -91,7 +93,9 @@ class CategoryCode {
         put(HANDBAG, R.string.handbag)
         put(BAG_ETC, R.string.etc)
         put(HAT, R.string.hat)
+        put(HAT_TOTAL, R.string.total)
         put(ETC, R.string.etc)
+        put(ETC_TOTAL, R.string.total)
     }
 
     val codeSet: HashMap<Int, Int> get() = _codeSet as HashMap<Int, Int>
