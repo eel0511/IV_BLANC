@@ -13,6 +13,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.viewmodel.ProcessViewModel
 import com.strait.ivblanc.databinding.FragmentCategoryBinding
+import com.strait.ivblanc.util.CategoryCode
 import java.lang.Exception
 
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryBinding::bind, R.layout.fragment_category) {
@@ -44,12 +45,18 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
 
             largeCategory?.let {
                 processViewModel.setLargeCategory(it.first)
+                // 대분류가 바뀌면 소분류 ""로 할당
+                binding.autoCompleteCategoryFSmall.setText(resources.getText(R.string.empty))
             }
-
         }
 
         // 소분류 edittext observe -> viewModel 소분류 카테고리 변경
         binding.autoCompleteCategoryFSmall.addTextChangedListener {
+            if(it.toString().isBlank() || it.toString().isEmpty()) {
+                processViewModel.setSmallCategory(CategoryCode.UNSELECTED)
+                return@addTextChangedListener
+            }
+
             val smallCategory = smallCategories.find {
                  resources.getString(it.second) == it.toString()
             }
