@@ -1,7 +1,6 @@
 package com.strait.ivblanc.data.api
 
 import com.kakao.sdk.talk.model.Friend
-import com.strait.ivblanc.data.model.dto.Friend
 import com.strait.ivblanc.data.model.dto.FriendForUpload
 import com.strait.ivblanc.data.model.response.FriendResponse
 import retrofit2.Response
