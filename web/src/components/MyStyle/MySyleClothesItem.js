@@ -2,8 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import { imageList } from './SelectedImageList';
-
 // import './MyStyleImg.css';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -19,7 +17,7 @@ export default function MyClosetClothesItem({ clothesData }) {
     console.log(e.target.alt);
     const clothId = Number(e.target.alt);
     // setList([...list, clothesData]);
-    imageList.push(clothesData);
+
     // imageList.forEach((element) => {
     //   // console.log(element);
     //   // console.log(clothId in element);
@@ -29,8 +27,6 @@ export default function MyClosetClothesItem({ clothesData }) {
     //   if()
     //   imageList.push({ clotehsId: clothId });
     // });
-
-    console.log(imageList);
   }, []);
 
   return (

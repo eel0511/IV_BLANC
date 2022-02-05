@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
-import SelectedImage from '../../components/MyStyle/SelectedImage';
 
 export default function MyStyle() {
   return (
@@ -16,7 +15,6 @@ export default function MyStyle() {
             <Col sm={8}>아바타</Col>
           </Row>
         </Container>
-        <SelectedImage />
       </div>
     </>
   );
