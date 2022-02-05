@@ -69,10 +69,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
         // 사이즈 edittext observe -> viewModel 사이즈 변경
         binding.editTextCategoryFSize.addTextChangedListener {
             var sizeInt = 0
+            if(it.toString().isEmpty() || it.toString().isBlank()) {
+                processViewModel.setSize(0)
+                return@addTextChangedListener
+            }
             try {
                 sizeInt = it.toString().toInt()
             } catch (e: Exception) {
-                binding.editTextCategoryFSize.setText(0.toString())
+                binding.editTextCategoryFSize.setText(resources.getText(R.string.empty))
                 processViewModel.setSize(0)
                 return@addTextChangedListener
             }
