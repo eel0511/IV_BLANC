@@ -2,6 +2,6 @@ package com.strait.ivblanc.util
 
 class ColorCode {
     companion object {
-        val LIST = listOf("#ecc6c0", "#c14d49", "#e0633b", "#f6efdf", "#f6d766", "#35774d", "#cddeec", "#27476f", "#6d4859", "#abaeb6", "#5e4b48", "#9c7e3a", "#ffffff", "#000000", "etc", "variety")
+        val LIST = listOf("#ECC6C0", "#C14D49", "#E0633B", "#F6EFDF", "#F6D766", "#35774D", "#CDDEEC", "#27476F", "#6D4859", "#ABAEB6", "#5E4B48", "#9C7E3A", "#FFFFFF", "#000000", "etc", "variety")
     }
 }
