@@ -36,6 +36,7 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
         viewPagerAdapter = SimpleFragmentStateAdapter(this)
         viewPager.adapter = viewPagerAdapter
         binding.imageViewProcess.setImageURI(imgUri)
+        processViewModel.imgUri = imgUri
     }
 
     inner class SimpleFragmentStateAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
