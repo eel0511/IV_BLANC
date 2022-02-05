@@ -53,6 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     true
                 }
                 R.id.nav_friend -> {
+                    setFragment(FriendFragment(),"friend")
                     true
                 }
                 else -> false
