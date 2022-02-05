@@ -32,7 +32,9 @@ class SeasonFragment : BaseFragment<FragmentSeasonBinding>(FragmentSeasonBinding
         binding.buttonSeasonFBefore.setOnClickListener {
             (requireActivity() as ProcessActivity).goBefore()
         }
-        
+        binding.buttonSeasonFUpload.setOnClickListener {
+            processViewModel.addClothes()
+        }
     }
 
     // SeasonCode에서 찾지 못한다면 0 리턴
