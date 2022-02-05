@@ -99,4 +99,5 @@
     <string name="metalic">메탈릭</string>
     <string name="calendar">캘린더</string>
     <string name="map">지도</string>
+    <string name="empty" />
 </resources>
