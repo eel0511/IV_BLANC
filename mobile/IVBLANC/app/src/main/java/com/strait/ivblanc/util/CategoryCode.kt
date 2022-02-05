@@ -4,6 +4,7 @@ import com.strait.ivblanc.R
 
 class CategoryCode {
     companion object {
+        val UNSELECTED = -2
         val TOTAL_SMALL = -1
         val TOTAL = 0
         val TOP = 1
