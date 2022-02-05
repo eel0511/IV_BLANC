@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import axios from 'axios';
 
+import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
+
 export default function MyStyleTopbar() {
   const menus = [
     { name: '전체' },
@@ -17,11 +19,75 @@ export default function MyStyleTopbar() {
     { name: '룩' },
   ];
 
+  const clothesDatas = [
+    {
+      category: 10,
+      clothesId: 1,
+      color: 'red',
+      count: 0,
+      createDate: '2022-01-19T08:28:17.455Z',
+      dislikePoint: 0,
+      favorite: 0,
+      material: 'string',
+      season: 0,
+      size: 0,
+      updateDate: '2022-01-19T08:28:17.455Z',
+      url: '상의.jfif',
+      userId: 1,
+    },
+    {
+      category: 20,
+      clothesId: 2,
+      color: 'red',
+      count: 0,
+      createDate: '2022-01-20T08:28:17.455Z',
+      dislikePoint: 0,
+      favorite: 0,
+      material: 'string',
+      season: 0,
+      size: 0,
+      updateDate: '2022-01-20T08:28:17.455Z',
+      url: '하의.jfif',
+      userId: 1,
+    },
+    {
+      category: 20,
+      clothesId: 3,
+      color: 'red',
+      count: 0,
+      createDate: '2022-01-20T08:28:17.455Z',
+      dislikePoint: 0,
+      favorite: 0,
+      material: 'string',
+      season: 0,
+      size: 0,
+      updateDate: '2022-01-20T08:28:17.455Z',
+      url: 'logo.png',
+      userId: 1,
+    },
+    {
+      category: 20,
+      clothesId: 4,
+      color: 'red',
+      count: 0,
+      createDate: '2022-01-20T08:28:17.455Z',
+      dislikePoint: 0,
+      favorite: 0,
+      material: 'string',
+      season: 0,
+      size: 0,
+      updateDate: '2022-01-20T08:28:17.455Z',
+      url: 'logo2.png',
+      userId: 1,
+    },
+  ];
+
   const [tab, setTab] = useState(0);
   const [title, setTitle] = useState('선택');
 
   const [isData, setIsData] = useState(false);
   const [clothes, setClothes] = useState([]);
+  const [selectedClothes, setSelectedClothes] = useState([]);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -93,6 +159,18 @@ export default function MyStyleTopbar() {
     setTitle(e.target.outerText);
   };
 
+  const saveClothes = (e) => {
+    const clothId = e.target.alt;
+    const url = e.target.src;
+    console.log(e.target);
+    console.log(e);
+    const selectedData = {
+      clothesId: clothId,
+      url: '상의.jfif',
+    };
+    setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
+  };
+
   return (
     <div className='wrapper'>
       <Nav
@@ -113,23 +191,33 @@ export default function MyStyleTopbar() {
           })}
         </NavDropdown>
       </Nav>
-      {/* <div className='card h-100'>
-        <div className='card-body'>
-          {clothes.map((clothesData) => (
-            <img
-              className='MyStyleClothesItemImg'
-              key={clothesData.clothesId}
-              src={require(`${clothesData.url}`)}
-              alt={clothesData.clothesId}
-              style={{
-                width: '100px',
-                height: '100px',
-              }}
-            />
+
+      <div className='container-fluid'>
+        <div className='row'>
+          {clothesDatas.map((clothesData) => (
+            <div className='col-4 mt-3' key={clothesData.clothesId}>
+              <div className='card h-100'>
+                <div className='card-body'>
+                  <img
+                    className='MyClosetClothesItemImg'
+                    src={require(`../../assets/${clothesData.url}`)}
+                    alt={clothesData.clothesId}
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                    }}
+                    onClick={saveClothes}
+                  />
+                </div>
+              </div>
+            </div>
           ))}
         </div>
-      </div> */}
-      <Clothes />
+      </div>
+
+      <SelectedImage selectedClothes={selectedClothes} />
+
+      {/* 서버 연동시 필요한 코드 */}
       {/* {isData && <Clothes clothes={clothes} />} */}
     </div>
   );
