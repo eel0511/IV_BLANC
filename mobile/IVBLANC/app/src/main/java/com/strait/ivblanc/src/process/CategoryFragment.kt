@@ -13,6 +13,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.viewmodel.ProcessViewModel
 import com.strait.ivblanc.databinding.FragmentCategoryBinding
+import java.lang.Exception
 
 class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryBinding::bind, R.layout.fragment_category) {
     private val processViewModel: ProcessViewModel by activityViewModels()
@@ -60,7 +61,15 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
 
         // 사이즈 edittext observe -> viewModel 사이즈 변경
         binding.editTextCategoryFSize.addTextChangedListener {
-            processViewModel.setSize(it.toString().toInt())
+            var sizeInt = 0
+            try {
+                sizeInt = it.toString().toInt()
+            } catch (e: Exception) {
+                binding.editTextCategoryFSize.setText(0.toString())
+                processViewModel.setSize(0)
+                return@addTextChangedListener
+            }
+            processViewModel.setSize(sizeInt)
         }
 
         // 다음 버튼 화면 이동
