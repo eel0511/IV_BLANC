@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/defaultPadding"
+    tools:context=".src.main.FriendFragment">
+
+
+    <TextView
+        android:id="@+id/list_friend_name"
+        android:layout_width="379dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="16dp"
+        android:text="친구이름 님의 옷장"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/list_friend_style1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_style4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth1"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_style2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_style3"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth4"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_style3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_style2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_style4"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth3"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_style4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_style3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_style1"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth2"
+        tools:src="@tools:sample/avatars" />
+
+
+    <ImageView
+        android:id="@+id/list_friend_cloth1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_cloth2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth1"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_cloth3"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth2"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/list_friend_cloth4"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth3"
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
+        tools:src="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
