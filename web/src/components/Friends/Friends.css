@@ -9,3 +9,12 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+/* Notice */
+.Notice {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 50px;
+  cursor: pointer;
+}
