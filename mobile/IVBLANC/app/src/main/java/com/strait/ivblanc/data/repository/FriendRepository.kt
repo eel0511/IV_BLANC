@@ -11,7 +11,7 @@ import java.lang.Exception
 class FriendRepository {
     val friendApi = ApplicationClass.sRetrofit.create(FriendApi::class.java)
 
-    suspend fun getAllFriends(applicant:String): Resource<FriendResponse> {
+    suspend fun getAllFriends(applicant:String): Resource<List<FriendResponse>> {
         return try{
             val response=friendApi.getAllFriends(applicant)
             if(response.isSuccessful) {
@@ -62,7 +62,7 @@ class FriendRepository {
         }
     }
 
-    suspend fun getAllFriendRequest(applicant:String): Resource<FriendResponse> {
+    suspend fun getAllFriendRequest(applicant:String): Resource<List<FriendResponse>> {
         return try{
             val response=friendApi.getAllFriendRequest(applicant)
             if(response.isSuccessful) {
@@ -78,7 +78,7 @@ class FriendRepository {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
-    suspend fun getAllAcceptFriend(applicant:String): Resource<FriendResponse> {
+    suspend fun getAllAcceptFriend(applicant:String): Resource<List<FriendResponse>> {
         return try{
             val response=friendApi.getAllAcceptFriend(applicant)
             if(response.isSuccessful) {
@@ -110,7 +110,7 @@ class FriendRepository {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
-    suspend fun getAllNotAcceptFriend(applicant:String): Resource<FriendResponse> {
+    suspend fun getAllNotAcceptFriend(applicant:String): Resource<List<FriendResponse>> {
         return try{
             val response=friendApi.getAllNotAcceptFriend(applicant)
             if(response.isSuccessful) {
