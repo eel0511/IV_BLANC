@@ -1,8 +1,8 @@
 import React from 'react';
-import MyClosetClothesItem from '../../components/MyCloset/MyClosetClothesItem';
+import MyStyleClothesItem from './MySyleClothesItem';
 
-function AllClothes() {
-  //   const [myClothes, setMyClothes] = useState([]);
+function AllClothes({ clothes }) {
+  // const [myClothes, setMyClothes] = useState([]);
   const clothesDatas = [
     {
       category: 10,
@@ -65,13 +65,27 @@ function AllClothes() {
       userId: 1,
     },
   ];
+
   return (
     <div className='container-fluid'>
       모든 옷
       <div className='row'>
         {clothesDatas.map((clothesData) => (
           <div className='col-4 mt-3' key={clothesData.clothesId}>
-            <MyClosetClothesItem clothesData={clothesData} />
+            {/* <div className='card h-100'>
+              <div className='card-body'>
+                <img
+                  className='MyClosetClothesItemImg'
+                  src={require(`${clothesData.url}`)}
+                  alt={clothesData.clothesId}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                />
+              </div>
+            </div> */}
+            <MyStyleClothesItem clothesData={clothesData} />
           </div>
         ))}
       </div>

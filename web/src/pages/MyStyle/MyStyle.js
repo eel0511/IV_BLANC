@@ -8,11 +8,11 @@ export default function MyStyle() {
       <h1>Mystyle</h1>
       <div className='MyStyleContanier'>
         <Container fluid='md'>
-          <Row>
+          <Row xs={1} md={2}>
             <Col sm={4}>
               <MyStyleTopbar />
             </Col>
-            <Col sm={8}>2of2</Col>
+            <Col sm={8}>아바타</Col>
           </Row>
         </Container>
       </div>
