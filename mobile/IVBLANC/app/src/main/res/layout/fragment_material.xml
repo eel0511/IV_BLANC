@@ -16,6 +16,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView_materialF_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/defaultMargin"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_materialF"
+        app:layout_constraintStart_toEndOf="@id/textView_materialF"
+        app:layout_constraintTop_toTopOf="@id/textView_materialF"
+        tools:text="면" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_materialF"
         android:layout_width="match_parent"
