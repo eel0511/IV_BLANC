@@ -54,6 +54,13 @@ class ColorFragment : BaseFragment<FragmentColorBinding>(FragmentColorBinding::b
                 outRect.top = 50
             }
         })
+
+        binding.buttonColorFNext.setOnClickListener {
+            (requireActivity() as ProcessActivity).goNext()
+        }
+        binding.buttonColorFBefore.setOnClickListener {
+            (requireActivity() as ProcessActivity).goBefore()
+        }
     }
 
     private fun changeColor(imageView: ImageView, colorCode: String) {
