@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.strait.ivblanc.config.BaseResponse
 import com.strait.ivblanc.data.model.dto.Friend
 
-class FriendResponse : BaseResponse(){
+class FriendListResponse :BaseResponse(){
     @SerializedName("data")
-    val data: Friend? = null
+    val dataSet: List<Friend>? = null
 }
