@@ -51,6 +51,13 @@ class MaterialFragment : BaseFragment<FragmentMaterialBinding>(FragmentMaterialB
                 }
             })
         }
+
+        binding.buttonMaterialFNext.setOnClickListener {
+            (requireActivity() as ProcessActivity).goNext()
+        }
+        binding.buttonMaterialFBefore.setOnClickListener {
+            (requireActivity() as ProcessActivity).goBefore()
+        }
     }
 
 }
