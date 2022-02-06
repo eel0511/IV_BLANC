@@ -200,7 +200,7 @@ export default function MyStyleTopbar() {
       </Nav>
 
       {/* 서버 연동 */}
-      {isData && (
+      {isData && clothes.length > 0 ? (
         <div className='container-fluid'>
           <div className='row'>
             {clothes.map((clothesData) => (
@@ -224,6 +224,8 @@ export default function MyStyleTopbar() {
             ))}
           </div>
         </div>
+      ) : (
+        <p>등록된 데이터가 없습니다.</p>
       )}
 
       {/* <div className='container-fluid'>
