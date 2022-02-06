@@ -43,6 +43,7 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
     }
 
     private fun init() {
+        isInit = true
         setFirstDate()
         setLastDate()
         calendarAdapter = CalendarAdapter()
