@@ -199,7 +199,34 @@ export default function MyStyleTopbar() {
         </NavDropdown>
       </Nav>
 
-      <div className='container-fluid'>
+      {/* 서버 연동 */}
+      {isData && (
+        <div className='container-fluid'>
+          <div className='row'>
+            {clothes.map((clothesData) => (
+              <div className='col-4 mt-3' key={clothesData.clothesId}>
+                <div className='card h-100'>
+                  <div className='card-body'>
+                    <img
+                      className='MyClosetClothesItemImg'
+                      // src={require(`../../assets/${clothesData.url}`)}
+                      // src={clothesData.url}
+                      alt={clothesData.clothesId}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                      }}
+                      onClick={saveClothes}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* <div className='container-fluid'>
         <div className='row'>
           {clothesDatas.map((clothesData) => (
             <div className='col-4 mt-3' key={clothesData.clothesId}>
@@ -220,12 +247,9 @@ export default function MyStyleTopbar() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <SelectedImage selectedClothes={selectedClothes} />
-
-      {/* 서버 연동시 필요한 코드 */}
-      {/* {isData && <Clothes clothes={clothes} />} */}
     </div>
   );
 }
