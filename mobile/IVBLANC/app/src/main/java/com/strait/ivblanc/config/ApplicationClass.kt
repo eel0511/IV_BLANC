@@ -2,6 +2,7 @@ package com.strait.ivblanc.config
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
+import com.naver.maps.map.NaverMapSdk
 import com.ssafy.template.config.ReceivedCookiesInterceptor
 import com.ssafy.template.config.XAccessTokenInterceptor
 import com.strait.ivblanc.BuildConfig
@@ -34,6 +35,9 @@ class ApplicationClass: Application() {
         sSharedPreferences = SharedPreferencesUtil(applicationContext)
         initRetrofit()
         KakaoSdk.init(this, "${BuildConfig.KAKAO_API_KEY}")
+        NaverMapSdk.getInstance(this).setClient(
+            NaverMapSdk.NaverCloudPlatformClient("${BuildConfig.NAVER_MAPS_ID}")
+        )
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
