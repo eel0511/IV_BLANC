@@ -93,7 +93,7 @@ export default function MyStyleTopbar() {
     const category = e;
     console.log(category);
     setTab(e);
-    /*
+
     if (Number(category) === 0) {
       try {
         await axios
@@ -105,9 +105,16 @@ export default function MyStyleTopbar() {
           })
           .then((res) => {
             // console.log(res);
-            console.log('response:', res.data);
+            const resData = res.data.data;
+            console.log('response:', resData);
+
             if (res.status === 200 && res.data.output === 1) {
               alert('전체 옷 조회!');
+              setIsData(true);
+              setClothes([]);
+              resData.map((clothesData) =>
+                setClothes((clothes) => [...clothes, clothesData])
+              );
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
@@ -151,7 +158,7 @@ export default function MyStyleTopbar() {
       } catch (err) {
         console.error(err);
       }
-    }*/
+    }
   };
 
   const handleClick = (e) => {
