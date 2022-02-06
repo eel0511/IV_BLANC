@@ -91,6 +91,7 @@ export default function MyStyleTopbar() {
   const [isData, setIsData] = useState(false);
   const [clothes, setClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
+  const [saveClothesId, setSaveClothesId] = useState([]);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -170,7 +171,7 @@ export default function MyStyleTopbar() {
   };
 
   const saveClothes = (e) => {
-    const clothId = e.target.alt;
+    const clothId = Number(e.target.alt);
     const url = e.target.src;
     console.log(e.target);
     console.log(e);
@@ -178,11 +179,17 @@ export default function MyStyleTopbar() {
       clothesId: clothId,
       url: '상의.jfif',
     };
+    const selectedClothesId = {
+      clothesId: clothId,
+    };
     setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
+    setSaveClothesId((saveClothesId) => [...saveClothesId, selectedClothesId]);
   };
 
   const saveStyle = async (e) => {
     e.preventDefault();
+
+    // selectedClothes에서 clothesId만 뽑아야내야 함
 
     // 백엔드 통신
     try {
@@ -192,7 +199,7 @@ export default function MyStyleTopbar() {
             'X-AUTH-TOKEN':
               'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
           },
-          styleDetails: selectedClothes,
+          styleDetails: saveClothesId,
         })
         .then((res) => {
           console.log('response:', res.data);
