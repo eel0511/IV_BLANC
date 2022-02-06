@@ -1,7 +1,10 @@
 package com.strait.ivblanc.data.model.dto
 
 import android.net.Uri
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class FriendViewdata(
     val name:String,
     val cloth1: Uri,
@@ -12,4 +15,4 @@ data class FriendViewdata(
     val style2: Uri,
     val style3: Uri,
     val style4: Uri,
-)
+): Parcelable

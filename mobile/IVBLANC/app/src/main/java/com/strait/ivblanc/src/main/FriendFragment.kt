@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.main
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,16 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.FriendRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.FriendViewdata
+import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.databinding.FragmentFriendBinding
 import com.strait.ivblanc.databinding.FragmentHistoryBinding
+import com.strait.ivblanc.src.friend.FriendCloset
 import kotlinx.coroutines.*
 
 
@@ -26,9 +30,15 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(FragmentFriendBinding
     val friendRepository = FriendRepository()
     val scope = CoroutineScope(Dispatchers.Main)
     private val viewModel: MainViewModel by activityViewModels()
+    private val friendViewModel:FriendViewModel by activityViewModels()
     private val itemClickListener = object :FriendRecyclerViewAdapter.ItemClickListener{
         override fun onClick(friendViewdata: FriendViewdata) {
-            TODO("Not yet implemented")
+            val intent = Intent(requireActivity(),FriendCloset::class.java)
+            intent.putExtra("test",friendViewdata)
+            startActivity(intent)
+            friendViewModel.setFriendName(friendViewdata.name)
+
+
         }
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
