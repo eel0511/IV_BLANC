@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function SelectedImage({ selectedClothes }) {
   return (
-    <div className='wrapper'>
+    <div className='wrapper' style={{ marginTop: '50px' }}>
       <div className='imgContainer'>
         {selectedClothes.map((clothesData) => (
           <img
