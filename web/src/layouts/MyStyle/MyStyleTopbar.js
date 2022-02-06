@@ -109,7 +109,7 @@ export default function MyStyleTopbar() {
             console.log('response:', resData);
 
             if (res.status === 200 && res.data.output === 1) {
-              alert('전체 옷 조회!');
+              // alert('전체 옷 조회!');
               setIsData(true);
               setClothes([]);
               resData.map((clothesData) =>
@@ -143,7 +143,7 @@ export default function MyStyleTopbar() {
             console.log('response:', resData);
 
             if (res.status === 200 && res.data.output === 1) {
-              alert(`${category} 조회`);
+              // alert(`${category} 조회`);
               setIsData(true);
               setClothes([]);
               resData.map((clothesData) =>
