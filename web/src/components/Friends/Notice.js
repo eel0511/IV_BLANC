@@ -1,14 +1,18 @@
 import React from 'react';
+import { Badge } from '@mui/material';
+import { BsBell } from 'react-icons/bs';
+
 
 export default function Notice() {
+  const handleChange = () => {
+    alert('hello');
+  };
+
   return (
-    <>
-      <img
-        className='Notice'
-        src={require('../../assets/알림.png')}
-        alt='Notice'
-        style={{ width: '50px', height: '50px' }}
-      />
-    </>
+    <div className='Notice'>
+      <Badge color="secondary" badgeContent={1000} max={999}>
+        <BsBell className='Notice__icon' onClick={handleChange}/>
+      </Badge>
+    </div>
   );
 }
