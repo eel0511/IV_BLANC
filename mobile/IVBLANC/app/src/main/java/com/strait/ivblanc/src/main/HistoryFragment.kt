@@ -40,6 +40,8 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
                 else -> tab.text = resources.getString(R.string.map)
             }
         }.attach()
+        mainViewModel.setToolbarTitle(resources.getString(R.string.history))
+        mainViewModel.setLeadingIcon(R.drawable.ic_add)
     }
 
     private inner class ViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {

@@ -4,7 +4,9 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/defaultPadding">
+    android:paddingEnd="@dimen/defaultPadding"
+    android:elevation="2dp"
+    android:background="@color/white">
 
         <ImageView
             android:id="@+id/imageView_toolbar_leadingIcon"
