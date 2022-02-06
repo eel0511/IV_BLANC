@@ -181,6 +181,17 @@ export default function MyStyleTopbar() {
     setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
   };
 
+  const handleInitiate = async (e) => {
+    e.preventDefault();
+
+    if (window.confirm('진짜 초기화 하시겠습니까?')) {
+      setSelectedClothes([]);
+      alert('초기화 하였습니다');
+    } else {
+      alert('취소합니다.');
+    }
+  };
+
   return (
     <div className='wrapper'>
       <Nav
@@ -268,7 +279,7 @@ export default function MyStyleTopbar() {
             <Button variant='contained' color='success'>
               스타일 저장
             </Button>
-            <Button variant='contained' color='error'>
+            <Button variant='contained' color='error' onClick={handleInitiate}>
               초기화
             </Button>
           </Stack>
