@@ -14,4 +14,5 @@
     <dimen name="photoBoxSize">300dp</dimen>
     <dimen name="cameraButtonSize">48dp</dimen>
     <dimen name="colorPickSize">32dp</dimen>
+    <dimen name="materialPickSize">48dp</dimen>
 </resources>

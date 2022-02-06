@@ -128,7 +128,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             .setContent(content)
             .setOnPositiveClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
-                    // TODO: 2022/01/26 옷 삭제 함수 invoke
                     viewModel.deleteClothesById((item.content as Clothes).clothesId)
                 }
             }).build().show()
