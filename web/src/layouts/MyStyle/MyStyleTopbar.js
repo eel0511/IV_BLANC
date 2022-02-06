@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import axios from 'axios';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
@@ -252,6 +254,19 @@ export default function MyStyleTopbar() {
       </div> */}
 
       <SelectedImage selectedClothes={selectedClothes} />
+
+      {selectedClothes.length > 0 && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Stack direction='row' spacing={2}>
+            <Button variant='contained' color='success'>
+              스타일 저장
+            </Button>
+            <Button variant='contained' color='error'>
+              초기화
+            </Button>
+          </Stack>
+        </div>
+      )}
     </div>
   );
 }
