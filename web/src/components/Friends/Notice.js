@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Badge, Button, Menu, MenuItem, Avatar } from '@mui/material';
+import { Badge, Menu, MenuItem, Avatar } from '@mui/material';
 import { BsBell } from 'react-icons/bs';
+import FriendsAcceptButton from './FriendsAcceptButton';
 import axios from 'axios';
 
 export default function Notice() {
@@ -74,9 +75,7 @@ export default function Notice() {
       >
         {friendRequest.map((friend, id) => (
           <div className='Notice__friendRequest' key={id}>
-            <Avatar alt='' src='/static/images/avatar/1.jpg'/>
-            {friend.friendName}
-            <MenuItem onClick={handleClose}>수락</MenuItem>
+            <FriendsAcceptButton friend={friend} />
           </div>
         ))}
       </Menu>
