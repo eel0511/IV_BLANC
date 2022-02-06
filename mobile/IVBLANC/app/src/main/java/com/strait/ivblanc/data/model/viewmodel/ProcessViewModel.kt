@@ -1,6 +1,8 @@
 package com.strait.ivblanc.data.model.viewmodel
 
 import android.net.Uri
+import android.os.Environment
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,6 +30,7 @@ class ProcessViewModel: ViewModel() {
     val clothesResponseStatus: LiveData<Resource<ClothesDeleteResponse>> get() = _clothesResponseStatus
 
     var imgUri: Uri? = null
+    var absoluteImgPath: String? = null
     val categorySet = CategoryCode().codeSet
     val materialSet = MaterialCode().codeSet
 
@@ -55,10 +58,10 @@ class ProcessViewModel: ViewModel() {
     // 서버에 옷 업로드
     fun addClothes() = viewModelScope.launch {
         val clothes = makeClothesForUpload()
-        if (clothes != null && imgUri != null) {
+        if (clothes != null && absoluteImgPath != null) {
             setLoading()
             withContext(Dispatchers.IO) {
-                val result = clothesRepository.addClothes(clothes, makeMultiPart(imgUri!!))
+                val result = clothesRepository.addClothes(clothes, makeMultiPart(this@ProcessViewModel.absoluteImgPath!!))
                 if(result.status == Status.SUCCESS) {
                     _clothesResponseStatus.postValue(Resource.success(result.data!!))
                 } else {
@@ -89,8 +92,8 @@ class ProcessViewModel: ViewModel() {
         return smallCategory
     }
 
-    private fun makeMultiPart(imgUri: Uri): MultipartBody.Part {
-        val imgFile = File(imgUri.toString())
+    private fun makeMultiPart(path: String): MultipartBody.Part {
+        val imgFile = File(path)
         val requestBody = imgFile.asRequestBody("image/*".toMediaType())
         return MultipartBody.Part.create(requestBody)
     }
