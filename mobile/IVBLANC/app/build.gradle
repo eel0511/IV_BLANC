@@ -21,6 +21,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
+        buildConfigField "String", "NAVER_MAPS_ID", properties['naver_maps_id']
         manifestPlaceholders = [kakaoApiKey: kakao_api_key]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
