@@ -21,6 +21,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
+        buildConfigField "String", "NAVER_MAPS_ID", properties['naver_maps_id']
         manifestPlaceholders = [kakaoApiKey: kakao_api_key]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -115,6 +116,10 @@ dependencies {
 
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    // naver maps
+    implementation 'com.naver.maps:map-sdk:3.12.0'
+
 
     // Local Unit Tests
     implementation "androidx.test:core:1.4.0"
