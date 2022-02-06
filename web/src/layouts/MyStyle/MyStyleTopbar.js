@@ -93,7 +93,7 @@ export default function MyStyleTopbar() {
     const category = e;
     console.log(category);
     setTab(e);
-    /*
+
     if (Number(category) === 0) {
       try {
         await axios
@@ -105,9 +105,16 @@ export default function MyStyleTopbar() {
           })
           .then((res) => {
             // console.log(res);
-            console.log('response:', res.data);
+            const resData = res.data.data;
+            console.log('response:', resData);
+
             if (res.status === 200 && res.data.output === 1) {
-              alert('전체 옷 조회!');
+              // alert('전체 옷 조회!');
+              setIsData(true);
+              setClothes([]);
+              resData.map((clothesData) =>
+                setClothes((clothes) => [...clothes, clothesData])
+              );
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
@@ -136,7 +143,7 @@ export default function MyStyleTopbar() {
             console.log('response:', resData);
 
             if (res.status === 200 && res.data.output === 1) {
-              alert(`${category} 조회`);
+              // alert(`${category} 조회`);
               setIsData(true);
               setClothes([]);
               resData.map((clothesData) =>
@@ -151,7 +158,7 @@ export default function MyStyleTopbar() {
       } catch (err) {
         console.error(err);
       }
-    }*/
+    }
   };
 
   const handleClick = (e) => {
@@ -192,7 +199,36 @@ export default function MyStyleTopbar() {
         </NavDropdown>
       </Nav>
 
-      <div className='container-fluid'>
+      {/* 서버 연동 */}
+      {isData && clothes.length > 0 ? (
+        <div className='container-fluid'>
+          <div className='row'>
+            {clothes.map((clothesData) => (
+              <div className='col-4 mt-3' key={clothesData.clothesId}>
+                <div className='card h-100'>
+                  <div className='card-body'>
+                    <img
+                      className='MyClosetClothesItemImg'
+                      // src={require(`../../assets/${clothesData.url}`)}
+                      // src={clothesData.url}
+                      alt={clothesData.clothesId}
+                      style={{
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                      }}
+                      onClick={saveClothes}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <p>등록된 데이터가 없습니다.</p>
+      )}
+
+      {/* <div className='container-fluid'>
         <div className='row'>
           {clothesDatas.map((clothesData) => (
             <div className='col-4 mt-3' key={clothesData.clothesId}>
@@ -213,12 +249,9 @@ export default function MyStyleTopbar() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <SelectedImage selectedClothes={selectedClothes} />
-
-      {/* 서버 연동시 필요한 코드 */}
-      {/* {isData && <Clothes clothes={clothes} />} */}
     </div>
   );
 }
