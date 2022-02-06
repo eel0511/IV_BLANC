@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_historyCalendar_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="3:4"
@@ -25,4 +25,5 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_historyCalendar_list_date"
         android:layout_marginTop="@dimen/defaultMargin"
         tools:srcCompat="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
