@@ -95,20 +95,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             R.drawable.ic_add -> {
                 when(getCurrentFragmentTag()) {
                     "clothes" -> {
-                        object: View.OnClickListener {
-                            override fun onClick(v: View?) {
-                                startActivity(Intent(this@MainActivity, PhotoSelectActivity::class.java).apply {
-                                    putExtra("intend", PhotoSelectActivity.CLOTHES)
-                                })
-                            }
+                        View.OnClickListener {
+                            startActivity(Intent(this@MainActivity, PhotoSelectActivity::class.java).apply {
+                                putExtra("intend", PhotoSelectActivity.CLOTHES)
+                            })
                         }
                     }
                     "style" -> {
-                        object: View.OnClickListener {
-                            override fun onClick(v: View?) {
-                                toast("스타일 생성 Activity로 이동", Toast.LENGTH_SHORT)
-                            }
-                        }
+                        View.OnClickListener { toast("스타일 생성 Activity로 이동", Toast.LENGTH_SHORT) }
+                    }
+                    "history" -> {
+                        View.OnClickListener { toast("히스토리 생성 Activity로 이동", Toast.LENGTH_SHORT) }
                     }
                     else -> View.OnClickListener{}
                 }
