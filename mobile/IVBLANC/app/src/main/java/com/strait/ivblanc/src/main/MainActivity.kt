@@ -50,6 +50,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     true
                 }
                 R.id.nav_history -> {
+                    setFragment(HistoryFragment(), "history")
                     true
                 }
                 R.id.nav_friend -> {
