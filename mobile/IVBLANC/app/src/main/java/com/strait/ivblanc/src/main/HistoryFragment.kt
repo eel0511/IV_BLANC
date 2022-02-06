@@ -49,8 +49,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
             return when (position) {
                 // TODO: 2022/02/06 캘린더 fragment로 이동
                 0 -> {
-                    toast("캘린더 fragment", Toast.LENGTH_SHORT)
-                    AlbumFragment()
+                    CalendarFragment()
                 }
                 // TODO: 2022/02/06 지도 fragment로 이동
                 else -> {
