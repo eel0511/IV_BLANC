@@ -116,6 +116,10 @@ dependencies {
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
 
+    // naver maps
+    implementation 'com.naver.maps:map-sdk:3.12.0'
+
+
     // Local Unit Tests
     implementation "androidx.test:core:1.4.0"
     testImplementation "junit:junit:4.13"
