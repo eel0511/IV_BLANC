@@ -181,6 +181,34 @@ export default function MyStyleTopbar() {
     setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
   };
 
+  const saveStyle = async (e) => {
+    e.preventDefault();
+
+    // 백엔드 통신
+    try {
+      await axios
+        .post('http://i6d104.p.ssafy.io:9999/api/style/add', {
+          headers: {
+            'X-AUTH-TOKEN':
+              'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          },
+          styleDetails: selectedClothes,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200 && res.data.output === 1) {
+            alert('스타일 저장 성공!!');
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
+          } else {
+            alert(res.data.msg);
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleInitiate = async (e) => {
     e.preventDefault();
 
@@ -276,7 +304,7 @@ export default function MyStyleTopbar() {
           }}
         >
           <Stack direction='row' spacing={2}>
-            <Button variant='contained' color='success'>
+            <Button variant='contained' color='success' onClick={saveStyle}>
               스타일 저장
             </Button>
             <Button variant='contained' color='error' onClick={handleInitiate}>
