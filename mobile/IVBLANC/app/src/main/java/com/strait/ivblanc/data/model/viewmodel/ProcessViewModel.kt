@@ -94,8 +94,7 @@ class ProcessViewModel: ViewModel() {
 
     private fun makeMultiPart(path: String): MultipartBody.Part {
         val imgFile = File(path)
-        val requestBody = imgFile.asRequestBody("image/*".toMediaType())
-        return MultipartBody.Part.create(requestBody)
+        return MultipartBody.Part.createFormData("photo", imgFile.name, imgFile.asRequestBody("image/*".toMediaType()))
     }
 
     private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
