@@ -21,7 +21,6 @@ private const val TAG = "PhotoListFragment_debuk"
 class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
-
     override fun onResume() {
         super.onResume()
         when(tag) {

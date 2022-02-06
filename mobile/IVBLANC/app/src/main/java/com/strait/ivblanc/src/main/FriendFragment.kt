@@ -49,6 +49,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(FragmentFriendBinding
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarTitle("친구")
+        friendViewModel.setToolbarTitle("caaaa")
         scope.launch {
             reloadImages()
         }
