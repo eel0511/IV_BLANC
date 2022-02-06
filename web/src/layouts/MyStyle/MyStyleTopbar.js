@@ -7,6 +7,7 @@ import axios from 'axios';
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
+import { margin } from '@mui/system';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -256,7 +257,13 @@ export default function MyStyleTopbar() {
       <SelectedImage selectedClothes={selectedClothes} />
 
       {selectedClothes.length > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '50px',
+          }}
+        >
           <Stack direction='row' spacing={2}>
             <Button variant='contained' color='success'>
               스타일 저장
