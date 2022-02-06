@@ -1,20 +1,26 @@
 package com.strait.ivblanc.src.process
 
+import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.viewmodel.ProcessViewModel
 import com.strait.ivblanc.databinding.ActivityProcessBinding
+import com.strait.ivblanc.util.Status
 
 class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBinding::inflate) {
     lateinit var viewPager: ViewPager2
     lateinit var viewPagerAdapter: FragmentStateAdapter
+    lateinit var loadingDialog: Dialog
     private val FRAGMENT_NUMBER = 4
     private val processViewModel: ProcessViewModel by viewModels()
     lateinit var imgUri: Uri
@@ -37,6 +43,48 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
         viewPager.adapter = viewPagerAdapter
         binding.imageViewProcess.setImageURI(imgUri)
         processViewModel.imgUri = imgUri
+        processViewModel.absoluteImgPath = getAbsolutePath(imgUri)
+        processViewModel.clothesResponseStatus.observe(this) { resource ->
+            when(resource.status) {
+                Status.SUCCESS -> {
+                    dismissLoading()
+                    toast("옷 등록이 완료되었습니다.", Toast.LENGTH_SHORT)
+                }
+                Status.LOADING -> {
+                    showLoading()
+                }
+                Status.ERROR -> {
+                    dismissLoading()
+                    resource.message?.let { it -> toast(it, Toast.LENGTH_SHORT) }
+                }
+            }
+        }
+    }
+
+    private fun getAbsolutePath(imgUri: Uri): String? {
+        val cursor = contentResolver.query(imgUri, arrayOf(MediaStore.MediaColumns.DATA), null, null, null)
+        if (cursor != null) {
+            if(cursor.moveToFirst()) {
+                return cursor.getString(0)
+            }
+        }
+        return null
+    }
+
+    private fun showLoading() {
+        loadingDialog = Dialog(this)
+        loadingDialog.apply {
+            setContentView(R.layout.dialog_loading)
+            window?.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_rectangle, null))
+            setCanceledOnTouchOutside(false)
+            setCancelable(false)
+        }.show()
+    }
+
+    private fun dismissLoading() {
+        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
+        }
     }
 
     inner class SimpleFragmentStateAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
