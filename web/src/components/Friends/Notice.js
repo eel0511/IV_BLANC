@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Badge, Menu, MenuItem, Avatar } from '@mui/material';
+import { Badge, Menu } from '@mui/material';
 import { BsBell } from 'react-icons/bs';
 import FriendsAcceptButton from './FriendsAcceptButton';
 import axios from 'axios';
 
 export default function Notice() {
-  const [friendRequest, setFriendRequest] = useState([
-    {
-      friendEmail: 'abc@naver.com',
-      friendName: '김싸피',
-    },
-    {
-      friendEmail: 'abc@naver.com',
-      friendName: '이싸피',
-    },
-    {
-      friendEmail: 'abc@naver.com',
-      friendName: '정싸피',
-    },
-  ]);
+  const [friendRequest, setFriendRequest] = useState([]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -44,7 +31,8 @@ export default function Notice() {
         }
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data.data);
+        setFriendRequest(response.data.data);
       });
   };
 

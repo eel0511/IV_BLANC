@@ -21,10 +21,6 @@ export default function FriendsAcceptButton({ friend }) {
       });
   };
 
-  const test = () => {
-    alert('성공')
-  };
-
   return (
     <>
       <Avatar alt='' src='/static/images/avatar/1.jpg'/>
