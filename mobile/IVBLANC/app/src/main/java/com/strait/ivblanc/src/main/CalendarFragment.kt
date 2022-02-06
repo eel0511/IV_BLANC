@@ -56,6 +56,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(FragmentCalendarB
         }
     }
 
+    // TODO: 2022/02/07 아이템 개수를 Int.Max_value로 하는 것은 꺼림칙하다. 로직 개선 필요 
     inner class ViewPagerAdapter(fa: FragmentActivity): FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = Int.MAX_VALUE
 
