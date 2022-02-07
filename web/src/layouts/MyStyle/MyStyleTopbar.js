@@ -174,7 +174,7 @@ export default function MyStyleTopbar() {
   const saveClothes = (e) => {
     const clothId = Number(e.target.alt);
     const url = e.target.src;
-    const category = Number(e.target.category);
+    const category = Number(e.target.title);
     console.log(e.target);
     console.log(e);
     const selectedData = {
