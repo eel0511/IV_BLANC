@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,9 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value = "/api/user")
 public class UserController {
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
     private final ResponseService responseService;
-    private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     /**
@@ -48,7 +47,7 @@ public class UserController {
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호 변경")
     @PutMapping(value = "/update/pw", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    SingleResult<String> userUpdatePw(@Valid UpdatePwReqDTO req,
+    SingleResult<String> userUpdatePw(@Valid @RequestBody UpdatePwReqDTO req,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         userService.updatePw(req, userId);
@@ -58,7 +57,7 @@ public class UserController {
     // 회원 정보 변경 - 개인정보
     @ApiOperation(value = "개인정보 변경", notes = "개인정보 변경")
     @PutMapping(value = "/update/personal", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<String> userUpdatePersonal(@Valid UpdatePersonalReqDTO req,
+    public @ResponseBody SingleResult<String> userUpdatePersonal(@Valid @RequestBody UpdatePersonalReqDTO req,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         userService.updatePersonal(req, userId);
@@ -68,7 +67,7 @@ public class UserController {
     // 회원 탈퇴
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴")
     @DeleteMapping(value = "/signOut", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<String> userSignOut(@Valid SignOutReqDTO req,
+    public @ResponseBody SingleResult<String> userSignOut(@Valid @RequestBody SignOutReqDTO req,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         userService.deleteUser(req, userId);
