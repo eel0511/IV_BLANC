@@ -2,7 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 export default function FriendsList() {
-  const [friendsList, setFriendsList] = useState([]);
+  const [friendsList, setFriendsList] = useState([
+    {
+      friendEmail: 'aaa@bbb.com',
+      friendName: '김나박이'
+    },
+    {
+      friendEmail: 'aaa@bbb.com',
+      friendName: '이나박이'
+    },
+    {
+      friendEmail: 'aaa@bbb.com',
+      friendName: '장나박이'
+    }
+  ]);
 
   const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
   const getFriendsList = () => {
@@ -10,16 +23,15 @@ export default function FriendsList() {
       .get('http://i6d104.p.ssafy.io:9999/api/friend/isaccept',
       { 
         headers: {
-          "Access-Control-Allow-origin": "*",
-          "Authorization": `Bearer ${token}`
+          'X-AUTH-TOKEN': `${token}`
         },
         params: {
-          applicant: 'user'
+          applicant: 'abc@naver.com'
         }
       })
       .then((response) => {
-        setFriendsList(response.data);
-        // console.log(response.data)
+        // setFriendsList(response.data);
+        console.log(response.data.data)
       });
   };
 
@@ -29,7 +41,7 @@ export default function FriendsList() {
 
   return (
     <>
-      <h1>Body</h1>
+      
     </>
   );
 }

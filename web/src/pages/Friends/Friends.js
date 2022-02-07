@@ -6,7 +6,6 @@ import Notice from '../../components/Friends/Notice';
 export default function Friends() {
   return (
     <>
-      <h1>Friends</h1>
       <div><FriendsList /></div>
       <footer>
         <Notice />
