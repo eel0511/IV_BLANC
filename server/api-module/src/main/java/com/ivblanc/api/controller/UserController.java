@@ -3,7 +3,6 @@ package com.ivblanc.api.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,9 +19,6 @@ import com.ivblanc.api.dto.req.UpdatePwReqDTO;
 import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.entity.User;
-import com.ivblanc.core.exception.ApiMessageException;
-import com.ivblanc.core.repository.UserRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,11 +58,7 @@ public class UserController {
     public @ResponseBody SingleResult<String> userUpdatePersonal(@Valid @RequestBody UpdatePersonalReqDTO req,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
-        User user = userService.findById(userId);
-        if(user == null){
-            throw new ApiMessageException("존재하지 않는 userId 입니다.");
-        }
-        userService.updatePersonal(req, user);
+        userService.updatePersonal(req, userId);
         return responseService.getSingleResult(userId + "번 유저 개인정보 변경 완료");
     }
 

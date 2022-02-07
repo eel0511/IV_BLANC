@@ -1,7 +1,5 @@
 package com.ivblanc.api.service;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ivblanc.api.dto.req.SignOutReqDTO;
 import com.ivblanc.api.dto.req.UpdatePersonalReqDTO;
 import com.ivblanc.api.dto.req.UpdatePwReqDTO;
-import com.ivblanc.core.entity.History;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
@@ -32,7 +29,8 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 
-	public boolean validateUser(String email, String pw, User user){
+	public User validateUser(String email, String pw, int userId){
+		User user = findById(userId);
 		if(findByEmail(email) == null){
 			throw new ApiMessageException("등록되지 않은 이메일입니다.");
 		}
@@ -45,29 +43,32 @@ public class UserService {
 			throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
 		}
 
-		return true;
+		return user;
 	}
 
+	@Transactional
 	public void updatePw(UpdatePwReqDTO req, int userId){
-		// User user = validateUser(req.getEmail(), req.getPw(), userId);
-		// if(user == null){
-		// 	throw new ApiMessageException("잘못된 회원정보입니다.");
-		// }
-		//
-		// if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
-		// 	throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
-		// }
-		//
-		// if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
-		// 	throw new ApiMessageException("비밀번호를 확인해주세요.");
-		// }
-		//
-		// user.updatePassword(passwordEncoder.encode(req.getPw_new()));
-		// userRepository.save(user);
+		User user = validateUser(req.getEmail(), req.getPw(), userId);
+		if(user == null){
+			throw new ApiMessageException("잘못된 회원정보입니다.");
+		}
+
+		if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
+			throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
+		}
+
+		if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
+			throw new ApiMessageException("비밀번호를 확인해주세요.");
+		}
+
+		user.updatePassword(passwordEncoder.encode(req.getPw_new()));
+		userRepository.save(user);
 	}
 
-	public void updatePersonal(UpdatePersonalReqDTO req, User user){
-		if(!validateUser(req.getEmail(), req.getPw(), user)) {
+	@Transactional
+	public void updatePersonal(UpdatePersonalReqDTO req, int userId){
+		User user = validateUser(req.getEmail(), req.getPw(), userId);
+		if(user == null){
 			throw new ApiMessageException("잘못된 회원정보입니다.");
 		}
 
@@ -77,23 +78,16 @@ public class UserService {
 		user.setName(req.getName());
 		System.out.println("userId = " + user.getUserId());
 
-		User user2 = userRepository.findByUserId(user.getUserId());
-		System.out.println("userAge before= " + user2.getAge());
-
 		userRepository.save(user);
-
-		user2 = userRepository.findByUserId(user.getUserId());
-		System.out.println("userAge after= " + user2.getAge());
-
-		userRepository.save(user2);
 	}
 
+	@Transactional
 	public void deleteUser(SignOutReqDTO req, int userId) {
-		// User user = validateUser(req.getEmail(), req.getPw(), userId);
-		// if(user == null){
-		// 	throw new ApiMessageException("잘못된 회원정보입니다.");
-		// }
-		//
-		// userRepository.deleteById(user.getUserId());
+		User user = validateUser(req.getEmail(), req.getPw(), userId);
+		if(user == null){
+			throw new ApiMessageException("잘못된 회원정보입니다.");
+		}
+
+		userRepository.deleteById(user.getUserId());
 	}
 }
