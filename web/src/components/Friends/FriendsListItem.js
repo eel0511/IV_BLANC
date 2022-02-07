@@ -6,38 +6,38 @@ import './Friends.css';
 export default function FirendsListItem({ friend }) {
   const [friendsClothesList, setFriendsClothesList] = useState([
     {
-      "category": 0,
-      "clothesId": 0,
-      "color": "string",
-      "count": 0,
-      "createDate": "2022-02-07T02:00:58.443Z",
-      "dislikePoint": 0,
-      "favorite": 0,
-      "likePoint": 0,
-      "material": 0,
-      "season": 0,
-      "size": 0,
-      "updateDate": "2022-02-07T02:00:58.443Z",
-      "url": "string",
-      "userId": 0
-    }
+      category: 0,
+      clothesId: 0,
+      color: 'string',
+      count: 0,
+      createDate: '2022-02-07T02:00:58.443Z',
+      dislikePoint: 0,
+      favorite: 0,
+      likePoint: 0,
+      material: 0,
+      season: 0,
+      size: 0,
+      updateDate: '2022-02-07T02:00:58.443Z',
+      url: 'string',
+      userId: 0,
+    },
   ]);
 
-  const token = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
   const getFriendsClothesList = () => {
     axios
-      .get('http://i6d104.p.ssafy.io:9999/api/clothes/friendclothes',
-      { 
+      .get('http://i6d104.p.ssafy.io:9999/api/clothes/friendclothes', {
         headers: {
-          'X-AUTH-TOKEN': `${token}`
+          'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          email: 'aaa@bbb.com'
-        }
+          email: `${friend.friendEmail}`,
+        },
       })
       .then((response) => {
-        // setFriendsClothesList(response.data.data);
-        console.log(response.data.data)
+        setFriendsClothesList(response.data.data);
+        // console.log(response.data.data)
       });
   };
 
