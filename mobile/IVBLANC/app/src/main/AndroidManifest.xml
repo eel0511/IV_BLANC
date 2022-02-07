@@ -26,7 +26,8 @@
             android:exported="false" />
         <activity
             android:name=".src.process.ProcessActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".src.photoSelect.PhotoSelectActivity"
             android:exported="false" />

@@ -20,15 +20,15 @@ public class UpdatePwReqDTO {
 	private String email;
 
 	@NotBlank
-	@ApiModelProperty(value = "기존 비밀번호", required = true, example = "123")
+	@ApiModelProperty(value = "기존 비밀번호", required = true, example = "123a")
 	private String pw;
 
 	@NotBlank
-	@ApiModelProperty(value = "새 비밀번호", required = true, example = "123")
+	@ApiModelProperty(value = "새 비밀번호", required = true, example = "123a")
 	private String pw_new;
 
 	@NotBlank
-	@ApiModelProperty(value = "새 비밀번호 확인", required = true, example = "123")
+	@ApiModelProperty(value = "새 비밀번호 확인", required = true, example = "123a")
 	private String pw_check;
 
 }

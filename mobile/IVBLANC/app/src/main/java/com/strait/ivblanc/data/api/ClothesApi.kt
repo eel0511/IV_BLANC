@@ -20,7 +20,11 @@ interface ClothesApi {
     // TODO: 2022/02/03 ClothesDeleteResponse 이름 바꾸기 
     @Multipart
         @POST("/api/clothes/add")
-    suspend fun addClothes(@Body clothes: ClothesForUpload
-                           , @Part("file") image: MultipartBody.Part): Response<ClothesDeleteResponse>
+    suspend fun addClothes(@Part category: MultipartBody.Part
+                           , @Part color: MultipartBody.Part
+                           , @Part material: MultipartBody.Part
+                           , @Part season: MultipartBody.Part
+                           , @Part size: MultipartBody.Part
+                           , @Part image: MultipartBody.Part): Response<ClothesDeleteResponse>
 
 }

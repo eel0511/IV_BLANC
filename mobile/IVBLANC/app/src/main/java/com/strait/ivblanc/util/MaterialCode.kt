@@ -20,6 +20,24 @@ class MaterialCode {
         val CORDE_DU_ROI = 14
         val METALIC = 15
         val ETC = 16
+
+        val LIST = listOf(Triple(COTTON, R.string.cotton, R.drawable.cotton)
+            , Triple(LINEN, R.string.linen, R.drawable.linen)
+            , Triple(POLYESTER, R.string.polyester, R.drawable.polyester)
+            , Triple(WOOL, R.string.wool, R.drawable.wool)
+            , Triple(FUR, R.string.fur, R.drawable.fur)
+            , Triple(TWEED, R.string.tweed, R.drawable.tweed)
+            , Triple(NYLON, R.string.nylon, R.drawable.nylon)
+            , Triple(DENIM, R.string.denim, R.drawable.denim)
+            , Triple(LEATHER, R.string.leather, R.drawable.leather)
+            , Triple(SUEDE, R.string.suede, R.drawable.suede)
+            , Triple(VELVET, R.string.velvet, R.drawable.velvet)
+            , Triple(CHIFFON, R.string.chiffon, R.drawable.chiffon)
+            , Triple(SILK, R.string.silk, R.drawable.silk)
+            , Triple(CORDE_DU_ROI, R.string.cordeDuRoi, R.drawable.cordeduroi)
+            , Triple(METALIC, R.string.metalic, R.drawable.metalic)
+            , Triple(ETC, R.string.etc, R.drawable.ic_etc)
+        )
     }
 
     private val _codeSet = mutableMapOf<Int, Int>().apply {

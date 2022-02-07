@@ -25,11 +25,11 @@ public class SignUpReqDTO {
     private int social;
 
     @NotBlank
-    @ApiModelProperty(value = "비밀번호", required = true, example = "123")
+    @ApiModelProperty(value = "비밀번호", required = true, example = "123a")
     private String password;
 
     @NotBlank
-    @ApiModelProperty(value = "비밀번호 확인", required = true, example = "123")
+    @ApiModelProperty(value = "비밀번호 확인", required = true, example = "123a")
     private String password_chk;
 
     @ApiModelProperty(value = "이름", required = false, example = "카카오")

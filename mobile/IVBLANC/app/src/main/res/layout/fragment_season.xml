@@ -18,7 +18,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_seasonF"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/TextInputLayoutStyle.dropdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/defaultMargin"
@@ -28,7 +28,9 @@
         <AutoCompleteTextView
             android:id="@+id/autoComplete_seasonF"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/spring"
+            android:inputType="none"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

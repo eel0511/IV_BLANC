@@ -20,6 +20,6 @@ public class SignOutReqDTO {
     private String email;
 
     @NotBlank
-    @ApiModelProperty(value = "비밀번호", required = true, example = "123")
+    @ApiModelProperty(value = "비밀번호", required = true, example = "123a")
     private String pw;
 }

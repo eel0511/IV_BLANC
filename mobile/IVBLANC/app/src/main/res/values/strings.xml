@@ -99,4 +99,21 @@
     <string name="metalic">메탈릭</string>
     <string name="calendar">캘린더</string>
     <string name="map">지도</string>
+    <string name="empty" />
+    <string name="spring">봄</string>
+    <string name="summer">여름</string>
+    <string name="fall">가을</string>
+    <string name="winter">겨울</string>
+    <string name="loadingComment">잠시만 기다려 주세요.</string>
+    <string name="clothes">옷</string>
+    <string name="style">스타일</string>
+    <string name="history">히스토리</string>
+    <string name="friend">친구</string>
+    <string name="sunday">일</string>
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
 </resources>
