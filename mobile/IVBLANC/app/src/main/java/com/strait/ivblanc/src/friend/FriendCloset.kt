@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.FriendViewdata
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
@@ -36,8 +37,8 @@ class FriendCloset :
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        friendViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
-
+        var test = intent.getParcelableExtra<FriendViewdata>("test")
+        friendViewModel.setToolbarTitle("친구 "+test!!.name+"의 옷장")
         setToolbar()
         setViewPager()
     }
