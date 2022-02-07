@@ -96,11 +96,15 @@ export default function SignInSide() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://i6d104.p.ssafy.io:9999/api/sign/login', {
-          email: data.get('email'),
-          pw: data.get('password'),
-          social: 0,
-        })
+        .post(
+          'http://i6d104.p.ssafy.io:9999/api/sign/login',
+          {
+            email: data.get('email'),
+            pw: data.get('password'),
+            social: 0,
+          },
+          { withCredentials: true }
+        )
         .then((res) => {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
