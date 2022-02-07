@@ -121,6 +121,7 @@ export default function SignInSide() {
       await axios
         .post(
           'http://localhost:9999/api/sign/login',
+          // i6d104.p.ssafy.io:9999
           {
             email: data.get('email'),
             pw: data.get('password'),
