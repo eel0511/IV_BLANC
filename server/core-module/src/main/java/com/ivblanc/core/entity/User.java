@@ -129,23 +129,6 @@ public class User implements UserDetails {
     // =================================================================================================
 
 
-
-    public void updateAge(int age){
-        this.age = age;
-    }
-
-    public void updateGender(int gender){
-        this.gender = gender;
-    }
-
-    public void updatePhone(String phone){
-        this.phone = phone;
-    }
-
-    public void updateName(String name){
-        this.name = name;
-    }
-
     public void updatePassword(String password){
         this.password = password;
     }
