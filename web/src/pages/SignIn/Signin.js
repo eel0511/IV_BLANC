@@ -17,6 +17,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import AuthSocial from '../../components/login/AuthSocial';
+import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
 function Copyright(props) {
   return (
@@ -134,6 +135,7 @@ export default function SignInSide() {
             const token = getCookie('JWT');
             console.log(token);
             localStorage.setItem('JWT', token);
+            setAuthorizationToken(token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
             alert(res.data.msg);
