@@ -53,8 +53,8 @@ class FriendFragment :
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarTitle("친구")
-        viewModel.setLeadingIcon(R.drawable.ic_baseline_notifications_24)
-        viewModel.setTrailingIcon(R.drawable.ic_friend)
+        viewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
+        viewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
         reloadImages()
     }
 
