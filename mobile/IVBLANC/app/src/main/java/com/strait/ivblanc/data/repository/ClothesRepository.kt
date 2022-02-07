@@ -19,10 +19,10 @@ class ClothesRepository {
         return try {
             val response = clothesApi.getAllFriendClothes(email)
             if(response.isSuccessful) {
-                return if(response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
+                return if(response.code() == 200 && response.body()!!.output == 1 ) {
                     Resource.success(response.body()!!)
                 } else {
-                    Resource.error(response.body(), "옷 데이터가 없습니다.")
+                    Resource.error(response.body(), "error")
                 }
             } else {
                 Resource.error(null, "알 수 없는 오류입니다.")

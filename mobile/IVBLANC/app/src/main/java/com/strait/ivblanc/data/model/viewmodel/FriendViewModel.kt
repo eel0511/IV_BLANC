@@ -84,10 +84,30 @@ class FriendViewModel :ViewModel(){
         get() = _friendListLiveData
     //친구 관련 끝
 
+
+    // friend
+    fun getAllFriends(applicant: String)=viewModelScope.launch {
+        //친구 리스트를 가져옴
+        getFriends(applicant)
+        Log.d("bbbb", "getAllFriends: "+totalFriendList)
+
+        //가져온 친구리스트로 각각 옷을 뽑아옴
+        totalFriendList.forEach {
+            getAllFriendClothes(it.friendEmail,it.friendName)
+        }
+
+        //최종 친구목록 보여질 것
+        _friendListLiveData.postValue(totalFriendViewdataList)
+    }
     suspend fun getAllFriendClothes(email:String,name:String) = withContext(Dispatchers.Main) {
         setLoading()
+        //default data
+        var u =
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg")
         val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
         _friendResponseStatus.postValue(result)
+        Log.d("aaaa", "getAllFriendClothes: "+result)
+
         if(result.status == Status.SUCCESS) {
             var list = arrayListOf<Uri>()
             for(i in result.data!!.dataSet!!.indices){
@@ -96,28 +116,15 @@ class FriendViewModel :ViewModel(){
                     list.add(Uri.parse(result.data!!.dataSet!![i].url))
                 }
             }
-            var u =
-                Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg")
-            while(list.size<4){
+             while(list.size<4){
                 list.add(u)
             }
-            var f = FriendViewdata(name,list[0],list[1],list[2],list[3],u,u,u,u)
-            if(!totalFriendViewdataList.contains(f)){
-                totalFriendViewdataList.addAll(listOf(f))
+            var friendViewdata = FriendViewdata(name,list[0],list[1],list[2],list[3],u,u,u,u)
+            if(!totalFriendViewdataList.contains(friendViewdata)){
+                totalFriendViewdataList.addAll(listOf(friendViewdata))
             }
-
-            Log.d("aaaa", "getAllFriendClothes: "+totalFriendViewdataList)
-
         }
-    }
-    // friend
-    fun getAllFriends(applicant: String)=viewModelScope.launch {
-        getFriends(applicant)
-        Log.d("bbbb", "getAllFriends: "+totalFriendList)
-        totalFriendList.forEach {
-            getAllFriendClothes(it.friendEmail,it.friendName)
-        }
-        _friendListLiveData.postValue(totalFriendViewdataList)
+        Log.d("aaaa", "getAllFriendClothes: "+totalFriendViewdataList)
     }
     suspend fun getFriends(applicant:String)=withContext(Dispatchers.IO) {
         val result: Resource<FriendListResponse> = friendRepository.getAllFriends(applicant)

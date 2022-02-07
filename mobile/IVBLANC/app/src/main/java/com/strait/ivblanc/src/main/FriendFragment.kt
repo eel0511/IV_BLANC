@@ -57,7 +57,8 @@ class FriendFragment :
 
     fun reloadImages() {
         list.clear()
-        friendViewModel.getAllFriends("ssu@a.com")
+        //친구 이메일 넣어야함
+        friendViewModel.getAllFriends("aaa@a.com")
     }
 
     fun init() {
