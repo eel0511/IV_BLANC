@@ -216,6 +216,10 @@ export default function MyStyleTopbar() {
     }
   };
 
+  const showStyle = (e) => {
+    e.preventDefault();
+  };
+
   const handleInitiate = async (e) => {
     e.preventDefault();
 
@@ -313,6 +317,9 @@ export default function MyStyleTopbar() {
           <Stack direction='row' spacing={2}>
             <Button variant='contained' color='success' onClick={saveStyle}>
               스타일 저장
+            </Button>
+            <Button variant='contained' color='info' onClick={showStyle}>
+              스타일 보기
             </Button>
             <Button variant='contained' color='error' onClick={handleInitiate}>
               초기화
