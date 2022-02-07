@@ -93,6 +93,7 @@ export default function MyStyleTopbar() {
   const [clothes, setClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
+  const [isShowLook, setIsShowLook] = useState(false);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -221,6 +222,8 @@ export default function MyStyleTopbar() {
 
   const showStyle = (e) => {
     e.preventDefault();
+
+    setIsShowLook(true);
   };
 
   const handleInitiate = async (e) => {
@@ -349,7 +352,7 @@ export default function MyStyleTopbar() {
           </div>
         </Col>
         <Col sm={8}>
-          <StyleLook selectedClothes={selectedClothes} />
+          {isShowLook && <StyleLook selectedClothes={selectedClothes} />}
         </Col>
       </Row>
     </Container>
