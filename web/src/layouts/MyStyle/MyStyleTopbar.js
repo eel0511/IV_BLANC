@@ -174,11 +174,13 @@ export default function MyStyleTopbar() {
   const saveClothes = (e) => {
     const clothId = Number(e.target.alt);
     const url = e.target.src;
+    const category = Number(e.target.category);
     console.log(e.target);
     console.log(e);
     const selectedData = {
       clothesId: clothId,
       url: '상의.jfif',
+      category: category,
     };
     const selectedClothesId = {
       clothesId: clothId,
