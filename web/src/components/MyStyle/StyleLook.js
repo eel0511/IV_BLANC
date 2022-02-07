@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function StyleLook({ selectedClothes }) {
+  const [shirts, setShirts] = useState({});
+  const [pants, setPants] = useState({});
+  const [outer, setOuter] = useState({});
+  const [shoes, setShoes] = useState({});
+  const [bag, setBag] = useState({});
+  const [hat, setHat] = useState({});
+  const [others, setOthers] = useState({});
+
   return (
     <div className='wrapper'>
       <div className='col'>
