@@ -92,7 +92,8 @@ export default function SignUp() {
 
     try {
       await axios
-        .get('http://i6d104.p.ssafy.io:9999/api/sign/checkEmail', {
+        .get('http://localhost:9999/api/sign/checkEmail', {
+          // i6d104.p.ssafy.io:9999
           params: {
             email: tmpEmail,
           },
@@ -230,7 +231,8 @@ export default function SignUp() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://i6d104.p.ssafy.io:9999/api/sign/signup', {
+        .post('http://localhost:9999/api/sign/signup', {
+          // i6d104.p.ssafy.io:9999
           email: data.get('email'),
           password: data.get('password'),
           password_chk: data.get('password_chk'),
@@ -238,7 +240,7 @@ export default function SignUp() {
           gender: data.get('gender') === 'male' ? 1 : 2,
           age: Number(data.get('age')),
           phone: data.get('phoneNum'),
-          social: 1,
+          social: 0,
         })
         .then((res) => {
           console.log('response:', res.data);

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import setAuthorizationToken from '../src/utils/setAuthorizationToken';
+
+// setAuthorizationToken(localStorage.JWT);
 
 ReactDOM.render(
   <React.StrictMode>
