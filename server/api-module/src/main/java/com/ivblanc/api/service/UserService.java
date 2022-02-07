@@ -32,62 +32,68 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 
-	public void updatePw(UpdatePwReqDTO req, int userId){
-		User user = findById(userId);
-		if(user == null) {
-			throw new ApiMessageException("등록되지 않은 아이디입니다.");
+	public boolean validateUser(String email, String pw, User user){
+		if(findByEmail(email) == null){
+			throw new ApiMessageException("등록되지 않은 이메일입니다.");
 		}
 
-		if(user.getEmail() != req.getEmail()){
+		if(!user.getEmail().equals(email)){
 			throw new ApiMessageException("잘못된 접근입니다.");
 		}
 
-		if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
+		if(!passwordEncoder.matches(pw, user.getPassword())){
 			throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
 		}
 
-		if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
-			throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
-		}
-
-		if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
-			throw new ApiMessageException("비밀번호를 확인해주세요.");
-		}
-
-		user.updatePassword(passwordEncoder.encode(req.getPw_new()));
-		userRepository.save(user);
+		return true;
 	}
 
-	public void updatePersonal(UpdatePersonalReqDTO req, int userId){
-		User user = findById(userId);
-		if(user == null)
-			throw new ApiMessageException("등록되지 않은 회원입니다.");
+	public void updatePw(UpdatePwReqDTO req, int userId){
+		// User user = validateUser(req.getEmail(), req.getPw(), userId);
+		// if(user == null){
+		// 	throw new ApiMessageException("잘못된 회원정보입니다.");
+		// }
+		//
+		// if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
+		// 	throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
+		// }
+		//
+		// if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
+		// 	throw new ApiMessageException("비밀번호를 확인해주세요.");
+		// }
+		//
+		// user.updatePassword(passwordEncoder.encode(req.getPw_new()));
+		// userRepository.save(user);
+	}
 
-		if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
-			throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
+	public void updatePersonal(UpdatePersonalReqDTO req, User user){
+		if(!validateUser(req.getEmail(), req.getPw(), user)) {
+			throw new ApiMessageException("잘못된 회원정보입니다.");
 		}
 
-		user.updateAge(req.getAge());
-		user.updateGender(req.getGender());
-		user.updatePhone(req.getPhone());
-		user.updateName(req.getName());
+		user.setAge(req.getAge());
+		user.setGender(req.getGender());
+		user.setPhone(req.getPhone());
+		user.setName(req.getName());
+		System.out.println("userId = " + user.getUserId());
+
+		User user2 = userRepository.findByUserId(user.getUserId());
+		System.out.println("userAge before= " + user2.getAge());
+
 		userRepository.save(user);
+
+		user2 = userRepository.findByUserId(user.getUserId());
+		System.out.println("userAge after= " + user2.getAge());
+
+		userRepository.save(user2);
 	}
 
 	public void deleteUser(SignOutReqDTO req, int userId) {
-		// 존재하는 회원인지 확인
-		User user = findById(userId);
-		if(user == null)
-			throw new ApiMessageException("등록되지 않은 회원입니다.");
-
-		if(user.getEmail() != req.getEmail()){
-			throw new ApiMessageException("잘못된 접근입니다.");
-		}
-
-		if(!passwordEncoder.matches(req.getPw(), user.getPassword())){
-			throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
-		}
-
-		userRepository.deleteById(user.getUserId());
+		// User user = validateUser(req.getEmail(), req.getPw(), userId);
+		// if(user == null){
+		// 	throw new ApiMessageException("잘못된 회원정보입니다.");
+		// }
+		//
+		// userRepository.deleteById(user.getUserId());
 	}
 }

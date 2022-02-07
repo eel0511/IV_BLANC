@@ -57,7 +57,7 @@ public class SignController {
     @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
     @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    CommonResult checkEmail(@Valid @RequestBody CheckEmailReqDTO req) throws Exception{
+    CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
         // 존재하는 회원인지 확인
         User user = signService.findByEmail(req.getEmail());
         if(user != null)
