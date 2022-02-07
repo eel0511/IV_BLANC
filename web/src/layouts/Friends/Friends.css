@@ -1,12 +1,3 @@
 .friend {
   object-fit: contain;
 }
-
-.friend__header {
-  display: flex;
-  align-items: center;
-}
-
-.friend__avatar {
-  margin: 15px;
-}
