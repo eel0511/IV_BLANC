@@ -55,17 +55,17 @@ export default function MyClothesCreateModalBody() {
     axios
       .post('http://119.56.162.61:8888/api/clothes/add', formData,
       {
+        headers: {
+          'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDMyNjUzNzAsImV4cCI6MTY0NTg1NzM3MH0.4cg27bxcecL15ItYRFutBZOKKW2P9MJyziWiz8S9_QE'
+        }
+      },
+      {
         params: {
           category: Number(selectedSubCategory),
           color: selectedColor,
           material: Number(selectedMaterial),
           season: Number(selectedSeason),
           size: Number(selectedSize),
-        }
-      },
-      {
-        headers: {
-          'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDMyNjUzNzAsImV4cCI6MTY0NTg1NzM3MH0.4cg27bxcecL15ItYRFutBZOKKW2P9MJyziWiz8S9_QE'
         }
       }
       )
