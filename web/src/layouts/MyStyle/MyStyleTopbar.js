@@ -345,7 +345,9 @@ export default function MyStyleTopbar() {
             )}
           </div>
         </Col>
-        <Col sm={8}>아바타</Col>
+        <Col sm={8}>
+          <StyleLook selectedClothes={selectedClothes} />
+        </Col>
       </Row>
     </Container>
   );
