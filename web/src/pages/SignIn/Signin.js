@@ -131,8 +131,9 @@ export default function SignInSide() {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
-            console.log(getCookie('JWT'));
-            // console.log(document.cookie);
+            const token = getCookie('JWT');
+            console.log(token);
+            localStorage.setItem('JWT', token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
             alert(res.data.msg);
