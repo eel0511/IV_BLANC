@@ -46,8 +46,8 @@ export default function MyClosetClothesItem({ clothesData }) {
         break;
     }
 
-    console.log(mainCategory);
-    console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
+    // console.log(mainCategory);
+    // console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
     setCategory(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
     setColor(Object.keys(codeData['colors']).find((key) => codeData['colors'][key] === clothesData.color));
     setMaterial(Object.keys(codeData['material']).find((key) => codeData['material'][key] === clothesData.material));
