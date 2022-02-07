@@ -1,14 +1,21 @@
 package com.strait.ivblanc.data.model.viewmodel
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.Friend
+import com.strait.ivblanc.data.model.dto.FriendViewdata
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.response.ClothesResponse
+import com.strait.ivblanc.data.model.response.FriendListResponse
+import com.strait.ivblanc.data.model.response.FriendResponse
 import com.strait.ivblanc.data.repository.ClothesRepository
+import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
@@ -53,153 +60,78 @@ class FriendViewModel :ViewModel(){
     // 옷관련 필드
     private val clothesRepository = ClothesRepository()
     var currentCategory = CategoryCode.TOTAL
-    private val totalClothesList = mutableListOf<Clothes>()
+    private var totalClothesList = mutableListOf<Clothes>()
 
     private val _clothesResponseStatus = MutableLiveData<Resource<*>>()
     val clothesResponseStatus: LiveData<Resource<*>>
         get() = _clothesResponseStatus
 
     // ExpandableRecyclerView에서 observe하는 리스트
-    private val _clothesListLiveData = MutableLiveData<List<PhotoItem<Clothes>>>()
-    val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
+    private val _clothesListLiveData = MutableLiveData<List<List<PhotoItem<Clothes>>>>()
+    val clothesListLiveData : LiveData<List<List<PhotoItem<Clothes>>>>
         get() = _clothesListLiveData
     // 옷관련 필드 끝
+    //친구 관련
+    private val friendRepository = FriendRepository()
 
-    suspend fun getAllClothes() = withContext(Dispatchers.IO) {
+    private val _friendResponseStatus = MutableLiveData<Resource<*>>()
+    val friendResponseStatus: LiveData<Resource<*>>
+        get() = _friendResponseStatus
+    private val totalFriendList = mutableListOf<Friend>()
+    private val totalFriendViewdataList = mutableListOf<FriendViewdata>()
+    private val _friendListLiveData =  MutableLiveData<List<FriendViewdata>>()
+    val friendListLiveData:LiveData<List<FriendViewdata>>
+        get() = _friendListLiveData
+    //친구 관련 끝
+
+    suspend fun getAllFriendClothes(email:String,name:String) = withContext(Dispatchers.Main) {
         setLoading()
-        val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
-        _clothesResponseStatus.postValue(result)
+        val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
+        _friendResponseStatus.postValue(result)
         if(result.status == Status.SUCCESS) {
-            totalClothesList.addAll(result.data!!.dataSet!!)
+            var list = arrayListOf<Uri>()
+            for(i in result.data!!.dataSet!!.indices){
+                if(i==4) break
+                if(result.data!!.dataSet!![i].url!="NULL"&&result.data!!.dataSet!![i].url!=null){
+                    list.add(Uri.parse(result.data!!.dataSet!![i].url))
+                }
+            }
+            var u =
+                Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg")
+            while(list.size<4){
+                list.add(u)
+            }
+            var f = FriendViewdata(name,list[0],list[1],list[2],list[3],u,u,u,u)
+            if(!totalFriendViewdataList.contains(f)){
+                totalFriendViewdataList.addAll(listOf(f))
+            }
+
+            Log.d("aaaa", "getAllFriendClothes: "+totalFriendViewdataList)
+
         }
     }
-
-    fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
-        getAllClothes()
-        updateClothesByCategory(category)
+    // friend
+    fun getAllFriends(applicant: String)=viewModelScope.launch {
+        getFriends(applicant)
+        Log.d("bbbb", "getAllFriends: "+totalFriendList)
+        totalFriendList.forEach {
+            getAllFriendClothes(it.friendEmail,it.friendName)
+        }
+        _friendListLiveData.postValue(totalFriendViewdataList)
     }
-
-    /**
-     * 삭제 성공 시,
-     *  전체 TotalClothesList에서 해당 옷 삭제,
-     *  현재 카테고리에 따라 _clothesListLiveDate 업데이트,
-     */
-    fun deleteClothesById(clothesId: Int) = viewModelScope.launch {
-        setLoading()
-        withContext(Dispatchers.IO) {
-            val result = clothesRepository.deleteClothesById(clothesId)
-            if(result.status == Status.SUCCESS) {
-                totalClothesList.remove(totalClothesList.find { clothes -> clothes.clothesId == clothesId })
-                updateClothesByCategory(currentCategory)
-                _clothesResponseStatus.postValue(Resource.success(result.data!!))
-            } else {
-                _clothesResponseStatus.postValue(result)
+    suspend fun getFriends(applicant:String)=withContext(Dispatchers.IO) {
+        val result: Resource<FriendListResponse> = friendRepository.getAllFriends(applicant)
+        _friendResponseStatus.postValue(result)
+        if(result.status==Status.SUCCESS){
+            result.data!!.dataSet!!.forEach {
+                if(!totalFriendList.contains(it)){
+                    totalFriendList.add(it)
+                }
             }
         }
     }
+    //friend end
 
-    // 대분류 카테고리로 전체 옷 필터링
-    private fun getClothesListWithLargeCategory(category: Int): MutableList<Clothes> {
-        val largeCategory = category.toString()[0].digitToInt()
-        return totalClothesList.filter { clothes -> clothes.category.toString()[0].digitToInt() == largeCategory }.toMutableList()
-    }
-
-    // 소분류 카테고리로 옷 필터링
-    private fun getClothesListWithSmallCategory(category: Int): MutableList<Clothes> {
-        val filteredList = getClothesListWithLargeCategory(category)
-        return filteredList.filter { clothes -> clothes.category == category }.toMutableList()
-    }
-
-    /**
-     * 최근에 추가한 옷이 있으면
-     * 최근에 추가한 옷 헤더 추가
-     * 최근에 추가한 옷 child 추가
-     *
-     * 즐겨찾기한 옷이 있으면
-     * 즐겨찾기한 옷 헤더 추가
-     * 즐겨찾기한 옷 child 추가
-     *
-     * 최근에 추가한 옷, 즐겨찾기한 옷 둘중에 하나라도 있으면
-     * -> 카테고리 별 옷 헤더 추가
-     *
-     * 카테고리 별 옷 child 추가
-     */
-    // TODO: 2022/01/31 ExpandableRecyclerViewAdapter 뷰타입 Divider 추가
-    private fun makePhotoItemList(filteredList: MutableList<Clothes>): List<PhotoItem<Clothes>> {
-        val photoItemList = mutableListOf<PhotoItem<Clothes>>()
-        val recentlyCreatedClothesList = getCreatedRecentlyClothesList(filteredList)
-        val favoriteClothesList = getFavoriteClothesList(filteredList)
-        // 주석의 첫번째 조건
-        if(recentlyCreatedClothesList.size != 0) {
-            photoItemList.add(PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "최근에 추가한 옷").apply{
-                initInvisibleItems()
-            })
-            photoItemList.addAll(getPhotoItemList(recentlyCreatedClothesList))
-        }
-        // 주석의 두번째 조건
-        if(favoriteClothesList.size != 0) {
-            photoItemList.add(PhotoItem<Clothes>(ExpandableRecyclerViewAdapter.HEADER, "즐겨찾기한 옷").apply {
-                initInvisibleItems()
-            })
-            photoItemList.addAll(getPhotoItemList(favoriteClothesList))
-        }
-        // 주석의 마지막 조건
-        if(favoriteClothesList.size != 0 || recentlyCreatedClothesList.size != 0) {
-            photoItemList.add(PhotoItem(ExpandableRecyclerViewAdapter.HEADER))
-        }
-        photoItemList.addAll(getPhotoItemList(filteredList))
-        return photoItemList
-    }
-
-    // List<Clothes>를 List<PhotoItem<Clothes>>로 변환
-    private fun <T> getPhotoItemList(list: MutableList<T>):List<PhotoItem<T>> {
-        val result = mutableListOf<PhotoItem<T>>()
-        list.forEach { clothes -> result.add(PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = clothes)) }
-        return result
-    }
-
-    // 즐겨찾기 한 옷
-    private fun getFavoriteClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
-        return list.filter { clothes -> clothes.favorite == 1 }.toMutableList()
-    }
-
-    // 최근 일주일 간 생성된 옷
-    private fun getCreatedRecentlyClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
-        val today = System.currentTimeMillis()
-        val oneWeekMillis = 1000 * 7 * 24 * 60 * 60
-        return list.filter { clothes -> dateStringToMillis(clothes.createDate) > (today - oneWeekMillis)}.toMutableList()
-    }
-
-    // string to millis
-    private fun dateStringToMillis(dateString: String): Long {
-        val stringFormat = SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss", Locale.KOREA)
-        val date = stringFormat.parse(dateString)
-        return date.time
-    }
-
-
-    /**
-     * 대분류로 분류 후, 소분류로 분류
-     * (대분류 전체인 경우 code는 10보다 작음)
-     * List<PhotoItem<Clothes>> 생성 후
-     * _clothesListLiveData 업데이트
-     */
-    // View에서 호출하는 카테고리 별 조회
-    fun updateClothesByCategory(category: Int) {
-        currentCategory = category
-        when {
-            category == CategoryCode.TOTAL -> {
-                _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
-            }
-            category < 10 -> {
-                _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
-            }
-            else -> {
-                _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
-            }
-        }
-    }
-
-    private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
+    private fun setLoading() = _friendResponseStatus.postValue(Resource.loading(null))
 
 }
