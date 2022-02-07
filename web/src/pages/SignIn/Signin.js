@@ -99,7 +99,7 @@ export default function SignInSide() {
         .post('http://i6d104.p.ssafy.io:9999/api/sign/login', {
           email: data.get('email'),
           pw: data.get('password'),
-          social: 1,
+          social: 0,
         })
         .then((res) => {
           console.log('response:', res.data);
