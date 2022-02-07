@@ -1,9 +1,13 @@
 package com.ivblanc.api.controller;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = {"가입/로그인"})
 @Slf4j
@@ -47,7 +52,13 @@ public class SignController {
     @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
     @GetMapping(value = "/checkEmail", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    CommonResult checkEmail(@Valid CheckEmailReqDTO req) throws Exception{
+    CommonResult checkEmail(@Valid CheckEmailReqDTO req, @ApiIgnore Errors errors) throws Exception{
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(objectError -> {
+                String message = objectError.getDefaultMessage();
+                throw new ApiMessageException(message);
+             });
+        }
         // 존재하는 회원인지 확인
         User user = signService.findByEmail(req.getEmail());
         if(user != null)
@@ -59,7 +70,14 @@ public class SignController {
     // 일반 회원가입
     @ApiOperation(value = "일반 회원가입", notes = "일반 회원가입")
     @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<String> userSignUp(@Valid @RequestBody SignUpReqDTO req) throws Exception{
+    public @ResponseBody SingleResult<String> userSignUp(@Valid @RequestBody SignUpReqDTO req, @ApiIgnore Errors errors) throws Exception{
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(objectError -> {
+                String message = objectError.getDefaultMessage();
+                throw new ApiMessageException(message);
+            });
+        }
+
         int userId = signService.userSignUp(req);
 
         if(userId <= 0)

@@ -67,24 +67,8 @@ public class SignService {
         if(emailChk != null)
             throw new ApiMessageException("중복된 이메일의 회원이 존재합니다.");
 
-        if(!CheckValidate.checkEmailForm(req.getEmail())){
-            throw new ApiMessageException("이메일 형식을 확인해주세요.");
-        }
-
-        if(!PasswordValidate.checkPwForm(req.getPassword())){
-            throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
-        }
-
-        if(!PasswordValidate.checkPwMatch(req.getPassword(), req.getPassword_chk())){
-            throw new ApiMessageException("비밀번호를 확인해주세요.");
-        }
-
-        if(!CheckValidate.isOnlyNum(req.getPhone())){
-            throw new ApiMessageException("전화번호는 -를 빼고 입력해주세요.");
-        }
-
-        if(!CheckValidate.checkPhoneForm(req.getPhone())){
-            throw new ApiMessageException("전화번호 형식을 확인해주세요");
+        if(!req.getPassword().equals(req.getPassword_chk())){
+            throw new ApiMessageException("비밀번호가 일치하지 않습니다.");
         }
 
         // DB에 저장할 User Entity 세팅
