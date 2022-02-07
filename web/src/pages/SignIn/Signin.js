@@ -36,6 +36,28 @@ function Copyright(props) {
   );
 }
 
+// 쿠키에서 JWT 읽어오는 함수
+function getCookie(cname) {
+  const name = cname + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+
+  const ca = decodedCookie.split(';');
+
+  for (let i = 0; i < ca.length; i++) {
+    const c = ca[i];
+
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return '';
+}
+
 const theme = createTheme();
 
 export default function SignInSide() {
@@ -97,7 +119,7 @@ export default function SignInSide() {
     try {
       await axios
         .post(
-          'http://i6d104.p.ssafy.io:9999/api/sign/login',
+          'http://localhost:9999/api/sign/login',
           {
             email: data.get('email'),
             pw: data.get('password'),
@@ -109,6 +131,8 @@ export default function SignInSide() {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
+            console.log(getCookie('JWT'));
+            // console.log(document.cookie);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
             alert(res.data.msg);
