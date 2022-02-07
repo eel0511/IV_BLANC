@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from "styled-components";
+import Navbar from '../../components/Navbar';
+import ScrollToTop from '../../components/ScrollToTop';
 import MyClosetClothes from '../../layouts/MyCloset/MyClosetClothes';
 import MyClosetSidebar from '../../layouts/MyCloset/MyClosetSidebar';
 import './MyCloset.css';
+import home from "../../assets/home.png";
 
 export default function MyCloset() {
   const [myClothes, setMyClothes] = useState([]);
@@ -88,12 +92,23 @@ export default function MyCloset() {
   // }, []);
 
   return (
-    <>
+    <Section>
+      <ScrollToTop />
+      <Navbar />
       <h1>My Closet</h1>
       <div className='MyClosetContainer'>
         <MyClosetSidebar />
         <MyClosetClothes clothesDatas={clothesDatas} />
       </div>
-    </>
+    </Section>
   );
 }
+
+const Section = styled.section`
+  background-image: url(${home});
+  background-size: cover;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+`;

@@ -1,16 +1,5 @@
 package com.ivblanc.api.controller;
 
-import javax.validation.Valid;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.MakeFriendReqDTO;
 import com.ivblanc.api.dto.res.FriendResDTO;
@@ -20,17 +9,20 @@ import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
-import com.ivblanc.core.repository.UserRepository;
-
+import com.ivblanc.core.entity.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Api(tags = {"FRIEND"})
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @RequestMapping(value = "/api/friend")
 public class FriendController {
 	private final FriendService friendService;
@@ -71,8 +63,9 @@ public class FriendController {
 	@PostMapping(value = "/isaccept")
 	public @ResponseBody
 	SingleResult<FriendResDTO> acceptFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
-		friendService.makeFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		friendService.makeFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 
 	}
 
@@ -83,7 +76,8 @@ public class FriendController {
 
 		friendService.deleteFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
 		friendService.deleteFriend(friendService.findUserFreind(req.getFriendName(), req.getApplicant()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구 요청 취소", notes = "N인 친구신청 목록에 대해 취소를 할 수 있습니다.\n"
@@ -92,7 +86,8 @@ public class FriendController {
 	@ResponseBody
 	SingleResult<FriendResDTO> cancelFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
 		friendService.deleteFriend(friendService.findUserFreind(req.getApplicant(), req.getFriendName()));
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구추가", notes = "친구 email을 등록하여 상태 N으로 단방향 연결합니다.\n"
@@ -102,10 +97,18 @@ public class FriendController {
 	SingleResult<FriendResDTO> addFriend(@Valid @RequestBody MakeFriendReqDTO req) throws Exception {
 
 		friendService.addFriend(req);
+		User friend = userService.findByEmail(req.getFriendName());
+		//fcm 없을시 추가만됨
+		if(friend.getToken_fcm()==null||friend.getToken_fcm().length()<10){
+			User user = userService.findByEmail(req.getFriendName());
+			return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
+		}
+
 		fcmService.sendMessageTo(userService.findByEmail(req.getFriendName()).getToken_fcm(), "친구요청 알림",
 			userService.findByEmail(req.getApplicant()).getName() + "님이 친구요청을 보냈습니다.");
 		System.out.println(req.getFriendName());
-		return responseService.getSingleResult(new FriendResDTO(req.getFriendName()));
+		User user = userService.findByEmail(req.getFriendName());
+		return responseService.getSingleResult(new FriendResDTO(req.getFriendName(),user.getName()));
 	}
 
 	@ApiOperation(value = "친구요청 보기", notes = "자신이 받은 상태 N인 요청을 모두 볼수있습니다.\n"
@@ -113,6 +116,6 @@ public class FriendController {
 	@GetMapping(value = "/friendrequest")
 	public ListResult<FriendResDTO>
 	findRequest(@RequestParam String applicant) throws Exception {
-		return responseService.getListResult(friendService.MakeFriendToResDTO(friendService.findRequest(applicant)));
+		return responseService.getListResult(friendService.MakeApplicantToResDTO(friendService.findRequest(applicant)));
 	}
 }
