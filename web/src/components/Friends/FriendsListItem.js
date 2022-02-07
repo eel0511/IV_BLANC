@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar, Paper, Box } from '@mui/material';
+import { BsPlusCircle } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import './Friends.css';
 
 export default function FirendsListItem({ friend }) {
@@ -54,6 +56,11 @@ export default function FirendsListItem({ friend }) {
           src='/static/images/avatar/1.jpg'
         />
         <h3>{friend.friendName}</h3>
+        <Link to='/friends/closet'>
+          <BsPlusCircle 
+            className='friend__plusIcon'
+          />
+        </Link>
       </div>
       <div className='friend__body'>
         <Box
