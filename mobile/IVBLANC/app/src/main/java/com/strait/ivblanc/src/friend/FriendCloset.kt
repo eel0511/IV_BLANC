@@ -10,14 +10,21 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityFriendClosetBinding
 import com.strait.ivblanc.src.main.FriendFragment
+import com.strait.ivblanc.src.photoSelect.AlbumFragment
+import com.strait.ivblanc.src.photoSelect.CameraFragment
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
@@ -25,35 +32,19 @@ import com.strait.ivblanc.util.CategoryCode
 class FriendCloset :
     BaseActivity<ActivityFriendClosetBinding>(ActivityFriendClosetBinding::inflate) {
     val friendViewModel: FriendViewModel by viewModels()
+    lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friend_closet)
         friendViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
-        init()
+
+        setToolbar()
+        setViewPager()
     }
 
-    private fun init() {
+    override fun onResume() {
+        super.onResume()
         setToolbar()
-        // 첫 화면 세팅
-        setFragment(FriendFragment(), "friend_clothes")
-
-        // nav click 시 fragment 변경
-        binding.bottomNavFriend.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_friend_clothes -> {
-                    Log.d("nav_c", "init: ")
-                    setFragment(PhotoListFragment<Clothes>(), "friend_clothes")
-                    true
-                }
-                // Style로 변경
-                R.id.nav_friend_style -> {
-                    Log.d("nav_s", "init: ")
-                    setFragment(FriendFragment(), "friend_style")
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     private fun setToolbar() {
@@ -71,12 +62,29 @@ class FriendCloset :
             setTrailingIcon(it, getListener(it))
         }
     }
-
-    private fun setFragment(fragment: Fragment, tag: String) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout_friend_container, fragment, tag).commit()
+    private fun setViewPager() {
+        viewPager = binding.viewpagerFriend
+        val viewPagerAdapter = ScreenSlidePagerAdapter(this)
+        viewPager.adapter = viewPagerAdapter
+        val tabLayout = binding.tabLayoutFriend
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when(position) {
+                0 -> tab.text = "clothes"
+                else -> tab.text = "style"
+            }
+        }.attach()
     }
 
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> PhotoListFragment<Clothes>()
+                else -> PhotoListFragment<Style>()
+            }
+        }
+    }
     // imageView의 background drawable Id에 따라 버튼 리스너 반환
     private fun getListener(resId: Int): View.OnClickListener {
         return when (resId) {
@@ -118,7 +126,7 @@ class FriendCloset :
     }
 
     private fun getCurrentFragmentTag(): String? =
-        supportFragmentManager.findFragmentById(R.id.frameLayout_friend_container)?.tag
+        supportFragmentManager.findFragmentById(R.id.tabLayout_friend)?.tag
 
     private fun setToolbarTitle(title: String) {
         binding.toolbarFriend.textViewFriendToolbar.text = title

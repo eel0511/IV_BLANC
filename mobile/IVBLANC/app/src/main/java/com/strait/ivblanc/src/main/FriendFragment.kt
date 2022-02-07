@@ -37,7 +37,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(FragmentFriendBinding
             intent.putExtra("test",friendViewdata)
             startActivity(intent)
             friendViewModel.setFriendName(friendViewdata.name)
-
+            friendViewModel.setToolbarTitle(friendViewdata.name+"님의 옷장입니다")
 
         }
     }
@@ -49,7 +49,8 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(FragmentFriendBinding
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarTitle("친구")
-        friendViewModel.setToolbarTitle("caaaa")
+
+
         scope.launch {
             reloadImages()
         }
