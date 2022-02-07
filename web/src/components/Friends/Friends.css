@@ -40,3 +40,11 @@
 .friend__avatar {
   margin: 15px;
 }
+
+.friend__plusIcon {
+  position: relative;
+  left: 500px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}

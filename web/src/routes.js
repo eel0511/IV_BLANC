@@ -9,6 +9,7 @@ import KakaoAuth from './components/login/kakaoOAuth';
 import NaverAuth from './components/login/naverOAuth';
 import FindEmail from './pages/FindAccount/FindEmail';
 import FindPassword from './pages/FindAccount/FindPassword';
+import FriendsCloset from './pages/Friends/FriendsCloset';
 
 export default [
   {
@@ -54,5 +55,9 @@ export default [
   {
     path: '/findpassword',
     component: FindPassword,
+  },
+  {
+    path: '/friends/closet',
+    component: FriendsCloset,
   },
 ];
