@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import './MyStyleImg.css';
 
 function StyleLook({ selectedClothes }) {
   const [shirts, setShirts] = useState({});
@@ -36,13 +37,6 @@ function StyleLook({ selectedClothes }) {
           setOthers(selectedClothes.find((clothes) => clothes.category === 7));
       }
     }
-    // setShirts(selectedClothes.find((clothes) => clothes.category === 1));
-    // setPants(selectedClothes.find((clothes) => clothes.category === 2));
-    // setOuter(selectedClothes.find((clothes) => clothes.category === 3));
-    // setShoes(selectedClothes.find((clothes) => clothes.category === 4));
-    // setBag(selectedClothes.find((clothes) => clothes.category === 5));
-    // setHat(selectedClothes.find((clothes) => clothes.category === 6));
-    // setOthers(selectedClothes.find((clothes) => clothes.category === 7));
   }, []);
 
   return (
@@ -54,60 +48,69 @@ function StyleLook({ selectedClothes }) {
           float: 'left',
         }}
       >
-        <img
-          className='MyStyleClothesItemImg'
+        {Object.keys(hat).length > 0 && (
+          <img
+            className='MyStyleHat'
+            src={require(`../../assets/${hat.url}`)}
+            // src={hat.url}
+            alt={hat.clothesId}
+          />
+        )}
+        <br />
+        {Object.keys(shirts).length > 0 && (
+          <img
+            className='MyStyleShirts'
+            src={require(`../../assets/${shirts.url}`)}
+            // src={shirts.url}
+            alt={shirts.clothesId}
+          />
+        )}
+        <br />
+        {Object.keys(pants).length > 0 && (
+          <img
+            className='MyStylePants'
+            src={require(`../../assets/${pants.url}`)}
+            // src={pants.url}
+            alt={pants.clothesId}
+          />
+        )}
+        <br />
+        {Object.keys(shoes).length > 0 && (
+          <img
+            className='MyStyleShoes'
+            src={require(`../../assets/${shoes.url}`)}
+            // src={shoes.url}
+            alt={shoes.clothesId}
+          />
+        )}
+
+        {/* <img
+          className='MyStyleHat'
           src={require(`../../assets/상의.jfif`)}
           // src={hat.url}
           alt={1}
-          style={{
-            maxWidth: '150px',
-            maxHeight: '150px',
-            verticalAlign: 'middle',
-            marginLeft: '70px',
-          }}
         />
         <br></br>
         <img
-          className='MyStyleClothesItemImg'
+          className='MyStyleShirts'
           src={require(`../../assets/상의.jfif`)}
           // src={shirts.url}
           alt={1}
-          style={{
-            maxWidth: '400px',
-            maxHeight: '400px',
-            verticalAlign: 'middle',
-            marginTop: '20px',
-            marginLeft: '70px',
-          }}
         />
         <br></br>
         <img
-          className='MyStyleClothesItemImg'
+          className='MyStylePants'
           src={require(`../../assets/상의.jfif`)}
           // src={shirts.url}
           alt={1}
-          style={{
-            maxWidth: '400px',
-            maxHeight: '400px',
-            verticalAlign: 'middle',
-            marginTop: '20px',
-            marginLeft: '70px',
-          }}
         />
         <br></br>
         <img
-          className='MyStyleClothesItemImg'
+          className='MyStyleShoes'
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
           alt={1}
-          style={{
-            maxWidth: '150px',
-            maxHeight: '150px',
-            verticalAlign: 'middle',
-            marginTop: '20px',
-            marginLeft: '70px',
-          }}
-        />
+        /> */}
       </div>
 
       <div
@@ -117,120 +120,56 @@ function StyleLook({ selectedClothes }) {
           float: 'right',
         }}
       >
-        <img
-          className='MyStyleClothesItemImg'
+        {Object.keys(others).length > 0 && (
+          <img
+            className='MyStyleOthers'
+            src={require(`../../assets/${others.url}`)}
+            // src={shoes.url}
+            alt={others.clothesId}
+          />
+        )}
+        <br />
+        {Object.keys(outer).length > 0 && (
+          <img
+            className='MyStyleOuter'
+            src={require(`../../assets/${outer.url}`)}
+            // src={shoes.url}
+            alt={outer.clothesId}
+          />
+        )}
+        <br />
+        {Object.keys(bag).length > 0 && (
+          <img
+            className='MyStyleBag'
+            src={require(`../../assets/${bag.url}`)}
+            // src={shoes.url}
+            alt={bag.clothesId}
+          />
+        )}
+
+        {/* <img
+          className='MyStyleOthers'
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
           alt={1}
-          style={{
-            maxWidth: '150px',
-            maxHeight: '150px',
-            verticalAlign: 'middle',
-            marginRight: '80px',
-          }}
         />
         <br></br>
         <img
-          className='MyStyleClothesItemImg'
+          className='MyStyleOuter'
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
           alt={1}
-          style={{
-            maxWidth: '300px',
-            maxHeight: '300px',
-            verticalAlign: 'middle',
-            marginTop: '70px',
-            marginRight: '80px',
-          }}
         />
         <br></br>
         <img
-          className='MyStyleClothesItemImg'
+          className='MyStyleBag'
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
           alt={1}
-          style={{
-            maxWidth: '150px',
-            maxHeight: '150px',
-            verticalAlign: 'middle',
-            marginTop: '70px',
-            marginRight: '80px',
-          }}
-        />
+        /> */}
       </div>
     </div>
   );
 }
 
 export default StyleLook;
-
-{
-  /* {Object.keys(hat).length > 0 && (
-          <img
-            className='MyStyleClothesItemImg'
-            src={require(`../../assets/${hat.url}`)}
-            // src={hat.url}
-            alt={hat.clothesId}
-            style={{
-              maxWidth: '200px',
-              maxHeight: '200px',
-            }}
-          />
-        )}
-
-        {Object.keys(shirts).length > 0 && (
-          <img
-            className='MyStyleClothesItemImg'
-            src={require(`../../assets/${shirts.url}`)}
-            // src={shirts.url}
-            alt={shirts.clothesId}
-            style={{
-              maxWidth: '400px',
-              maxHeight: '400px',
-            }}
-          />
-        )}
-
-        {Object.keys(pants).length > 0 && (
-          <img
-            className='MyStyleClothesItemImg'
-            src={require(`../../assets/${pants.url}`)}
-            // src={pants.url}
-            alt={pants.clothesId}
-            style={{
-              maxWidth: '400px',
-              maxHeight: '400px',
-            }}
-          />
-        )}
-
-        {Object.keys(shoes).length > 0 && (
-          <img
-            className='MyStyleClothesItemImg'
-            src={require(`../../assets/${shoes.url}`)}
-            // src={shoes.url}
-            alt={shoes.clothesId}
-            style={{
-              maxWidth: '300px',
-              maxHeight: '300px',
-            }}
-          />
-        )} */
-}
-
-{
-  /* {selectedClothes.map((clothesData) => (
-          <div className='look' key={clothesData.clothesId}>
-            <img
-              className='MyStyleClothesItemImg'
-              src={require(`../../assets/${clothesData.url}`)}
-              // src={clothesData.url}
-              alt={clothesData.clothesId}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-              }}
-            />
-          </div>
-        ))} */
-}
