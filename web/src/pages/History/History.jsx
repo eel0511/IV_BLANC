@@ -43,8 +43,8 @@ import HistoryCreateButton from './HistoryCreateButton';
 const cards = [
   {
     id: "1",
-    variant: "hover",
-    front: { title: "Hover", background: fimg1 },
+    variant: "focus",
+    front: { title: "Focus", background: fimg1 },
     back: {
       image: bimg1,
       title: "title 1",
@@ -54,8 +54,8 @@ const cards = [
   },
   {
     id: "2",
-    variant: "click",
-    front: { title: "Click", background: fimg2 },
+    variant: "focus",
+    front: { title: "Focus", background: fimg2 },
     back: {
       image: bimg2,
       title: "title 2",
