@@ -86,6 +86,7 @@ class ClothesRepository {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
-
-
+    private fun getBody(name: String, value: Any): MultipartBody.Part {
+        return MultipartBody.Part.createFormData(name, value.toString())
+    }
 }
