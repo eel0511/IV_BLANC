@@ -58,8 +58,8 @@ public class StyleController {
 	@PostMapping(value = "/add")
 	public @ResponseBody
 	SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails,
-		@RequestHeader(value = "X-AUTH-TOKEN") String token,
-		int userId) throws Exception {
+		@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
+		int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
 		String madeby = userService.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token))).getEmail();
 		Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, userId));
 		styleService.addStyle(style);
