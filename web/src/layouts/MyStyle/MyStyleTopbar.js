@@ -91,6 +91,7 @@ export default function MyStyleTopbar() {
   const [isData, setIsData] = useState(false);
   const [clothes, setClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
+  const [saveClothesId, setSaveClothesId] = useState([]);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -170,7 +171,7 @@ export default function MyStyleTopbar() {
   };
 
   const saveClothes = (e) => {
-    const clothId = e.target.alt;
+    const clothId = Number(e.target.alt);
     const url = e.target.src;
     console.log(e.target);
     console.log(e);
@@ -178,7 +179,52 @@ export default function MyStyleTopbar() {
       clothesId: clothId,
       url: '상의.jfif',
     };
+    const selectedClothesId = {
+      clothesId: clothId,
+    };
     setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
+    setSaveClothesId((saveClothesId) => [...saveClothesId, selectedClothesId]);
+  };
+
+  const saveStyle = async (e) => {
+    e.preventDefault();
+
+    // selectedClothes에서 clothesId만 뽑아야내야 함
+
+    // 백엔드 통신
+    try {
+      await axios
+        .post('http://i6d104.p.ssafy.io:9999/api/style/add', {
+          headers: {
+            'X-AUTH-TOKEN':
+              'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          },
+          styleDetails: saveClothesId,
+        })
+        .then((res) => {
+          console.log('response:', res.data);
+          if (res.status === 200 && res.data.output === 1) {
+            alert('스타일 저장 성공!!');
+          } else if (res.status === 200 && res.data.output === 0) {
+            alert(res.data.msg);
+          } else {
+            alert(res.data.msg);
+          }
+        });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleInitiate = async (e) => {
+    e.preventDefault();
+
+    if (window.confirm('진짜 초기화 하시겠습니까?')) {
+      setSelectedClothes([]);
+      alert('초기화 하였습니다');
+    } else {
+      alert('취소합니다.');
+    }
   };
 
   return (
@@ -265,10 +311,10 @@ export default function MyStyleTopbar() {
           }}
         >
           <Stack direction='row' spacing={2}>
-            <Button variant='contained' color='success'>
+            <Button variant='contained' color='success' onClick={saveStyle}>
               스타일 저장
             </Button>
-            <Button variant='contained' color='error'>
+            <Button variant='contained' color='error' onClick={handleInitiate}>
               초기화
             </Button>
           </Stack>
