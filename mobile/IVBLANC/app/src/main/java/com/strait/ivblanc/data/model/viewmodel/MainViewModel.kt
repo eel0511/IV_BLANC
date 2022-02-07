@@ -72,7 +72,18 @@ class MainViewModel: ViewModel() {
             totalClothesList.addAll(result.data!!.dataSet!!)
         }
     }
-
+    suspend fun getAllFriendClothes(email:String)= withContext(Dispatchers.IO) {
+        setLoading()
+        val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
+        _clothesResponseStatus.postValue(result)
+        if(result.status == Status.SUCCESS) {
+            totalClothesList.addAll(result.data!!.dataSet!!)
+        }
+    }
+    fun getAllFriendClothesWithCategory(email: String,category: Int)= viewModelScope.launch {
+        getAllFriendClothes(email)
+        updateClothesByCategory(category)
+    }
     fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
         getAllClothes()
         updateClothesByCategory(category)

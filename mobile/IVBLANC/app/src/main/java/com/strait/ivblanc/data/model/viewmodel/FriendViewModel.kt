@@ -119,7 +119,7 @@ class FriendViewModel :ViewModel(){
              while(list.size<4){
                 list.add(u)
             }
-            var friendViewdata = FriendViewdata(name,list[0],list[1],list[2],list[3],u,u,u,u)
+            var friendViewdata = FriendViewdata(name,email,list[0],list[1],list[2],list[3],u,u,u,u)
             if(!totalFriendViewdataList.contains(friendViewdata)){
                 totalFriendViewdataList.addAll(listOf(friendViewdata))
             }

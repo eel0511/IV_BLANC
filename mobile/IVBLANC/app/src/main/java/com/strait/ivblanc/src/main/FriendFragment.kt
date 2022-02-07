@@ -39,6 +39,7 @@ class FriendFragment :
         override fun onClick(friendViewdata: FriendViewdata) {
             val intent = Intent(requireActivity(), FriendCloset::class.java)
             intent.putExtra("test", friendViewdata)
+
             startActivity(intent)
         }
     }
@@ -52,6 +53,8 @@ class FriendFragment :
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarTitle("친구")
+        viewModel.setLeadingIcon(R.drawable.ic_baseline_notifications_24)
+        viewModel.setTrailingIcon(R.drawable.ic_friend)
         reloadImages()
     }
 
