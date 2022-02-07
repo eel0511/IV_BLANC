@@ -25,7 +25,7 @@ export default function FriendsAcceptButton({ friend }) {
     <>
       <Avatar alt='' src='/static/images/avatar/1.jpg'/>
       {friend.friendName}
-      <MenuItem onClick={test}>수락</MenuItem>
+      <MenuItem onClick={friendsAcceptRequest}>수락</MenuItem>
     </>
   );
 }
