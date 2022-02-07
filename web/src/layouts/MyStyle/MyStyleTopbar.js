@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import axios from 'axios';
@@ -92,6 +93,7 @@ export default function MyStyleTopbar() {
   const [clothes, setClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
+  const [isShowLook, setIsShowLook] = useState(false);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -173,11 +175,13 @@ export default function MyStyleTopbar() {
   const saveClothes = (e) => {
     const clothId = Number(e.target.alt);
     const url = e.target.src;
+    const category = Number(e.target.title);
     console.log(e.target);
     console.log(e);
     const selectedData = {
       clothesId: clothId,
       url: '상의.jfif',
+      category: category,
     };
     const selectedClothesId = {
       clothesId: clothId,
@@ -216,11 +220,18 @@ export default function MyStyleTopbar() {
     }
   };
 
+  const showStyle = (e) => {
+    e.preventDefault();
+
+    setIsShowLook(true);
+  };
+
   const handleInitiate = async (e) => {
     e.preventDefault();
 
     if (window.confirm('진짜 초기화 하시겠습니까?')) {
       setSelectedClothes([]);
+      setIsShowLook(false);
       alert('초기화 하였습니다');
     } else {
       alert('취소합니다.');
@@ -228,56 +239,64 @@ export default function MyStyleTopbar() {
   };
 
   return (
-    <div className='wrapper'>
-      <Nav
-        className='mt-5 mb-3'
-        variant='tabs'
-        defaultActiveKey='link-0'
-        onSelect={handleSelect}
-      >
-        <NavDropdown title={title} id='nav-dropdown'>
-          {menus.map((menu, index) => {
-            return (
-              <Nav.Item offset='10px'>
-                <Nav.Link eventKey={index} key={index} onClick={handleClick}>
-                  {menu.name}
-                </Nav.Link>
-              </Nav.Item>
-            );
-          })}
-        </NavDropdown>
-      </Nav>
+    <Container fluid='md'>
+      <Row xs={1} md={2}>
+        <Col sm={4}>
+          <div className='wrapper'>
+            <Nav
+              className='mt-5 mb-3'
+              variant='tabs'
+              defaultActiveKey='link-0'
+              onSelect={handleSelect}
+            >
+              <NavDropdown title={title} id='nav-dropdown'>
+                {menus.map((menu, index) => {
+                  return (
+                    <Nav.Item offset='10px'>
+                      <Nav.Link
+                        eventKey={index}
+                        key={index}
+                        onClick={handleClick}
+                      >
+                        {menu.name}
+                      </Nav.Link>
+                    </Nav.Item>
+                  );
+                })}
+              </NavDropdown>
+            </Nav>
 
-      {/* 서버 연동 */}
-      {isData && clothes.length > 0 ? (
-        <div className='container-fluid'>
-          <div className='row'>
-            {clothes.map((clothesData) => (
-              <div className='col-4 mt-3' key={clothesData.clothesId}>
-                <div className='card h-100'>
-                  <div className='card-body'>
-                    <img
-                      className='MyClosetClothesItemImg'
-                      // src={require(`../../assets/${clothesData.url}`)}
-                      // src={clothesData.url}
-                      alt={clothesData.clothesId}
-                      style={{
-                        maxWidth: '100%',
-                        maxHeight: '100%',
-                      }}
-                      onClick={saveClothes}
-                    />
-                  </div>
+            {/* 서버 연동 */}
+            {isData && clothes.length > 0 ? (
+              <div className='container-fluid'>
+                <div className='row'>
+                  {clothes.map((clothesData) => (
+                    <div className='col-4 mt-3' key={clothesData.clothesId}>
+                      <div className='card h-100'>
+                        <div className='card-body'>
+                          <img
+                            className='MyClosetClothesItemImg'
+                            // src={require(`../../assets/${clothesData.url}`)}
+                            // src={clothesData.url}
+                            alt={clothesData.clothesId}
+                            title={clothesData.category}
+                            style={{
+                              maxWidth: '100%',
+                              maxHeight: '100%',
+                            }}
+                            onClick={saveClothes}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <p>등록된 데이터가 없습니다.</p>
-      )}
+            ) : (
+              <p>등록된 데이터가 없습니다.</p>
+            )}
 
-      {/* <div className='container-fluid'>
+            {/* <div className='container-fluid'>
         <div className='row'>
           {clothesDatas.map((clothesData) => (
             <div className='col-4 mt-3' key={clothesData.clothesId}>
@@ -300,26 +319,43 @@ export default function MyStyleTopbar() {
         </div>
       </div> */}
 
-      <SelectedImage selectedClothes={selectedClothes} />
+            <SelectedImage selectedClothes={selectedClothes} />
 
-      {selectedClothes.length > 0 && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '50px',
-          }}
-        >
-          <Stack direction='row' spacing={2}>
-            <Button variant='contained' color='success' onClick={saveStyle}>
-              스타일 저장
-            </Button>
-            <Button variant='contained' color='error' onClick={handleInitiate}>
-              초기화
-            </Button>
-          </Stack>
-        </div>
-      )}
-    </div>
+            {selectedClothes.length > 0 && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '50px',
+                }}
+              >
+                <Stack direction='row' spacing={2}>
+                  <Button
+                    variant='contained'
+                    color='success'
+                    onClick={saveStyle}
+                  >
+                    스타일 저장
+                  </Button>
+                  <Button variant='contained' color='info' onClick={showStyle}>
+                    스타일 보기
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color='error'
+                    onClick={handleInitiate}
+                  >
+                    초기화
+                  </Button>
+                </Stack>
+              </div>
+            )}
+          </div>
+        </Col>
+        <Col sm={8}>
+          {isShowLook && <StyleLook selectedClothes={selectedClothes} />}
+        </Col>
+      </Row>
+    </Container>
   );
 }
