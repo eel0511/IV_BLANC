@@ -238,7 +238,7 @@ export default function SignUp() {
           gender: data.get('gender') === 'male' ? 1 : 2,
           age: Number(data.get('age')),
           phone: data.get('phoneNum'),
-          social: 1,
+          social: 0,
         })
         .then((res) => {
           console.log('response:', res.data);
