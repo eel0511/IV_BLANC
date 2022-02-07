@@ -31,7 +31,7 @@ export default function Notice() {
         }
       })
       .then((response) => {
-        // console.log(response.data.data);
+        console.log(response.data.data);
         setFriendRequest(response.data.data);
       });
   };
@@ -61,11 +61,17 @@ export default function Notice() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {friendRequest.map((friend, id) => (
-          <div className='Notice__friendRequest' key={id}>
-            <FriendsAcceptButton friend={friend} />
+        {
+          {friendRequest}.length === 0 ?
+          <div>
+            {friendRequest.map((friend, id) => (
+              <div className='Notice__friendRequest' key={id}>
+                <FriendsAcceptButton friend={friend} />
+              </div>
+            ))}
           </div>
-        ))}
+          : <h3>새로운 알림이 없습니다.</h3>
+        }
       </Menu>
     </div>
   );
