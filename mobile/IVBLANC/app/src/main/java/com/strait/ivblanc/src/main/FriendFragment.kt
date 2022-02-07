@@ -3,6 +3,7 @@ package com.strait.ivblanc.src.main
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,54 +25,61 @@ import com.strait.ivblanc.src.friend.FriendCloset
 import kotlinx.coroutines.*
 
 
-class FriendFragment : BaseFragment<FragmentFriendBinding>(FragmentFriendBinding::bind,R.layout.fragment_friend){
+class FriendFragment :
+    BaseFragment<FragmentFriendBinding>(FragmentFriendBinding::bind, R.layout.fragment_friend) {
 
-    lateinit var friendRecyclerViewAdapter:FriendRecyclerViewAdapter
+    lateinit var friendRecyclerViewAdapter: FriendRecyclerViewAdapter
     val friendRepository = FriendRepository()
     val scope = CoroutineScope(Dispatchers.Main)
     private val viewModel: MainViewModel by activityViewModels()
-    private val friendViewModel:FriendViewModel by activityViewModels()
-    private val itemClickListener = object :FriendRecyclerViewAdapter.ItemClickListener{
+    private val friendViewModel: FriendViewModel by activityViewModels()
+    var friendclothlist = arrayListOf<MutableList<Uri>>()
+    var list = arrayListOf<FriendViewdata>()
+    private val itemClickListener = object : FriendRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friendViewdata: FriendViewdata) {
-            val intent = Intent(requireActivity(),FriendCloset::class.java)
-            intent.putExtra("test",friendViewdata)
+            val intent = Intent(requireActivity(), FriendCloset::class.java)
+            intent.putExtra("test", friendViewdata)
             startActivity(intent)
-            friendViewModel.setFriendName(friendViewdata.name)
-            friendViewModel.setToolbarTitle(friendViewdata.name+"님의 옷장입니다")
-
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.setToolbarTitle("친구")
-
-
-        scope.launch {
-            reloadImages()
-        }
+        reloadImages()
     }
-    suspend fun reloadImages() {
-        var response = friendRepository.getAllFriends("ssu@a.com")
-        var u = Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg")
-        var list = arrayListOf<FriendViewdata>()
-        response.data!!.dataSet!!.forEach {
-            list.add(FriendViewdata(it.friendName,u,u,u,u,u,u,u,u))
-        }
-        friendRecyclerViewAdapter.friendViewdata = list
-        friendRecyclerViewAdapter.notifyDataSetChanged()
+
+    fun reloadImages() {
+        list.clear()
+        friendViewModel.getAllFriends("ssu@a.com")
     }
-    fun init(){
+
+    fun init() {
         friendRecyclerViewAdapter = FriendRecyclerViewAdapter().apply {
             itemClickListener = this@FriendFragment.itemClickListener
         }
         binding.friendRecyclerview.apply {
-            adapter=friendRecyclerViewAdapter
-            layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+            adapter = friendRecyclerViewAdapter
+            layoutManager =
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
+
+        friendViewModel.friendListLiveData.observe(requireActivity()) {
+            list.clear()
+            Log.d("list", "reloadImages: " + it + it.size)
+            it.forEach {
+                Log.d("friendlist", "reloadImages: " + it)
+                list.add(it)
+            }
+            friendRecyclerViewAdapter.friendViewdata = list
+            friendRecyclerViewAdapter.notifyDataSetChanged()
+        }
+
     }
 }
