@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function StyleLook({ selectedClothes }) {
   const [shirts, setShirts] = useState({});
@@ -45,9 +46,180 @@ function StyleLook({ selectedClothes }) {
   }, []);
 
   return (
-    <div className='wrapper'>
-      <div className='col'>
-        {/* {selectedClothes.map((clothesData) => (
+    <div className='colName'>
+      <div
+        className='col'
+        style={{
+          display: 'inline-block',
+          float: 'left',
+        }}
+      >
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={hat.url}
+          alt={1}
+          style={{
+            maxWidth: '150px',
+            maxHeight: '150px',
+            verticalAlign: 'middle',
+            marginLeft: '70px',
+          }}
+        />
+        <br></br>
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shirts.url}
+          alt={1}
+          style={{
+            maxWidth: '400px',
+            maxHeight: '400px',
+            verticalAlign: 'middle',
+            marginTop: '20px',
+            marginLeft: '70px',
+          }}
+        />
+        <br></br>
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shirts.url}
+          alt={1}
+          style={{
+            maxWidth: '400px',
+            maxHeight: '400px',
+            verticalAlign: 'middle',
+            marginTop: '20px',
+            marginLeft: '70px',
+          }}
+        />
+        <br></br>
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shoes.url}
+          alt={1}
+          style={{
+            maxWidth: '150px',
+            maxHeight: '150px',
+            verticalAlign: 'middle',
+            marginTop: '20px',
+            marginLeft: '70px',
+          }}
+        />
+      </div>
+
+      <div
+        className='col'
+        style={{
+          display: 'inline-block',
+          float: 'right',
+        }}
+      >
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shoes.url}
+          alt={1}
+          style={{
+            maxWidth: '150px',
+            maxHeight: '150px',
+            verticalAlign: 'middle',
+            marginRight: '80px',
+          }}
+        />
+        <br></br>
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shoes.url}
+          alt={1}
+          style={{
+            maxWidth: '300px',
+            maxHeight: '300px',
+            verticalAlign: 'middle',
+            marginTop: '70px',
+            marginRight: '80px',
+          }}
+        />
+        <br></br>
+        <img
+          className='MyStyleClothesItemImg'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shoes.url}
+          alt={1}
+          style={{
+            maxWidth: '150px',
+            maxHeight: '150px',
+            verticalAlign: 'middle',
+            marginTop: '70px',
+            marginRight: '80px',
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export default StyleLook;
+
+{
+  /* {Object.keys(hat).length > 0 && (
+          <img
+            className='MyStyleClothesItemImg'
+            src={require(`../../assets/${hat.url}`)}
+            // src={hat.url}
+            alt={hat.clothesId}
+            style={{
+              maxWidth: '200px',
+              maxHeight: '200px',
+            }}
+          />
+        )}
+
+        {Object.keys(shirts).length > 0 && (
+          <img
+            className='MyStyleClothesItemImg'
+            src={require(`../../assets/${shirts.url}`)}
+            // src={shirts.url}
+            alt={shirts.clothesId}
+            style={{
+              maxWidth: '400px',
+              maxHeight: '400px',
+            }}
+          />
+        )}
+
+        {Object.keys(pants).length > 0 && (
+          <img
+            className='MyStyleClothesItemImg'
+            src={require(`../../assets/${pants.url}`)}
+            // src={pants.url}
+            alt={pants.clothesId}
+            style={{
+              maxWidth: '400px',
+              maxHeight: '400px',
+            }}
+          />
+        )}
+
+        {Object.keys(shoes).length > 0 && (
+          <img
+            className='MyStyleClothesItemImg'
+            src={require(`../../assets/${shoes.url}`)}
+            // src={shoes.url}
+            alt={shoes.clothesId}
+            style={{
+              maxWidth: '300px',
+              maxHeight: '300px',
+            }}
+          />
+        )} */
+}
+
+{
+  /* {selectedClothes.map((clothesData) => (
           <div className='look' key={clothesData.clothesId}>
             <img
               className='MyStyleClothesItemImg'
@@ -60,10 +232,5 @@ function StyleLook({ selectedClothes }) {
               }}
             />
           </div>
-        ))} */}
-      </div>
-    </div>
-  );
+        ))} */
 }
-
-export default StyleLook;
