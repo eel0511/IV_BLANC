@@ -273,6 +273,7 @@ export default function MyStyleTopbar() {
                             // src={require(`../../assets/${clothesData.url}`)}
                             // src={clothesData.url}
                             alt={clothesData.clothesId}
+                            title={clothesData.category}
                             style={{
                               maxWidth: '100%',
                               maxHeight: '100%',
