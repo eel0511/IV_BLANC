@@ -32,4 +32,6 @@ public class UpdatePersonalReqDTO {
     @ApiModelProperty(value = "전화번호", required = false, example = "010-1234-5678")
     private String phone;
 
+    @ApiModelProperty(value = "이름", required = false, example = "홍길동")
+    private String name;
 }

@@ -70,6 +70,7 @@ public class UserService {
 		user.updateAge(req.getAge());
 		user.updateGender(req.getGender());
 		user.updatePhone(req.getPhone());
+		user.updateName(req.getName());
 		userRepository.save(user);
 	}
 
