@@ -231,6 +231,7 @@ export default function MyStyleTopbar() {
 
     if (window.confirm('진짜 초기화 하시겠습니까?')) {
       setSelectedClothes([]);
+      setIsShowLook(false);
       alert('초기화 하였습니다');
     } else {
       alert('취소합니다.');
