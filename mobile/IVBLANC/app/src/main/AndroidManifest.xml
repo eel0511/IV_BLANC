@@ -19,7 +19,7 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".src.StyleMakingActivity"
+            android:name=".src.styleMaking.StyleMakingActivity"
             android:exported="false" />
         <activity
             android:name=".src.clothesDetail.ClothesDetailActivity"
