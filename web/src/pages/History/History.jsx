@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ScrollToTop from '../../components/ScrollToTop';
 import Navbar from '../../components/Navbar';
 import home from "../../assets/home.png";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import fimg1 from "../../assets/images/2.jfif";
 import bimg1 from "../../assets/outfit/1.jfif";
 import fimg2 from "../../assets/images/3.jfif";
