@@ -8,6 +8,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Friend
 
@@ -20,7 +22,7 @@ class WaitRecyclerViewAdapter() : RecyclerView.Adapter<WaitRecyclerViewAdapter.V
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
         fun bind(item: Friend) {
-            img.setImageURI(Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg"))
+            img.setImageResource(R.drawable.kakao)
             text.text = item.friendName + "님의 수락을 기다리는 중입니다."
             button.setImageResource(R.drawable.ic_close)
             button.setOnClickListener {
