@@ -54,6 +54,34 @@ function StyleLook({ selectedClothes }) {
     }
   }, []);
 
+  const saveLook = () => {
+    console.log('클릭은 됐나');
+    console.log('onCapture');
+    html2canvas(document.getElementById('StyleImg')).then((canvas) => {
+      saveAs(canvas.toDataURL(), 'capture-test.png');
+    });
+    // const onCapture = () => {
+    //   console.log('onCapture');
+    //   html2canvas(document.getElementById('StyleImg')).then((canvas) => {
+    //     saveAs(canvas.toDataURL('image/png'), 'capture-test.png');
+    //   });
+    // };
+    const saveAs = (uri, filename) => {
+      // 캡쳐된 파일을 이미지 파일로 내보낸다.
+      console.log('onSaveAs');
+      const link = document.createElement('a');
+      if (typeof link.download === 'string') {
+        link.href = uri;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        window.open(uri);
+      }
+    };
+  };
+
   return (
     <div className='Look'>
       <Button variant='contained' color='success' onClick={saveLook}>
