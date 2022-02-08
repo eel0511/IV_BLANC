@@ -10,7 +10,6 @@ import com.ivblanc.api.dto.req.UpdatePwReqDTO;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
-import com.ivblanc.core.utils.PasswordValidate;
 
 import lombok.RequiredArgsConstructor;
 

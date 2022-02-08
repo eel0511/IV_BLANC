@@ -17,8 +17,6 @@ import com.ivblanc.api.dto.req.SignUpReqDTO;
 import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.UserRepository;
-import com.ivblanc.core.utils.CheckValidate;
-import com.ivblanc.core.utils.PasswordValidate;
 
 
 @Service
@@ -101,9 +99,6 @@ public class SignService {
 
     @Transactional(readOnly = false)
     public void userLogin(LoginUserReqDTO req, HttpServletResponse response){
-        if(!CheckValidate.checkEmailForm(req.getEmail())){
-            throw new ApiMessageException("이메일 형식을 확인해주세요.");
-        }
 
         User user = findUserByEmailType(req.getEmail(), req.getSocial());
         if(user == null){
