@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import MyClothesCreateModalBody from './MyClothesCreateModalBody';
 
 export default function MyClothesCreateButton() {
@@ -21,11 +21,6 @@ export default function MyClothesCreateButton() {
         <Modal.Body>
           <MyClothesCreateModalBody />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
