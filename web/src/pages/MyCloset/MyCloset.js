@@ -10,6 +10,11 @@ import home from '../../assets/home.png';
 
 export default function MyCloset() {
   const [myClothes, setMyClothes] = useState([]);
+  const [filterMyClothes, setFilterMyClothes] = useState([]);
+
+  const getFilterMyclothes = (myclothes) => {
+    setFilterMyClothes(myclothes);
+  };
 
   const token =
     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
@@ -26,17 +31,17 @@ export default function MyCloset() {
       });
   };
 
-  // useEffect(() => {
-  //   getMyClothesData();
-  // }, []);
+  useEffect(() => {
+    getMyClothesData();
+  }, []);
 
   return (
     <Section>
       <ScrollToTop />
       <Navbar />
       <div className='MyClosetContainer'>
-        <MyClosetSidebar />
-        <MyClosetClothes clothesDatas={myClothes} />
+        <MyClosetSidebar clothesDatas={myClothes} getFilterMyclothes={getFilterMyclothes}/>
+        <MyClosetClothes clothesDatas={filterMyClothes} />
       </div>
     </Section>
   );
