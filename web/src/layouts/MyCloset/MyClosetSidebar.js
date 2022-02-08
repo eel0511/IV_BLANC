@@ -17,7 +17,6 @@ export default function MyClosetSidebar() {
   return (
     <div className='MyClosetSidebar'>
       <div className='MyClosetSidebarWrapper'>
-        <h1>사이드 바</h1>
         <ul className='MyClosetSidebarList'>
           {menus.map((menu, index) => {
             return (
