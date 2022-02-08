@@ -49,61 +49,96 @@ export default function MyClosetClothesItem({ clothesData }) {
 
     // console.log(mainCategory);
     // console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
-    setCategory(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
-    setColor(Object.keys(codeData['colors']).find((key) => codeData['colors'][key] === clothesData.color));
-    setMaterial(Object.keys(codeData['material']).find((key) => codeData['material'][key] === clothesData.material));
-    setSeason(Object.keys(codeData['season']).find((key) => codeData['season'][key] === clothesData.season));
+    setCategory(
+      Object.keys(mainCategory).find(
+        (key) => mainCategory[key] === clothesData.category
+      )
+    );
+    setColor(
+      Object.keys(codeData['colors']).find(
+        (key) => codeData['colors'][key] === clothesData.color
+      )
+    );
+    setMaterial(
+      Object.keys(codeData['material']).find(
+        (key) => codeData['material'][key] === clothesData.material
+      )
+    );
+    setSeason(
+      Object.keys(codeData['season']).find(
+        (key) => codeData['season'][key] === clothesData.season
+      )
+    );
 
     // 즐겨찾기 데이터를 받아와서 favorite === 1이면 setFavoriteChecked 수정
+    if (clothesData.favorite === 1) {
+      setFavoriteChecked(true);
+    }
   }, []);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleChange = async (e) => {
-    console.log(e.target.checked);
+    // console.log(e.target.checked);
     const favoriteCurrent = e.target.checked;
     setFavoriteChecked(favoriteCurrent);
-    console.log(favoriteCurrent);
+    // console.log(favoriteCurrent);
 
     // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
     // favoriteChecked===true이면 추가, 아니면 삭제
     // 추후에 토큰 사용한 백엔드 연동 구현
-    // if (favoriteCurrent) {
-    //   try {
-    //     await axios.put('http://119.56.162.61:8888/api/clothes/addfavorite?clothesId=1').then((res) => {
-    //       console.log('response:', res.data);
-    //       if (res.status === 200 && res.data.output === 1) {
-    //         alert(res.data.msg);
-    //       } else if (res.status === 200 && res.data.output === 0) {
-    //         alert(res.data.msg);
-    //       } else {
-    //         alert(res.data.msg);
-    //       }
-    //     });
-    //   } catch (err) {
-    //     console.error(err.response.data);
-    //   }
-    // } else {
-    //   try {
-    //     await axios
-    //       .put('http://119.56.162.61:8888/api/clothes/deletefavorite', {
-    //         clothesId: 1,
-    //       })
-    //       .then((res) => {
-    //         console.log('response:', res.data);
-    //         if (res.status === 200 && res.data.output === 1) {
-    //           alert(res.data.msg);
-    //         } else if (res.status === 200 && res.data.output === 0) {
-    //           alert(res.data.msg);
-    //         } else {
-    //           alert(res.data.msg);
-    //         }
-    //       });
-    //   } catch (err) {
-    //     console.error(err.response.data);
-    //   }
-    // }
+    if (favoriteCurrent) {
+      try {
+        await axios
+          .put('http://i6d104.p.ssafy.io:9999/api/clothes/addfavorite', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`
+            }
+          })
+          .then((res) => {
+            console.log('response:', res.data);
+            if (res.status === 200 && res.data.output === 1) {
+              alert(res.data.msg);
+            } else if (res.status === 200 && res.data.output === 0) {
+              alert(res.data.msg);
+            } else {
+              alert(res.data.msg);
+            }
+          });
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    } else {
+      try {
+        await axios
+          .put('http://i6d104.p.ssafy.io:9999/api/clothes/deletefavorite', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`
+            }
+          })
+          .then((res) => {
+            console.log('response:', res.data);
+            if (res.status === 200 && res.data.output === 1) {
+              alert(res.data.msg);
+            } else if (res.status === 200 && res.data.output === 0) {
+              alert(res.data.msg);
+            } else {
+              alert(res.data.msg);
+            }
+          });
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    }
   };
 
   const handleDelete = async (e) => {
@@ -112,28 +147,32 @@ export default function MyClosetClothesItem({ clothesData }) {
     if (window.confirm('진짜 삭제하시겠습니까?')) {
       // 삭제 기능 구현
       // 토큰 포함 버전으로 바꿔야 함
-      // try {
-      //   await axios
-      //     .put('http://119.56.162.61:8888/api/clothes/deleteById', {
-      //       params: {
-      //         clothesId: 1,
-      //       },
-      //     })
-      //     .then((res) => {
-      //       console.log('response:', res.data);
-      //       if (res.status === 200 && res.data.output === 1) {
-      //         console.log(res.data.msg);
-      //         alert('삭제되었습니다.');
-      //         setShow(false);
-      //       } else if (res.status === 200 && res.data.output === 0) {
-      //         alert(res.data.msg);
-      //       } else {
-      //         alert(res.data.msg);
-      //       }
-      //     });
-      // } catch (err) {
-      //   console.error(err.response.data);
-      // }
+      try {
+        await axios
+          .delete('http://i6d104.p.ssafy.io:9999/api/clothes/deleteById', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`,
+            },
+          })
+          .then((res) => {
+            console.log('response:', res.data);
+            if (res.status === 200 && res.data.output === 1) {
+              console.log(res.data.msg);
+              alert('삭제되었습니다.');
+              setShow(false);
+            } else if (res.status === 200 && res.data.output === 0) {
+              alert(res.data.msg);
+            } else {
+              alert(res.data.msg);
+            }
+          });
+      } catch (err) {
+        console.error(err.response.data);
+      }
     } else {
       alert('취소합니다.');
     }
@@ -142,7 +181,13 @@ export default function MyClosetClothesItem({ clothesData }) {
   return (
     <div className='card h-100'>
       <div className='card-body'>
-        <img className='MyClosetClothesItemImg' src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} onClick={handleShow} />
+        <img
+          className='MyClosetClothesItemImg'
+          src={require(`../../assets/${clothesData.url}`)}
+          alt={clothesData.clothesId}
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
+          onClick={handleShow}
+        />
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
@@ -152,10 +197,21 @@ export default function MyClosetClothesItem({ clothesData }) {
             <Container>
               <Row>
                 <Col md={{ span: 7, offset: 2 }}>
-                  <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                  <img
+                    src={require(`../../assets/${clothesData.url}`)}
+                    alt={clothesData.clothesId}
+                    style={{ maxWidth: '100%', maxHeight: '100%' }}
+                  />
                 </Col>
                 <Col md={{ span: 1, offset: 1 }}>
-                  <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
+                  <Checkbox
+                    {...label}
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite />}
+                    checked={favoriteChecked}
+                    onChange={handleChange}
+                    color='error'
+                  />
                 </Col>
               </Row>
             </Container>
@@ -175,7 +231,11 @@ export default function MyClosetClothesItem({ clothesData }) {
             <Container>
               <Row>
                 <Col>
-                  <Button variant='danger' style={{ float: 'left' }} onClick={handleDelete}>
+                  <Button
+                    variant='danger'
+                    style={{ float: 'left' }}
+                    onClick={handleDelete}
+                  >
                     삭제
                   </Button>
                 </Col>
