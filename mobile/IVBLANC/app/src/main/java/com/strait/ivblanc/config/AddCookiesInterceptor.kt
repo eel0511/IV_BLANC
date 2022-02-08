@@ -7,7 +7,7 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-private const val TAG = "AddCoIncep_싸피"
+private const val TAG = "AddCoIncep_해협"
 class AddCookiesInterceptor : Interceptor{
 
     @Throws(IOException::class)
@@ -15,11 +15,15 @@ class AddCookiesInterceptor : Interceptor{
         val builder: Request.Builder = chain.request().newBuilder()
 
         // cookie 가져오기
-        val getCookies = sSharedPreferences.getUserCookie()
-        for (cookie in getCookies!!) {
-            builder.addHeader("Cookie", cookie)
-            Log.d(TAG,"Adding Header: $cookie")
-        }
+//        val token = sSharedPreferences.getString(ApplicationClass.JWT)
+//        token?.let {
+//            builder.addHeader(ApplicationClass.X_AUTH_TOKEN, it)
+//        }
+
+//        for (cookie in getCookies!!) {
+//            builder.addHeader(ApplicationClass.X_AUTH_TOKEN, cookie)
+//            Log.d(TAG,"Adding Header: ${cookie}")
+//        }
         return chain.proceed(builder.build())
     }
 }

@@ -1,8 +1,10 @@
 package com.strait.ivblanc.data.api
 
 import com.strait.ivblanc.data.model.dto.UserForJoin
+import com.strait.ivblanc.data.model.dto.UserForLogin
 import com.strait.ivblanc.data.model.response.EmailCheckResponse
 import com.strait.ivblanc.data.model.response.JoinResponse
+import com.strait.ivblanc.data.model.response.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,5 +17,8 @@ interface UserApi {
 
     @GET("/api/sign/checkEmail")
     suspend fun emailCheck(@Query("email") email: String): Response<EmailCheckResponse>
+
+    @POST("/api/sign/login")
+    suspend fun emailLogin(@Body user: UserForLogin): Response<LoginResponse>
 
 }

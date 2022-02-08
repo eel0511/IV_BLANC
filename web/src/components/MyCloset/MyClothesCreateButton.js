@@ -10,7 +10,7 @@ export default function MyClothesCreateButton() {
 
   return (
     <>
-      <button type='button' className='btn btn-secondary' onClick={handleShow}>
+      <button type='button' className='btn btn-primary' onClick={handleShow}>
         등록 하기
       </button>
 

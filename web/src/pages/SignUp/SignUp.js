@@ -21,7 +21,12 @@ import '../../styles/signup.scss';
 
 function Copyright(props) {
   return (
-    <Typography variant='body2' color='text.secondary' align='center' {...props}>
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
+    >
       {'Copyright © '}
       <Link color='inherit' href='https://mui.com/'>
         Your Website
@@ -65,7 +70,8 @@ export default function SignUp() {
 
   // 이메일 형식 확인
   const onChangeEmail = useCallback((e) => {
-    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const emailCurrent = e.target.value;
     setEmail(emailCurrent);
 
@@ -86,7 +92,8 @@ export default function SignUp() {
 
     try {
       await axios
-        .get('http://119.56.162.61:8888/api/sign/checkEmail', {
+        .get('http://localhost:9999/api/sign/checkEmail', {
+          // i6d104.p.ssafy.io:9999
           params: {
             email: tmpEmail,
           },
@@ -114,12 +121,15 @@ export default function SignUp() {
 
   // 비밀번호
   const onChangePassword = useCallback((e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 16자리 이하로 입력해주세요!');
+      setPasswordMessage(
+        '숫자+영문자+특수문자 조합으로 8자리 이상 16자리 이하로 입력해주세요!'
+      );
       setIsPassword(false);
     } else {
       setPasswordMessage('안전한 비밀번호에요 : )');
@@ -221,7 +231,8 @@ export default function SignUp() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://119.56.162.61:8888/api/sign/signup', {
+        .post('http://localhost:9999/api/sign/signup', {
+          // i6d104.p.ssafy.io:9999
           email: data.get('email'),
           password: data.get('password'),
           password_chk: data.get('password_chk'),
@@ -229,7 +240,7 @@ export default function SignUp() {
           gender: data.get('gender') === 'male' ? 1 : 2,
           age: Number(data.get('age')),
           phone: data.get('phoneNum'),
-          social: 1,
+          social: 0,
         })
         .then((res) => {
           console.log('response:', res.data);
@@ -257,15 +268,37 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <img src={require('../../assets/logo2.png')} alt='우리로고' width={'300px'}></img>
+          <img
+            src={require('../../assets/logo2.png')}
+            alt='우리로고'
+            width={'300px'}
+          ></img>
           <Typography component='h1' variant='h5'>
             회원가입
           </Typography>
-          <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component='form'
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={8}>
-                <TextField required fullWidth id='email' label='이메일' name='email' autoComplete='email' value={email} onChange={onChangeEmail} />
-                {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  id='email'
+                  label='이메일'
+                  name='email'
+                  autoComplete='email'
+                  value={email}
+                  onChange={onChangeEmail}
+                />
+                {email.length > 0 && (
+                  <span className={`message ${isEmail ? 'success' : 'error'}`}>
+                    {emailMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={4}>
                 <Button onClick={checkEmail} variant='outlined' sx={{ mt: 1 }}>
@@ -274,34 +307,125 @@ export default function SignUp() {
               </Grid>
 
               <Grid item xs={12}>
-                <TextField required fullWidth name='password' label='비밀번호' type='password' id='password' autoComplete='new-password' onChange={onChangePassword} />
-                {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  name='password'
+                  label='비밀번호'
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  onChange={onChangePassword}
+                />
+                {password.length > 0 && (
+                  <span
+                    className={`message ${isPassword ? 'success' : 'error'}`}
+                  >
+                    {passwordMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth name='password_chk' label='비밀번호 확인' type='password' id='password' autoComplete='new-password' onChange={onChangePasswordConfirm} />
-                {passwordConfirm.length > 0 && <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  name='password_chk'
+                  label='비밀번호 확인'
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  onChange={onChangePasswordConfirm}
+                />
+                {passwordConfirm.length > 0 && (
+                  <span
+                    className={`message ${
+                      isPasswordConfirm ? 'success' : 'error'
+                    }`}
+                  >
+                    {passwordConfirmMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='name' label='이름' name='name' autoComplete='family-name' onChange={onChangeName} />
-                {name.length > 0 && <span className={`message ${isName ? 'success' : 'error'}`}>{nameMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  id='name'
+                  label='이름'
+                  name='name'
+                  autoComplete='family-name'
+                  onChange={onChangeName}
+                />
+                {name.length > 0 && (
+                  <span className={`message ${isName ? 'success' : 'error'}`}>
+                    {nameMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={12} align='left'>
-                <FormLabel id='demo-row-radio-buttons-group-label'>성별</FormLabel>
-                <RadioGroup row aria-labelledby='demo-row-radio-buttons-group-label' name='gender' value={gender} onChange={onChangeGender}>
-                  <FormControlLabel value='female' control={<Radio />} label='Female' />
-                  <FormControlLabel value='male' control={<Radio />} label='Male' />
+                <FormLabel id='demo-row-radio-buttons-group-label'>
+                  성별
+                </FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby='demo-row-radio-buttons-group-label'
+                  name='gender'
+                  value={gender}
+                  onChange={onChangeGender}
+                >
+                  <FormControlLabel
+                    value='female'
+                    control={<Radio />}
+                    label='Female'
+                  />
+                  <FormControlLabel
+                    value='male'
+                    control={<Radio />}
+                    label='Male'
+                  />
                 </RadioGroup>
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='age' label='나이' name='age' autoComplete='age' onChange={onChangeAge} />
-                {isNaN(age) && <span className={`message ${isAge ? 'success' : 'error'}`}>{ageMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  id='age'
+                  label='나이'
+                  name='age'
+                  autoComplete='age'
+                  onChange={onChangeAge}
+                />
+                {isNaN(age) && (
+                  <span className={`message ${isAge ? 'success' : 'error'}`}>
+                    {ageMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth id='phoneNum' label='전화번호' name='phoneNum' autoComplete='phoneNumber' onChange={onChangePhoneNum} />
-                {phoneNum.length > 0 && <span className={`message ${isPhoneNum ? 'success' : 'error'}`}>{phoneNumMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  id='phoneNum'
+                  label='전화번호'
+                  name='phoneNum'
+                  autoComplete='phoneNumber'
+                  onChange={onChangePhoneNum}
+                />
+                {phoneNum.length > 0 && (
+                  <span
+                    className={`message ${isPhoneNum ? 'success' : 'error'}`}
+                  >
+                    {phoneNumMessage}
+                  </span>
+                )}
               </Grid>
             </Grid>
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              sx={{ mt: 3, mb: 2 }}
+            >
               회원가입
             </Button>
             <Grid container justifyContent='flex-end'>

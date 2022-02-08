@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,13 +20,14 @@ import java.util.stream.Collectors;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user",
     uniqueConstraints = {
         @UniqueConstraint(
-            columnNames={"email"}
+            columnNames={"user_id"}
         )
     }
 )
@@ -125,23 +128,6 @@ public class User implements UserDetails {
 
     // =================================================================================================
 
-
-
-    public void updateAge(int age){
-        this.age = age;
-    }
-
-    public void updateGender(int gender){
-        this.gender = gender;
-    }
-
-    public void updatePhone(String phone){
-        this.phone = phone;
-    }
-
-    public void updateName(String name){
-        this.name = name;
-    }
 
     public void updatePassword(String password){
         this.password = password;

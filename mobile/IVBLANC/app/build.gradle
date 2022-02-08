@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id 'kotlin-parcelize'
 }
 
 Properties properties = new Properties()
@@ -20,6 +21,7 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "KAKAO_API_KEY", properties['kakao_api_key']
+        buildConfigField "String", "NAVER_MAPS_ID", properties['naver_maps_id']
         manifestPlaceholders = [kakaoApiKey: kakao_api_key]
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -104,6 +106,23 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
+
+    //cameraX
+    def camerax_version = "1.1.0-beta01"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-video:${camerax_version}"
+
+    implementation "androidx.camera:camera-view:${camerax_version}"
+    implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    // naver maps
+    implementation 'com.naver.maps:map-sdk:3.12.0'
+
+    //joda-time
+    implementation 'joda-time:joda-time:2.10.13'
+
 
     // Local Unit Tests
     implementation "androidx.test:core:1.4.0"

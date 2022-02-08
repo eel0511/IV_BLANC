@@ -1,6 +1,8 @@
 package com.strait.ivblanc.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -12,10 +14,26 @@ import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
+import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
 
-class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
-    lateinit var exAdapter: ExpandableRecyclerViewAdapter<Clothes>
+// TODO: 2022/02/04 generic 오용, 리팩터링 필수
+private const val TAG = "PhotoListFragment_debuk"
+class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
+    lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
+    override fun onResume() {
+        super.onResume()
+        when(tag) {
+            "clothes" -> {
+                viewModel.setToolbarTitle("옷")
+            }
+            "style" -> {
+                viewModel.setToolbarTitle("스타일")
+            }
+        }
+        viewModel.setLeadingIcon(R.drawable.ic_add)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,9 +64,17 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
                             exAdapter.notifyItemRangeRemoved(position + 1, count)
                         }
                     }
-                    // TODO: 2022/01/24 상세 뷰로 이동
+                    // TODO: 2022/01/30 data.content type에 따라 분기
                     ExpandableRecyclerViewAdapter.CHILD -> {
-
+                        exAdapter.data[position].content?.let { item ->
+                            val intent = when(item) {
+                                is Clothes -> {
+                                    Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
+                                }
+                                else -> null
+                            }
+                            startActivity(intent)
+                        }
                     }
                 }
             }
@@ -85,7 +111,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             
         }
         viewModel.clothesListLiveData.observe(requireActivity()) {
-            exAdapter.data = it as ArrayList<PhotoItem<Clothes>>
+            exAdapter.data = it as ArrayList<PhotoItem<T>>
             exAdapter.notifyDataSetChanged()
         }
 
@@ -101,7 +127,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoLi
             .setContent(content)
             .setOnPositiveClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
-                    // TODO: 2022/01/26 옷 삭제 함수 invoke
+                    viewModel.deleteClothesById((item.content as Clothes).clothesId)
                 }
             }).build().show()
     }

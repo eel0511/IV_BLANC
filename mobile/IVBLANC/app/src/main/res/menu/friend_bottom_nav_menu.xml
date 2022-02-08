@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_friend_clothes"
+        android:enabled="true"
+        android:title="옷"
+        android:icon="@drawable/ic_closet"/>
+
+    <item
+        android:id="@+id/nav_friend_style"
+        android:enabled="true"
+        android:title="스타일"
+        android:icon="@drawable/ic_hanger"/>
+</menu>

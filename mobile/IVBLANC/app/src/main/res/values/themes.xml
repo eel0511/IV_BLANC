@@ -18,6 +18,12 @@
         <item name="android:overScrollMode">never</item>
     </style>
 
+    <style name="TextInputLayoutStyle.dropdown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="android:strokeColor">@color/black</item>
+        <item name="boxStrokeColor">@color/black</item>
+        <item name="endIconTint">@color/gray_400</item>
+    </style>
+
     <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
         <!--FilledBox일 경우 밑줄 색상, OutlinedBox일 경우 테두리 색상-->
         <item name="boxStrokeColor">@color/black</item>
@@ -86,13 +92,30 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Text.base" parent="android:TextAppearance">
+    <style name="Text.Base" parent="android:TextAppearance">
         <item name="android:textStyle">normal</item>
         <item name="android:fontFamily">@font/app_font</item>
+        <item name="android:textSize">@dimen/defaultTextSize</item>
     </style>
 
-    <style name="Text.Title" parent="Text.base">
+    <style name="Text.Subtitle" parent="Text.Base">
+        <item name="android:textSize">@dimen/subtitleTextSize</item>
+    </style>
+
+    <style name="Text.Title" parent="Text.Base">
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/titleTextSize</item>
+    </style>
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:textColor">@color/black</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+    <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
