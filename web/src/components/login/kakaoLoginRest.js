@@ -7,7 +7,7 @@ export default function AuthSocial() {
   return (
     <div className='App'>
       <a href={KAKAO_AUTH_URL}>
-        <img src={require('../../assets/kakao_logo.png')} alt='카카오 로그인' width='280px' height='auto'></img>
+        <img src={require('../../assets/kakao_logo.png')} alt='카카오 로그인' width='225px' height='auto'></img>
       </a>
     </div>
   );
