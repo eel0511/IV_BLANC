@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
 export default function MyClothesCreateModalBody() {
-  const [selectedColor, setSelectedColor] = useState('빨강');
+  const [selectedColor, setSelectedColor] = useState('#C14D49');
   const [selectedMaterial, setSelectedMaterial] = useState(0);
   const [selectedMainCategory, setSelectedMainCategory] = useState('상의');
   const [selectedSeason, setSelectedSeason] = useState(1);
@@ -15,32 +15,32 @@ export default function MyClothesCreateModalBody() {
 
   const colorHandleChange = (e) => {
     setSelectedColor(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const materialHandleChange = (e) => {
     setSelectedMaterial(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const seasonHandleChange = (e) => {
     setSelectedSeason(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const sizeHandleChange = (e) => {
     setSelectedSize(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const mainCategoryHandleChange = (e) => {
     setSelectedMainCategory(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const subCategoryHandleChange = (e) => {
     setSelectedSubCategory(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const imgHandleChange = (e) => {
@@ -53,7 +53,7 @@ export default function MyClothesCreateModalBody() {
     formData.append('file', selectedImg);
 
     axios
-      .post('http://119.56.162.61:8888/api/clothes/add', formData,
+      .post('http://i6d104.p.ssafy.io:9999/api/clothes/add', formData,
       {
         headers: {
           'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDMyNjUzNzAsImV4cCI6MTY0NTg1NzM3MH0.4cg27bxcecL15ItYRFutBZOKKW2P9MJyziWiz8S9_QE'
@@ -86,12 +86,12 @@ export default function MyClothesCreateModalBody() {
         return (
           <React.Fragment key={colorArray[1]}>
             <input
-              id={'색상' + colorArray[0]}
-              value={colorArray[0]}
+              id={'색상' + colorArray[1]}
+              value={colorArray[1]}
               className='form-check-input'
               type='radio'
               name='colorGroup'
-              defaultChecked={selectedColor === colorArray[0] ? true : false}
+              defaultChecked={selectedColor === colorArray[1] ? true : false}
               onChange={colorHandleChange}
             />
             <label
