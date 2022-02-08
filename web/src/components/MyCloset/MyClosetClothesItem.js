@@ -112,28 +112,31 @@ export default function MyClosetClothesItem({ clothesData }) {
     if (window.confirm('진짜 삭제하시겠습니까?')) {
       // 삭제 기능 구현
       // 토큰 포함 버전으로 바꿔야 함
-      // try {
-      //   await axios
-      //     .put('http://119.56.162.61:8888/api/clothes/deleteById', {
-      //       params: {
-      //         clothesId: 1,
-      //       },
-      //     })
-      //     .then((res) => {
-      //       console.log('response:', res.data);
-      //       if (res.status === 200 && res.data.output === 1) {
-      //         console.log(res.data.msg);
-      //         alert('삭제되었습니다.');
-      //         setShow(false);
-      //       } else if (res.status === 200 && res.data.output === 0) {
-      //         alert(res.data.msg);
-      //       } else {
-      //         alert(res.data.msg);
-      //       }
-      //     });
-      // } catch (err) {
-      //   console.error(err.response.data);
-      // }
+      try {
+        await axios
+          .delete('http://i6d104.p.ssafy.io:9999/api/clothes/deleteById', {
+            headers: {
+              'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY'
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`,
+            },
+          })
+          .then((res) => {
+            console.log('response:', res.data);
+            if (res.status === 200 && res.data.output === 1) {
+              console.log(res.data.msg);
+              alert('삭제되었습니다.');
+              setShow(false);
+            } else if (res.status === 200 && res.data.output === 0) {
+              alert(res.data.msg);
+            } else {
+              alert(res.data.msg);
+            }
+          });
+      } catch (err) {
+        console.error(err.response.data);
+      }
     } else {
       alert('취소합니다.');
     }
