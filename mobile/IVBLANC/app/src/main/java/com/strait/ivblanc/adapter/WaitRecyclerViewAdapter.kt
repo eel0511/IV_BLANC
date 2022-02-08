@@ -22,7 +22,10 @@ class WaitRecyclerViewAdapter() : RecyclerView.Adapter<WaitRecyclerViewAdapter.V
         fun bind(item: Friend) {
             img.setImageURI(Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg"))
             text.text = item.friendName + "님의 수락을 기다리는 중입니다."
-            button.visibility = View.GONE
+            button.setImageResource(R.drawable.ic_close)
+            button.setOnClickListener {
+                itemClickListener.onClick(item)
+            }
         }
     }
 
