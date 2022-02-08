@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.strait.ivblanc.R
+import com.strait.ivblanc.adapter.BottomSheetClothesRVAdapter
 import com.strait.ivblanc.adapter.StyleEditorAdapter
 import com.strait.ivblanc.adapter.StyleRecyclerViewAdapter
 import com.strait.ivblanc.component.ItemTouchHelperCallback
@@ -25,6 +27,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var style: Style
     lateinit var styleEditorAdapter: StyleEditorAdapter
     lateinit var recyclerViewAdapter: StyleRecyclerViewAdapter
+    lateinit var bottomSheetRVAdapter: BottomSheetClothesRVAdapter
     lateinit var itemTouchHelper: ItemTouchHelper
     lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
     private val clothesViewModel: ClothesViewModel by viewModels()
@@ -39,10 +42,11 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         intent.getParcelableExtra<Style>("style")?.let {
             style = it
         }
+        bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
         setToolbar()
         setStyleEditorAdapter()
         setRecyclerView()
-        bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
+        setBottomSheetRecyclerView()
     }
 
     private fun setToolbar() {
@@ -69,6 +73,17 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             layoutManager = LinearLayoutManager(this@StyleMakingActivity, RecyclerView.VERTICAL, false)
         }
         itemTouchHelper.attachToRecyclerView(binding.recyclerViewStyleMakingClothes)
+    }
+
+    private fun setBottomSheetRecyclerView() {
+        bottomSheetRVAdapter = BottomSheetClothesRVAdapter()
+        binding.recyclerViewStyleMakingBottomSheet.apply {
+            adapter = bottomSheetRVAdapter
+            layoutManager = GridLayoutManager(this@StyleMakingActivity, 3, RecyclerView.VERTICAL, false)
+        }
+        clothesViewModel.clothesListLiveData.observe(this) {
+            bottomSheetRVAdapter.setData()
+        }
     }
 
     private fun setStyleEditorAdapter() {
