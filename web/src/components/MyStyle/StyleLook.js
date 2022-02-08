@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
+import Button from '@mui/material/Button';
 import './MyStyleImg.css';
 
 function StyleLook({ selectedClothes }) {
@@ -55,6 +56,9 @@ function StyleLook({ selectedClothes }) {
 
   return (
     <div className='Look'>
+      <Button variant='contained' color='success' onClick={saveLook}>
+        캡처
+      </Button>
       <div id='StyleImg'>
         <div
           className='col'
