@@ -1,9 +1,15 @@
 package com.strait.ivblanc.src.friend
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.kakao.sdk.common.util.SdkLogLevel
+import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.MyrequestRecyclerViewAdapter
 import com.strait.ivblanc.adapter.WaitRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseActivity
@@ -20,23 +26,60 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     private val myrequestitemClickListener =
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
-                friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
+               AcceptDialog(friend.friendName+"님의 요청을 수락하시겠습니까?",friend)
             }
         }
     private val waititemClickListener = object : WaitRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friend: Friend) {
-
+            CancelDialog(friend.friendName+"님께의 요청을 취소하시겠습니까?",friend)
         }
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        friendViewModel.setToolbarTitle("알림")
+        friendViewModel.setLeadingIcon(R.drawable.ic_back)
         friendViewModel.getmyrequestFriend("aaa@a.com")
         friendViewModel.getmyWaitFriend("aaa@a.com")
         initMyRequestRecycler()
         initWaitRecycler()
+        setToolbar()
+    }
+
+    private fun setToolbar() {
+        setSupportActionBar(binding.toolbarFriend.friendToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        friendViewModel.toolbarTitle.observe(this) {
+            setToolbarTitle(it)
+        }
+        friendViewModel.leadingIconDrawable.observe(this) {
+            setLeadingIcon(it, getListener(it))
+        }
+
+        friendViewModel.trailingIconDrawable.observe(this) {
+            setTrailingIcon(it, getListener(it))
+        }
+    }
+
+    // imageView의 background drawable Id에 따라 버튼 리스너 반환
+    private fun getListener(resId: Int): View.OnClickListener {
+        return when (resId) {
+            R.drawable.ic_close -> object : View.OnClickListener {
+                override fun onClick(v: View?) {
+                    this@FriendNoti.onBackPressed()
+                }
+            }
+            // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설정
+            R.drawable.ic_back -> {
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        finish()
+                    }
+                }
+            }
+            else -> View.OnClickListener { }
+        }
     }
 
     fun initMyRequestRecycler() {
@@ -77,5 +120,67 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             waitRecyclerViewAdapter.mywaitList = waitlist
             waitRecyclerViewAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun setToolbarTitle(title: String) {
+        binding.toolbarFriend.textViewFriendToolbar.text = title
+    }
+
+    private fun setLeadingIcon(resId: Int, clickListener: View.OnClickListener) {
+        try {
+            binding.toolbarFriend.imageViewFriendToolbarLeadingIcon.background =
+                ResourcesCompat.getDrawable(resources, resId, null)
+        } catch (e: Exception) {
+        }
+        binding.toolbarFriend.imageViewFriendToolbarLeadingIcon.setOnClickListener(clickListener)
+    }
+
+    private fun setTrailingIcon(resId: Int, clickListener: View.OnClickListener) {
+        try {
+            binding.toolbarFriend.imageViewFriendToolbarTrailingIcon.background =
+                ResourcesCompat.getDrawable(resources, resId, null)
+        } catch (e: Exception) {
+        }
+        binding.toolbarFriend.imageViewFriendToolbarTrailingIcon.setOnClickListener(clickListener)
+    }
+
+    fun AcceptDialog(title: String,friend: Friend) {
+        MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
+            .setTitle(title)
+            .setPositiveButton("확인") { dialog, which ->
+                // Respond to positive button press
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
+                        onBackPressed()
+                    }
+                }
+            }
+            .setNegativeButton("취소") { dialog, which ->
+                // Respond to positive button press
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        //applicant 수정 필요 받아오는값으로
+                        onBackPressed()
+                    }
+                }
+            }
+            .show()
+    }
+    fun CancelDialog(title: String,friend: Friend) {
+        var list = DialogInterface.s
+        MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
+            .setTitle(title)
+            .setPositiveButton("확인") { dialog, which ->
+                // Respond to positive button press
+                View.OnClickListener { friendViewModel.cancelFriend("aaa@a.com",friend.friendEmail) }
+            }
+            .setNegativeButton("취소") { dialog, which ->
+                // Respond to positive button press
+                View.OnClickListener { //applicant 수정 필요 받아오는값으로
+                    onBackPressed()
+                }
+            }
+            .show()
     }
 }

@@ -172,20 +172,44 @@ class FriendViewModel : ViewModel() {
         getmyrequest(applicant)
         _friendRequestListLiveData.postValue(totalRequestFriendList)
     }
-    suspend fun acceptFriend(applicant: String,FriendEmail: String)= withContext(Dispatchers.IO) {
-        val result: Resource<FriendResponse> = friendRepository.acceptFriend(FriendForUpload(FriendEmail,applicant))
+
+    suspend fun acceptFriend(applicant: String, FriendEmail: String) = withContext(Dispatchers.IO) {
+        val result: Resource<FriendResponse> =
+            friendRepository.acceptFriend(FriendForUpload(FriendEmail, applicant))
         _friendResponseStatus.postValue(result)
         if (result.status == Status.SUCCESS) {
             _acceptfriendName.postValue(result.data!!.data!!.friendName)
         }
     }
-    fun myacceptFriend(applicant: String,FriendEmail: String)=viewModelScope.launch {
-        acceptFriend(applicant,FriendEmail)
+
+    fun myacceptFriend(applicant: String, FriendEmail: String) = viewModelScope.launch {
+        acceptFriend(applicant, FriendEmail)
         getmyrequestFriend(FriendEmail)
     }
-    suspend fun getWaitFriend(applicant: String)= withContext(Dispatchers.IO) {
+
+
+    suspend fun cancelWaitFriend(applicant: String, FriendEmail: String) =
+          withContext(Dispatchers.IO) {
+            val result: Resource<FriendResponse> =
+                friendRepository.cancelFriend(FriendForUpload(applicant, FriendEmail))
+            Log.d("ssss", "cancelWaitFriend: "+result)
+            _friendResponseStatus.postValue(result)
+            if (result.status == Status.SUCCESS) {
+                _acceptfriendName.postValue(result.data!!.data!!.friendName)
+            }
+        }
+    fun cancelFriend(applicant: String,FriendEmail: String)= viewModelScope.launch {
+        Log.d("ssss1111", "cancelFriend: "+totalWaitFriendList)
+        cancelWaitFriend(applicant,FriendEmail)
+        getWaitFriend(applicant)
+        _friendWaitListLiveData.postValue(totalWaitFriendList)
+        Log.d("ssss2222", "cancelFriend: "+totalWaitFriendList)
+    }
+
+    suspend fun getWaitFriend(applicant: String) = withContext(Dispatchers.IO) {
         val result: Resource<FriendListResponse> = friendRepository.getAllNotAcceptFriend(applicant)
         _friendResponseStatus.postValue(result)
+        totalWaitFriendList.clear()
         if (result.status == Status.SUCCESS) {
             result.data!!.dataSet!!.forEach {
                 if (!totalWaitFriendList.contains(it)) {
@@ -194,10 +218,12 @@ class FriendViewModel : ViewModel() {
             }
         }
     }
-    fun getmyWaitFriend(applicant: String)=viewModelScope.launch {
+
+    fun getmyWaitFriend(applicant: String) = viewModelScope.launch {
         getWaitFriend(applicant)
         _friendWaitListLiveData.postValue(totalWaitFriendList)
     }
+
     fun requestFriend(applicant: String, FriendEmail: String) = viewModelScope.launch {
         reqFriend(applicant, FriendEmail)
     }
