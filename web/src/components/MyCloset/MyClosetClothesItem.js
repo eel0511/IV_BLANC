@@ -91,7 +91,15 @@ export default function MyClosetClothesItem({ clothesData }) {
     if (favoriteCurrent) {
       try {
         await axios
-          .put('http://119.56.162.61:8888/api/clothes/addfavorite?clothesId=1')
+          .put('http://i6d104.p.ssafy.io:9999/api/clothes/addfavorite', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`
+            }
+          })
           .then((res) => {
             console.log('response:', res.data);
             if (res.status === 200 && res.data.output === 1) {
@@ -108,8 +116,14 @@ export default function MyClosetClothesItem({ clothesData }) {
     } else {
       try {
         await axios
-          .put('http://119.56.162.61:8888/api/clothes/deletefavorite', {
-            clothesId: 1,
+          .put('http://i6d104.p.ssafy.io:9999/api/clothes/deletefavorite', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              clothesId: `${clothesData.clothesId}`
+            }
           })
           .then((res) => {
             console.log('response:', res.data);
