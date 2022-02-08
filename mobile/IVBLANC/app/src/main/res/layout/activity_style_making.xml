@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".src.styleMaking.StyleMakingActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_styleMaking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <include
         android:id="@+id/toolbar_styleMaking"
@@ -105,4 +110,60 @@
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout_styleMaking_edit"
         android:background="@color/gray_100"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_styleMaking_bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_hideable="false"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="@color/gray_100"
+        app:behavior_peekHeight="90dp"
+        android:padding="@dimen/defaultPadding"
+        android:layout_marginStart="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_styleMaking_edit"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle.dropdown"
+            android:id="@+id/textInputLayout_styleMaking_largeCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout_styleMaking_bottomSheet">
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView_clothesSelectBottomSheetF_largeCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle.dropdown"
+            android:id="@+id/textInputLayout_styleMaking_smallCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet"
+            app:layout_constraintStart_toEndOf="@id/textInputLayout_styleMaking_largeCategory"
+            android:layout_marginStart="@dimen/defaultMargin">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView_clothesSelectBottomSheetF_smallCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_clothesSelectBottomSheetF"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="@dimen/defaultPadding"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout_styleMaking_largeCategory"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout_styleMaking_bottomSheet"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
