@@ -5,9 +5,11 @@ import android.content.res.Resources
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import androidx.core.view.MotionEventCompat
 import com.bumptech.glide.Glide
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
+import kotlin.math.abs
 
 private const val TAG = "EditorAdapter_debuk"
 class StyleEditorAdapter(val containerView: ViewGroup) {
@@ -18,6 +20,11 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
 
     // 각 카테고리 아이템을 나타내는 이미지뷰
     private val imageViews = mutableMapOf<Int, ImageView>()
+
+    var imageX = 0f
+    var imageY = 0f
+    var eventX = 0f
+    var eventY = 0f
 
     init {
         val scaleGestureDetector = ScaleGestureDetector(containerView.context, object: ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -32,18 +39,40 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
             }
         })
 
-        containerView.setOnTouchListener(object: View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                event?.let {
-                    if(event.pointerCount > 0) {
-                        scaleGestureDetector.onTouchEvent(event)
-                    }
+        containerView.setOnTouchListener { v, event ->
+            Log.d(TAG, "touch: ")
+            scaleGestureDetector.onTouchEvent(event)
+            focusedImageView?.let {
+                if(event.pointerCount < 2) {
+                    moveFocusedImageView(it, event)
                 }
-
-                return true
             }
+            v?.performClick()
+            true
+        }
+    }
 
-        })
+    private fun moveFocusedImageView(imageView: ImageView, event: MotionEvent) {
+        when(event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                imageX = imageView.x
+                imageY = imageView.y
+                eventX = event.x
+                eventY = event.y
+            }
+            MotionEvent.ACTION_MOVE -> {
+                imageView.animate().x(imageX + (event.x - eventX))
+                    .y(imageY + (event.y - eventY))
+                    .setDuration(0)
+                    .start()
+            }
+            MotionEvent.ACTION_UP -> {
+                imageX = 0f
+                imageY = 0f
+                eventX = 0f
+                eventY = 0f
+            }
+        }
     }
 
     fun addImageView(imageView: ImageView) {
