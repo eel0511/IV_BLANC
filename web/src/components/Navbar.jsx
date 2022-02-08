@@ -39,7 +39,7 @@ export default function Navbar() {
         </div>
       </div>
       <div className={`links ${isNavOpen ? "show" : ""}`}>
-        <ul defaultActiveKey='/'> 
+        <ul > 
           <li className="active">
           <Link className='nav-link' aria-current='page' to='/'>Home</Link>
           </li>

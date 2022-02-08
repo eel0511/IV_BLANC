@@ -26,7 +26,7 @@ export default function MyClosetClothesItem({ clothesData }) {
     setDate(moment(clothesData.createDate).format("YYYY-MM-DD HH:mm:ss"));
 
     let mainCategory = "";
-    switch (clothesData.category / 10) {
+    switch (parseInt(clothesData.category / 10)) {
       case 1:
         mainCategory = codeData["category"].상의;
         break;
@@ -42,8 +42,227 @@ export default function MyClosetClothesItem({ clothesData }) {
       case 6:
         mainCategory = codeData["category"].가방;
         break;
-      default:
+      case 7:
         mainCategory = codeData["category"].모자;
+        break;
+      // case 10:
+      //   mainCategory = codeData["category"].티셔츠;
+      //   break;
+      // case 11:
+      //   mainCategory = codeData["category"].셔츠;
+      //   break;
+      // case 12:
+      //   mainCategory = codeData["category"].후드;
+      //   break;
+      // case 13:
+      //   mainCategory = codeData["category"].맨투맨;
+      //   break;
+      // case 14:
+      //   mainCategory = codeData["category"].블라우스;
+      //   break;
+      // case 15:
+      //   mainCategory = codeData["category"].크롭탑;
+      //   break;
+      // case 16:
+      //   mainCategory = codeData["category"].드레스;
+      //   break;
+      // case 17:
+      //   mainCategory = codeData["category"].상의기타;
+      //   break;
+      // case 20:
+      //   mainCategory = codeData["category"].청바지;
+      //   break;
+      // case 21:
+      //   mainCategory = codeData["category"].면바지;
+      //   break;
+      // case 22:
+      //   mainCategory = codeData["category"].반바지;
+      //   break;
+      // case 23:
+      //   mainCategory = codeData["category"].정장바지;
+      //   break;
+      // case 24:
+      //   mainCategory = codeData["category"].운동복;
+      //   break;
+      // case 25:
+      //   mainCategory = codeData["category"].스커트;
+      //   break;
+      // case 26:
+      //   mainCategory = codeData["category"].레깅스;
+      //   break;
+      // case 27:
+      //   mainCategory = codeData["category"].하의기타;
+      //   break;
+      // case 30:
+      //   mainCategory = codeData["category"].코트;
+      //   break;
+      // case 31:
+      //   mainCategory = codeData["category"].자켓;
+      //   break;
+      // case 32:
+      //   mainCategory = codeData["category"].패딩;
+      //   break;
+      // case 33:
+      //   mainCategory = codeData["category"].조끼;
+      //   break;
+      // case 34:
+      //   mainCategory = codeData["category"].가디건;
+      //   break;
+      // case 35:
+      //   mainCategory = codeData["category"].아우터기타;
+      //   break;
+      // case 40:
+      //   mainCategory = codeData["category"].스니커즈;
+      //   break;
+      // case 41:
+      //   mainCategory = codeData["category"].운동화;
+      //   break;
+      // case 42:
+      //   mainCategory = codeData["category"].로퍼플랫;
+      //   break;
+      // case 43:
+      //   mainCategory = codeData["category"].부츠;
+      //   break;
+      // case 44:
+      //   mainCategory = codeData["category"].샌들슬리퍼;
+      //   break;
+      // case 45:
+      //   mainCategory = codeData["category"].힐;
+      //   break;
+      // case 46:
+      //   mainCategory = codeData["category"].신발기타;
+      //   break;
+      // case 50:
+      //   mainCategory = codeData["category"].백팩;
+      //   break;
+      // case 51:
+      //   mainCategory = codeData["category"].크로스백팩;
+      //   break;
+      // case 52:
+      //   mainCategory = codeData["category"].숄더백;
+      //   break;
+      // case 53:
+      //   mainCategory = codeData["category"].핸드백;
+      //   break;
+      // case 54:
+      //   mainCategory = codeData["category"].가방기타;
+      //   break;
+      default:
+        mainCategory = codeData["category"].기타;
+        break;
+    }
+
+    let mainColor = "";
+    switch (clothesData.colors) {
+      case "#C14D49":
+        mainColor = codeData["colors"].빨강;
+        break;
+      case "#E0633B":
+        mainColor = codeData["colors"].주황;
+        break;
+      case "#F6EFDF":
+        mainColor = codeData["colors"].베이지;
+        break;
+      case "#F6D766":
+        mainColor = codeData["colors"].노랑;
+        break;
+      case "#ECC6C0":
+        mainColor = codeData["colors"].핑크;
+        break;
+      case "#35774D":
+        mainColor = codeData["colors"].초록;
+        break;
+      case "#CDDEEC":
+        mainColor = codeData["colors"].하늘;
+        break;
+      case "#27476F":
+        mainColor = codeData["colors"].파랑;
+        break;
+      case "#6D4859":
+        mainColor = codeData["colors"].보라;
+        break;
+      case "#5E4B48":
+        mainColor = codeData["colors"].갈색;
+        break;
+      case "#ABAEB6":
+        mainColor = codeData["colors"].회색;
+        break;
+      case "#9C7E3A":
+        mainColor = codeData["colors"].네이비;
+        break;
+      case "#FFFFFF":
+        mainColor = codeData["colors"].흰색;
+        break;
+      default:
+        mainColor = codeData["colors"].검정;
+        break;
+    }
+
+    let mainMaterial = "";
+    switch (clothesData.material / 10) {
+      case 1:
+        mainMaterial = codeData["material"].면;
+        break;
+      case 2:
+        mainMaterial = codeData["material"].린넨;
+        break;
+      case 3:
+        mainMaterial = codeData["material"].폴리에스테르;
+        break;
+      case 4:
+        mainMaterial = codeData["material"].니트올;
+        break;
+      case 5:
+        mainMaterial = codeData["material"].퍼;
+        break;
+      case 6:
+        mainMaterial = codeData["material"].트위드;
+        break;
+      case 7:
+        mainMaterial = codeData["material"].나일론;
+        break;
+      case 8:
+        mainMaterial = codeData["material"].데님;
+        break;
+      case 9:
+        mainMaterial = codeData["material"].가죽;
+        break;
+      case 10:
+        mainMaterial = codeData["material"].스웨이드;
+        break;
+      case 11:
+        mainMaterial = codeData["material"].벨벳;
+        break;
+      case 12:
+        mainMaterial = codeData["material"].쉬폰;
+        break;
+      case 13:
+        mainMaterial = codeData["material"].실크;
+        break;
+      case 14:
+        mainMaterial = codeData["material"].코듀로이;
+        break;
+      case 15:
+        mainMaterial = codeData["material"].메탈릭;
+        break;
+      default:
+        mainMaterial = codeData["material"].기타;
+        break;
+    }
+
+    let mainSeason = "";
+    switch (clothesData.season / 10) {
+      case 1:
+        mainSeason = codeData["season"].봄;
+        break;
+      case 2:
+        mainSeason = codeData["season"].여름;
+        break;
+      case 3:
+        mainSeason = codeData["season"].가을;
+        break;
+      default:
+        mainColor = codeData["season"].겨울;
         break;
     }
 
@@ -55,18 +274,18 @@ export default function MyClosetClothesItem({ clothesData }) {
       )
     );
     setColor(
-      Object.keys(codeData['colors']).find(
-        (key) => codeData['colors'][key] === clothesData.color
+      Object.keys(mainColor).find(
+        (key) => mainColor[key] === clothesData.color
       )
     );
     setMaterial(
-      Object.keys(codeData['material']).find(
-        (key) => codeData['material'][key] === clothesData.material
+      Object.keys(mainMaterial).find(
+        (key) => mainMaterial[key] === clothesData.material
       )
     );
     setSeason(
-      Object.keys(codeData['season']).find(
-        (key) => codeData['season'][key] === clothesData.season
+      Object.keys(mainSeason).find(
+        (key) => mainSeason[key] === clothesData.season
       )
     );
 
