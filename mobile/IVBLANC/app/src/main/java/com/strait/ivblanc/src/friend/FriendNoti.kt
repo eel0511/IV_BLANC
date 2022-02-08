@@ -8,9 +8,13 @@ import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.util.SdkLogLevel
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.MyrequestRecyclerViewAdapter
+import com.strait.ivblanc.adapter.NotiRecyclerViewAdapter
 import com.strait.ivblanc.adapter.WaitRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Friend
@@ -18,11 +22,14 @@ import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.databinding.ActivityFriendNotiBinding
 
 class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBinding::inflate) {
+    val SP_NAME = "fcm_message"
     private val friendViewModel: FriendViewModel by viewModels()
     lateinit var myrequestRecyclerViewAdapter: MyrequestRecyclerViewAdapter
     lateinit var waitRecyclerViewAdapter: WaitRecyclerViewAdapter
+    lateinit var notiRecyclerViewAdapter: NotiRecyclerViewAdapter
     var requestlist = arrayListOf<Friend>()
     var waitlist = arrayListOf<Friend>()
+    var notilist = arrayListOf<String>()
     private val myrequestitemClickListener =
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
@@ -37,6 +44,12 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         }
 
     }
+    private val notiitemClickListener = object:NotiRecyclerViewAdapter.ItemClickListener{
+        override fun onClick() {
+
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +59,7 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         friendViewModel.getmyWaitFriend("aaa@a.com")
         initMyRequestRecycler()
         initWaitRecycler()
+        initNotiRecylcer()
         setToolbar()
     }
 
@@ -124,6 +138,18 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         }
     }
 
+    fun initNotiRecylcer(){
+        notiRecyclerViewAdapter = NotiRecyclerViewAdapter().apply {
+            itemClickListener = this@FriendNoti.notiitemClickListener
+        }
+        binding.notiRecyclerView.apply {
+            adapter = notiRecyclerViewAdapter
+            layoutManager = LinearLayoutManager(this@FriendNoti, LinearLayoutManager.VERTICAL, false)
+
+        }
+        notiRecyclerViewAdapter.notilist=readSharedPreference("fcm")
+        notiRecyclerViewAdapter.notifyDataSetChanged()
+    }
     private fun setToolbarTitle(title: String) {
         binding.toolbarFriend.textViewFriendToolbar.text = title
     }
@@ -159,5 +185,12 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             }
             .show()
     }
-
+    private fun readSharedPreference(key:String): ArrayList<String>{
+        val sp = binding.root.context.getSharedPreferences(SP_NAME, FirebaseMessagingService.MODE_PRIVATE)
+        val gson = Gson()
+        val json = sp.getString(key, "") ?: ""
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        val obj: ArrayList<String> = gson.fromJson(json, type) ?: ArrayList()
+        return obj
+    }
 }

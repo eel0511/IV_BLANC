@@ -2,22 +2,22 @@ package com.strait.ivblanc.src.main
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
-import android.widget.Toast
-import androidx.activity.viewModels
 import android.view.View
 import android.widget.EditText
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.messaging.FirebaseMessaging
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
@@ -25,20 +25,24 @@ import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
-import com.strait.ivblanc.src.photoSelect.AlbumFragment
-import com.strait.ivblanc.src.photoSelect.CameraFragment
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
-import com.strait.ivblanc.src.process.ProcessActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
-import java.lang.Exception
+
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     val mainViewModel: MainViewModel by viewModels()
     val friendViewModel: FriendViewModel by viewModels()
     lateinit var dialog: Dialog
+
+    companion object {
+        // Notification Channel ID
+        const val channel_id = "IVBLANC"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getFCM()
         // TODO: 2022/01/26 모든 옷 받기 테스트
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         init()
@@ -77,11 +81,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         friendViewModel.friendName.observe(this) {
             if (friendViewModel.friendName.value == "error1") {
                 friendDialog("없는 이메일입니다.")
-            }else if(friendViewModel.friendName.value == "error2") {
+            } else if (friendViewModel.friendName.value == "error2") {
                 friendDialog("이미 요청보낸 친구입니다.")
-            }
-            else{
-                friendDialog(friendViewModel.friendName.value+"님께 친구요청을 보냈습니다")
+            } else {
+                friendDialog(friendViewModel.friendName.value + "님께 친구요청을 보냈습니다")
             }
 
         }
@@ -144,7 +147,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
-                    startActivity(Intent(this@MainActivity,FriendNoti::class.java))
+                    startActivity(Intent(this@MainActivity, FriendNoti::class.java))
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {
@@ -181,14 +184,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.toolbarMain.imageViewToolbarTrailingIcon.setOnClickListener(clickListener)
     }
 
+    fun getFCM() {
+        // FCM 토큰 수신
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
+            }
+        })
+        createNotificationChannel(channel_id, "ssafy")
+    }
+
+    // NotificationChannel 설정
+    private fun createNotificationChannel(id: String, name: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(id, name, importance)
+
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     private fun initDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_friend, null)
 
         val dialogText = dialogView.findViewById<EditText>(R.id.dialogEt)
-        AlertDialog.Builder(this,R.style.MyDialogTheme).setView(dialogView)
-            .setPositiveButton("확인"
+        AlertDialog.Builder(this, R.style.MyDialogTheme).setView(dialogView)
+            .setPositiveButton(
+                "확인"
             ) { dialog, i ->
-                Log.d("ssss", "initDialog: "+dialogText.text)
+                Log.d("ssss", "initDialog: " + dialogText.text)
 
                 friendViewModel.requestFriend("aaa@a.com", dialogText.text.toString())
             }
@@ -197,7 +223,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             .show()
     }
-    fun friendDialog(title:String){
+
+    fun friendDialog(title: String) {
         MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
             .setTitle(title)
             .setPositiveButton("확인") { dialog, which ->
@@ -211,4 +238,5 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             .show()
     }
+
 }
