@@ -9,18 +9,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
+import com.strait.ivblanc.data.model.dto.Friend
 
 class WaitRecyclerViewAdapter() : RecyclerView.Adapter<WaitRecyclerViewAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
-    var mywaitList = listOf<String>()
+    var mywaitList = listOf<Friend>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val img = itemView.findViewById<ImageView>(R.id.myrequest_img)
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
-        fun bind(item: String) {
+        fun bind(item: Friend) {
             img.setImageURI(Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg"))
-            text.text = item + "님 의 친구 수락을 기다리는 중입니다."
+            text.text = item.friendName + "님의 수락을 기다리는 중입니다."
             button.visibility = View.GONE
         }
     }
@@ -38,7 +39,7 @@ class WaitRecyclerViewAdapter() : RecyclerView.Adapter<WaitRecyclerViewAdapter.V
 
     override fun getItemCount(): Int = mywaitList.size
     interface ItemClickListener {
-        fun onClick()
+        fun onClick(friend: Friend)
     }
 
 }
