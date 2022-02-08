@@ -35,10 +35,14 @@ class ClothesViewModel: ViewModel() {
     val clothesResponseStatus: LiveData<Resource<*>>
         get() = _clothesResponseStatus
 
+    // TODO: 2022/02/08 List<PhotoItem<Clothes>>로 변환하는 함수는 따로 추출
     // ExpandableRecyclerView에서 observe하는 리스트
     private val _clothesListLiveData = MutableLiveData<List<PhotoItem<Clothes>>>()
     val clothesListLiveData : LiveData<List<PhotoItem<Clothes>>>
         get() = _clothesListLiveData
+
+    private val _clothesList = MutableLiveData<List<Clothes>>()
+    val clothesList: LiveData<List<Clothes>> get() = _clothesList
     // 옷관련 필드 끝
 
     suspend fun getAllClothes() = withContext(Dispatchers.IO) {
@@ -75,13 +79,21 @@ class ClothesViewModel: ViewModel() {
     }
 
     // 대분류 카테고리로 전체 옷 필터링
+    // 0이면 전체 옷 반환
     private fun getClothesListWithLargeCategory(category: Int): MutableList<Clothes> {
+        if(category == 0) return totalClothesList
         val largeCategory = category.toString()[0].digitToInt()
         return totalClothesList.filter { clothes -> clothes.category.toString()[0].digitToInt() == largeCategory }.toMutableList()
     }
 
     // 소분류 카테고리로 옷 필터링
+    // -1은 대분류 전체를 반환해야함
     private fun getClothesListWithSmallCategory(category: Int): MutableList<Clothes> {
+        if(category == -1) {
+            _largeCategory.value?.let {
+                return getClothesListWithLargeCategory(it)
+            }
+        }
         val filteredList = getClothesListWithLargeCategory(category)
         return filteredList.filter { clothes -> clothes.category == category }.toMutableList()
     }
@@ -166,12 +178,15 @@ class ClothesViewModel: ViewModel() {
         when {
             category == CategoryCode.TOTAL -> {
                 _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
+                _clothesList.postValue(totalClothesList)
             }
-            category < 10 -> {
+            category in 1..9 -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
+                _clothesList.postValue(getClothesListWithLargeCategory(category))
             }
             else -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
+                _clothesList.postValue(getClothesListWithLargeCategory(category))
             }
         }
     }
