@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class FriendViewdata(
     val name:String,
+    val email:String,
     val cloth1: Uri,
     val cloth2: Uri,
     val cloth3: Uri,

@@ -1,6 +1,7 @@
 package com.strait.ivblanc.src.friend
 
 import android.content.Intent
+import android.icu.util.ULocale
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -33,12 +34,15 @@ import com.strait.ivblanc.util.CategoryCode
 class FriendCloset :
     BaseActivity<ActivityFriendClosetBinding>(ActivityFriendClosetBinding::inflate) {
     val friendViewModel: FriendViewModel by viewModels()
+    val MainViewModel: MainViewModel by viewModels()
     lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         var test = intent.getParcelableExtra<FriendViewdata>("test")
-        friendViewModel.setToolbarTitle("친구 "+test!!.name+"의 옷장")
+        friendViewModel.setToolbarTitle("친구 " + test!!.name + "의 옷장")
+        friendViewModel.setLeadingIcon(R.drawable.ic_back)
+        MainViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
         setToolbar()
         setViewPager()
     }
@@ -63,13 +67,14 @@ class FriendCloset :
             setTrailingIcon(it, getListener(it))
         }
     }
+
     private fun setViewPager() {
         viewPager = binding.viewpagerFriend
         val viewPagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
         val tabLayout = binding.tabLayoutFriend
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            when(position) {
+            when (position) {
                 0 -> tab.text = "clothes"
                 else -> tab.text = "style"
             }
@@ -86,6 +91,7 @@ class FriendCloset :
             }
         }
     }
+
     // imageView의 background drawable Id에 따라 버튼 리스너 반환
     private fun getListener(resId: Int): View.OnClickListener {
         return when (resId) {
@@ -95,32 +101,12 @@ class FriendCloset :
                 }
             }
             // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설정
-            R.drawable.ic_add -> {
-                when (getCurrentFragmentTag()) {
-                    "friend_clothes" -> {
-                        object : View.OnClickListener {
-                            override fun onClick(v: View?) {
-                                startActivity(
-                                    Intent(
-                                        this@FriendCloset,
-                                        PhotoSelectActivity::class.java
-                                    ).apply {
-                                        putExtra("intend", PhotoSelectActivity.CLOTHES)
-                                    })
-                            }
-                        }
+            R.drawable.ic_back -> {
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        finish()
                     }
-                    "friend_style" -> {
-                        object : View.OnClickListener {
-                            override fun onClick(v: View?) {
-                                toast("스타일 생성 Activity로 이동", Toast.LENGTH_SHORT)
-                            }
-                        }
-                    }
-                    else -> View.OnClickListener {}
                 }
-
-
             }
             else -> View.OnClickListener { }
         }
