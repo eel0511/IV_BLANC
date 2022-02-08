@@ -183,7 +183,7 @@ export default function MyClosetClothesItem({ clothesData }) {
       <div className='card-body'>
         <img
           className='MyClosetClothesItemImg'
-          src={require(`../../assets/${clothesData.url}`)}
+          src={`${clothesData.url}`}
           alt={clothesData.clothesId}
           style={{ maxWidth: '100%', maxHeight: '100%' }}
           onClick={handleShow}
@@ -198,7 +198,7 @@ export default function MyClosetClothesItem({ clothesData }) {
               <Row>
                 <Col md={{ span: 7, offset: 2 }}>
                   <img
-                    src={require(`../../assets/${clothesData.url}`)}
+                    src={`${clothesData.url}`}
                     alt={clothesData.clothesId}
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
                   />
