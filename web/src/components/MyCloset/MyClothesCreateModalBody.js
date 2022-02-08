@@ -23,7 +23,7 @@ export default function MyClothesCreateModalBody() {
   border: none;
   margin: 10px;
   background-color: ${(props) => props.color};
-  border: 5px solid pink;
+  border: 1px solid black;
   h4 {
     font-size: 0.8rem;
     color: red;
