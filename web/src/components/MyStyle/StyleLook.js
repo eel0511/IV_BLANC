@@ -55,83 +55,85 @@ function StyleLook({ selectedClothes }) {
 
   return (
     <div className='Look'>
-      <div
-        className='col'
-        style={{
-          display: 'inline-block',
-          float: 'left',
-        }}
-      >
-        {Object.keys(hat).length > 0 && (
-          <img
-            className='MyStyleHat'
-            src={require(`../../assets/${hat.url}`)}
-            // src={hat.url}
-            alt={hat.clothesId}
-          />
-        )}
-        <br />
-        {Object.keys(shirts).length > 0 && (
-          <img
-            className='MyStyleShirts'
-            src={require(`../../assets/${shirts.url}`)}
-            // src={shirts.url}
-            alt={shirts.clothesId}
-          />
-        )}
-        <br />
-        {Object.keys(pants).length > 0 && (
-          <img
-            className='MyStylePants'
-            src={require(`../../assets/${pants.url}`)}
-            // src={pants.url}
-            alt={pants.clothesId}
-          />
-        )}
-        <br />
-        {Object.keys(shoes).length > 0 && (
-          <img
-            className='MyStyleShoes'
-            src={require(`../../assets/${shoes.url}`)}
-            // src={shoes.url}
-            alt={shoes.clothesId}
-          />
-        )}
-      </div>
+      <div id='StyleImg'>
+        <div
+          className='col'
+          style={{
+            display: 'inline-block',
+            float: 'left',
+          }}
+        >
+          {Object.keys(hat).length > 0 && (
+            <img
+              className='MyStyleHat'
+              src={require(`../../assets/${hat.url}`)}
+              // src={hat.url}
+              alt={hat.clothesId}
+            />
+          )}
+          <br />
+          {Object.keys(shirts).length > 0 && (
+            <img
+              className='MyStyleShirts'
+              src={require(`../../assets/${shirts.url}`)}
+              // src={shirts.url}
+              alt={shirts.clothesId}
+            />
+          )}
+          <br />
+          {Object.keys(pants).length > 0 && (
+            <img
+              className='MyStylePants'
+              src={require(`../../assets/${pants.url}`)}
+              // src={pants.url}
+              alt={pants.clothesId}
+            />
+          )}
+          <br />
+          {Object.keys(shoes).length > 0 && (
+            <img
+              className='MyStyleShoes'
+              src={require(`../../assets/${shoes.url}`)}
+              // src={shoes.url}
+              alt={shoes.clothesId}
+            />
+          )}
+        </div>
 
-      <div
-        className='col'
-        style={{
-          display: 'inline-block',
-          float: 'right',
-        }}
-      >
-        {Object.keys(others).length > 0 && (
-          <img
-            className='MyStyleOthers'
-            src={require(`../../assets/${others.url}`)}
-            // src={shoes.url}
-            alt={others.clothesId}
-          />
-        )}
-        <br />
-        {Object.keys(outer).length > 0 && (
-          <img
-            className='MyStyleOuter'
-            src={require(`../../assets/${outer.url}`)}
-            // src={shoes.url}
-            alt={outer.clothesId}
-          />
-        )}
-        <br />
-        {Object.keys(bag).length > 0 && (
-          <img
-            className='MyStyleBag'
-            src={require(`../../assets/${bag.url}`)}
-            // src={shoes.url}
-            alt={bag.clothesId}
-          />
-        )}
+        <div
+          className='col'
+          style={{
+            display: 'inline-block',
+            float: 'right',
+          }}
+        >
+          {Object.keys(others).length > 0 && (
+            <img
+              className='MyStyleOthers'
+              src={require(`../../assets/${others.url}`)}
+              // src={shoes.url}
+              alt={others.clothesId}
+            />
+          )}
+          <br />
+          {Object.keys(outer).length > 0 && (
+            <img
+              className='MyStyleOuter'
+              src={require(`../../assets/${outer.url}`)}
+              // src={shoes.url}
+              alt={outer.clothesId}
+            />
+          )}
+          <br />
+          {Object.keys(bag).length > 0 && (
+            <img
+              className='MyStyleBag'
+              src={require(`../../assets/${bag.url}`)}
+              // src={shoes.url}
+              alt={bag.clothesId}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
