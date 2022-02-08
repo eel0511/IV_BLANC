@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button, ListGroup, Container, Row, Col } from 'react-bootstrap';
-import moment from 'moment';
-import Checkbox from '@mui/material/Checkbox';
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import Favorite from '@mui/icons-material/Favorite';
-import axios from 'axios';
-import codeData from '../../codeData.json';
-import './MyCloset.css';
-import DetailClothes from './MyClosetDetailItem';
+import React, { useState, useEffect } from "react";
+import { Modal, Button, ListGroup, Container, Row, Col } from "react-bootstrap";
+import moment from "moment";
+import Checkbox from "@mui/material/Checkbox";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
+import axios from "axios";
+import codeData from "../../codeData.json";
+import "./MyCloset.css";
+import DetailClothes from "./MyClosetDetailItem";
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 export default function MyClosetClothesItem({ clothesData }) {
   const [show, setShow] = useState(false);
@@ -17,42 +17,62 @@ export default function MyClosetClothesItem({ clothesData }) {
   const [favoriteChecked, setFavoriteChecked] = useState(false);
 
   // 종류, 색깔, 소재, 계절
-  const [category, setCategory] = useState('');
-  const [color, setColor] = useState('');
-  const [material, setMaterial] = useState('');
-  const [season, setSeason] = useState('');
+  const [category, setCategory] = useState("");
+  const [color, setColor] = useState("");
+  const [material, setMaterial] = useState("");
+  const [season, setSeason] = useState("");
 
   useEffect(() => {
-    setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
+    setDate(moment(clothesData.createDate).format("YYYY-MM-DD HH:mm:ss"));
 
-    let mainCategory = '';
+    let mainCategory = "";
     switch (clothesData.category / 10) {
       case 1:
-        mainCategory = codeData['category'].상의;
+        mainCategory = codeData["category"].상의;
         break;
       case 2:
-        mainCategory = codeData['category'].하의;
+        mainCategory = codeData["category"].하의;
         break;
       case 4:
-        mainCategory = codeData['category'].아우터;
+        mainCategory = codeData["category"].아우터;
         break;
       case 5:
-        mainCategory = codeData['category'].신발;
+        mainCategory = codeData["category"].신발;
         break;
       case 6:
-        mainCategory = codeData['category'].가방;
+        mainCategory = codeData["category"].가방;
         break;
       default:
-        mainCategory = codeData['category'].모자;
+        mainCategory = codeData["category"].모자;
         break;
     }
 
-    // console.log(mainCategory);
-    // console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
-    setCategory(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
-    setColor(Object.keys(codeData['colors']).find((key) => codeData['colors'][key] === clothesData.color));
-    setMaterial(Object.keys(codeData['material']).find((key) => codeData['material'][key] === clothesData.material));
-    setSeason(Object.keys(codeData['season']).find((key) => codeData['season'][key] === clothesData.season));
+    console.log(mainCategory);
+    console.log(
+      Object.keys(mainCategory).find(
+        (key) => mainCategory[key] === clothesData.category
+      )
+    );
+    setCategory(
+      Object.keys(mainCategory).find(
+        (key) => mainCategory[key] === clothesData.category
+      )
+    );
+    setColor(
+      Object.keys(codeData["colors"]).find(
+        (key) => codeData["colors"][key] === clothesData.color
+      )
+    );
+    setMaterial(
+      Object.keys(codeData["material"]).find(
+        (key) => codeData["material"][key] === clothesData.material
+      )
+    );
+    setSeason(
+      Object.keys(codeData["season"]).find(
+        (key) => codeData["season"][key] === clothesData.season
+      )
+    );
 
     // 즐겨찾기 데이터를 받아와서 favorite === 1이면 setFavoriteChecked 수정
   }, []);
@@ -109,7 +129,7 @@ export default function MyClosetClothesItem({ clothesData }) {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    if (window.confirm('진짜 삭제하시겠습니까?')) {
+    if (window.confirm("진짜 삭제하시겠습니까?")) {
       // 삭제 기능 구현
       // 토큰 포함 버전으로 바꿔야 함
       // try {
@@ -135,27 +155,44 @@ export default function MyClosetClothesItem({ clothesData }) {
       //   console.error(err.response.data);
       // }
     } else {
-      alert('취소합니다.');
+      alert("취소합니다.");
     }
   };
 
   return (
     <div className='card h-100'>
       <div className='card-body'>
-        <img className='MyClosetClothesItemImg' src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} onClick={handleShow} />
+        <img
+          className='MyClosetClothesItemImg'
+          src={require(`../../assets/${clothesData.url}`)}
+          alt={clothesData.clothesId}
+          style={{ maxWidth: "100%", maxHeight: "100%" }}
+          onClick={handleShow}
+        />
 
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>옷 상세정보</Modal.Title>
+            <Modal.Title>Detail</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Container>
               <Row>
                 <Col md={{ span: 7, offset: 2 }}>
-                  <img src={require(`../../assets/${clothesData.url}`)} alt={clothesData.clothesId} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                  <img
+                    src={require(`../../assets/${clothesData.url}`)}
+                    alt={clothesData.clothesId}
+                    style={{ maxWidth: "100%", maxHeight: "100%" }}
+                  />
                 </Col>
                 <Col md={{ span: 1, offset: 1 }}>
-                  <Checkbox {...label} icon={<FavoriteBorder />} checkedIcon={<Favorite />} checked={favoriteChecked} onChange={handleChange} color='error' />
+                  <Checkbox
+                    {...label}
+                    icon={<FavoriteBorder />}
+                    checkedIcon={<Favorite />}
+                    checked={favoriteChecked}
+                    onChange={handleChange}
+                    color='error'
+                  />
                 </Col>
               </Row>
             </Container>
@@ -175,7 +212,11 @@ export default function MyClosetClothesItem({ clothesData }) {
             <Container>
               <Row>
                 <Col>
-                  <Button variant='danger' style={{ float: 'left' }} onClick={handleDelete}>
+                  <Button
+                    variant='danger'
+                    style={{ float: "left" }}
+                    onClick={handleDelete}
+                  >
                     삭제
                   </Button>
                 </Col>

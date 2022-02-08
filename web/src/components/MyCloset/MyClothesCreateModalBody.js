@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import codeData from '../../codeData.json';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import styled from "styled-components";
 import { useParams } from 'react-router-dom';
+import { display } from '@mui/system';
 
 export default function MyClothesCreateModalBody() {
   const [selectedColor, setSelectedColor] = useState('#C14D49');
@@ -13,6 +15,33 @@ export default function MyClothesCreateModalBody() {
   const [selectedSubCategory, setSelectedSubCategory] = useState();
   const [selectedImg, setSelectedImg] = useState();
   
+  const Label = styled.label`
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  margin: 10px;
+  background-color: ${(props) => props.color};
+  border: 5px solid pink;
+  h4 {
+    font-size: 0.8rem;
+    color: red;
+    
+  }
+`;
+
+const ColorSelectorContainer = styled.div`
+  display: inline;
+  justify-content: space-between;
+  width: 500px;
+  margin-top: 8px;
+  padding: 10px;
+  /* input {
+    display: none;
+  } */
+  /* border: 1px solid salmon; */
+`;
 
   const colorHandleChange = (e) => {
     setSelectedColor(e.target.value);
@@ -75,12 +104,13 @@ export default function MyClothesCreateModalBody() {
   };
 
   return (
-    <form className='RadioForm'>
+    <ColorSelectorContainer>
       <div>
         <h2>색상</h2>
       </div>
       {Object.entries(codeData['colors']).map((colorArray) => {
         return (
+          
           <React.Fragment key={colorArray[1]}>
             <input
               id={'색상' + colorArray[1]}
@@ -91,12 +121,26 @@ export default function MyClothesCreateModalBody() {
               defaultChecked={selectedColor === colorArray[1] ? true : false}
               onChange={colorHandleChange}
             />
-            <label
+            {/* <label
               className='form-check-label'
               htmlFor={'색상' + colorArray[0]}
             >
               {colorArray[0]}
-            </label>
+            </label> */}
+            <Label 
+            id={'색상' + colorArray[1]}
+            value={colorArray[1]}
+            className='form-check-input'
+            type='radio'
+            name='colorGroup'
+            defaultChecked={selectedColor === colorArray[1] ? true : false}
+            onChange={colorHandleChange}
+            htmlFor={colorArray[0]} 
+            color={colorArray[1]} 
+
+            >
+             <h4> {colorArray[0]} </h4>
+              </Label>
           </React.Fragment>
         );
       })}
@@ -236,6 +280,6 @@ export default function MyClothesCreateModalBody() {
       <Button variant='secondary' onClick={createClothes}>
         등록
       </Button>
-    </form>
+    </ColorSelectorContainer>
   );
 }
