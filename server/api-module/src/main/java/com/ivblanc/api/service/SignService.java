@@ -98,7 +98,7 @@ public class SignService {
 
 
     @Transactional(readOnly = false)
-    public void userLogin(LoginUserReqDTO req, HttpServletResponse response){
+    public User userLogin(LoginUserReqDTO req, HttpServletResponse response){
 
         User user = findUserByEmailType(req.getEmail(), req.getSocial());
         if(user == null){
@@ -131,6 +131,8 @@ public class SignService {
         user.updateTokenFCM(req.getToken_fcm());
         user.updateTokenJWT(token);
         userRepository.save(user);
+
+        return user;
     }
 }
 

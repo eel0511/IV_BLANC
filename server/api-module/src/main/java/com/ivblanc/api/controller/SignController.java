@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ivblanc.api.dto.req.CheckEmailReqDTO;
 import com.ivblanc.api.dto.req.LoginUserReqDTO;
 import com.ivblanc.api.dto.req.SignUpReqDTO;
+import com.ivblanc.api.dto.res.LoginResDTO;
 import com.ivblanc.api.service.SignService;
 import com.ivblanc.api.service.common.CommonResult;
 import com.ivblanc.api.service.common.ResponseService;
@@ -89,8 +90,8 @@ public class SignController {
     // 일반 로그인
     @ApiOperation(value = "일반 로그인", notes = "일반 로그인")
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody CommonResult login(@Valid @RequestBody LoginUserReqDTO req, HttpServletResponse response) throws Exception{
-        signService.userLogin(req, response);
-        return responseService.getSuccessResult("로그인 성공");
+    public @ResponseBody SingleResult<LoginResDTO> login(@Valid @RequestBody LoginUserReqDTO req, HttpServletResponse response) throws Exception{
+        User user = signService.userLogin(req, response);
+        return responseService.getSingleResult(new LoginResDTO(user.getUserId(), user.getEmail(), user.getName()));
     }
 }
