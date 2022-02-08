@@ -26,12 +26,14 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     private val myrequestitemClickListener =
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
-               AcceptDialog(friend.friendName+"님의 요청을 수락하시겠습니까?",friend)
+                friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
+                AcceptDialog(friend.friendName + "님의 요청을 수락했습니다")
             }
         }
     private val waititemClickListener = object : WaitRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friend: Friend) {
-            CancelDialog(friend.friendName+"님께의 요청을 취소하시겠습니까?",friend)
+            friendViewModel.cancelFriend("aaa@a.com", friend.friendEmail)
+            AcceptDialog(friend.friendName + "님께의 요청을 취소했습니다.")
         }
 
     }
@@ -144,43 +146,18 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         binding.toolbarFriend.imageViewFriendToolbarTrailingIcon.setOnClickListener(clickListener)
     }
 
-    fun AcceptDialog(title: String,friend: Friend) {
+    fun AcceptDialog(title: String) {
         MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
             .setTitle(title)
             .setPositiveButton("확인") { dialog, which ->
                 // Respond to positive button press
                 object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
-                        onBackPressed()
-                    }
-                }
-            }
-            .setNegativeButton("취소") { dialog, which ->
-                // Respond to positive button press
-                object : View.OnClickListener {
-                    override fun onClick(v: View?) {
-                        //applicant 수정 필요 받아오는값으로
                         onBackPressed()
                     }
                 }
             }
             .show()
     }
-    fun CancelDialog(title: String,friend: Friend) {
-        var list = DialogInterface.s
-        MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
-            .setTitle(title)
-            .setPositiveButton("확인") { dialog, which ->
-                // Respond to positive button press
-                View.OnClickListener { friendViewModel.cancelFriend("aaa@a.com",friend.friendEmail) }
-            }
-            .setNegativeButton("취소") { dialog, which ->
-                // Respond to positive button press
-                View.OnClickListener { //applicant 수정 필요 받아오는값으로
-                    onBackPressed()
-                }
-            }
-            .show()
-    }
+
 }
