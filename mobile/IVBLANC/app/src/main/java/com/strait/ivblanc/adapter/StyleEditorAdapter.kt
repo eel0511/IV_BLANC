@@ -40,9 +40,12 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
         })
 
         containerView.setOnTouchListener { v, event ->
-            Log.d(TAG, "touch: ")
+            // 모든 터치 이벤트는 제스처 디텍터로 전달
             scaleGestureDetector.onTouchEvent(event)
+
             focusedImageView?.let {
+                // 1개의 포인터만 존재할 때, 이미지 드래그 실행
+                // TODO: 2022/02/08 핀치 줌을 한 뒤, 한 손가락만 놨을 때 드래그 이벤트 발생 방지 추가
                 if(event.pointerCount < 2) {
                     moveFocusedImageView(it, event)
                 }
@@ -54,19 +57,25 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
 
     private fun moveFocusedImageView(imageView: ImageView, event: MotionEvent) {
         when(event.actionMasked) {
+            // 다운일 때 이미지 뷰의 위치, 이벤트의 위치 저장
             MotionEvent.ACTION_DOWN -> {
+                Log.d(TAG, "moveFocusedImageView: DOWN")
                 imageX = imageView.x
                 imageY = imageView.y
                 eventX = event.x
                 eventY = event.y
             }
+            // 드래그일 때, 저장된 포인트와 움직인 포인트의 차이만큼 이미지뷰 이동
             MotionEvent.ACTION_MOVE -> {
+                Log.d(TAG, "moveFocusedImageView: MOVE")
                 imageView.animate().x(imageX + (event.x - eventX))
                     .y(imageY + (event.y - eventY))
                     .setDuration(0)
                     .start()
             }
+            //
             MotionEvent.ACTION_UP -> {
+                Log.d(TAG, "moveFocusedImageView: UP")
                 imageX = 0f
                 imageY = 0f
                 eventX = 0f
@@ -84,6 +93,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
         }
     }
 
+    // 카테고리에 해당하는 옷이 추가되거나 변경될 때, 이미지뷰에 세팅
     fun addOrUpdateClothes(clothes: Clothes) {
         val largeCategory = getLargeCategory(clothes)
         clothesMap[largeCategory] = clothes
