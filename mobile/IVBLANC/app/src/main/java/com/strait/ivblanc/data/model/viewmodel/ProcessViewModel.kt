@@ -50,7 +50,7 @@ class ProcessViewModel: ViewModel() {
 
     fun setLargeCategory(largeCategory: Int) = _largeCategory.postValue(largeCategory)
     fun setSmallCategory(smallCategory: Int) = _smallCategory.postValue(smallCategory)
-    fun setSeason(season: Int) = _smallCategory.postValue(season)
+    fun setSeason(season: Int) = _season.postValue(season)
     fun setColor(color: String) = _color.postValue(color)
     fun setMaterial(material: Int) = _material.postValue(material)
     fun setSize(size: Int) = _size.postValue(size)
