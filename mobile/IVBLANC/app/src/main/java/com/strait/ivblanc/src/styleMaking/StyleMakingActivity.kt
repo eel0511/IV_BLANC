@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.StyleEditorAdapter
 import com.strait.ivblanc.adapter.StyleRecyclerViewAdapter
@@ -14,6 +16,7 @@ import com.strait.ivblanc.component.ItemTouchHelperCallback
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
+import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
 import com.strait.ivblanc.util.CategoryCode
@@ -23,22 +26,25 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var styleEditorAdapter: StyleEditorAdapter
     lateinit var recyclerViewAdapter: StyleRecyclerViewAdapter
     lateinit var itemTouchHelper: ItemTouchHelper
-    private val mainViewModel: MainViewModel by viewModels()
+    lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
+    private val clothesViewModel: ClothesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
     }
 
     private fun init() {
-        //메인 뷰 모델에서 모든 옷 정보 요청을 포함한
-        mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+        // clothesViewModel에서 모든 옷 요청
+        clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         intent.getParcelableExtra<Style>("style")?.let {
             style = it
         }
         setToolbar()
         setStyleEditorAdapter()
         setRecyclerView()
+        bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
     }
+
     private fun setToolbar() {
         val toolbar = binding.toolbarStyleMaking.toolbar
         toolbar.findViewById<TextView>(R.id.textView_toolbar).text = "스타일 만들기"
