@@ -40,7 +40,7 @@ function StyleLook({ selectedClothes }) {
   }, []);
 
   return (
-    <div className='colName'>
+    <div className='Look'>
       <div
         className='col'
         style={{
