@@ -93,8 +93,8 @@ public class HistoryService {
 		}
 
 		History history = History.builder()
-			.location(req.getLocation())
-			.field(req.getField())
+			.location(req.getLatitude())
+			.field(req.getLongitude())
 			.date(dt)
 			.weather(req.getWeather())
 			.temperature_low(req.getTemperature_low())
@@ -128,8 +128,8 @@ public class HistoryService {
 			url = style.get().getUrl();
 		}
 
-		history.setLocation(req.getLocation());
-		history.setField(req.getField());
+		history.setLocation(req.getLatitude());
+		history.setField(req.getLongitude());
 		history.setDate(dt);
 		history.setWeather(req.getWeather());
 		history.setTemperature_low(req.getTemperature_low());
