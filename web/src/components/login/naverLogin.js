@@ -20,7 +20,7 @@ class NaverLogin extends Component {
         loginButton: {
           color: 'green', // 색상(white, green)
           type: 2, // 버튼타입(1,2,3)
-          height: 60, // 배너 및 버튼 높이
+          height: 50, // 배너 및 버튼 높이
         },
       });
 
