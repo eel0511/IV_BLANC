@@ -82,6 +82,11 @@ class FriendViewModel : ViewModel() {
     private val _friendListLiveData = MutableLiveData<List<FriendViewdata>>()
     val friendListLiveData: LiveData<List<FriendViewdata>>
         get() = _friendListLiveData
+
+    private val totalRequestFriendList = mutableListOf<Friend>()
+    private val _friendRequestListLiveData = MutableLiveData<List<Friend>>()
+    val friendRequestListLiveData: LiveData<List<Friend>>
+        get() = _friendRequestListLiveData
     //친구 관련 끝
 
 
@@ -141,23 +146,40 @@ class FriendViewModel : ViewModel() {
         }
     }
 
-    fun requestFriend(applicant: String, FriendEmail: String) =viewModelScope.launch {
-        reqFriend(applicant,FriendEmail)
+    suspend fun getmyrequest(applicant: String) = withContext(Dispatchers.IO) {
+        val result: Resource<FriendListResponse> = friendRepository.getAllFriendRequest(applicant)
+        _friendResponseStatus.postValue(result)
+        if (result.status == Status.SUCCESS) {
+            result.data!!.dataSet!!.forEach {
+                if (!totalRequestFriendList.contains(it)) {
+                    totalRequestFriendList.add(it)
+                }
+            }
+        }
     }
+
+    fun getmyrequestFriend(applicant: String) = viewModelScope.launch {
+        getmyrequest(applicant)
+        _friendRequestListLiveData.postValue(totalRequestFriendList)
+    }
+
+    fun requestFriend(applicant: String, FriendEmail: String) = viewModelScope.launch {
+        reqFriend(applicant, FriendEmail)
+    }
+
     suspend fun reqFriend(applicant: String, FriendEmail: String) =
         withContext(Dispatchers.IO) {
-            Log.d("ssss", "reqFriend: "+applicant+" "+FriendEmail)
+            Log.d("ssss", "reqFriend: " + applicant + " " + FriendEmail)
             val result: Resource<FriendResponse> =
                 friendRepository.requestFriend(FriendForUpload(applicant, FriendEmail))
             _friendResponseStatus.postValue(result)
             if (result.status == Status.SUCCESS) {
-               _friendName.postValue(result.data!!.data!!.friendName)
-            }
-            else{
-                Log.d("ssss", "reqFriend: "+result.message)
-                if(result.message == "이미 요청보낸 친구입니다."){
+                _friendName.postValue(result.data!!.data!!.friendName)
+            } else {
+                Log.d("ssss", "reqFriend: " + result.message)
+                if (result.message == "이미 요청보낸 친구입니다.") {
                     _friendName.postValue("error2")
-                }else{
+                } else {
                     _friendName.postValue("error1")
                 }
             }
