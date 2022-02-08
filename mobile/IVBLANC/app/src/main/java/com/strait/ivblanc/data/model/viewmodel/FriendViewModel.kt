@@ -74,6 +74,10 @@ class FriendViewModel : ViewModel() {
     //친구 관련
     private val friendRepository = FriendRepository()
 
+
+    private val _acceptfriendName = MutableLiveData<String>()
+    val acceptfriendName: LiveData<String> get() = _acceptfriendName
+
     private val _friendResponseStatus = MutableLiveData<Resource<*>>()
     val friendResponseStatus: LiveData<Resource<*>>
         get() = _friendResponseStatus
@@ -87,6 +91,11 @@ class FriendViewModel : ViewModel() {
     private val _friendRequestListLiveData = MutableLiveData<List<Friend>>()
     val friendRequestListLiveData: LiveData<List<Friend>>
         get() = _friendRequestListLiveData
+
+    private val totalWaitFriendList = mutableListOf<Friend>()
+    private val _friendWaitListLiveData = MutableLiveData<List<Friend>>()
+    val friendWaitListLiveData: LiveData<List<Friend>>
+        get() = _friendWaitListLiveData
     //친구 관련 끝
 
 
@@ -149,6 +158,7 @@ class FriendViewModel : ViewModel() {
     suspend fun getmyrequest(applicant: String) = withContext(Dispatchers.IO) {
         val result: Resource<FriendListResponse> = friendRepository.getAllFriendRequest(applicant)
         _friendResponseStatus.postValue(result)
+        totalRequestFriendList.clear()
         if (result.status == Status.SUCCESS) {
             result.data!!.dataSet!!.forEach {
                 if (!totalRequestFriendList.contains(it)) {
@@ -162,7 +172,32 @@ class FriendViewModel : ViewModel() {
         getmyrequest(applicant)
         _friendRequestListLiveData.postValue(totalRequestFriendList)
     }
-
+    suspend fun acceptFriend(applicant: String,FriendEmail: String)= withContext(Dispatchers.IO) {
+        val result: Resource<FriendResponse> = friendRepository.acceptFriend(FriendForUpload(FriendEmail,applicant))
+        _friendResponseStatus.postValue(result)
+        if (result.status == Status.SUCCESS) {
+            _acceptfriendName.postValue(result.data!!.data!!.friendName)
+        }
+    }
+    fun myacceptFriend(applicant: String,FriendEmail: String)=viewModelScope.launch {
+        acceptFriend(applicant,FriendEmail)
+        getmyrequestFriend(FriendEmail)
+    }
+    suspend fun getWaitFriend(applicant: String)= withContext(Dispatchers.IO) {
+        val result: Resource<FriendListResponse> = friendRepository.getAllNotAcceptFriend(applicant)
+        _friendResponseStatus.postValue(result)
+        if (result.status == Status.SUCCESS) {
+            result.data!!.dataSet!!.forEach {
+                if (!totalWaitFriendList.contains(it)) {
+                    totalWaitFriendList.add(it)
+                }
+            }
+        }
+    }
+    fun getmyWaitFriend(applicant: String)=viewModelScope.launch {
+        getWaitFriend(applicant)
+        _friendWaitListLiveData.postValue(totalWaitFriendList)
+    }
     fun requestFriend(applicant: String, FriendEmail: String) = viewModelScope.launch {
         reqFriend(applicant, FriendEmail)
     }
@@ -184,6 +219,7 @@ class FriendViewModel : ViewModel() {
                 }
             }
         }
+
     //friend end
 
     private fun setLoading() = _friendResponseStatus.postValue(Resource.loading(null))
