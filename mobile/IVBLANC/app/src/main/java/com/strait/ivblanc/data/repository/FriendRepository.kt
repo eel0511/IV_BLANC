@@ -1,5 +1,7 @@
 package com.strait.ivblanc.data.repository
 
+import android.util.Log
+import com.kakao.sdk.common.util.SdkLogLevel
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.FriendApi
 import com.strait.ivblanc.data.model.dto.FriendForUpload
@@ -134,9 +136,11 @@ class FriendRepository {
                 return if(response.code() == StatusCode.OK && response.body()!!.output == 1 && response.body()!!.data!!.friendEmail.isNotEmpty()) {
                     Resource.success(response.body()!!)
                 } else {
-                    Resource.error(null, "알 수 없는 에러입니다.")
+                    Log.d("ssss", "requestFriend: "+response.body()!!.message)
+                    Resource.error(null, response.body()!!.message!!)
                 }
-            } else {
+            }
+            else {
                 Resource.error(null, "알 수 없는 에러입니다.")
             }
         } catch (e: Exception) {
