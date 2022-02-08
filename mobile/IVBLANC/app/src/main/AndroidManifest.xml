@@ -19,6 +19,9 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.friend.FriendNoti"
+            android:exported="false" />
+        <activity
             android:name=".src.friend.FriendCloset"
             android:exported="false" />
         <activity
@@ -27,7 +30,7 @@
         <activity
             android:name=".src.process.ProcessActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".src.photoSelect.PhotoSelectActivity"
             android:exported="false" />

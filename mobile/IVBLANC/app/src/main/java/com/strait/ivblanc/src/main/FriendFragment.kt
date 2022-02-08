@@ -29,11 +29,8 @@ class FriendFragment :
     BaseFragment<FragmentFriendBinding>(FragmentFriendBinding::bind, R.layout.fragment_friend) {
 
     lateinit var friendRecyclerViewAdapter: FriendRecyclerViewAdapter
-    val friendRepository = FriendRepository()
-    val scope = CoroutineScope(Dispatchers.Main)
     private val viewModel: MainViewModel by activityViewModels()
     private val friendViewModel: FriendViewModel by activityViewModels()
-    var friendclothlist = arrayListOf<MutableList<Uri>>()
     var list = arrayListOf<FriendViewdata>()
     private val itemClickListener = object : FriendRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friendViewdata: FriendViewdata) {

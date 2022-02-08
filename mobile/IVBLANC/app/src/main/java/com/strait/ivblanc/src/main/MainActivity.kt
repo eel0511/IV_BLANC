@@ -24,6 +24,7 @@ import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
+import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.AlbumFragment
 import com.strait.ivblanc.src.photoSelect.CameraFragment
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
@@ -143,7 +144,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
-
+                    startActivity(Intent(this@MainActivity,FriendNoti::class.java))
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {
