@@ -8,11 +8,16 @@ import { navAnimation } from "../animations";
 import { useScroll } from "./useScroll";
 import { Link } from 'react-router-dom';
 
+function isActive() {
+  return window.location.pathname;
+}
+
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [element, controls] = useScroll();
   const html = document.querySelector("html");
   html.addEventListener("click", (e) => setIsNavOpen(false));
+
   return (
     <Nav
       state={isNavOpen ? 1 : 0}
@@ -39,21 +44,21 @@ export default function Navbar() {
         </div>
       </div>
       <div className={`links ${isNavOpen ? "show" : ""}`}>
-        <ul defaultActiveKey='/'> 
-          <li className="active" >
-          <Link className='navbar-brand' to='/'>Home</Link>
+        <ul> 
+          <li className={(isActive() === '/') ? 'active' : null}>
+          <Link className={(isActive() === '/') ? 'navbar-brand' : 'nav-link'} to='/'>Home</Link>
           </li>
-          <li>
-          <Link className='nav-link' aria-current='page' to='/mycloset' >Closet</Link>
+          <li className={(isActive() === '/mycloset') ? 'active' : null}>
+          <Link className={(isActive() === '/mycloset') ? 'navbar-brand' : 'nav-link'} aria-current='page' to='/mycloset' >Closet</Link>
           </li>
-          <li>
-          <Link className='nav-link' aria-current='page' to='/mystyle'>Pick</Link>
+          <li className={(isActive() === '/mystyle') ? 'active' : null}>
+          <Link className={(isActive() === '/mystyle') ? 'navbar-brand' : 'nav-link'} aria-current='page' to='/mystyle'>Pick</Link>
           </li>
-          <li>
-          <Link className='nav-link ' aria-current='page' to='/friends'>Share</Link>
+          <li className={(isActive() === '/friends') ? 'active' : null}>
+          <Link className={(isActive() === '/friends') ? 'navbar-brand' : 'nav-link'} aria-current='page' to='/friends'>Share</Link>
           </li>
-          <li>
-          <Link className='nav-link ' aria-current='page' to='/history'>History</Link>
+          <li className={(isActive() === '/history') ? 'active' : null}>
+          <Link className={(isActive() === '/history') ? 'navbar-brand' : 'nav-link'} aria-current='page' to='/history'>History</Link>
           </li>
           {/* <li>
             <a href="#contact">Notice</a>
@@ -104,7 +109,7 @@ const Nav = styled(motion.nav)`
           color: white;
           text-decoration: none;
           font-weight: bold;
-          font-size: 1.1rem;
+          // font-size: 1.1rem;
         }
       }
     }
