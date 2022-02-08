@@ -81,8 +81,8 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             adapter = bottomSheetRVAdapter
             layoutManager = GridLayoutManager(this@StyleMakingActivity, 3, RecyclerView.VERTICAL, false)
         }
-        clothesViewModel.clothesListLiveData.observe(this) {
-            bottomSheetRVAdapter.setData()
+        clothesViewModel.clothesList.observe(this) {
+            bottomSheetRVAdapter.setData(it)
         }
     }
 
