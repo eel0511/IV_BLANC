@@ -180,7 +180,7 @@ export default function MyStyleTopbar() {
     console.log(e);
     const selectedData = {
       clothesId: clothId,
-      url: '상의.jfif',
+      url: url,
       category: category,
     };
     const selectedClothesId = {
@@ -277,7 +277,7 @@ export default function MyStyleTopbar() {
                           <img
                             className='MyClosetClothesItemImg'
                             // src={require(`../../assets/${clothesData.url}`)}
-                            // src={clothesData.url}
+                            src={clothesData.url}
                             alt={clothesData.clothesId}
                             title={clothesData.category}
                             style={{
