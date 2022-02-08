@@ -69,17 +69,16 @@ function StyleLook({ selectedClothes }) {
   }, []);
 
   const saveLook = () => {
-    console.log('클릭은 됐나');
     console.log('onCapture');
-    html2canvas(document.getElementById('StyleImg')).then((canvas) => {
+    html2canvas(document.getElementById('StyleImg'), {
+      allTaint: true,
+      // allowTaint: true,
+      useCORS: true,
+      // foreignObjectRendering: true,
+    }).then((canvas) => {
+      // canvas.crossOrigin = 'anonymous';
       saveAs(canvas.toDataURL(), 'capture-test.png');
     });
-    // const onCapture = () => {
-    //   console.log('onCapture');
-    //   html2canvas(document.getElementById('StyleImg')).then((canvas) => {
-    //     saveAs(canvas.toDataURL('image/png'), 'capture-test.png');
-    //   });
-    // };
     const saveAs = (uri, filename) => {
       // 캡쳐된 파일을 이미지 파일로 내보낸다.
       console.log('onSaveAs');
@@ -101,6 +100,7 @@ function StyleLook({ selectedClothes }) {
       <Button variant='contained' color='success' onClick={saveLook}>
         캡처
       </Button>
+
       <div id='StyleImg'>
         <div
           className='col'
