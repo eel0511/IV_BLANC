@@ -31,6 +31,7 @@ import com.strait.ivblanc.util.CategoryCode
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+    val SP_NAME = "fcm_message"
     val mainViewModel: MainViewModel by viewModels()
     val friendViewModel: FriendViewModel by viewModels()
     lateinit var dialog: Dialog

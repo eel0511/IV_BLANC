@@ -7,33 +7,48 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
 import com.strait.ivblanc.R
+import com.strait.ivblanc.databinding.ListMyrequestItemBinding
+import com.strait.ivblanc.src.fcm.FcmService
 
 class NotiRecyclerViewAdapter() : RecyclerView.Adapter<NotiRecyclerViewAdapter.ViewHolder>() {
-    lateinit var itemClickListener: ItemClickListener
-    var notilist = listOf<String>()
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val SP_NAME = "fcm_message"
+    var notilist = FcmService().fcmList
+
+    inner class ViewHolder(val binding: ListMyrequestItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private val img = itemView.findViewById<ImageView>(R.id.myrequest_img)
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
         fun bind(item: String) {
             img.setImageResource(R.drawable.kakao)
             text.text = item
-            button.visibility = View.GONE
+            button.setImageResource(R.drawable.ic_close)
             button.setOnClickListener {
-                itemClickListener.onClick()
+                notilist.remove(item)
+                writeSharedPreference("fcm", notilist)
+                notifyDataSetChanged()
             }
+        }
+        private fun writeSharedPreference(key:String, value:ArrayList<String>){
+            val sp = binding.root.context.getSharedPreferences(SP_NAME, FirebaseMessagingService.MODE_PRIVATE)
+            val editor = sp.edit()
+            val gson = Gson()
+            val json: String = gson.toJson(value)
+            editor.putString(key, json)
+            editor.apply()
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NotiRecyclerViewAdapter.ViewHolder =
-        ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.list_myrequest_item, parent, false)
-        )
+    ): NotiRecyclerViewAdapter.ViewHolder{
+            val binding = ListMyrequestItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            return ViewHolder(binding)
+        }
 
     override fun onBindViewHolder(holder: NotiRecyclerViewAdapter.ViewHolder, position: Int) =
         holder.bind(notilist[position])

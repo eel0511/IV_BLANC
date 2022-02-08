@@ -44,12 +44,7 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         }
 
     }
-    private val notiitemClickListener = object:NotiRecyclerViewAdapter.ItemClickListener{
-        override fun onClick() {
 
-        }
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,9 +134,7 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     }
 
     fun initNotiRecylcer(){
-        notiRecyclerViewAdapter = NotiRecyclerViewAdapter().apply {
-            itemClickListener = this@FriendNoti.notiitemClickListener
-        }
+        notiRecyclerViewAdapter = NotiRecyclerViewAdapter()
         binding.notiRecyclerView.apply {
             adapter = notiRecyclerViewAdapter
             layoutManager = LinearLayoutManager(this@FriendNoti, LinearLayoutManager.VERTICAL, false)
@@ -185,6 +178,7 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             }
             .show()
     }
+
     private fun readSharedPreference(key:String): ArrayList<String>{
         val sp = binding.root.context.getSharedPreferences(SP_NAME, FirebaseMessagingService.MODE_PRIVATE)
         val gson = Gson()
