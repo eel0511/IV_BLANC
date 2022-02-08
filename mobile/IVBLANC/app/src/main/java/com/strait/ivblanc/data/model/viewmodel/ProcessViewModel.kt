@@ -37,7 +37,7 @@ class ProcessViewModel: ViewModel() {
     private val _largeCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 1 ~ 7까지
     private val _smallCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 대분류에서 가져오기
     private val _season = MutableLiveData<Int>(1) // 1 - 4
-    private val _color = MutableLiveData<String>("#ffffff") // hex code
+    private val _color = MutableLiveData<String>("#FFFFFF") // hex code
     private val _size = MutableLiveData<Int>(0) // 모든 숫자
     private val _material = MutableLiveData<Int>(MaterialCode.COTTON) // MaterialCode
 
