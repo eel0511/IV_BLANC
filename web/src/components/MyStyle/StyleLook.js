@@ -14,27 +14,41 @@ function StyleLook({ selectedClothes }) {
   useEffect(() => {
     // 값이 없다면 undefined가 뜬다.
     for (let i = 0; i < selectedClothes.length; ++i) {
-      switch (selectedClothes[i].category) {
+      switch (selectedClothes[i].category / 10) {
         case 1:
-          setShirts(selectedClothes.find((clothes) => clothes.category === 1));
+          setShirts(
+            selectedClothes.find((clothes) => clothes.category / 10 === 1)
+          );
           break;
         case 2:
-          setPants(selectedClothes.find((clothes) => clothes.category === 2));
+          setPants(
+            selectedClothes.find((clothes) => clothes.category / 10 === 2)
+          );
           break;
         case 3:
-          setOuter(selectedClothes.find((clothes) => clothes.category === 3));
+          setOuter(
+            selectedClothes.find((clothes) => clothes.category / 10 === 3)
+          );
           break;
         case 4:
-          setShoes(selectedClothes.find((clothes) => clothes.category === 4));
+          setShoes(
+            selectedClothes.find((clothes) => clothes.category / 10 === 4)
+          );
           break;
         case 5:
-          setBag(selectedClothes.find((clothes) => clothes.category === 5));
+          setBag(
+            selectedClothes.find((clothes) => clothes.category / 10 === 5)
+          );
           break;
         case 6:
-          setHat(selectedClothes.find((clothes) => clothes.category === 6));
+          setHat(
+            selectedClothes.find((clothes) => clothes.category / 10 === 6)
+          );
           break;
         default:
-          setOthers(selectedClothes.find((clothes) => clothes.category === 7));
+          setOthers(
+            selectedClothes.find((clothes) => clothes.category / 10 === 7)
+          );
       }
     }
   }, []);
@@ -83,34 +97,6 @@ function StyleLook({ selectedClothes }) {
             alt={shoes.clothesId}
           />
         )}
-
-        {/* <img
-          className='MyStyleHat'
-          src={require(`../../assets/상의.jfif`)}
-          // src={hat.url}
-          alt={1}
-        />
-        <br></br>
-        <img
-          className='MyStyleShirts'
-          src={require(`../../assets/상의.jfif`)}
-          // src={shirts.url}
-          alt={1}
-        />
-        <br></br>
-        <img
-          className='MyStylePants'
-          src={require(`../../assets/상의.jfif`)}
-          // src={shirts.url}
-          alt={1}
-        />
-        <br></br>
-        <img
-          className='MyStyleShoes'
-          src={require(`../../assets/상의.jfif`)}
-          // src={shoes.url}
-          alt={1}
-        /> */}
       </div>
 
       <div
@@ -146,8 +132,45 @@ function StyleLook({ selectedClothes }) {
             alt={bag.clothesId}
           />
         )}
+      </div>
+    </div>
+  );
+}
 
-        {/* <img
+export default StyleLook;
+
+{
+  /* <img
+          className='MyStyleHat'
+          src={require(`../../assets/상의.jfif`)}
+          // src={hat.url}
+          alt={1}
+        />
+        <br></br>
+        <img
+          className='MyStyleShirts'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shirts.url}
+          alt={1}
+        />
+        <br></br>
+        <img
+          className='MyStylePants'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shirts.url}
+          alt={1}
+        />
+        <br></br>
+        <img
+          className='MyStyleShoes'
+          src={require(`../../assets/상의.jfif`)}
+          // src={shoes.url}
+          alt={1}
+        /> */
+}
+
+{
+  /* <img
           className='MyStyleOthers'
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
@@ -166,10 +189,5 @@ function StyleLook({ selectedClothes }) {
           src={require(`../../assets/상의.jfif`)}
           // src={shoes.url}
           alt={1}
-        /> */}
-      </div>
-    </div>
-  );
+        /> */
 }
-
-export default StyleLook;
