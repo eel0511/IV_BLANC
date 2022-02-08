@@ -15,6 +15,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/myrequest_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/myrequest_recycler_view"
         android:layout_width="0dp"
@@ -24,7 +34,7 @@
         app:layout_constraintBottom_toTopOf="@+id/wait_recycle_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_friend">
+        app:layout_constraintTop_toBottomOf="@+id/myrequest_info">
 
     </androidx.recyclerview.widget.RecyclerView>
 
