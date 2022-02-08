@@ -275,9 +275,9 @@ export default function SignUp() {
           }}
         >
           <img
-            src={require('../../assets/logo2.png')}
+            src={require('../../assets/logo.png')}
             alt='우리로고'
-            width={'300px'}
+            width={'100px'}
           ></img>
           <Typography component='h1' variant='h5'>
             회원가입

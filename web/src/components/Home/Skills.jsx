@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Title from "./Title";
 import skills1 from "../../assets/skills1.png";
 import skills2 from "../../assets/skills2.png";
+import logotext from '../../assets/logo2.png'
+import logo from '../../assets/logo.png'
 import { skillsBarAnimations } from "../../animations";
 import { motion } from "framer-motion";
 import { useScroll } from "../useScroll";
@@ -32,17 +34,19 @@ function Skills() {
   ];
   return (
     <Section id="skills" ref={element}>
-      <Title value="skills" />
+      <Title value="brand" />
       <div className="background">
         <img src={skills1} alt="skills design" className="design1" />
         <img src={skills2} alt="skills design" className="design2" />
       </div>
       <div className="skills__title">
-        <p>Our Skills</p>
-        <h2>Check our super awesome skills</h2>
+        <p>IV BLANC</p>
+        <h2>Check our super awesome visions</h2>
       </div>
       <div className="skills">
-        <div className="skills__bars">
+      {/* <img src={logotext} alt="logotext" className="logotext" />
+      <img src={logo} alt="logo" className="logo"/> */}
+        {/* <div className="skills__bars">
           {skillsData.map(({ name, amount }) => {
             return (
               <motion.div
@@ -65,15 +69,21 @@ function Skills() {
               </motion.div>
             );
           })}
-        </div>
+        </div> */}
         <div className="skills__content">
           <p className="title">
-            Lorem ipsum dolor, sit amet consectetur impedit?
+            Why IV BLANC?
           </p>
           <p className="description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis eius
-            cupiditate incidunt distinctio velit quos dolore, ut, tempore
-            suscipit impedit reiciendis voluptas, illo expedita! Necessitatibus!
+          입다 + 몽블랑 : 브랜드 가치가 높은 패션 쉐어 플랫폼의 명품이 되기위해!
+          </p>
+          <p className="title">
+            What does LOGO mean?
+          </p>
+          <p className="description">
+          로고 의미는 IV BLANC의 첫 이니셜을 따서 I, B인데 
+두 개의 B는 저희가 또 공유 옷장, 즉 옷장을 공유하는 플랫폼이라 옷장의 문을 열어논것을 표현하였고
+중간의 I는 옷장을 열어 나 자신 = I 로 표현해 나 스스로의 스타일을 찾아가겠다를 의미!
           </p>
         </div>
       </div>
@@ -112,10 +122,12 @@ const Section = styled.section`
       text-transform: uppercase;
       letter-spacing: 0.2rem;
       color: var(--primary-color);
+      z-index: 2;
     }
     h2 {
       color: white;
       font-size: 2rem;
+      z-index: 2;
     }
   }
   .skills {
@@ -134,7 +146,12 @@ const Section = styled.section`
         flex-direction: row-reverse;
 
         gap: 1rem;
-
+        .logo{
+          z-index: 1;
+        }
+        .logotext{
+          z-index: 1;
+        }
         .container {
           display: flex;
           flex-direction: column;

@@ -57,10 +57,11 @@ const Section = styled.section`
       align-items: flex-start;
       gap: 1.2rem;
       padding-left: 14rem;
-      margin-top: 10rem;
+      margin-top: 6rem;
       width: 100%;
       .title {
         h1 {
+          color: #ed6991;
           font-size: 5rem;
           line-height: 5.3rem;
           margin-bottom: 2rem;
