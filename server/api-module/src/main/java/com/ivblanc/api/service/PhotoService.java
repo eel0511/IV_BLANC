@@ -1,5 +1,6 @@
 package com.ivblanc.api.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,18 @@ public class PhotoService {
 		photoRepository.save(photo);
 	}
 
-	public void deletePhoto(int photoId){
+	public void deletePhoto(int photoId) throws IOException {
+		Optional<Photo> photo = findByPhotoId(photoId);
+		if(!photo.isPresent()){
+			throw new ApiMessageException("존재하지 않는 photoId 입니다.");
+		}
+
+		String[] tmp = photo.get().getUrl().split("/");
+		String fileName = tmp[tmp.length - 1];
+
+		if(!fileService.delete(fileName)){
+			throw new ApiMessageException("파일 삭제 실패");
+		}
 		photoRepository.deleteById(photoId);
 	}
 

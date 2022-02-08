@@ -82,4 +82,11 @@ public class FileService {
 		}
 
 	}
+
+	public boolean delete(String fileName) throws IOException{
+		BlobId blobId = BlobId.of("iv-blanc.appspot.com", fileName);
+		Credentials credentials = GoogleCredentials.fromStream(new ClassPathResource(firebaseConfig).getInputStream());
+		Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+		return storage.delete(blobId);
+	}
 }

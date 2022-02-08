@@ -1,5 +1,6 @@
 package com.ivblanc.api.service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.ivblanc.api.dto.req.MakeHistoryReqDTO;
 import com.ivblanc.api.dto.req.UpdateHistoryReqDTO;
 import com.ivblanc.core.entity.History;
+import com.ivblanc.core.entity.Photo;
 import com.ivblanc.core.entity.Style;
 import com.ivblanc.core.exception.ApiMessageException;
 import com.ivblanc.core.repository.HistoryRepository;
@@ -24,6 +26,7 @@ public class HistoryService {
 
 	private final HistoryRepository historyRepository;
 	private final StyleService styleService;
+	private final PhotoService photoService;
 
 	public Optional<History> findByHistoryId(int history_id) {
 		return historyRepository.findById(history_id);
@@ -112,7 +115,12 @@ public class HistoryService {
 		historyRepository.save(history);
 	}
 
-	public void deleteHistoryById(int historyId) {
+	public void deleteHistoryById(int historyId) throws IOException {
+		Optional<History> history = findByHistoryId(historyId);
+		for(Photo p : history.get().getPhotos()){
+			photoService.deletePhoto(p.getPhotoId());
+		}
+
 		historyRepository.deleteById(historyId);
 	}
 
