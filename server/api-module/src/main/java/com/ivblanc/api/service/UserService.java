@@ -53,11 +53,7 @@ public class UserService {
 			throw new ApiMessageException("잘못된 회원정보입니다.");
 		}
 
-		if(!PasswordValidate.checkPwForm(req.getPw_new()) ){
-			throw new ApiMessageException("비밀번호는 영문,숫자,특수문자 중 2가지 이상을 포함하며 8자리 이상, 14자리 이하입니다");
-		}
-
-		if(!PasswordValidate.checkPwMatch(req.getPw_new(), req.getPw_check())){
+		if(!req.getPw_new().equals(req.getPw_check())){
 			throw new ApiMessageException("비밀번호를 확인해주세요.");
 		}
 

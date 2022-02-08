@@ -3,6 +3,7 @@ package com.ivblanc.api.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.MediaType;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,11 +20,13 @@ import com.ivblanc.api.dto.req.UpdatePwReqDTO;
 import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
+import com.ivblanc.core.exception.ApiMessageException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import springfox.documentation.annotations.ApiIgnore;
 
 @Api(tags = {"USER"})
 @Slf4j
@@ -45,8 +48,15 @@ public class UserController {
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호 변경")
     @PutMapping(value = "/update/pw", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    SingleResult<String> userUpdatePw(@Valid @RequestBody UpdatePwReqDTO req,
+    SingleResult<String> userUpdatePw(@Valid @RequestBody UpdatePwReqDTO req, @ApiIgnore Errors errors,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(objectError -> {
+                String message = objectError.getDefaultMessage();
+                throw new ApiMessageException(message);
+            });
+        }
+
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         userService.updatePw(req, userId);
         return responseService.getSingleResult(userId + "번 유저 비밀번호 변경 완료");
@@ -55,8 +65,15 @@ public class UserController {
     // 회원 정보 변경 - 개인정보
     @ApiOperation(value = "개인정보 변경", notes = "개인정보 변경")
     @PutMapping(value = "/update/personal", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody SingleResult<String> userUpdatePersonal(@Valid @RequestBody UpdatePersonalReqDTO req,
+    public @ResponseBody SingleResult<String> userUpdatePersonal(@Valid @RequestBody UpdatePersonalReqDTO req, @ApiIgnore Errors errors,
         @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
+        if(errors.hasErrors()){
+            errors.getAllErrors().forEach(objectError -> {
+                String message = objectError.getDefaultMessage();
+                throw new ApiMessageException(message);
+            });
+        }
+
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         userService.updatePersonal(req, userId);
         return responseService.getSingleResult(userId + "번 유저 개인정보 변경 완료");
