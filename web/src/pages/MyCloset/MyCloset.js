@@ -28,6 +28,7 @@ export default function MyCloset() {
       .then((response) => {
         // console.log(response.data.data);
         setMyClothes(response.data.data);
+        setFilterMyClothes(response.data.data);
       });
   };
 
