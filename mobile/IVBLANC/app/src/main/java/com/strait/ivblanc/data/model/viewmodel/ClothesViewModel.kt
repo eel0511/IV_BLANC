@@ -180,13 +180,11 @@ class ClothesViewModel: ViewModel() {
 
     private val _largeCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 1 ~ 7까지
     private val _smallCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 대분류에서 가져오기
-
     val largeCategory: LiveData<Int> get() = _largeCategory
     val smallCategory: LiveData<Int> get() = _smallCategory
 
     fun setLargeCategory(largeCategory: Int) = _largeCategory.postValue(largeCategory)
     fun setSmallCategory(smallCategory: Int) = _smallCategory.postValue(smallCategory)
-    fun setSeason(season: Int) = _smallCategory.postValue(season)
 
     //카테고리 관련
     private fun getCategoryFromLiveData(): Int? {
