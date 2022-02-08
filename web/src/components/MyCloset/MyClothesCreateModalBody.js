@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import codeData from '../../codeData.json';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function MyClothesCreateModalBody() {
   const [selectedColor, setSelectedColor] = useState('#C14D49');
-  const [selectedMaterial, setSelectedMaterial] = useState(0);
+  const [selectedMaterial, setSelectedMaterial] = useState(1);
   const [selectedMainCategory, setSelectedMainCategory] = useState('상의');
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedSize, setSelectedSize] = useState();
@@ -15,57 +16,53 @@ export default function MyClothesCreateModalBody() {
 
   const colorHandleChange = (e) => {
     setSelectedColor(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const materialHandleChange = (e) => {
     setSelectedMaterial(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const seasonHandleChange = (e) => {
     setSelectedSeason(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const sizeHandleChange = (e) => {
     setSelectedSize(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const mainCategoryHandleChange = (e) => {
     setSelectedMainCategory(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const subCategoryHandleChange = (e) => {
     setSelectedSubCategory(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const imgHandleChange = (e) => {
-    // console.log(e.target.files[0])
+    // console.log(e.target.files)
     setSelectedImg(e.target.files[0])
   };
 
   const createClothes = () => {
     const formData = new FormData();
-    formData.append('file', selectedImg);
+    formData.append('photo', selectedImg);
+    formData.append('category', Number(selectedSubCategory));
+    formData.append('color', selectedColor);
+    formData.append('material', Number(selectedMaterial));
+    formData.append('season', Number(selectedSeason));
+    formData.append('size', Number(selectedSize));
 
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/clothes/add', formData,
       {
         headers: {
-          'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDMyNjUzNzAsImV4cCI6MTY0NTg1NzM3MH0.4cg27bxcecL15ItYRFutBZOKKW2P9MJyziWiz8S9_QE'
-        }
-      },
-      {
-        params: {
-          category: Number(selectedSubCategory),
-          color: selectedColor,
-          material: Number(selectedMaterial),
-          season: Number(selectedSeason),
-          size: Number(selectedSize),
+          'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY'
         }
       }
       )
