@@ -15,40 +15,54 @@ function StyleLook({ selectedClothes }) {
   useEffect(() => {
     // 값이 없다면 undefined가 뜬다.
     for (let i = 0; i < selectedClothes.length; ++i) {
-      switch (selectedClothes[i].category / 10) {
+      switch (parseInt(selectedClothes[i].category / 10)) {
         case 1:
           setShirts(
-            selectedClothes.find((clothes) => clothes.category / 10 === 1)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 1
+            )
           );
           break;
         case 2:
           setPants(
-            selectedClothes.find((clothes) => clothes.category / 10 === 2)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 2
+            )
           );
           break;
         case 3:
           setOuter(
-            selectedClothes.find((clothes) => clothes.category / 10 === 3)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 3
+            )
           );
           break;
         case 4:
           setShoes(
-            selectedClothes.find((clothes) => clothes.category / 10 === 4)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 4
+            )
           );
           break;
         case 5:
           setBag(
-            selectedClothes.find((clothes) => clothes.category / 10 === 5)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 5
+            )
           );
           break;
         case 6:
           setHat(
-            selectedClothes.find((clothes) => clothes.category / 10 === 6)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 6
+            )
           );
           break;
         default:
           setOthers(
-            selectedClothes.find((clothes) => clothes.category / 10 === 7)
+            selectedClothes.find(
+              (clothes) => parseInt(clothes.category / 10) === 7
+            )
           );
       }
     }
