@@ -83,7 +83,6 @@ export default function MyClosetClothesItem({ clothesData }) {
     // console.log(e.target.checked);
     const favoriteCurrent = e.target.checked;
     setFavoriteChecked(favoriteCurrent);
-    // console.log(favoriteCurrent);
 
     // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
     // favoriteChecked===true이면 추가, 아니면 삭제
@@ -96,9 +95,9 @@ export default function MyClosetClothesItem({ clothesData }) {
               'X-AUTH-TOKEN':
                 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
-            params: {
-              clothesId: `${clothesData.clothesId}`
-            }
+            // params: {
+            //   clothesId: clothesData.clothesId
+            // }
           })
           .then((res) => {
             console.log('response:', res.data);
@@ -122,7 +121,7 @@ export default function MyClosetClothesItem({ clothesData }) {
                 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
             params: {
-              clothesId: `${clothesData.clothesId}`
+              clothesId: clothesData.clothesId
             }
           })
           .then((res) => {
@@ -155,7 +154,7 @@ export default function MyClosetClothesItem({ clothesData }) {
                 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
             params: {
-              clothesId: `${clothesData.clothesId}`,
+              clothesId: clothesData.clothesId,
             },
           })
           .then((res) => {
