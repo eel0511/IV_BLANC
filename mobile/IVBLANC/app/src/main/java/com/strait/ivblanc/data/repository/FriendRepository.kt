@@ -33,8 +33,11 @@ class FriendRepository {
 
     suspend fun cancelFriend(friend:FriendForUpload):Resource<FriendResponse>{
         return try{
+            Log.d("ssss123123", "cancelFriend: "+friend)
             val response=friendApi.cancelFriend(friend)
+            Log.d("ssss123123", "cancelFriend: "+response)
             if(response.isSuccessful) {
+                Log.d("ssss", "cancelFriend: "+response)
                 return if(response.code() == StatusCode.OK && response.body()!!.output == 1 && response.body()!!.data!!.friendEmail.isNotEmpty()) {
                     Resource.success(response.body()!!)
                 } else {
