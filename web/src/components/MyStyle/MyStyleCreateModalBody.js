@@ -5,16 +5,26 @@ import { Button } from 'react-bootstrap';
 function MyStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
-    // console.log(e.target.files)
+    console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
   };
 
   const createStyle = () => {
+    let clothesList = '';
+    for (let i = 0; i < saveClothesId.length - 1; ++i) {
+      clothesList += saveClothesId[i].clothesId + ',';
+    }
+    clothesList += saveClothesId[saveClothesId.length - 1].clothesId;
+
     const formData = new FormData();
     formData.append('photo', selectedImg);
+    formData.append('clothesList', clothesList);
+
+    console.log(saveClothesId);
+    console.log(clothesList);
 
     axios
-      .post('http://i6d104.p.ssafy.io:9999/api/clothes/add', formData, {
+      .post('http://i6d104.p.ssafy.io:9999/api/style/add', formData, {
         headers: {
           'X-AUTH-TOKEN':
             'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
