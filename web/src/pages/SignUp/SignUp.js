@@ -261,7 +261,9 @@ export default function SignUp() {
 
   return (
     <Section>
-    <Navbar />
+    <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs' >
         <CssBaseline />
@@ -472,7 +474,7 @@ export default function SignUp() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

@@ -153,7 +153,9 @@ export default function SignInSide() {
 
   return (
     <Section>
-      <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
         {/* <Grid container component='main' sx={{ height: '100vh' }}> */}
@@ -297,7 +299,7 @@ export default function SignInSide() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

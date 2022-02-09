@@ -11,7 +11,9 @@ export default function Friends() {
   return (
     <Section>
       <ScrollToTop />
-      <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
         <div><FriendsList /></div>
         <footer>
           <Notice />
@@ -22,7 +24,7 @@ export default function Friends() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

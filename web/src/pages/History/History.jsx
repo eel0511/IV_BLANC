@@ -224,7 +224,9 @@ export default function History() {
   return (
       <Section>
       <ScrollToTop />
-      <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
       <>
       <HistoryCreateButton />
       </>
@@ -248,7 +250,7 @@ export default function History() {
 
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;
