@@ -115,18 +115,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
 
     private fun setRecyclerView() {
-        // TODO: 2022/02/08 recyclerViewAdapterItem
-        val items = mutableListOf<Clothes>()
-        items.add(Clothes(10, 0, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 1, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 2, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 3, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 4, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 5, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        items.add(Clothes(10, 6, "#FFFFFF", 0, "", 0, 1, 0, 0, 1, 100, "", "https://storage.googleapis.com/iv-blanc.appspot.com/909c85b8-dc08-4e18-8b44-c6faf79a9be8.jpg", 13))
-        recyclerViewAdapter = StyleRecyclerViewAdapter().apply {
-            data = items
-        }
+        recyclerViewAdapter = StyleRecyclerViewAdapter()
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(recyclerViewAdapter))
         binding.recyclerViewStyleMakingClothes.apply {
             adapter = recyclerViewAdapter
@@ -189,6 +178,9 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         if(this::styleEditorAdapter.isInitialized) {
             Log.d(TAG, "setClothesToEditor: ${clothes.clothesId}")
             styleEditorAdapter.addOrUpdateClothes(clothes)    
+        }
+        if(this::recyclerViewAdapter.isInitialized) {
+            recyclerViewAdapter.addOrUpdateClothes(clothes)
         }
     }
 }
