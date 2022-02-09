@@ -1,9 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".src.history.HistoryDetailActivity">
+    android:orientation="vertical"
+    tools:context=".src.historyDetail.HistoryDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="8">
+
+        <ImageView
+            android:id="@+id/imageView_historyDetail_close"
+            android:layout_width="@dimen/defaultIconSize"
+            android:layout_height="@dimen/defaultIconSize"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginTop="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView_historyDetail_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="2022.02.09"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView_historyDetail_location"
+                style="@style/Text.Subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="서웉특별시 강남구 도산대로 317"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView_historyDetail_edit"
+            android:layout_width="@dimen/defaultIconSize"
+            android:layout_height="@dimen/defaultIconSize"
+            android:layout_marginTop="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@drawable/ic_baseline_edit" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView_historyDetail_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        app:layout_constraintDimensionRatio="1:1"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_historyDetail_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultPadding"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <TextView
+            android:id="@+id/textView_historyDetail_subject"
+            style="@style/Text.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginEnd="@dimen/defaultPadding"
+            android:layout_weight="3"
+            tools:text="제목을 입력하세요." />
+
+        <ImageView
+            android:id="@+id/textView_historyDetail_weather"
+            android:layout_width="@dimen/smallIconSize"
+            android:layout_height="@dimen/smallIconSize"
+            android:layout_weight="1"
+            android:background="@drawable/ic_sunny" />
+
+        <TextView
+            android:id="@+id/textView_historyDetail_temperature"
+            style="@style/Text.Subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_weight="2"
+            tools:text="5/-3" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_historyDetail_text"
+        android:layout_width="match_parent"
+        android:layout_height="108dp"
+        android:layout_marginStart="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        android:text="내용내용내용" />
+
+
+</LinearLayout>
