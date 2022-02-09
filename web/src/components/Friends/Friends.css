@@ -13,23 +13,23 @@
 
 /* Notice */
 .Notice {
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 50px;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* margin: 50px; */
   cursor: pointer;
 }
 
 .Notice__icon {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
-.Notice__friendRequest {
+/* .Notice__friendRequest {
   display: flex;
   align-items: center;
   padding: 10px;
-}
+} */
 
 /* FriendsListItem */
 

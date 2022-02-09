@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { navAnimation } from "../animations";
 import { useScroll } from "./useScroll";
 import { Link } from 'react-router-dom';
+import Notice from "./Friends/Notice";
 
 function isActive() {
   return window.location.pathname;
@@ -64,6 +65,9 @@ export default function Navbar() {
           </li>
           <li className={(isActive() === '/signin') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/signin'>Sign in</Link>
+          </li>
+          <li>
+          <Notice />
           </li>
         </ul>
       </div>
