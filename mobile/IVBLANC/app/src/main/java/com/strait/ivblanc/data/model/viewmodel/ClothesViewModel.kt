@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
@@ -165,6 +166,8 @@ class ClothesViewModel: ViewModel() {
         return date.time
     }
 
+    private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
+
 
     /**
      * 대분류로 분류 후, 소분류로 분류
@@ -178,45 +181,41 @@ class ClothesViewModel: ViewModel() {
         when {
             category == CategoryCode.TOTAL -> {
                 _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
-                _clothesList.postValue(totalClothesList)
+                _clothesList.postValue(totalClothesList.toMutableList())
             }
             category in 1..9 -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
                 _clothesList.postValue(getClothesListWithLargeCategory(category))
             }
+            category == CategoryCode.TOTAL_SMALL -> {
+                _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(largeCategory.value!!)))
+                _clothesList.postValue(getClothesListWithLargeCategory(largeCategory.value!!))
+            }
             else -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
-                _clothesList.postValue(getClothesListWithLargeCategory(category))
+                _clothesList.postValue(getClothesListWithSmallCategory(category))
             }
         }
     }
 
     val categorySet = CategoryCode().codeSet
 
-    private val _largeCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 1 ~ 7까지
-    private val _smallCategory = MutableLiveData<Int>(CategoryCode.UNSELECTED) // CategoryCode 대분류에서 가져오기
+    private val _largeCategory = MutableLiveData<Int>(CategoryCode.TOTAL) // CategoryCode 1 ~ 7까지
+    private val _smallCategory = MutableLiveData<Int>(CategoryCode.TOTAL_SMALL) // CategoryCode 대분류에서 가져오기
     val largeCategory: LiveData<Int> get() = _largeCategory
     val smallCategory: LiveData<Int> get() = _smallCategory
 
     fun setLargeCategory(largeCategory: Int) = _largeCategory.postValue(largeCategory)
     fun setSmallCategory(smallCategory: Int) = _smallCategory.postValue(smallCategory)
 
-    //카테고리 관련
-    private fun getCategoryFromLiveData(): Int? {
-        val smallCategory = _smallCategory.value
-        if(smallCategory == CategoryCode.UNSELECTED) return null
-        return smallCategory
-    }
-
-    private fun setLoading() = _clothesResponseStatus.postValue(Resource.loading(null))
-
     val largeCategorySet = getLargeCategories()
 
-    // 전체를 제외한 대분류만 나타낸다. 전체 카테고리 셋을 순회하며 1부터 9사이의 값을 취한다.
+    // 대분류만 나타낸다. 전체 카테고리 셋을 순회하며 0부터 9사이의 값을 취한다.
+    // CategoryCode.TOTAL = 0, 전체도 포함한다.
     private fun getLargeCategories(): List<Pair<Int, Int>> {
         val result = mutableListOf<Pair<Int, Int>>()
         categorySet.forEach { entry ->
-            if(entry.key in 1..9) result.add(entry.toPair())
+            if(entry.key in 0..9) result.add(entry.toPair())
         }
         return result
     }
@@ -225,13 +224,11 @@ class ClothesViewModel: ViewModel() {
     // 모든 소분류는 10 이상이며, -1은 전체를 나타낸다.
     fun getSmallCategoriesByLargeCategory(largeCategory: Int): List<Pair<Int, Int>> {
         val result = mutableListOf<Pair<Int, Int>>()
-
         categorySet.forEach { entry ->
             if(entry.key.toString()[0] == largeCategory.toString()[0] && entry.key >= 10) {
                 result.add(entry.toPair())
             }
         }
-
         return result
     }
 
