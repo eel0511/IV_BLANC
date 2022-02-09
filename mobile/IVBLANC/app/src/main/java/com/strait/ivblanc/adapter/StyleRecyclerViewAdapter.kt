@@ -40,4 +40,23 @@ class StyleRecyclerViewAdapter: RecyclerView.Adapter<StyleRecyclerViewAdapter.Vi
         return true
     }
 
+    fun addOrUpdateClothes(clothes: Clothes) {
+        val largeCategory = getLargeCategory(clothes)
+        val item = data.find {
+            largeCategory == getLargeCategory(it)
+        }
+        if(item != null) {
+            val index = data.indexOf(item)
+            data.set(index, clothes)
+            notifyItemChanged(index)
+        } else {
+            data.add(clothes)
+            notifyItemInserted(data.indexOf(clothes))
+        }
+    }
+
+    private fun getLargeCategory(clothes: Clothes): Int {
+        return clothes.category.toString()[0].digitToInt()
+    }
+
 }
