@@ -10,7 +10,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.component.ItemTouchHelperListener
 
-class StyleRecyclerViewAdapter: RecyclerView.Adapter<StyleRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperListener {
+class StyleRecyclerViewAdapter(val editorAdapter: StyleEditorAdapter): RecyclerView.Adapter<StyleRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperListener {
     var data = mutableListOf<Clothes>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -36,7 +36,8 @@ class StyleRecyclerViewAdapter: RecyclerView.Adapter<StyleRecyclerViewAdapter.Vi
         data.removeAt(startPosition)
         data.add(endPosition, item)
         notifyItemMoved(startPosition, endPosition)
-        // TODO: 2022/02/08 Editor View의 이미지 z 값 바꾸기 
+        // TODO: 2022/02/08 Editor View의 이미지 z 값 바꾸기
+        notifyToStyleEditor()
         return true
     }
 
@@ -53,6 +54,15 @@ class StyleRecyclerViewAdapter: RecyclerView.Adapter<StyleRecyclerViewAdapter.Vi
             data.add(clothes)
             notifyItemInserted(data.indexOf(clothes))
         }
+        notifyToStyleEditor()
+    }
+
+    fun notifyToStyleEditor() {
+        val largeCategories = mutableListOf<Int>()
+        data.forEach {
+            largeCategories.add(getLargeCategory(it))
+        }
+        editorAdapter.changeImageZorder(largeCategories)
     }
 
     private fun getLargeCategory(clothes: Clothes): Int {
