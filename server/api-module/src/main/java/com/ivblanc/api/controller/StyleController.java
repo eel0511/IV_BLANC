@@ -3,6 +3,7 @@ package com.ivblanc.api.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ivblanc.api.dto.req.MakeStyleReqDTO;
 import com.ivblanc.api.service.*;
 import com.ivblanc.core.entity.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -56,14 +57,10 @@ public class StyleController {
             + "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
     @PostMapping(value = "/add")
     public @ResponseBody
-    SingleResult<String> addStyle(@RequestParam("clothesList" ) String list,
-                                  @RequestHeader(value = "X-AUTH-TOKEN") String token, final MultipartFile photo) throws Exception {
-        List<MakeStyleDetailReqDTO> styleDetails = new ArrayList<>();
-        String[] temp = list.split(",");
-        for(String s : temp){
-            styleDetails.add(new MakeStyleDetailReqDTO(Integer.parseInt(s.trim())));
-        }
-        String url = fileService.upload(photo);
+    SingleResult<String> addStyle(@RequestBody MakeStyleReqDTO req,
+                                  @RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
+        List<MakeStyleDetailReqDTO> styleDetails = req.getClothesIdList();
+        String url = fileService.upload(req.getFile());
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         if (url.equals("error")) {
             throw new ApiMessageException("파일 올리기 실패");
