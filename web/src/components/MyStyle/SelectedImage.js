@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function SelectedImage({ selectedClothes }) {
   return (
@@ -8,7 +8,7 @@ function SelectedImage({ selectedClothes }) {
           <img
             className='MyStyleClothesItemImg'
             key={clothesData.clothesId}
-            src={require(`../../assets/${clothesData.url}`)}
+            src={clothesData.url}
             alt={clothesData.clothesId}
             style={{
               width: '100px',

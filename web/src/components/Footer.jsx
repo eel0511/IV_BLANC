@@ -17,7 +17,7 @@ function Footer() {
           duration: 0.8,
         }}
       >
-        &copy; IV BLANC created with love by 해협
+        &copy; IV BLANC created with love by 구미 1반 4팀 해협
       </motion.span>
       <motion.div
         className="footer__social__icons"
@@ -29,7 +29,6 @@ function Footer() {
           duration: 0.8,
         }}
       >
-        <BsBehance />
         <BsTwitter />
         <BsFacebook />
         <BsYoutube />

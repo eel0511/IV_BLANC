@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
+import logo2 from "../assets/logo2.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
@@ -23,7 +23,7 @@ export default function Navbar() {
     >
       <div className="brand__container">
       <Link className='brand' to='/'>
-          <img src={logo} alt="Logo" />
+          <img src={logo2} alt="Logo" />
           </Link>
         <div className="toggle">
           {isNavOpen ? (
@@ -40,29 +40,26 @@ export default function Navbar() {
       </div>
       <div className={`links ${isNavOpen ? "show" : ""}`}>
         <ul defaultActiveKey='/'> 
-          <li className="active" >
-          <Link className='navbar-brand' to='/'>Home</Link>
+          <li className="active">
+          <Link className='nav-link' aria-current='page' to='/'>Home</Link>
           </li>
-          <li>
+          <li className="active">
           <Link className='nav-link' aria-current='page' to='/mycloset' >Closet</Link>
           </li>
-          <li>
+          <li className="active">
           <Link className='nav-link' aria-current='page' to='/mystyle'>Pick</Link>
           </li>
-          <li>
+          <li className="active">
           <Link className='nav-link ' aria-current='page' to='/friends'>Share</Link>
           </li>
-          <li>
+          <li className="active">
           <Link className='nav-link ' aria-current='page' to='/history'>History</Link>
           </li>
-          {/* <li>
-            <a href="#contact">Notice</a>
-          </li> */}
-          <li>
-          <Link className='nav-link active' aria-current='page' to='/signup'>SignUp</Link>
+          <li className="active">
+          <Link className='nav-link' aria-current='page' to='/signup'>SignUp</Link>
           </li>
-          <li>
-          <Link className='nav-link active' aria-current='page' to='/signin'>Sign in</Link>
+          <li className="active">
+          <Link className='nav-link' aria-current='page' to='/signin'>Sign in</Link>
           </li>
         </ul>
       </div>
@@ -78,11 +75,11 @@ const Nav = styled(motion.nav)`
   /* background-color: #ed6991; */
   color: white;
   .brand__container {
-    margin: 0 2rem;
+    /* margin: 20 20; */
     .brand {
       img {
-          width: 50px;
-          height: 50px;
+          width: 9rem;
+          height: 9rem;
         }
     }
     .toggle {
@@ -92,11 +89,14 @@ const Nav = styled(motion.nav)`
   .links {
     ul {
       .active {
-        a {
-          border-bottom: 0.2rem solid var(--secondary-color);
+        a:hover , a:focus{
+          background-color: #ed6991;
+          border-radius: 15px;
+          /* border-bottom: 0.2rem solid var(--secondary-color); */
         }
       }
       list-style: none;
+      margin-top : 3rem;
       display: flex;
       gap: 3rem;
       li {

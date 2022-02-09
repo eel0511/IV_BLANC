@@ -1,5 +1,6 @@
 package com.ivblanc.api.controller;
 
+import com.ivblanc.api.service.common.CommonResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.ivblanc.api.config.security.JwtTokenProvider;
@@ -30,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -157,6 +159,25 @@ public class ClothesController {
     public String upload(@RequestParam("file") MultipartFile multipartFile) {
         return fileService.upload(multipartFile);
     }
+
+    @ApiOperation(value = "beta")
+    @PostMapping(value = "/beta")
+    public @ResponseBody
+    CommonResult betaservice(final MultipartFile photo) throws Exception {
+
+        RestTemplate restTemplate = new RestTemplate();
+        String sendurl ="http://119.56.162.61:5000/";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", new MultipartInputStreamFileResource(photo.getInputStream(), photo.getOriginalFilename()));
+
+        HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
+
+        return responseService.getSingleResult(response.getBody());
+    }
+
 
     @ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
     @PostMapping(value = "/add")

@@ -180,7 +180,7 @@ export default function MyStyleTopbar() {
     console.log(e);
     const selectedData = {
       clothesId: clothId,
-      url: '상의.jfif',
+      url: url,
       category: category,
     };
     const selectedClothesId = {
@@ -276,8 +276,7 @@ export default function MyStyleTopbar() {
                         <div className='card-body'>
                           <img
                             className='MyClosetClothesItemImg'
-                            // src={require(`../../assets/${clothesData.url}`)}
-                            // src={clothesData.url}
+                            src={clothesData.url}
                             alt={clothesData.clothesId}
                             title={clothesData.category}
                             style={{
@@ -295,29 +294,6 @@ export default function MyStyleTopbar() {
             ) : (
               <p>등록된 데이터가 없습니다.</p>
             )}
-
-            {/* <div className='container-fluid'>
-        <div className='row'>
-          {clothesDatas.map((clothesData) => (
-            <div className='col-4 mt-3' key={clothesData.clothesId}>
-              <div className='card h-100'>
-                <div className='card-body'>
-                  <img
-                    className='MyClosetClothesItemImg'
-                    src={require(`../../assets/${clothesData.url}`)}
-                    alt={clothesData.clothesId}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '100%',
-                    }}
-                    onClick={saveClothes}
-                  />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
 
             <SelectedImage selectedClothes={selectedClothes} />
 
