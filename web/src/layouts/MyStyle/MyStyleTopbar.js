@@ -8,7 +8,7 @@ import axios from 'axios';
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
-import { margin } from '@mui/system';
+import { Modal } from 'react-bootstrap';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -314,10 +314,18 @@ export default function MyStyleTopbar() {
                   <Button
                     variant='contained'
                     color='success'
-                    onClick={saveStyle}
+                    onClick={handleShow}
                   >
                     스타일 저장
                   </Button>
+
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>스타일 저장</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body></Modal.Body>
+                  </Modal>
+
                   <Button variant='contained' color='info' onClick={showStyle}>
                     스타일 보기
                   </Button>
