@@ -5,16 +5,21 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityClothesDetailBinding
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.MaterialCode
 
 class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(ActivityClothesDetailBinding::inflate) {
     lateinit var clothes: Clothes
+    val mainViewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.getParcelableExtra<Clothes>("clothes")?.let {
@@ -22,8 +27,48 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         } ?: finish()
         setClothesInfo()
         setClickListeners()
+        initFavorite()
+
+        //좋아요 하트 실시간 변경, 0 받아오면 오류임
+        mainViewModel.resFavorite.observe(this){
+            if(mainViewModel.resFavorite.value==0){
+                favoriteDialog("error")
+            }else{
+                if(clothes.favorite==0){
+                    clothes.favorite=1
+                }else{
+                    clothes.favorite=0
+                }
+                initFavorite()
+            }
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        initFavorite()
+    }
+    fun initFavorite(){
+        if(clothes.favorite==1){
+            binding.imageViewClothesDetailFavorite.setImageResource(R.drawable.ic_heart_filled)
+        }else{
+            binding.imageViewClothesDetailFavorite.setImageResource(R.drawable.ic_heart_out_line)
+        }
+    }
+    fun favoriteDialog(title: String) {
+        MaterialAlertDialogBuilder(this, R.style.MyDialogTheme)
+            .setTitle(title)
+            .setPositiveButton("확인") { dialog, which ->
+                // Respond to positive button press
+                object : View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        //applicant 수정 필요 받아오는값으로
+                        onBackPressed()
+                    }
+                }
+            }
+            .show()
+    }
     private fun setClickListeners() {
         binding.imageViewClothesDetailClose.setOnClickListener {
             finish()
@@ -31,12 +76,15 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         binding.imageViewClothesDetailFavorite.setOnClickListener {
             when(clothes.favorite) {
                 0 -> {
-                    // TODO: 2022/01/31 즐겨찾기 세팅 함수 호출   
+                    // TODO: 2022/01/31 즐겨찾기 세팅 함수 호출
+                    mainViewModel.addFavorite(clothes.clothesId)
                 }
                 else -> {
                     // TODO: 2022/01/31 즐겨찾기 해제 함수 호출
+                    mainViewModel.deleteFavorite(clothes.clothesId)
                 }
             }
+            mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
         binding.imageViewClothesDetailStyle.setOnClickListener {
             // TODO: 2022/01/31 스타일 생성 화면으로 이동 
