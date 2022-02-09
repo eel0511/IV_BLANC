@@ -46,6 +46,7 @@
 /* card */
 .card {
   height: 300px;
+  box-shadow: 5px 5px #d3d3d3;
 }
 
 .card:hover {

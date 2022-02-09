@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Avatar, Paper, Box } from '@mui/material';
 import './Friends.css';
 import FirendsListItem from '../../components/Friends/FriendsListItem';
+import pricing1 from "../../assets/pricing1.png";
+import pricing2 from "../../assets/pricing2.png";
 
 export default function FriendsList() {
   const [friendsList, setFriendsList] = useState([
@@ -44,6 +46,10 @@ export default function FriendsList() {
 
   return (
     <div className='friend'>
+      <div className="background">
+        <img src={pricing1} alt="background" className="bg1" />
+        <img src={pricing2} alt="background" className="bg2" />
+      </div>
       {friendsList.map((friend, id) => (
         <div key={id}>
           <FirendsListItem friend={friend} />

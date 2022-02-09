@@ -9,7 +9,7 @@
 
 .MyClosetSidebar {
   flex: 2;
-  height: calc(100vh - 150px);
+  height: calc(100%-50px);
   overflow-y: scroll;
 }
 

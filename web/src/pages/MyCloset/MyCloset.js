@@ -282,7 +282,7 @@ export default function MyCloset() {
 const Section = styled.section`
   // background-image: url(${home});
   background-size: cover;
-  min-height: 100vh;
+  min-height: 80vh;
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
