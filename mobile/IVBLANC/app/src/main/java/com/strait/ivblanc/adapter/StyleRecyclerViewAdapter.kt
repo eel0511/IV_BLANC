@@ -41,6 +41,15 @@ class StyleRecyclerViewAdapter(val editorAdapter: StyleEditorAdapter): RecyclerV
         return true
     }
 
+    // 스와이프로 삭제 시 editorAdapter에 삭제 요청
+    override fun onItemSwipe(position: Int) {
+        val clothes = data[position]
+        data.removeAt(position)
+        notifyItemRemoved(position)
+        editorAdapter.deleteClothes(clothes)
+        notifyToStyleEditor()
+    }
+
     fun addOrUpdateClothes(clothes: Clothes) {
         val largeCategory = getLargeCategory(clothes)
         val item = data.find {
