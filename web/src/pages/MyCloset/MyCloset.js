@@ -32,14 +32,16 @@ export default function MyCloset() {
       });
   };
 
-  useEffect(() => {
-    getMyClothesData();
-  }, []);
+  // useEffect(() => {
+  //   getMyClothesData();
+  // }, []);
 
   return (
     <Section>
       <ScrollToTop />
-      <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
       <div className='MyClosetContainer'>
         <MyClosetSidebar
           clothesDatas={myClothes}
@@ -52,7 +54,7 @@ export default function MyCloset() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;
