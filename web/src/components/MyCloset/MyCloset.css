@@ -3,11 +3,8 @@
 
 .MyClosetClothesItemImg {
   transition: all 0.2s linear;
-}
-
-.MyClosetClothesItemImg:hover {
-  transform: scale(1.15, 1.15);
-  background-color : white;
+  height: 250px;
+  width: 250px;
 }
 
 /* MyClosetSidebarItem */
@@ -44,4 +41,14 @@
 
 .form-check-input {
   margin: 4px;
+}
+
+/* card */
+.card {
+  height: 300px;
+}
+
+.card:hover {
+  transform: scale(1.10, 1.10);
+  background-color : white;
 }

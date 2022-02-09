@@ -179,7 +179,7 @@ export default function MyClosetClothesItem({ clothesData }) {
   };
 
   return (
-    <div className='card h-100'>
+    <div className='card'>
       <div className='card-body'>
         <img
           className='MyClosetClothesItemImg'
