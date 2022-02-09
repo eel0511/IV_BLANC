@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
@@ -64,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
                 // Style로 변경
                 R.id.nav_style -> {
-                    setFragment(PhotoListFragment<Clothes>(), "style")
+                    setFragment(PhotoListFragment<Style>(), "style")
                     true
                 }
                 R.id.nav_history -> {
