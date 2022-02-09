@@ -21,7 +21,7 @@ class CaptureUtil {
             view.draw(canvas)
 
             val currentMillis = System.currentTimeMillis()
-            val name = "ivblanc${SimpleDateFormat("yyyy-MM-ddThh:mm:ss", Locale.KOREA).format(currentMillis)}.jpg"
+            val name = "ivblanc${SimpleDateFormat("yyyy-MM-d/hh:mm:ss", Locale.KOREA).format(currentMillis)}.jpg"
             var fos: OutputStream?
             var imageUri: Uri?
 
