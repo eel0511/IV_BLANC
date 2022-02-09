@@ -108,11 +108,11 @@
             tools:text="제목을 입력하세요." />
 
         <ImageView
-            android:id="@+id/textView_historyDetail_weather"
+            android:id="@+id/imageView_historyDetail_weather"
             android:layout_width="@dimen/smallIconSize"
             android:layout_height="@dimen/smallIconSize"
             android:layout_weight="1"
-            android:background="@drawable/ic_sunny" />
+            android:background="@drawable/icon_weather_sunny" />
 
         <TextView
             android:id="@+id/textView_historyDetail_temperature"
