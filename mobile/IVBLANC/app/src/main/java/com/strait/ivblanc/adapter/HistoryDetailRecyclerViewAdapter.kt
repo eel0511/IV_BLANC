@@ -11,7 +11,7 @@ import com.strait.ivblanc.data.model.dto.HistoryPhoto
 
 class HistoryDetailRecyclerViewAdapter(): RecyclerView.Adapter<HistoryDetailRecyclerViewAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
-    var data = mutableListOf<HistoryPhoto>()
+    var data = listOf<HistoryPhoto>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(photo: HistoryPhoto) {

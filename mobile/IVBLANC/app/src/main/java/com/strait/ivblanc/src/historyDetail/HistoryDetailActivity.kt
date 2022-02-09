@@ -9,7 +9,11 @@ import com.strait.ivblanc.databinding.ActivityHistoryDetailBinding
 
 import android.location.Address
 import android.util.Log
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
+import com.strait.ivblanc.adapter.HistoryDetailRecyclerViewAdapter
 
 import java.io.IOException
 
@@ -17,6 +21,7 @@ import java.io.IOException
 class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     ActivityHistoryDetailBinding::inflate) {
     lateinit var history: History
+    lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +30,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         } ?: finish()
         setHistoryInfo()
         setClickListeners()
+        setRecyclerView()
     }
 
     private fun setClickListeners() {
@@ -82,6 +88,13 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     }
 
     private fun setRecyclerView(){
-
+        historyDetailRecyclerViewAdapter = HistoryDetailRecyclerViewAdapter()
+        historyDetailRecyclerViewAdapter.apply {
+            data = history.historyPhotos
+        }
+        binding.recyclerViewHistoryDetailPhoto.apply {
+            adapter = historyDetailRecyclerViewAdapter
+            layoutManager = LinearLayoutManager(this@HistoryDetailActivity, RecyclerView.HORIZONTAL, false)
+        }
     }
 }
