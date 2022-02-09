@@ -32,6 +32,9 @@ function MyStyleCreateModalBody({ saveClothesId }) {
       })
       .then((response) => {
         console.log(response);
+        if (response.status === 200) {
+          alert('등록되었습니다.');
+        }
       })
       .catch((err) => {
         console.log('실패');
