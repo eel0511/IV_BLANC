@@ -41,7 +41,10 @@ export default function MyCloset() {
       <ScrollToTop />
       <Navbar />
       <div className='MyClosetContainer'>
-        <MyClosetSidebar clothesDatas={myClothes} getFilterMyclothes={getFilterMyclothes}/>
+        <MyClosetSidebar
+          clothesDatas={myClothes}
+          getFilterMyclothes={getFilterMyclothes}
+        />
         <MyClosetClothes clothesDatas={filterMyClothes} />
       </div>
     </Section>
