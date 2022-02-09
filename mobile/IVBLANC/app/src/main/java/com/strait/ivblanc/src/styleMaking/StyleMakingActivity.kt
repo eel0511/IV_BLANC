@@ -115,7 +115,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
 
     private fun setRecyclerView() {
-        recyclerViewAdapter = StyleRecyclerViewAdapter()
+        recyclerViewAdapter = StyleRecyclerViewAdapter(editorAdapter = styleEditorAdapter)
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(recyclerViewAdapter))
         binding.recyclerViewStyleMakingClothes.apply {
             adapter = recyclerViewAdapter
