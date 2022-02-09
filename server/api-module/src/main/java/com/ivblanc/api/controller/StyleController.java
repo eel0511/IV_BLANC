@@ -56,7 +56,7 @@ public class StyleController {
             + "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
     @PostMapping(value = "/add")
     public @ResponseBody
-    SingleResult<String> addStyle(@RequestParam List<MakeStyleDetailReqDTO> styleDetails,
+    SingleResult<String> addStyle(@RequestParam("clothesList") List<MakeStyleDetailReqDTO> styleDetails,
                                   @RequestHeader(value = "X-AUTH-TOKEN") String token, final MultipartFile photo) throws Exception {
         String url = fileService.upload(photo);
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
