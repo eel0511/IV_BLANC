@@ -2,6 +2,7 @@ package com.strait.ivblanc.data.model.viewmodel
 
 import android.app.Application
 import android.content.res.Resources
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -67,13 +68,14 @@ class MainViewModel : ViewModel() {
 
     //add
 
-    private var _resFavorite = MutableLiveData<String>()
-    val resFavorite:LiveData<String>
+    private var _resFavorite = MutableLiveData<Int>()
+    val resFavorite:LiveData<Int>
         get() = _resFavorite
 
     //add end
     suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()
+        totalClothesList.clear()
         val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
         _clothesResponseStatus.postValue(result)
         if (result.status == Status.SUCCESS) {
@@ -83,6 +85,7 @@ class MainViewModel : ViewModel() {
 
     suspend fun getAllFriendClothes(email: String) = withContext(Dispatchers.IO) {
         setLoading()
+        totalClothesList.clear()
         val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
         _clothesResponseStatus.postValue(result)
         if (result.status == Status.SUCCESS) {
@@ -100,13 +103,17 @@ class MainViewModel : ViewModel() {
         updateClothesByCategory(category)
     }
 
+    /**
+     *   Favorite ViewModel
+     */
     fun addFavorite(clothesId: Int) = viewModelScope.launch {
 
         withContext(Dispatchers.IO) {
             val result: Resource<ClothesFavoriteResponse> = clothesRepository.addfavorite(clothesId)
             _clothesResponseStatus.postValue(result)
             if (result.status == Status.SUCCESS) {
-                _resFavorite.postValue(result.data!!.clothesId ?: "")
+                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
+                Log.d("asdf", "addFavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
             }
         }
     }
@@ -117,7 +124,9 @@ class MainViewModel : ViewModel() {
                 clothesRepository.deletefavorite(clothesId)
             _clothesResponseStatus.postValue(result)
             if (result.status == Status.SUCCESS) {
-                _resFavorite.postValue(result.data!!.clothesId ?: "")
+
+                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
+                Log.d("asdf", "deletefavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
             }
         }
     }
