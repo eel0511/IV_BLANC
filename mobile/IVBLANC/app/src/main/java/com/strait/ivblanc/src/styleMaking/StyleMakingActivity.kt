@@ -2,6 +2,7 @@ package com.strait.ivblanc.src.styleMaking
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -25,6 +26,7 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
 import com.strait.ivblanc.util.CategoryCode
 
+private const val TAG = "StyleMakingActivity_debuk"
 class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivityStyleMakingBinding::inflate) {
     lateinit var style: Style
     lateinit var styleEditorAdapter: StyleEditorAdapter
@@ -108,7 +110,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
                     // TOTAL_SMALL이라면 대분류로 옷 분류
                     clothesViewModel.updateClothesByCategory(clothesViewModel.largeCategory.value!!)
                 }
-
             }
         }
     }
@@ -135,7 +136,13 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
 
     private fun setBottomSheetRecyclerView() {
-        bottomSheetRVAdapter = BottomSheetClothesRVAdapter()
+        bottomSheetRVAdapter = BottomSheetClothesRVAdapter().apply { 
+            itemClickListener = object: BottomSheetClothesRVAdapter.ItemClickListener {
+                override fun onClick(clothes: Clothes) {
+                    setClothesToEditor(clothes)
+                }
+            }
+        }
         binding.recyclerViewStyleMakingBottomSheet.apply {
             adapter = bottomSheetRVAdapter
             layoutManager = GridLayoutManager(this@StyleMakingActivity, 3, RecyclerView.VERTICAL, false)
@@ -176,5 +183,12 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             result.add(resources.getString(it.second))
         }
         return result.toList()
+    }
+    
+    private fun setClothesToEditor(clothes: Clothes) {
+        if(this::styleEditorAdapter.isInitialized) {
+            Log.d(TAG, "setClothesToEditor: ${clothes.clothesId}")
+            styleEditorAdapter.addOrUpdateClothes(clothes)    
+        }
     }
 }
