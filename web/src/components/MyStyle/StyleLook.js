@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
 import Button from '@mui/material/Button';
 import './MyStyleImg.css';
+import { Container, Row, Col } from 'react-bootstrap';
 
 function StyleLook({ selectedClothes }) {
   const [shirts, setShirts] = useState({});
@@ -102,69 +103,72 @@ function StyleLook({ selectedClothes }) {
       </Button>
 
       <div id='StyleImg'>
-        <div
-          className='col'
-          style={{
-            display: 'inline-block',
-            float: 'left',
-          }}
-        >
-          {Object.keys(hat).length > 0 && (
-            <img className='MyStyleHat' src={hat.url} alt={hat.clothesId} />
-          )}
-          <br />
-          {Object.keys(shirts).length > 0 && (
-            <img
-              className='MyStyleShirts'
-              src={shirts.url}
-              alt={shirts.clothesId}
-            />
-          )}
-          <br />
-          {Object.keys(pants).length > 0 && (
-            <img
-              className='MyStylePants'
-              src={pants.url}
-              alt={pants.clothesId}
-            />
-          )}
-          <br />
-          {Object.keys(shoes).length > 0 && (
-            <img
-              className='MyStyleShoes'
-              src={shoes.url}
-              alt={shoes.clothesId}
-            />
-          )}
-        </div>
+        <Container>
+          <Row>
+            <Col>
+              {Object.keys(hat).length > 0 && (
+                <img className='MyStyleHat' src={hat.url} alt={hat.clothesId} />
+              )}
+            </Col>
+            <Col>
+              {Object.keys(others).length > 0 && (
+                <img
+                  className='MyStyleOthers'
+                  src={others.url}
+                  alt={others.clothesId}
+                />
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {Object.keys(shirts).length > 0 && (
+                <img
+                  className='MyStyleShirts'
+                  src={shirts.url}
+                  alt={shirts.clothesId}
+                />
+              )}
+            </Col>
+            <Col>
+              {Object.keys(outer).length > 0 && (
+                <img
+                  className='MyStyleOuter'
+                  src={outer.url}
+                  alt={outer.clothesId}
+                />
+              )}
+            </Col>
+          </Row>
 
-        <div
-          className='col'
-          style={{
-            display: 'inline-block',
-            float: 'right',
-          }}
-        >
-          {Object.keys(others).length > 0 && (
-            <img
-              className='MyStyleOthers'
-              src={others.url}
-              alt={others.clothesId}
-            />
-          )}
-          <br />
-          {Object.keys(outer).length > 0 && (
-            <img
-              className='MyStyleOuter'
-              src={outer.url}
-              alt={outer.clothesId}
-            />
-          )}
-          <br />
-          {Object.keys(bag).length > 0 && (
-            <img className='MyStyleBag' src={bag.url} alt={bag.clothesId} />
-          )}
-        </div>
+          <Row>
+            <Col>
+              {Object.keys(pants).length > 0 && (
+                <img
+                  className='MyStylePants'
+                  src={pants.url}
+                  alt={pants.clothesId}
+                />
+              )}
+            </Col>
+            <Col>
+              {Object.keys(bag).length > 0 && (
+                <img className='MyStyleBag' src={bag.url} alt={bag.clothesId} />
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {Object.keys(shoes).length > 0 && (
+                <img
+                  className='MyStyleShoes'
+                  src={shoes.url}
+                  alt={shoes.clothesId}
+                />
+              )}
+            </Col>
+          </Row>
+        </Container>
       </div>
     </div>
   );
