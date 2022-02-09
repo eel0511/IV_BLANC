@@ -6,7 +6,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(e.target.files[0]);
+    setSelectedImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const createStyle = () => {
@@ -46,6 +46,13 @@ function MyStyleCreateModalBody({ saveClothesId }) {
       <div>
         <h2>스타일 등록</h2>
       </div>
+      {selectedImg && (
+        <img
+          alt='스타일 룩'
+          src={selectedImg}
+          style={{ margin: 'auto', width: '400px', height: '400px' }}
+        />
+      )}
       <input
         type='file'
         id='inputImg'
