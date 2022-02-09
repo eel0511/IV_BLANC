@@ -1,12 +1,15 @@
 package com.strait.ivblanc.src.styleMaking
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,10 +26,13 @@ import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
+import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
+import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.Status
 
-private const val TAG = "StyleMakingActivity_debuk"
+private const val TAG = "StyleMakingAct_debuk"
 class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivityStyleMakingBinding::inflate) {
     lateinit var style: Style
     lateinit var styleEditorAdapter: StyleEditorAdapter
@@ -35,6 +41,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var itemTouchHelper: ItemTouchHelper
     lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
     private val clothesViewModel: ClothesViewModel by viewModels()
+    private val styleViewModel: StyleViewModel by viewModels()
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,13 +61,39 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         setStyleEditorAdapter()
         setRecyclerView()
         setBottomSheetRecyclerView()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        styleViewModel.styleResponseStatus.observe(this) {
+            when(it.status) {
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+                Status.SUCCESS -> {
+
+                }
+            }
+        }
     }
 
     private fun setToolbar() {
         val toolbar = binding.toolbarStyleMaking.toolbar
         toolbar.findViewById<TextView>(R.id.textView_toolbar).text = "스타일 만들기"
+        val leadingIcon = toolbar.findViewById<ImageView>(R.id.imageView_toolbar_leadingIcon).apply {
+            setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_back, null))
+            setOnClickListener { finish() }
+        }
+        val trailingIcon = toolbar.findViewById<ImageView>(R.id.imageView_toolbar_trailingIcon).apply {
+            setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_checked, null))
+            setOnClickListener { requestAddStyle() }
+        }
     }
 
+    // Dropbox 관련 시작 -------------------------------
     private fun setBottomSheetDropDown() {
         largeCategories = getLargeCategoryString()
         // 초기화 시 대분류 전체, 소분류 전체로 세팅
@@ -114,6 +147,24 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
     }
 
+    private fun getLargeCategoryString(): List<String> {
+        val result = mutableListOf<String>()
+        clothesViewModel.largeCategorySet.forEach {
+            result.add(resources.getString(it.second))
+        }
+        return result.toList()
+    }
+
+    private fun getSmallCategoryStringByLargeCategory(largeCategory: Int): List<String> {
+        val result = mutableListOf<String>()
+        result.add(resources.getString(R.string.total))
+        clothesViewModel.getSmallCategoriesByLargeCategory(largeCategory).forEach {
+            result.add(resources.getString(it.second))
+        }
+        return result.toList()
+    }
+    // Dropbox 관련 끝 ------------------------------------------------------
+
     private fun setRecyclerView() {
         recyclerViewAdapter = StyleRecyclerViewAdapter(editorAdapter = styleEditorAdapter)
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(recyclerViewAdapter))
@@ -156,23 +207,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             }
         }
     }
-
-    private fun getLargeCategoryString(): List<String> {
-        val result = mutableListOf<String>()
-        clothesViewModel.largeCategorySet.forEach {
-            result.add(resources.getString(it.second))
-        }
-        return result.toList()
-    }
-
-    private fun getSmallCategoryStringByLargeCategory(largeCategory: Int): List<String> {
-        val result = mutableListOf<String>()
-        result.add(resources.getString(R.string.total))
-        clothesViewModel.getSmallCategoriesByLargeCategory(largeCategory).forEach {
-            result.add(resources.getString(it.second))
-        }
-        return result.toList()
-    }
     
     private fun setClothesToEditor(clothes: Clothes) {
         if(this::styleEditorAdapter.isInitialized) {
@@ -181,6 +215,23 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
         if(this::recyclerViewAdapter.isInitialized) {
             recyclerViewAdapter.addOrUpdateClothes(clothes)
+        }
+    }
+
+    private var imageUri: Uri? = null
+    // 스타일 생성 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
+    private fun requestAddStyle() {
+        if(this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
+
+            // 이미지 저장이 성공적으로 이뤄지면 imageUri 값 할당
+            imageUri = CaptureUtil.saveCapture(binding.constraintLayoutStyleMakingEdit)?.let { uri ->
+
+                // 이미지 저장이 이뤄진 후, contentResolver로 이미지 파일의 실제 경로를 이용하여 스타일 등록 요청
+                CaptureUtil.getAbsolutePathFromImageUri(this, uri)?.let {
+                    styleViewModel.addStyle(recyclerViewAdapter.data, it)
+                }
+                uri
+            }
         }
     }
 }

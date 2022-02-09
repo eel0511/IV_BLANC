@@ -1,6 +1,7 @@
 package com.strait.ivblanc.config
 
 import android.app.Application
+import android.content.ContentResolver
 import com.kakao.sdk.common.KakaoSdk
 import com.naver.maps.map.NaverMapSdk
 import com.ssafy.template.config.ReceivedCookiesInterceptor
@@ -28,11 +29,13 @@ class ApplicationClass: Application() {
 
         lateinit var sRetrofit: Retrofit
         lateinit var sSharedPreferences: SharedPreferencesUtil
+        lateinit var sContentResolver: ContentResolver
     }
 
     override fun onCreate() {
         super.onCreate()
         sSharedPreferences = SharedPreferencesUtil(applicationContext)
+        sContentResolver = contentResolver
         initRetrofit()
         KakaoSdk.init(this, "${BuildConfig.KAKAO_API_KEY}")
         NaverMapSdk.getInstance(this).setClient(
