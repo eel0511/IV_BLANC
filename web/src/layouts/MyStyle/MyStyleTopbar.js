@@ -95,6 +95,11 @@ export default function MyStyleTopbar() {
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const handleSelect = async (e) => {
     const category = e;
     console.log(category);
