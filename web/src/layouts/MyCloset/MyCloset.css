@@ -23,11 +23,13 @@
 }
 
 .MyClosetSidebarWrapper {
-  padding: 20px;
+  position: fixed;
+  width: 25%;
 }
 
 .MyClosetSidebarList {
-  padding: 0;
   margin: 0;
+  padding: 1rem;
+  width: 100%;
   list-style: none;
 }
