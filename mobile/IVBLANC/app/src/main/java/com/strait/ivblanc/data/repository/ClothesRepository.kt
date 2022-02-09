@@ -121,12 +121,12 @@ class ClothesRepository {
     suspend fun addfavorite(clothesId: Int): Resource<ClothesFavoriteResponse> {
         return try {
             val response = clothesApi.addfavorite(clothesId)
+            Log.d("asdf", "addfavorite: "+response.body()!!.data!!.clothes_id)
             if (response.isSuccessful) {
-                return if (response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                return if (response.code() == StatusCode.OK) {
                     Resource.success(response.body()!!)
-                } else if (response.code() == StatusCode.UNDOCUMENT) {
-                    Resource.error(null, "존재하지 않는 옷입니다.")
-                } else {
+                }
+                 else {
                     Resource.error(null, "알 수 없는 오류입니다.")
                 }
             } else {
@@ -140,11 +140,10 @@ class ClothesRepository {
     suspend fun deletefavorite(clothesId: Int): Resource<ClothesFavoriteResponse> {
         return try {
             val response = clothesApi.deletefavorite(clothesId)
+            Log.d("asdf", "addfavorite: "+response.body()!!.data!!.clothes_id)
             if (response.isSuccessful) {
-                return if (response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                return if (response.code() == StatusCode.OK) {
                     Resource.success(response.body()!!)
-                } else if (response.code() == StatusCode.UNDOCUMENT) {
-                    Resource.error(null, "존재하지 않는 옷입니다.")
                 } else {
                     Resource.error(null, "알 수 없는 오류입니다.")
                 }
