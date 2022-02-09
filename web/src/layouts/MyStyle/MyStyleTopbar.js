@@ -4,11 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
-import { Modal } from 'react-bootstrap';
+import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -323,7 +324,9 @@ export default function MyStyleTopbar() {
                     <Modal.Header closeButton>
                       <Modal.Title>스타일 저장</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body></Modal.Body>
+                    <Modal.Body>
+                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                    </Modal.Body>
                   </Modal>
 
                   <Button variant='contained' color='info' onClick={showStyle}>
