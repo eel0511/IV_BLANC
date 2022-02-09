@@ -22,6 +22,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
+import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
@@ -38,6 +39,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val SP_NAME = "fcm_message"
     val mainViewModel: MainViewModel by viewModels()
     val friendViewModel: FriendViewModel by viewModels()
+    val clothesViewModel: ClothesViewModel by viewModels()
     lateinit var dialog: Dialog
 
     companion object {
@@ -48,8 +50,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getFCM()
-        // TODO: 2022/01/26 모든 옷 받기 테스트
+        // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+        clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         init()
     }
 
