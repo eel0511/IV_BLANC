@@ -6,6 +6,7 @@ import FirendsListItem from '../../components/Friends/FriendsListItem';
 import pricing1 from "../../assets/pricing1.png";
 import pricing2 from "../../assets/pricing2.png";
 import Title from '../../components/Home/Title';
+import FriendsCreateButton from '../../components/Friends/FriendsCreateButton';
 
 export default function FriendsList() {
   const [friendsList, setFriendsList] = useState([
@@ -59,6 +60,7 @@ export default function FriendsList() {
           </div>
         ))}
       </div>
+      <FriendsCreateButton />
     </div>
   );
 }

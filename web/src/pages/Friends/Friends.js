@@ -14,11 +14,8 @@ export default function Friends() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-        <div><FriendsList /></div>
-        <footer>
-          <Notice />
-          <FriendsCreateButton />
-        </footer>
+      <div><FriendsList /></div>
+      <Notice />
     </Section>
   );
 }
