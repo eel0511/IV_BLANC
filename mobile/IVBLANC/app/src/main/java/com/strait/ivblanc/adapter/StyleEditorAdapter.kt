@@ -19,6 +19,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     private val clothesMap = mutableMapOf<Int, Clothes>()
 
     // 각 카테고리 아이템을 나타내는 이미지뷰
+    // largeCategory, imageView
     private val imageViews = mutableMapOf<Int, ImageView>()
 
     var imageX = 0f
@@ -81,6 +82,14 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
                 eventX = 0f
                 eventY = 0f
             }
+        }
+    }
+
+    fun changeImageZorder(list: List<Int>) {
+        var order = 10F
+        list.forEach {
+            imageViews[it]?.z = order
+            order -= 1F
         }
     }
 
