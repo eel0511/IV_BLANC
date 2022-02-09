@@ -9,6 +9,7 @@ import com.strait.ivblanc.databinding.ActivityHistoryDetailBinding
 
 import android.location.Address
 import android.util.Log
+import com.strait.ivblanc.R
 
 import java.io.IOException
 
@@ -45,13 +46,13 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         binding.textViewHistoryDetailText.text = history.text
 
         if(history.weather == "맑음"){
-            binding.imageViewHistoryDetailWeather.setImageResource(com.strait.ivblanc.R.drawable.icon_weather_sunny);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_sunny);
         } else if(history.weather == "흐림"){
-            binding.imageViewHistoryDetailWeather.setImageResource(com.strait.ivblanc.R.drawable.icon_weather_cloudy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_cloudy);
         } else if(history.weather == "눈"){
-            binding.imageViewHistoryDetailWeather.setImageResource(com.strait.ivblanc.R.drawable.icon_weather_snowy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_snowy);
         } else if(history.weather == "비"){
-            binding.imageViewHistoryDetailWeather.setImageResource(com.strait.ivblanc.R.drawable.icon_weather_rainy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_rainy);
         }
     }
 
