@@ -1,5 +1,6 @@
 package com.strait.ivblanc.data.api
 
+import com.strait.ivblanc.data.model.response.StyleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Multipart
