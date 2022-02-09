@@ -11,7 +11,6 @@ export default function MyStyle() {
     <Section>
       <ScrollToTop />
       <Navbar />
-      <h1>Mystyle</h1>
       <div className='MyStyleContanier'>
         <MyStyleTopbar />
         {/* <Container fluid='md'>

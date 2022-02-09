@@ -4,11 +4,12 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
-import { margin } from '@mui/system';
+import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -94,6 +95,11 @@ export default function MyStyleTopbar() {
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -309,10 +315,25 @@ export default function MyStyleTopbar() {
                   <Button
                     variant='contained'
                     color='success'
-                    onClick={saveStyle}
+                    onClick={handleShow}
                   >
                     스타일 저장
                   </Button>
+
+                  <Modal
+                    aria-labelledby='contained-modal-title-vcenter'
+                    centered
+                    show={show}
+                    onHide={handleClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>스타일 저장</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                    </Modal.Body>
+                  </Modal>
+
                   <Button variant='contained' color='info' onClick={showStyle}>
                     스타일 보기
                   </Button>
