@@ -15,6 +15,7 @@ import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
+import com.strait.ivblanc.util.CategoryCode
 
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
@@ -108,7 +109,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
         // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
         viewModel.clothesResponseStatus.observe(requireActivity()) {
-            
+
         }
         viewModel.clothesListLiveData.observe(requireActivity()) {
             exAdapter.data = it as ArrayList<PhotoItem<T>>
@@ -116,7 +117,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         }
 
     }
-
     fun showDeleteDialog(item: PhotoItem<*>) {
         val content: String = when(item.content) {
             is Clothes -> "이 옷을 삭제하시겠습니까?"
