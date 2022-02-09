@@ -78,7 +78,7 @@ function StyleLook({ selectedClothes }) {
       // foreignObjectRendering: true,
     }).then((canvas) => {
       // canvas.crossOrigin = 'anonymous';
-      saveAs(canvas.toDataURL(), 'capture-test.png');
+      saveAs(canvas.toDataURL(), 'captureTest.png');
     });
     const saveAs = (uri, filename) => {
       // 캡쳐된 파일을 이미지 파일로 내보낸다.
