@@ -56,6 +56,7 @@ const Section = styled.section`
       flex-direction: column;
       align-items: flex-start;
       gap: 1.2rem;
+      // margin: 0 auto;
       padding-left: 14rem;
       margin-top: 6rem;
       width: 100%;
