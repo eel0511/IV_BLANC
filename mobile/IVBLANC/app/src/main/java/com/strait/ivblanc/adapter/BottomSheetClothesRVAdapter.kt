@@ -15,7 +15,7 @@ class BottomSheetClothesRVAdapter: RecyclerView.Adapter<BottomSheetClothesRVAdap
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(clothes: Clothes) {
-            itemView.setOnClickListener { itemClickListener.onClick(clothes) }
+            itemView.setOnClickListener { if(this@BottomSheetClothesRVAdapter::itemClickListener.isInitialized) itemClickListener.onClick(clothes) }
             val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes)
             Glide.with(itemView.context).load(clothes.url).into(imageView)
         }
