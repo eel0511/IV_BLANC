@@ -17,3 +17,8 @@
   right: 0;
   bottom: 5rem;
 }
+
+.friend__content {
+  width: 800px;
+  margin: 0 auto;
+}
