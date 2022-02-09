@@ -320,7 +320,12 @@ export default function MyStyleTopbar() {
                     스타일 저장
                   </Button>
 
-                  <Modal show={show} onHide={handleClose}>
+                  <Modal
+                    aria-labelledby='contained-modal-title-vcenter'
+                    centered
+                    show={show}
+                    onHide={handleClose}
+                  >
                     <Modal.Header closeButton>
                       <Modal.Title>스타일 저장</Modal.Title>
                     </Modal.Header>
