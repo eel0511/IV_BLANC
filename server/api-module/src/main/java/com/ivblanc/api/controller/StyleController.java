@@ -58,11 +58,7 @@ public class StyleController {
     public @ResponseBody
     SingleResult<String> addStyle(@RequestParam("clothesList" ) String list,
                                   @RequestHeader(value = "X-AUTH-TOKEN") String token, final MultipartFile photo) throws Exception {
-        List<MakeStyleDetailReqDTO> styleDetails = new ArrayList<>();
-        String[] temp = list.split(",");
-        for(String s : temp){
-            styleDetails.add(new MakeStyleDetailReqDTO(Integer.parseInt(s.trim())));
-        }
+        List<MakeStyleDetailReqDTO> styleDetails = styleService.makeStyleDetailReqDTOList(list);
         String url = fileService.upload(photo);
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         if (url.equals("error")) {

@@ -1,8 +1,10 @@
 package com.ivblanc.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ivblanc.api.dto.req.MakeStyleDetailReqDTO;
 import org.springframework.stereotype.Service;
 
 import com.ivblanc.core.entity.Style;
@@ -44,5 +46,14 @@ public class StyleService {
     public Style updateFavorite(Style style, int favorite) {
         style.setFavorite(favorite);
         return style;
+    }
+
+    public List<MakeStyleDetailReqDTO> makeStyleDetailReqDTOList(String list){
+        List<MakeStyleDetailReqDTO> styleDetails = new ArrayList<>();
+        String[] temp = list.split(",");
+        for(String s : temp){
+            styleDetails.add(new MakeStyleDetailReqDTO(Integer.parseInt(s.trim())));
+        }
+        return styleDetails;
     }
 }
