@@ -9,7 +9,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
     setSelectedImg(e.target.files[0]);
   };
 
-  const createClothes = () => {
+  const createStyle = () => {
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
@@ -40,7 +40,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
         onChange={imgHandleChange}
       ></input>
       <div style={{ marginTop: '30px', float: 'right' }}>
-        <Button variant='primary' onClick={createClothes}>
+        <Button variant='primary' onClick={createStyle}>
           등록
         </Button>
       </div>
