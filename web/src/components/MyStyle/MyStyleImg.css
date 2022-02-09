@@ -2,30 +2,7 @@
   max-width: 150px;
   max-height: 150px;
   vertical-align: middle;
-  margin-top: 20px;
-  margin-left: 70px;
-}
 
-.MyStyleShirts {
-  max-width: 400px;
-  max-height: 400px;
-  vertical-align: middle;
-  margin-top: 20px;
-  margin-left: 70px;
-}
-
-.MyStylePants {
-  max-width: 400px;
-  max-height: 400px;
-  vertical-align: middle;
-  margin-top: 20px;
-  margin-left: 70px;
-}
-
-.MyStyleShoes {
-  max-width: 150px;
-  max-height: 150px;
-  vertical-align: middle;
   margin-top: 20px;
   margin-left: 70px;
 }
@@ -37,18 +14,42 @@
   margin-right: 80px;
 }
 
-.MyStyleOuter {
+.MyStyleShirts {
   max-width: 400px;
   max-height: 400px;
   vertical-align: middle;
-  margin-top: 70px;
-  margin-right: 80px;
+  margin-top: 20px;
+  margin-left: 70px;
+}
+
+.MyStyleOuter {
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.MyStylePants {
+  max-width: 400px;
+  max-height: 400px;
+  vertical-align: middle;
+  margin-top: 5px;
+  margin-left: 70px;
 }
 
 .MyStyleBag {
   max-width: 150px;
   max-height: 150px;
   vertical-align: middle;
-  margin-top: 70px;
+  margin-top: 20px;
   margin-right: 80px;
+}
+
+.MyStyleShoes {
+  max-width: 150px;
+  max-height: 150px;
+  vertical-align: middle;
+  margin-top: 5px;
+  margin-left: 70px;
 }
