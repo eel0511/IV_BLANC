@@ -17,6 +17,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import AuthSocial from '../../components/login/AuthSocial';
+import setAuthorizationToken from '../../utils/setAuthorizationToken';
 
 function Copyright(props) {
   return (
@@ -34,6 +35,28 @@ function Copyright(props) {
       {'.'}
     </Typography>
   );
+}
+
+// 쿠키에서 JWT 읽어오는 함수
+function getCookie(cname) {
+  const name = cname + '=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+
+  const ca = decodedCookie.split(';');
+
+  for (let i = 0; i < ca.length; i++) {
+    const c = ca[i];
+
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return '';
 }
 
 const theme = createTheme();
@@ -96,15 +119,24 @@ export default function SignInSide() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://i6d104.p.ssafy.io:9999/api/sign/login', {
-          email: data.get('email'),
-          pw: data.get('password'),
-          social: 1,
-        })
+        .post(
+          'http://localhost:9999/api/sign/login',
+          // i6d104.p.ssafy.io:9999
+          {
+            email: data.get('email'),
+            pw: data.get('password'),
+            social: 0,
+          },
+          { withCredentials: true }
+        )
         .then((res) => {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
+            const token = getCookie('JWT');
+            console.log(token);
+            localStorage.setItem('JWT', token);
+            setAuthorizationToken(token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
             alert(res.data.msg);

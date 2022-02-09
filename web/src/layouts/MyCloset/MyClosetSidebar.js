@@ -2,7 +2,7 @@ import React from 'react';
 import MyClosetSidebarItem from '../../components/MyCloset/MyClosetSidebarItem';
 import './MyCloset.css';
 
-export default function MyClosetSidebar() {
+export default function MyClosetSidebar({ clothesDatas, getFilterMyclothes }) {
   const menus = [
     { name: '전체' },
     { name: '상의' },
@@ -17,12 +17,11 @@ export default function MyClosetSidebar() {
   return (
     <div className='MyClosetSidebar'>
       <div className='MyClosetSidebarWrapper'>
-        <h1>사이드 바</h1>
         <ul className='MyClosetSidebarList'>
           {menus.map((menu, index) => {
             return (
               <li className='MyClosetSidebarListItem' key={index}>
-                <MyClosetSidebarItem menu={menu} />
+                <MyClosetSidebarItem menu={menu} id={index} clothesDatas={clothesDatas} getFilterMyclothes={getFilterMyclothes}/>
               </li>
             );
           })}

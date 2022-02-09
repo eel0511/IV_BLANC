@@ -19,6 +19,23 @@ private const val TAG = "ClothesRepository_debuk"
 class ClothesRepository {
     val clothesApi = ApplicationClass.sRetrofit.create(ClothesApi::class.java)
 
+    suspend fun getAllFriendClothes(email:String):Resource<ClothesResponse> {
+        return try {
+            val response = clothesApi.getAllFriendClothes(email)
+            if(response.isSuccessful) {
+                return if(response.code() == 200 && response.body()!!.output == 1 ) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "error")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            val msg = e.message
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
     suspend fun getAllClothes(): Resource<ClothesResponse> {
         return try {
             val response = clothesApi.getAllClothes()

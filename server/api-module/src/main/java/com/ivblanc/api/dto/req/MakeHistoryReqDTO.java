@@ -20,11 +20,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MakeHistoryReqDTO {
 
-	@ApiModelProperty(value = "위치", example = "000.0000000")
-	private BigDecimal location;
+	@ApiModelProperty(value = "위도", example = "000.0000000")
+	private BigDecimal latitude;
 
 	@ApiModelProperty(value = "경도", example = "0000.0000000")
-	private BigDecimal field;
+	private BigDecimal longitude;
 
 	@ApiModelProperty(value = "날짜", example = "yyyy-MM-dd")
 	private String date;

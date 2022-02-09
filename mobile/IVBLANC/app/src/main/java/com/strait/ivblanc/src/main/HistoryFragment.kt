@@ -40,6 +40,10 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
                 else -> tab.text = resources.getString(R.string.map)
             }
         }.attach()
+    }
+
+    override fun onResume() {
+        super.onResume()
         mainViewModel.setToolbarTitle(resources.getString(R.string.history))
         mainViewModel.setLeadingIcon(R.drawable.ic_add)
     }
@@ -55,8 +59,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
                 }
                 // TODO: 2022/02/06 지도 fragment로 이동
                 else -> {
-                    toast("지도 fragment", Toast.LENGTH_SHORT)
-                    CameraFragment()
+                    MapFragment()
                 }
             }
         }

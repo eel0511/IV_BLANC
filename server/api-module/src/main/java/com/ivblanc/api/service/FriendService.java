@@ -74,7 +74,7 @@ public class FriendService {
 			friendRepository.save(friend);
 		}
 		else{
-			throw new ApiMessageException("이미 요청보낸 친구입니다.");
+			throw new ApiMessageException(500,"이미 요청보낸 친구입니다.");
 		}
 
 	}

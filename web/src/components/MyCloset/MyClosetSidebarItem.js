@@ -1,8 +1,18 @@
 import React from 'react';
 
-export default function MyClosetSidebarItem({ menu }) {
+export default function MyClosetSidebarItem({ menu, id, clothesDatas, getFilterMyclothes }) {
   const showItem = () => {
-    alert('showItem');
+    if (id !== 0) {
+      const filterClothesDatas = clothesDatas.filter(
+        (clothesData) => parseInt(clothesData.category / 10) === id
+      );
+      // console.log(filterClothesDatas);
+      getFilterMyclothes(filterClothesDatas)
+    } else {
+      const filterClothesDatas = clothesDatas
+      // console.log(filterClothesDatas);
+      getFilterMyclothes(filterClothesDatas)
+    }
   };
 
   return (

@@ -39,6 +39,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: ivblanc
     password: ivblancgumi104
+
   flyway:
     enabled: false
   config:

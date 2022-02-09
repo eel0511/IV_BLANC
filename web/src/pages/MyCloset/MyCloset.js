@@ -1,103 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styled from "styled-components";
+import styled from 'styled-components';
 import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
 import MyClosetClothes from '../../layouts/MyCloset/MyClosetClothes';
 import MyClosetSidebar from '../../layouts/MyCloset/MyClosetSidebar';
 import './MyCloset.css';
-import home from "../../assets/home.png";
+import home from '../../assets/home.png';
 
 export default function MyCloset() {
   const [myClothes, setMyClothes] = useState([]);
-  const clothesDatas = [
-    {
-      category: 10,
-      clothesId: 1,
-      color: 'red',
-      count: 0,
-      createDate: '2022-01-19T08:28:17.455Z',
-      dislikePoint: 0,
-      favorite: 0,
-      material: 'string',
-      season: 0,
-      size: 0,
-      updateDate: '2022-01-19T08:28:17.455Z',
-      url: '상의.jfif',
-      userId: 1,
-    },
-    {
-      category: 20,
-      clothesId: 2,
-      color: 'red',
-      count: 0,
-      createDate: '2022-01-20T08:28:17.455Z',
-      dislikePoint: 0,
-      favorite: 0,
-      material: 'string',
-      season: 0,
-      size: 0,
-      updateDate: '2022-01-20T08:28:17.455Z',
-      url: '하의.jfif',
-      userId: 1,
-    },
-    {
-      category: 20,
-      clothesId: 3,
-      color: 'red',
-      count: 0,
-      createDate: '2022-01-20T08:28:17.455Z',
-      dislikePoint: 0,
-      favorite: 0,
-      material: 'string',
-      season: 0,
-      size: 0,
-      updateDate: '2022-01-20T08:28:17.455Z',
-      url: 'logo.png',
-      userId: 1,
-    },
-    {
-      category: 20,
-      clothesId: 4,
-      color: 'red',
-      count: 0,
-      createDate: '2022-01-20T08:28:17.455Z',
-      dislikePoint: 0,
-      favorite: 0,
-      material: 'string',
-      season: 0,
-      size: 0,
-      updateDate: '2022-01-20T08:28:17.455Z',
-      url: 'logo2.png',
-      userId: 1,
-    },
-  ];
+  const [filterMyClothes, setFilterMyClothes] = useState([]);
 
-  const testAxios = () => {
+  const getFilterMyclothes = (myclothes) => {
+    setFilterMyClothes(myclothes);
+  };
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const getMyClothesData = () => {
     axios
-      .get('http://119.56.162.61:8888/api/clothes/all', {
-        params: {
-          page: 1,
-          userId: 1,
+      .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
         },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data.data);
+        setMyClothes(response.data.data);
+        setFilterMyClothes(response.data.data);
       });
   };
 
-  // useEffect(() => {
-  //   testAxios();
-  // }, []);
+  useEffect(() => {
+    getMyClothesData();
+  }, []);
 
   return (
     <Section>
       <ScrollToTop />
       <Navbar />
-      <h1>My Closet</h1>
       <div className='MyClosetContainer'>
-        <MyClosetSidebar />
-        <MyClosetClothes clothesDatas={clothesDatas} />
+        <MyClosetSidebar clothesDatas={myClothes} getFilterMyclothes={getFilterMyclothes}/>
+        <MyClosetClothes clothesDatas={filterMyClothes} />
       </div>
     </Section>
   );

@@ -12,11 +12,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginUserResDTO {
-
-	@ApiModelProperty(value = "회원 아이디", required = true, example = "1")
+public class LoginResDTO {
+	@ApiModelProperty(value = "아이디", required = true, example = "1")
 	private int userId;
 
-	@ApiModelProperty(value = "JWT 토큰값", required = true, example = "")
-	private String token_jwt;
+	@ApiModelProperty(value = "이메일", required = true, example = "a@a.com")
+	private String email;
+
+	@ApiModelProperty(value = "이름", required = true, example = "홍길동")
+	private String name;
 }

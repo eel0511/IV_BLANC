@@ -12,6 +12,8 @@ interface ClothesApi {
     @GET("/api/clothes/all")
     suspend fun getAllClothes(): Response<ClothesResponse>
 
+    @GET("/api/clothes/friendclothes")
+    suspend fun getAllFriendClothes(@Query("email") email:String):Response<ClothesResponse>
     @DELETE("/api/clothes/deleteById")
     suspend fun deleteClothesById(@Query("clothesId") clothesId: Int): Response<ClothesDeleteResponse>
 

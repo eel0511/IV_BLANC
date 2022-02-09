@@ -1,10 +1,10 @@
 import React from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
-import home from "../../assets/home.png";
+import home from '../../assets/home.png';
 
 export default function MyStyle() {
   return (
@@ -13,14 +13,15 @@ export default function MyStyle() {
       <Navbar />
       <h1>Mystyle</h1>
       <div className='MyStyleContanier'>
-        <Container fluid='md'>
+        <MyStyleTopbar />
+        {/* <Container fluid='md'>
           <Row xs={1} md={2}>
             <Col sm={4}>
               <MyStyleTopbar />
             </Col>
             <Col sm={8}>아바타</Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
     </Section>
   );
