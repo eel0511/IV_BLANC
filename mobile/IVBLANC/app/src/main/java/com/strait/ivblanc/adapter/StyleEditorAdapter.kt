@@ -99,6 +99,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
                 focusedImageView = this
                 Log.d(TAG, "addImageView: ${this.id}")
             }
+            isClickable = false
         }
     }
 
