@@ -3,6 +3,7 @@ package com.strait.ivblanc.data.api
 import com.strait.ivblanc.config.BaseResponse
 import com.strait.ivblanc.data.model.dto.ClothesForUpload
 import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
+import com.strait.ivblanc.data.model.response.ClothesFavoriteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -26,5 +27,11 @@ interface ClothesApi {
                            , @Part season: MultipartBody.Part
                            , @Part size: MultipartBody.Part
                            , @Part image: MultipartBody.Part): Response<ClothesDeleteResponse>
+
+    @PUT("api/clothes/addfavorite")
+    suspend fun addfavorite(@Query("clothesId")clothesId: Int):Response<ClothesFavoriteResponse>
+
+    @PUT("api/clothes/deletefavorite")
+    suspend fun deletefavorite(@Query("clothesId")clothesId: Int):Response<ClothesFavoriteResponse>
 
 }
