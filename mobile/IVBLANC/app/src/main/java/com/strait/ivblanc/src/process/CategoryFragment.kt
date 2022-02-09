@@ -57,8 +57,9 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
                 return@addTextChangedListener
             }
 
-            val smallCategory = smallCategories.find {
-                 resources.getString(it.second) == it.toString()
+            val smallCategory = smallCategories.find { pair ->
+                val string = resources.getString(pair.second)
+                 it.toString() == string
             }
 
             smallCategory?.let {

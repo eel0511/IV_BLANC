@@ -26,6 +26,9 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
+
+import com.strait.ivblanc.src.process.ProcessActivity
+import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 
@@ -136,7 +139,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         }
                     }
                     "style" -> {
-                        View.OnClickListener { toast("스타일 생성 Activity로 이동", Toast.LENGTH_SHORT) }
+                        View.OnClickListener {
+                            startActivity(Intent(this@MainActivity, StyleMakingActivity::class.java))
+                        }
                     }
                     "history" -> {
                         View.OnClickListener { toast("히스토리 생성 Activity로 이동", Toast.LENGTH_SHORT) }
