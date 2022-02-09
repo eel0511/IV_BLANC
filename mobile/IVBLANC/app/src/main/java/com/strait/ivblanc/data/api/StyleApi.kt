@@ -10,5 +10,5 @@ import retrofit2.http.Part
 interface StyleApi {
     @Multipart
     @POST("/api/style/add")
-    suspend fun addStyle(@Part image: MultipartBody.Part, @Part styleDetails: MultipartBody.Part): Response<StyleResponse>
+    suspend fun addStyle(@Part image: MultipartBody.Part, @Part clothesList: MultipartBody.Part): Response<StyleResponse>
 }
