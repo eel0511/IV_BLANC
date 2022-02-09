@@ -38,7 +38,7 @@
                 android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_hat"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_bottom"
@@ -46,7 +46,7 @@
                 android:layout_height="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_top"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_outer"
@@ -54,7 +54,7 @@
                 android:layout_height="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_etc"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_shoes"
@@ -64,7 +64,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_bag"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_hat"
@@ -72,7 +72,7 @@
                 android:layout_height="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_bag"
@@ -80,7 +80,7 @@
                 android:layout_height="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_outer"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_etc"
@@ -88,7 +88,7 @@
                 android:layout_height="100dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/circle"/>
+                android:clickable="false"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

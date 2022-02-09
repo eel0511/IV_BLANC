@@ -99,6 +99,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
                 focusedImageView = this
                 Log.d(TAG, "addImageView: ${this.id}")
             }
+            isClickable = false
         }
     }
 
@@ -120,6 +121,8 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
             it.layoutParams.width = 150.dp
             it.layoutParams.height = 150.dp
             it.visibility = View.VISIBLE
+            it.isClickable = true
+            focusedImageView = it
             Glide.with(it).load(clothes.url).into(it)
         }
     }
@@ -127,7 +130,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     private fun removeImage(clothes: Clothes) {
         imageViews[getLargeCategory(clothes)]?.let {
             it.setImageDrawable(null)
-            it.visibility = View.GONE
+            it.isClickable = false
         }
     }
 
