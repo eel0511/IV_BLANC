@@ -251,10 +251,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         }
         DeleteDialog(requireActivity())
             .setContent(content)
-            .setOnPositiveClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
-                    viewModel.deleteClothesById((item.content as Clothes).clothesId)
+            .setOnPositiveClickListener {
+                when (item.content) {
+                    is Clothes -> viewModel.deleteClothesById((item.content as Clothes).clothesId)
+                    is Style -> styleViewModel.deleteStyleById((item.content as Style).styleId)
                 }
-            }).build().show()
+            }.build().show()
     }
 }
