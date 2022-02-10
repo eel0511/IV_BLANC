@@ -289,7 +289,7 @@ export default function MyStyleTopbar() {
   const handleSelect = async (e) => {
     const category = e;
     console.log(category);
-    setTab(e);
+    setTab(Number(category));
     setIsData(true);
 
     if (Number(category) === 0) {
@@ -435,6 +435,16 @@ export default function MyStyleTopbar() {
                 }}
               >
                 <Stack direction='row' spacing={2}>
+                  {tab === 1 && (
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      onClick={handleShowAIStyle}
+                    >
+                      AI 스타일링
+                    </Button>
+                  )}
+
                   <Button
                     variant='contained'
                     color='success'
