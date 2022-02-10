@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Nav, NavDropdown } from 'react-bootstrap';
 import { Container, Row, Col } from 'react-bootstrap';
 import Stack from '@mui/material/Stack';
@@ -37,6 +37,26 @@ export default function MyStyleTopbar() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const getMyClothesData = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setClothes(response.data.data);
+        setFilterMyClothes(response.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getMyClothesData();
+  }, []);
 
   const handleSelect = async (e) => {
     const category = e;
