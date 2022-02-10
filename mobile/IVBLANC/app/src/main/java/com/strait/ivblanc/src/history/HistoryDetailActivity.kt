@@ -1,4 +1,4 @@
-package com.strait.ivblanc.src.historyDetail
+package com.strait.ivblanc.src.history
 
 import android.location.Geocoder
 import android.os.Bundle

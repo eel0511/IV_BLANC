@@ -22,7 +22,7 @@
             android:name=".src.styleMaking.StyleMakingActivity"
             android:exported="false"/>
         <activity
-            android:name=".src.historyDetail.HistoryDetailActivity"
+            android:name=".src.history.HistoryDetailActivity"
             android:exported="true" />
         <activity
             android:name=".src.friend.FriendNoti"

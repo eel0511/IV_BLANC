@@ -14,7 +14,7 @@ import com.strait.ivblanc.data.model.dto.DateWithHistory
 import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.databinding.FragmentCalendarMonthBinding
-import com.strait.ivblanc.src.historyDetail.HistoryDetailActivity
+import com.strait.ivblanc.src.history.HistoryDetailActivity
 import org.joda.time.DateTime
 
 private const val TAG = "History_debuk"
