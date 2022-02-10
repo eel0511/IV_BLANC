@@ -5,6 +5,7 @@ import ScrollToTop from '../../components/ScrollToTop';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
 import home from '../../assets/home.png';
+import Title from '../../components/Home/Title';
 
 export default function MyStyle() {
   return (
@@ -13,7 +14,7 @@ export default function MyStyle() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-      <h1>Mystyle</h1>
+      <Title value="STYLE" />
       <div className='MyStyleContanier'>
         <MyStyleTopbar />
         {/* <Container fluid='md'>

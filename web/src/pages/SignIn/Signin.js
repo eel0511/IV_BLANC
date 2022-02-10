@@ -20,6 +20,7 @@ import axios from 'axios';
 import Container from '@mui/material/Container';
 import AuthSocial from '../../components/login/AuthSocial';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
+import Title from '../../components/Home/Title';
 
 function Copyright(props) {
   return (
@@ -156,6 +157,7 @@ export default function SignInSide() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
+      <Title value="SIGNIN" />
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs'>
         {/* <Grid container component='main' sx={{ height: '100vh' }}> */}

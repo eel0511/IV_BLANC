@@ -21,6 +21,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/signup.scss';
+import Title from '../../components/Home/Title';
 
 function Copyright(props) {
   return (
@@ -261,9 +262,10 @@ export default function SignUp() {
 
   return (
     <Section>
-    <div className='MyCloset__Nav'>
+      <div className='MyCloset__Nav'>
         <Navbar />
       </div>
+      <Title value="SIGNUP" />
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs' >
         <CssBaseline />

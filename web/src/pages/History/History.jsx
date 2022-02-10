@@ -39,6 +39,7 @@ import bimg16 from "../../assets/outfit/42.jfif";
 
 import FlipCard from "./FlipCard";
 import HistoryCreateButton from './HistoryCreateButton';
+import Title from '../../components/Home/Title';
 
 const cards = [
   {
@@ -227,9 +228,10 @@ export default function History() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-      <>
-      <HistoryCreateButton />
-      </>
+      <Title value="HISTORY" />
+      <div style={{ 'margin-top': '1rem' }}>
+      <HistoryCreateButton/>
+      </div>
       <StyledHistory>
       <div className="container">
       <div className="overlay-background" />
