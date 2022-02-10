@@ -19,8 +19,11 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.history.HistoryEditActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.styleMaking.StyleMakingActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".src.history.HistoryDetailActivity"
             android:exported="true" />
