@@ -3,8 +3,10 @@ package com.strait.ivblanc.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.DateWithHistory
 import com.strait.ivblanc.databinding.ListHistoryCalendarItemBinding
@@ -17,6 +19,7 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: DateWithHistory) {
             val textView = itemView.findViewById<TextView>(R.id.textView_historyCalendar_list_date)
+            val imageView = itemView.findViewById<ImageView>(R.id.imageView_historyCalendar_list)
             when(item.date) {
                 null -> textView.text = itemView.resources.getText(R.string.empty)
                 else -> textView.text = item.date.dayOfMonth.toString()
@@ -25,6 +28,7 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
             // 히스토리가 존재할 때만 클릭리스너 동작
             item.history?.let {
                 if(this@CalendarAdapter::itemClickListener.isInitialized) {
+                    Glide.with(imageView).load(item.history!!.styleUrl).into(imageView)
                     itemView.setOnClickListener {
                         itemClickListener.onClick(adapterPosition)
                     }
