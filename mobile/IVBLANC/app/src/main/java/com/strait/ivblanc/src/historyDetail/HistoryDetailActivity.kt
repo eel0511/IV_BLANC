@@ -9,6 +9,7 @@ import com.strait.ivblanc.databinding.ActivityHistoryDetailBinding
 
 import android.location.Address
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
@@ -48,17 +49,20 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         binding.textViewHistoryDetailDate.text = history.date
         binding.textViewHistoryDetailSubject.text = history.subject
         binding.textViewHistoryDetailLocation.text = getLocation()
-        binding.textViewHistoryDetailTemperature.text = history.temperature_high.toString() + "/" + history.temperature_low.toString()
+        binding.textViewHistoryDetailTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
         binding.textViewHistoryDetailText.text = history.text
 
+        if(history.photos.size == 0)
+            binding.recyclerViewHistoryDetailPhoto.visibility = View.GONE
+
         if(history.weather == "맑음"){
-            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_sunny);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_sunny_48);
         } else if(history.weather == "흐림"){
-            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_cloudy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_cloudy_64);
         } else if(history.weather == "눈"){
-            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_snowy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_snowy_48);
         } else if(history.weather == "비"){
-            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_rainy);
+            binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_rainy_48);
         }
     }
 

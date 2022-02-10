@@ -16,7 +16,7 @@ class HistoryDetailRecyclerViewAdapter(): RecyclerView.Adapter<HistoryDetailRecy
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(photo: HistoryPhoto) {
             val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_history)
-            Glide.with(imageView).load(photo.url).into(imageView)
+            Glide.with(imageView).load(photo.url).override(300 ,300).into(imageView)
         }
     }
 
