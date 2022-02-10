@@ -14,6 +14,9 @@ interface StyleApi {
     @GET("/api/style/finduserstyle")
     suspend fun getAllStyles(): Response<StyleAllResponse>
 
+    @DELETE("/api/style/delete")
+    suspend fun deleteStyleById(@Query("styleId") styleId: Int): Response<StyleResponse>
+
     @GET("/api/style/findfriendstyle")
     suspend fun getAllFriendStyles(@Query("FriendEmail")FriendEmail:String): Response<StyleAllResponse>
 }
