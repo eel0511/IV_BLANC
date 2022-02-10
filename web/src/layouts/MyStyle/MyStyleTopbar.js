@@ -259,6 +259,7 @@ export default function MyStyleTopbar() {
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
+  const [styleClothes, setStyleClothes] = useState([]);
 
   const [show, setShow] = useState(false);
 
@@ -294,6 +295,17 @@ export default function MyStyleTopbar() {
     if (Number(category) === 0) {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
+    } else if (Number(category) === 8) {
+      axios
+        .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+          headers: {
+            'X-AUTH-TOKEN': `${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data);
+          setStyleClothes(response.data.data);
+        });
     } else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
