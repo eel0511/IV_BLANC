@@ -1,10 +1,12 @@
 package com.strait.ivblanc.data.model.viewmodel
 
 import android.net.Uri
+import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.repository.StyleRepository
@@ -22,6 +24,10 @@ import java.io.File
 class StyleViewModel: ViewModel() {
     private val styleRepository = StyleRepository()
     private val ioScope = CoroutineScope(Dispatchers.IO)
+
+    // focus
+    private val _focusedImage = MutableLiveData<ImageView>()
+    var focusedImage : LiveData<ImageView> = _focusedImage
 
     // 네트워크 요청 상태, 로딩, 성공, 에러
     private val _styleResponseStatus = MutableLiveData<Resource<*>>()
@@ -41,7 +47,9 @@ class StyleViewModel: ViewModel() {
             _styleResponseStatus.postValue(response)
         }
     }
-
+    fun changefocus(imageView: ImageView){
+        _focusedImage.postValue(imageView)
+    }
     private fun makeClothesIdString(clothesList: List<Clothes>): String {
         val value = StringBuilder().apply {
             clothesList.forEach {

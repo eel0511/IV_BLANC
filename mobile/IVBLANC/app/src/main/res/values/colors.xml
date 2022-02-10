@@ -15,4 +15,6 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="black_trans">#4F000000</color>
 
+    <color name="ivblanc_purple">#662D91</color>
+    <color name="ivblanc_pink">#ED6991</color>
 </resources>
