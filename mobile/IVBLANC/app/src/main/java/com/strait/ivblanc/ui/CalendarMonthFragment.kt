@@ -24,7 +24,6 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
     private lateinit var firstDate: DateTime
     private lateinit var lastDate: DateTime
     private lateinit var calendarAdapter: CalendarAdapter
-    private lateinit var totalHistoryList: List<History>
     val historyViewModel: HistoryViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -64,9 +63,7 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
                 val intent = Intent(requireActivity(), HistoryDetailActivity::class.java).putExtra("history", item)
                 startActivity(intent)
             }
-
         }
-
     }
 
     private fun setFirstDate() {
