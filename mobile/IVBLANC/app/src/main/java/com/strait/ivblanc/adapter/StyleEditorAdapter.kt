@@ -73,6 +73,30 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
                     .y(imageY + (event.y - eventY))
                     .setDuration(0)
                     .start()
+                if(imageX + (event.x - eventX) >800.0f){
+                    imageView.animate().x(750.0f)
+                        .y(imageY + (event.y - eventY))
+                        .setDuration(0)
+                        .start()
+                }
+                if(imageX + (event.x - eventX)<-250.0f){
+                    imageView.animate().x(-200.0f)
+                        .y(imageY + (event.y - eventY))
+                        .setDuration(0)
+                        .start()
+                }
+                if(imageY + (event.y - eventY) >1100.0f){
+                    imageView.animate().x(imageX + (event.x - eventX))
+                        .y(1050.0f)
+                        .setDuration(0)
+                        .start()
+                }
+                if(imageY + (event.y - eventY)<-100.0f){
+                    imageView.animate().x(imageX + (event.x - eventX))
+                        .y(-50.0f)
+                        .setDuration(0)
+                        .start()
+                }
             }
             //
             MotionEvent.ACTION_UP -> {
