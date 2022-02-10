@@ -10,7 +10,7 @@ data class History(
     val latitude: Double,
     val longitude: Double,
     val historyId: Int,
-    val historyPhotos: List<HistoryPhoto>,
+    val photos: List<HistoryPhoto>,
     val styleUrl: String,
     val subject: String,
     val temperature_high: Int,

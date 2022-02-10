@@ -9,7 +9,6 @@ import com.strait.ivblanc.databinding.ActivityHistoryDetailBinding
 
 import android.location.Address
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
@@ -28,6 +27,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         intent.getParcelableExtra<History>("history")?.let {
             history = it
         } ?: finish()
+        Log.d("HISTORY_DETAIL", "onCreate called, historyId = " + history.historyId)
         setHistoryInfo()
         setClickListeners()
         setRecyclerView()
@@ -90,7 +90,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     private fun setRecyclerView(){
         historyDetailRecyclerViewAdapter = HistoryDetailRecyclerViewAdapter()
         historyDetailRecyclerViewAdapter.apply {
-            data = history.historyPhotos
+            data = history.photos
         }
         binding.recyclerViewHistoryDetailPhoto.apply {
             adapter = historyDetailRecyclerViewAdapter

@@ -1,5 +1,6 @@
 package com.strait.ivblanc.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -13,6 +14,7 @@ import com.strait.ivblanc.data.model.dto.DateWithHistory
 import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.databinding.FragmentCalendarMonthBinding
+import com.strait.ivblanc.src.historyDetail.HistoryDetailActivity
 import org.joda.time.DateTime
 
 private const val TAG = "History_debuk"
@@ -54,6 +56,15 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
         historyViewModel.historyListLiveData.observe(requireActivity()){
             calendarAdapter.data = getDatesOfMonthWithHistory(it)
             calendarAdapter.notifyDataSetChanged()
+        }
+
+        calendarAdapter.itemClickListener = object : CalendarAdapter.ItemClickListener {
+            override fun onClick(position: Int) {
+                val item = calendarAdapter.data[position].history
+                val intent = Intent(requireActivity(), HistoryDetailActivity::class.java).putExtra("history", item)
+                startActivity(intent)
+            }
+
         }
 
     }
