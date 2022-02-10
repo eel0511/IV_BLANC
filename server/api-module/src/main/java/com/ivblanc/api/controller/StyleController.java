@@ -87,9 +87,6 @@ public class StyleController {
     ListResult<Style> findStyle(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         List<Style> styleList = styleService.findAllByUserId(userId);
-        if (styleList.size() == 0) {
-            throw new ApiMessageException("없는 userId 입니다.");
-        }
         //page 적용하고싶은데 mysql에서는 좀 어려워보임
         return responseService.getListResult(styleList);
     }
@@ -104,9 +101,6 @@ public class StyleController {
         User friend = userService.findByEmail(FriendEmail);
         if (friendService.isRealFriend(me.getEmail(), friend.getEmail())) {
             List<Style> styleList = styleService.findAllByUserId(friend.getUserId());
-            if (styleList.size() == 0) {
-                throw new ApiMessageException("없는 userId 입니다.");
-            }
             return responseService.getListResult(styleList);
         }
 
