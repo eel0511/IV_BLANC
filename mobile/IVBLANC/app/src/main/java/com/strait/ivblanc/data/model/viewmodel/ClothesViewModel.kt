@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.model.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
+import com.strait.ivblanc.data.model.response.ClothesFavoriteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
 import com.strait.ivblanc.data.repository.ClothesRepository
 import com.strait.ivblanc.util.CategoryCode
@@ -46,6 +48,37 @@ class ClothesViewModel: ViewModel() {
     val clothesList: LiveData<List<Clothes>> get() = _clothesList
     // 옷관련 필드 끝
 
+    //add
+
+    private var _resFavorite = MutableLiveData<Int>()
+    val resFavorite:LiveData<Int>
+        get() = _resFavorite
+
+    fun addFavorite(clothesId: Int) = viewModelScope.launch {
+
+        withContext(Dispatchers.IO) {
+            val result: Resource<ClothesFavoriteResponse> = clothesRepository.addfavorite(clothesId)
+            _clothesResponseStatus.postValue(result)
+            if (result.status == Status.SUCCESS) {
+                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
+                Log.d("asdf", "addFavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
+            }
+        }
+    }
+
+    fun deleteFavorite(clothesId: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            val result: Resource<ClothesFavoriteResponse> =
+                clothesRepository.deletefavorite(clothesId)
+            _clothesResponseStatus.postValue(result)
+            if (result.status == Status.SUCCESS) {
+
+                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
+                Log.d("asdf", "deletefavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
+            }
+        }
+    }
+    //add end
     suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()
         val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
@@ -53,6 +86,22 @@ class ClothesViewModel: ViewModel() {
         if(result.status == Status.SUCCESS) {
             totalClothesList.addAll(result.data!!.dataSet!!)
         }
+    }
+
+    suspend fun getAllFriendClothes(email: String) = withContext(Dispatchers.IO) {
+        setLoading()
+        totalClothesList.clear()
+        val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
+        _clothesResponseStatus.postValue(result)
+        if (result.status == Status.SUCCESS) {
+            totalClothesList.addAll(result.data!!.dataSet!!)
+        }
+        Log.d("aaaaaaaa", "getAllFriendClothes: "+totalClothesList)
+    }
+
+    fun getAllFriendClothesWithCategory(email: String, category: Int) = viewModelScope.launch {
+        getAllFriendClothes(email)
+        updateClothesByCategory(category)
     }
 
     fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
