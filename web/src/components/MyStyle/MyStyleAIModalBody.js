@@ -4,6 +4,7 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
+
   const imgHandleChange = (e) => {
     console.log(e.target.files);
     setSelectedImg(URL.createObjectURL(e.target.files[0]));
@@ -13,18 +14,16 @@ function MyStyleAIModalBody() {
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
+    const token =
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
     axios
-      .post('http://i6d104.p.ssafy.io:9999/api/style/add', formData, {
+      .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', formData, {
         headers: {
-          'X-AUTH-TOKEN':
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          'X-AUTH-TOKEN': `${token}`,
         },
       })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
-          alert('등록되었습니다.');
-        }
       })
       .catch((err) => {
         console.log('실패');
