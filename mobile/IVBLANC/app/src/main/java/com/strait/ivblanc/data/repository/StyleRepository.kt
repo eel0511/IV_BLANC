@@ -2,6 +2,7 @@ package com.strait.ivblanc.data.repository
 
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.StyleApi
+import com.strait.ivblanc.data.model.response.StyleAllResponse
 import com.strait.ivblanc.data.model.response.StyleResponse
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.StatusCode
@@ -24,6 +25,23 @@ class StyleRepository {
                 Resource.error(null, "알 수 없는 오류입니다.")
             }
         } catch (e: Exception) {
+            Resource.error(null, "네트워크 연결을 확인해 주세요")
+        }
+    }
+    suspend fun findAllFriendStyle(FriendEmail:String):Resource<StyleAllResponse>{
+        return try{
+            val response = styleApi.getAllFriendStyles(FriendEmail)
+            if(response.isSuccessful){
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "친구 스타일 불러오기에 실패했습니다.")
+                }
+            }
+            else{
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        }catch (e:Exception){
             Resource.error(null, "네트워크 연결을 확인해 주세요")
         }
     }
