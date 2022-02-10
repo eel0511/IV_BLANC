@@ -1,6 +1,9 @@
 package com.strait.ivblanc.data.model.response
 
 import com.strait.ivblanc.config.BaseResponse
+import com.strait.ivblanc.data.model.dto.History
 
 class HistoryResponse: BaseResponse() {
+    @SerializedName("data")
+    val dataSet: List<History>? = null
 }

@@ -1,9 +1,5 @@
 package com.strait.ivblanc.data.api
 
-import com.strait.ivblanc.config.BaseResponse
-import com.strait.ivblanc.data.model.dto.ClothesForUpload
-import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
-import com.strait.ivblanc.data.model.response.ClothesResponse
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
