@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
