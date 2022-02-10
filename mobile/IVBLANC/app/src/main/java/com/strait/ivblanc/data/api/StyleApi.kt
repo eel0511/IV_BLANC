@@ -16,4 +16,7 @@ interface StyleApi {
 
     @GET("/api/style/finduserstyle")
     suspend fun getAllStyles(): Response<StyleAllResponse>
+
+    @GET("/api/style/findfriendstyle")
+    suspend fun getAllFriendStyles(): Response<StyleAllResponse>
 }
