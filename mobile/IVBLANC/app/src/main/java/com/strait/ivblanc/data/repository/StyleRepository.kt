@@ -35,6 +35,7 @@ class StyleRepository {
             val response = styleApi.getAllStyles()
             if (response.isSuccessful) {
                 return if (response.code() == StatusCode.OK && response.body()!!.output == 1) {
+
                     Resource.success(response.body()!!)
                 } else {
                     Resource.error(response.body(), "등록된 스타일 조회를 할 수 없습니다.")
