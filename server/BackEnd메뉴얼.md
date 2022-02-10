@@ -1,6 +1,16 @@
-### spring boot
+## Server
+---
+java 1.8 
+mysql (springboot연결은 mariadb)
+Intellij Ultimate 2021.3.1
+
+Python=3.8 pytorch=[>=1.6.0] cudatoolkit=[>=9.2]
+mysql(flask연결은 pymysql)
+
+firebase json파일은 모두 서버파일에 들어있음( iv-blanc-firebase-adminsdk-l6zca-232ca5420a.json )
 
 ---
+### spring boot
 
 #### application-alpha.yml 
 
@@ -29,7 +39,6 @@ bucket이름 등 firebase 관련 설정을 해준다
 API_URL 등 fcm 관련 설정을 해준다
 
 
-
 ### Flask 서버
 
 ---
@@ -42,6 +51,7 @@ myflask안의 main.py(spring의 /api/clothes/add 에 쓰임 )
 
 
 flask_AI 안의 app.py (스프링의 /api/clothes/beta 에 쓰임)
+
 
 1. Firebase 설정
 
@@ -58,55 +68,16 @@ https://github.com/shadow2496/VITON-HD
 
 flask_AI 안의 Flask 서버는 flask run으로 구동
 
-springboot 서버와 myflask안의 Flask서버는
 
 
-
-로컬에서 열 경우  Gradle의 cleanQuerydslSourcesDir , bootRun 차례대로 실행
-
+springboot 서버 로컬에서 열 경우  Gradle의 cleanQuerydslSourcesDir , bootRun 차례대로 실행
 
 
-aws에서 빌드 할 경우
+springboot 서버와 myflask안의 Flask서버는 aws에서 빌드 할 경우
 
-도커 젠킨스의 파이프라인 스크립트
-
-```
-pipeline {
-    agent any
-
-    tools {
-       jdk "jdk"
-       gradle "gradle7.1"
-    }
-
-    stages {
-          stage("clone"){
-            steps{
-                cleanWs()
-                echo "Clone SSAFY Gitlab"
-                git branch : 'develop', changelog: false, credentialsId: 'ee',  poll: false, url: "https://lab.ssafy.com/s06-webmobile4-sub2/S06P12D104"
-            }
-            post{
-                success{
-                    echo "Clone Success"
-                }
-            }
-        }
-        stage('build'){
-            steps{
-                dir('server'){
-                    echo "Build Server"
-                    sh "chmod +x gradlew"
-                    sh """
-                ./gradlew cleanQuerydslSourcesDir build
-                """
-                }
-            }
-        }
-    }
-}
-```
-
+i6d104.p.ssafy.io:9090
+ivblanc // ivblanc
+test 파이프 라인 실행시 빌드
 
 
 이렇게 하면 jar 파일이 생성된다.
