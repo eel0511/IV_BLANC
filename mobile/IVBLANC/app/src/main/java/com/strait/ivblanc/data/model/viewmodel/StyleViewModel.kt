@@ -10,6 +10,7 @@ import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.repository.StyleRepository
 import com.strait.ivblanc.util.MultiPartUtil
 import com.strait.ivblanc.util.Resource
+import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,10 @@ class StyleViewModel: ViewModel() {
     // 네트워크 요청 상태, 로딩, 성공, 에러
     private val _styleResponseStatus = MutableLiveData<Resource<*>>()
     val styleResponseStatus: LiveData<Resource<*>> get() = _styleResponseStatus
+
+    // 스타일 목록 라이브 데이터
+    private val _styleListLiveData = MutableLiveData<List<Style>>()
+    val styleListLiveData: LiveData<List<Style>> get() = _styleListLiveData
 
     // 스타일 등록 요청 관련 시작 ------------------------
     fun addStyle(clothesList: List<Clothes>, absolutePath: String) = viewModelScope.launch {
@@ -48,6 +53,19 @@ class StyleViewModel: ViewModel() {
     }
     // 스타일 등록 요청 관련 끝  ------------------------
 
+    // 스타일 조회 요청 관련 시작 -----------------------
+    fun getAllStyles() = viewModelScope.launch {
+        setLoading()
+        ioScope.launch {
+            val response = styleRepository.getAllStyles()
+            _styleResponseStatus.postValue(response)
+            if(response.status == Status.SUCCESS) {
+                _styleListLiveData.postValue(response.data!!.dataSet)
+            }
+        }
+    }
+
+    // 스타일 조회 요청 관련 끝 -----------------------
 
 
     private fun setLoading() {
