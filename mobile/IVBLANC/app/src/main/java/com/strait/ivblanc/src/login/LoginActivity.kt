@@ -10,11 +10,30 @@ import com.strait.ivblanc.databinding.ActivityLoginBinding
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
     val loginViewModel: LoginViewModel by viewModels()
+    lateinit var loginFragment: Fragment
+    lateinit var joinFragment: Fragment
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        val loginFragment = LoginFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.frameLayout_login_container, loginFragment).commit()
+        super.onCreate(savedInstanceState)
+        loginFragment = LoginFragment()
+        joinFragment = JoinFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout_login_container, loginFragment).commit()
+        //setFragment(1)
+
+    }
+
+    fun setFragment(num: Int) {
+        when (num) {
+            1 -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout_login_container, loginFragment).commit()
+            }
+            else -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout_login_container, joinFragment).commit()
+            }
+        }
 
     }
 

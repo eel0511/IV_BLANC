@@ -66,13 +66,6 @@ class MainViewModel : ViewModel() {
         get() = _clothesListLiveData
     // 옷관련 필드 끝
 
-    //add
-
-    private var _resFavorite = MutableLiveData<Int>()
-    val resFavorite:LiveData<Int>
-        get() = _resFavorite
-
-    //add end
     suspend fun getAllClothes() = withContext(Dispatchers.IO) {
         setLoading()
         totalClothesList.clear()
@@ -83,53 +76,11 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    suspend fun getAllFriendClothes(email: String) = withContext(Dispatchers.IO) {
-        setLoading()
-        totalClothesList.clear()
-        val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
-        _clothesResponseStatus.postValue(result)
-        if (result.status == Status.SUCCESS) {
-            totalClothesList.addAll(result.data!!.dataSet!!)
-        }
-    }
-
-    fun getAllFriendClothesWithCategory(email: String, category: Int) = viewModelScope.launch {
-        getAllFriendClothes(email)
-        updateClothesByCategory(category)
-    }
-
     fun getAllClothesWithCategory(category: Int) = viewModelScope.launch {
         getAllClothes()
         updateClothesByCategory(category)
     }
 
-    /**
-     *   Favorite ViewModel
-     */
-    fun addFavorite(clothesId: Int) = viewModelScope.launch {
-
-        withContext(Dispatchers.IO) {
-            val result: Resource<ClothesFavoriteResponse> = clothesRepository.addfavorite(clothesId)
-            _clothesResponseStatus.postValue(result)
-            if (result.status == Status.SUCCESS) {
-                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
-                Log.d("asdf", "addFavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
-            }
-        }
-    }
-
-     fun deleteFavorite(clothesId: Int) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            val result: Resource<ClothesFavoriteResponse> =
-                clothesRepository.deletefavorite(clothesId)
-            _clothesResponseStatus.postValue(result)
-            if (result.status == Status.SUCCESS) {
-
-                _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
-                Log.d("asdf", "deletefavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
-            }
-        }
-    }
 
     /**
      * 삭제 성공 시,

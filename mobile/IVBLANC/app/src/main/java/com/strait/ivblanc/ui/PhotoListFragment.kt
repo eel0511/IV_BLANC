@@ -127,9 +127,13 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
         }
 
+        // TODO: 2022/02/10 tag 분기.. 
         if(tag == "clothes") {
             setDropDown()
-        } else {
+        }else if(tag=="f0"){
+            setDropDown()
+        }
+        else {
             binding.textInputLayoutPhotoListFCategory.visibility = View.GONE
             binding.textInputLayoutPhotoListFSmallCategory.visibility = View.GONE
         }
@@ -139,13 +143,28 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
     private fun setObserverLiveData() {
         when(tag) {
+            // TODO: 2022/02/10 분기 처리 아름답게
             "clothes" -> {
                 clothesViewModel.clothesListLiveData.observe(requireActivity()) {
+                    Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
                     exAdapter.data = it as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()
                 }
             }
             "style" -> {
+                styleViewModel.styleListLiveData.observe(requireActivity()) {
+                    exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
+                    exAdapter.notifyDataSetChanged()
+                }
+            }
+            "f0"->{
+                clothesViewModel.clothesListLiveData.observe(requireActivity()) {
+                    Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
+                    exAdapter.data = it as ArrayList<PhotoItem<T>>
+                    exAdapter.notifyDataSetChanged()
+                }
+            }
+            "f1"->{
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
                     exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()

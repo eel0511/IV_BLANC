@@ -26,8 +26,11 @@ import com.strait.ivblanc.util.Status
 class LoginFragment :
     BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::bind, R.layout.fragment_login) {
     private val loginViewModel: LoginViewModel by activityViewModels()
-    private lateinit var callback: OnBackPressedCallback
-
+    var loginActivity : LoginActivity? = null
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loginActivity = activity as LoginActivity
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -35,8 +38,7 @@ class LoginFragment :
 
     private fun initView() {
         binding.buttonLoginFJoin.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout_login_container, JoinFragment()).commit()
+            loginActivity!!.setFragment(2)
         }
         binding.buttonLoginFLogin.setOnClickListener {
             if (isValidForm()) {
