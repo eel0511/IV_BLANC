@@ -171,8 +171,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         }
 
         loginViewModel.join(UserForJoin(email, password, passwordCheck, name, gender, age, phoneNumber))
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout_login_container, LoginFragment()).commit()
+        loginActivity!!.setFragment(1)
 
     }
 
