@@ -474,6 +474,7 @@ export default function MyStyleTopbar() {
                   <Modal
                     aria-labelledby='contained-modal-title-vcenter'
                     centered
+                    size='lg'
                     show={show}
                     onHide={handleClose}
                   >
