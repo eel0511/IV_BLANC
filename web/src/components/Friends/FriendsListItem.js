@@ -65,10 +65,9 @@ export default function FirendsListItem({ friend }) {
              friendsClothesList: `${friendsClothesList}`
            }
           }}
+          className='friend__link'
         >
-          <BsPlusCircle 
-            className='friend__plusIcon'
-          />
+          <BsPlusCircle className='friend__plusIcon'/>
         </Link>
       </div>
       <div className='friend__body'>
