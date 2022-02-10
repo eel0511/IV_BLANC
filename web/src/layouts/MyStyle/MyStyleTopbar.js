@@ -65,69 +65,20 @@ export default function MyStyleTopbar() {
     setTab(e);
 
     if (Number(category) === 0) {
-      try {
-        await axios
-          .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', {
-            headers: {
-              'X-AUTH-TOKEN':
-                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
-            },
-          })
-          .then((res) => {
-            // console.log(res);
-            const resData = res.data.data;
-            console.log('response:', resData);
-
-            if (res.status === 200 && res.data.output === 1) {
-              // alert('전체 옷 조회!');
-              setIsData(true);
-              setClothes([]);
-              resData.map((clothesData) =>
-                setClothes((clothes) => [...clothes, clothesData])
-              );
-            } else if (res.status === 200 && res.data.output === 0) {
-              alert(res.data.msg);
-            } else {
-              alert(res.data.msg);
-            }
-          });
-      } catch (err) {
-        console.error(err);
-      }
+      setFilterMyClothes([]);
+      setFilterMyClothes(clothes);
+      if (filterMyClothes.length === 0) setIsData(false);
+      else setIsData(true);
     } else {
-      try {
-        await axios
-          .get('http://i6d104.p.ssafy.io:9999/api/clothes/category', {
-            headers: {
-              'X-AUTH-TOKEN':
-                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
-            },
-            params: {
-              category: category,
-              page: 0,
-            },
-          })
-          .then((res) => {
-            // console.log(res);
-            const resData = res.data.data;
-            console.log('response:', resData);
+      const filterClothesDatas = clothes.filter(
+        (clothesData) =>
+          parseInt(clothesData.category / 10) === Number(category)
+      );
+      setFilterMyClothes([]);
+      setFilterMyClothes(filterClothesDatas);
 
-            if (res.status === 200 && res.data.output === 1) {
-              // alert(`${category} 조회`);
-              setIsData(true);
-              setClothes([]);
-              resData.map((clothesData) =>
-                setClothes((clothes) => [...clothes, clothesData])
-              );
-            } else if (res.status === 200 && res.data.output === 0) {
-              alert(res.data.msg);
-            } else {
-              alert(res.data.msg);
-            }
-          });
-      } catch (err) {
-        console.error(err);
-      }
+      if (filterMyClothes.length === 0) setIsData(false);
+      else setIsData(true);
     }
   };
 
@@ -231,10 +182,10 @@ export default function MyStyleTopbar() {
             </Nav>
 
             {/* 서버 연동 */}
-            {isData && clothes.length > 0 ? (
+            {isData && filterMyClothes.length > 0 ? (
               <div className='container-fluid'>
                 <div className='row'>
-                  {clothes.map((clothesData) => (
+                  {filterMyClothes.map((clothesData) => (
                     <div className='col-4 mt-3' key={clothesData.clothesId}>
                       <div className='card h-100'>
                         <div className='card-body'>
