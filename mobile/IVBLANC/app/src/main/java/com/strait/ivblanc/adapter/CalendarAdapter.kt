@@ -25,10 +25,12 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
                 else -> textView.text = item.date.dayOfMonth.toString()
             }
             // TODO: 2022/02/07 히스토리가 존재할 때 이미지 세팅
+            if(item.history != null){
+                Glide.with(imageView).load(item.history!!.styleUrl).into(imageView)
+            }
             // 히스토리가 존재할 때만 클릭리스너 동작
             item.history?.let {
                 if(this@CalendarAdapter::itemClickListener.isInitialized) {
-                    Glide.with(imageView).load(item.history!!.styleUrl).into(imageView)
                     itemView.setOnClickListener {
                         itemClickListener.onClick(adapterPosition)
                     }

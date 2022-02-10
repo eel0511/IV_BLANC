@@ -26,6 +26,10 @@ class HistoryViewModel: ViewModel() {
     val historyResponseStatus: LiveData<Resource<*>>
         get() = _historyResponseStatus
 
+    private val _historyListLiveData = MutableLiveData<List<History>>()
+    val historyListLiveData : LiveData<List<History>>
+        get() = _historyListLiveData
+
     private val totalHistoryList = mutableListOf<History>()
 
     fun getAllHistory() = viewModelScope.launch {
@@ -80,7 +84,9 @@ class HistoryViewModel: ViewModel() {
                 }
             }
         }
+        _historyListLiveData.postValue(totalHistoryList)
     }
+
 
 
     private fun setLoading() = _historyResponseStatus.postValue(Resource.loading(null))
