@@ -55,6 +55,8 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         if(history.photos.size == 0)
             binding.recyclerViewHistoryDetailPhoto.visibility = View.GONE
 
+
+
         if(history.weather == "맑음"){
             binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_sunny_48);
         } else if(history.weather == "흐림"){
@@ -72,8 +74,8 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
 
         var list: List<Address>? = null
         try {
-            val latitude = history.latitude
-            val longitude = history.longitude
+            val latitude = history.location
+            val longitude = history.field
             list = geocoder.getFromLocation(
                 latitude,  // 위도
                 longitude,  // 경도
@@ -83,10 +85,12 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             e.printStackTrace()
             Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
         }
-        if (list != null) {
-            if (!list.isEmpty()) {
-                return list.get(0).toString()
-            }
+
+        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
+
+        if (list != null && !list.isEmpty()) {
+            var cut = list.get(0).toString().split("\"")
+            return cut[1]
         }
         return "알 수 없는 장소"
     }
