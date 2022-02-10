@@ -16,4 +16,5 @@ interface StyleApi {
 
     @GET("/api/style/findfriendstyle")
     suspend fun getAllFriendStyles(@Query("FriendEmail")FriendEmail :String):Response<StyleAllResponse>
+
 }

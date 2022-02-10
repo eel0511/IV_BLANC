@@ -48,7 +48,9 @@ class StyleRepository {
             Resource.error(null, "네트워크 연결을 확인해 주세요.")
         }
     }
-            suspend fun findAllFriendStyle(FriendEmail:String):Resource<StyleAllResponse>{
+
+    suspend fun findAllFriendStyle(FriendEmail:String):Resource<StyleAllResponse>{
+
         return try{
             val response = styleApi.getAllFriendStyles(FriendEmail)
             if(response.isSuccessful){
