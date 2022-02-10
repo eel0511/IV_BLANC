@@ -54,10 +54,8 @@ const Section = styled.section`
       color: white;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: flex-center;
       gap: 1.2rem;
-      // margin: 0 auto;
-      padding-left: 14rem;
       margin-top: 6rem;
       width: 100%;
       .title {
@@ -73,7 +71,6 @@ const Section = styled.section`
         }
       }
       .subTitle {
-        padding-left: 28rem;
         img {
         }
         p {
