@@ -12,6 +12,7 @@ const Div = styled.div`
   position: relative;
   h1 {
     position: absolute;
+    margin-left: 1.5rem;
     transform: translateX(-44%) translateY(20vw) rotate(-90deg);
     font-size: 7rem;
     text-transform: uppercase;
