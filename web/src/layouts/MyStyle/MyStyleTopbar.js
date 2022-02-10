@@ -260,12 +260,16 @@ export default function MyStyleTopbar() {
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
-  const [AIStyle, setAIStyle] = useState();
+  const [AIStyle, setAIStyle] = useState('');
 
   const [show, setShow] = useState(false);
+  const [AIshow, setAIShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleAIClose = () => setAIShow(false);
+  const handleAIShow = () => setAIShow(true);
 
   const token =
     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
@@ -361,21 +365,21 @@ export default function MyStyleTopbar() {
   const handleShowAIStyle = async (e) => {
     e.preventDefault();
 
-    if (selectedClothes.length > 1) {
-      alert('상의 하나만 선택해주세요!');
-      return;
-    }
+    // if (selectedClothes.length > 1) {
+    //   alert('상의 하나만 선택해주세요!');
+    //   return;
+    // }
 
-    await axios
-      .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', {
-        headers: {
-          'X-AUTH-TOKEN': `${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-        setAIStyle(response.data);
-      });
+    // await axios
+    //   .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', {
+    //     headers: {
+    //       'X-AUTH-TOKEN': `${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //     setAIStyle(response.data);
+    //   });
   };
 
   let showImg = (
@@ -460,11 +464,24 @@ export default function MyStyleTopbar() {
                     <Button
                       variant='contained'
                       color='secondary'
-                      onClick={handleShowAIStyle}
+                      onClick={handleAIShow}
                     >
                       AI 스타일링
                     </Button>
                   )}
+                  <Modal
+                    aria-labelledby='contained-modal-title-vcenter'
+                    centered
+                    show={AIshow}
+                    onHide={handleAIClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>AI 스타일링</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <MyStyleCreateModalBody />
+                    </Modal.Body>
+                  </Modal>
 
                   <Button
                     variant='contained'
@@ -473,7 +490,6 @@ export default function MyStyleTopbar() {
                   >
                     스타일 저장
                   </Button>
-
                   <Modal
                     aria-labelledby='contained-modal-title-vcenter'
                     centered
