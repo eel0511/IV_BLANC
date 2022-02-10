@@ -146,6 +146,17 @@ class StyleViewModel: ViewModel() {
 
     // 스타일 조회 요청 관련 끝 -----------------------
 
+    // 스타일 삭제 요청 관련 시작 ---------------------
+    fun deleteStyleById(styleId: Int) = viewModelScope.launch {
+        setLoading()
+        ioScope.launch {
+            val response = styleRepository.deleteStyleById(styleId)
+            _styleResponseStatus.postValue(response)
+        }
+    }
+
+    // 스타일 삭제 요청 관련 끝 ------------------------
+
 
     private fun setLoading() {
         _styleResponseStatus.postValue(Resource.loading(null))
