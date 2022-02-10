@@ -1,5 +1,6 @@
 import React , { useState, useEffect } from 'react';
 import styled from "styled-components";
+import axios from 'axios';
 import ScrollToTop from '../../components/ScrollToTop';
 import Navbar from '../../components/Navbar';
 import home from "../../assets/home.png";
@@ -12,215 +13,71 @@ import fimg3 from "../../assets/images/4.jfif";
 import bimg3 from "../../assets/outfit/3.jfif";
 import fimg4 from "../../assets/images/6.jfif";
 import bimg4 from "../../assets/outfit/4.jfif";
-import fimg5 from "../../assets/images/11.jfif";
-import bimg5 from "../../assets/outfit/5.jfif";
-import fimg6 from "../../assets/images/12.png";
-import bimg6 from "../../assets/outfit/6.jfif";
-import fimg7 from "../../assets/images/13.jfif";
-import bimg7 from "../../assets/outfit/7.jfif";
-import fimg8 from "../../assets/images/21.png";
-import bimg8 from "../../assets/outfit/8.jfif";
-import fimg9 from "../../assets/images/22.jfif";
-import bimg9 from "../../assets/outfit/9.jfif";
-import fimg10 from "../../assets/images/25.jfif";
-import bimg10 from "../../assets/outfit/16.jfif";
-import fimg11 from "../../assets/images/26.jfif";
-import bimg11 from "../../assets/outfit/18.jfif";
-import fimg12 from "../../assets/images/27.png";
-import bimg12 from "../../assets/outfit/24.jfif";
-import fimg13 from "../../assets/images/29.jfif";
-import bimg13 from "../../assets/outfit/30.jfif";
-import fimg14 from "../../assets/images/37.jfif";
-import bimg14 from "../../assets/outfit/36.jfif";
-import fimg15 from "../../assets/images/40.png";
-import bimg15 from "../../assets/outfit/38.jfif";
-import fimg16 from "../../assets/images/41.jfif";
-import bimg16 from "../../assets/outfit/42.jfif";
-
+import ReactCardFlip from "react-card-flip";
 import FlipCard from "./FlipCard";
+import FlipCard1 from './FlipCard1';
 import HistoryCreateButton from './HistoryCreateButton';
 
 const cards = [
   {
-    id: "1",
+    date: "2022-02-10",
     variant: "focus",
-    front: { title: "Focus", background: fimg1 },
-    back: {
-      image: bimg1,
-      title: "title 1",
-      comment: "comment 1",
-      date: "2022-02-07"
-    }
+    historyId: 1,
+    styleUrl: bimg1,
+    subject: "제목 1",
+    text: "내용 1",
+    photos: {url : fimg1},
   },
   {
-    id: "2",
+    date: "2022-02-10",
     variant: "focus",
-    front: { title: "Focus", background: fimg2 },
-    back: {
-      image: bimg2,
-      title: "title 2",
-      comment: "comment 2",
-      date: "2022-02-07"
-    }
+    historyId: 2,
+    styleUrl: bimg2,
+    subject: "제목 1",
+    text: "내용 1",
+    photos: {url : fimg2},
   },
   {
-    id: "3",
+    date: "2022-02-10",
     variant: "focus",
-    front: { title: "Focus", background: fimg3 },
-    back: {
-      image: bimg3,
-      title: "title 3",
-      comment: "comment 3",
-      date: "2022-02-07"
-    }
+    historyId: 3,
+    styleUrl: bimg3,
+    subject: "제목 1",
+    text: "내용 1",
+    photos: {url : fimg3},
   },
   {
-    id: "4",
+    date: "2022-02-10",
     variant: "focus",
-    front: { title: "Focus", background: fimg4 },
-    back: {
-      image: bimg4,
-      title: "title 4",
-      comment: "comment 4",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "5",
-    variant: "focus",
-    front: { title: "Focus", background: fimg5 },
-    back: {
-      image: bimg5,
-      title: "title 5",
-      comment: "comment 5",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "6",
-    variant: "focus",
-    front: { title: "Focus", background: fimg6 },
-    back: {
-      image: bimg6,
-      title: "title 6",
-      comment: "comment 6",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "7",
-    variant: "focus",
-    front: { title: "Focus", background: fimg7 },
-    back: {
-      image: bimg7,
-      title: "title 7",
-      comment: "comment 7",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "8",
-    variant: "focus",
-    front: { title: "Focus", background: fimg8 },
-    back: {
-      image: bimg8,
-      title: "title 8",
-      comment: "comment 8",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "9",
-    variant: "focus",
-    front: { title: "Focus", background: fimg9 },
-    back: {
-      image: bimg9,
-      title: "title 9",
-      comment: "comment 9",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "10",
-    variant: "focus",
-    front: { title: "Focus", background: fimg10 },
-    back: {
-      image: bimg10,
-      title: "title 10",
-      comment: "comment 10",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "11",
-    variant: "focus",
-    front: { title: "Focus", background: fimg11 },
-    back: {
-      image: bimg11,
-      title: "title 11",
-      comment: "comment 11",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "12",
-    variant: "focus",
-    front: { title: "Focus", background: fimg12 },
-    back: {
-      image: bimg12,
-      title: "title 12",
-      comment: "comment 12",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "13",
-    variant: "focus",
-    front: { title: "Focus", background: fimg13 },
-    back: {
-      image: bimg13,
-      title: "title 13",
-      comment: "comment 13",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "14",
-    variant: "focus",
-    front: { title: "Focus", background: fimg14 },
-    back: {
-      image: bimg14,
-      title: "title 14",
-      comment: "comment 14",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "15",
-    variant: "focus",
-    front: { title: "Focus", background: fimg15 },
-    back: {
-      image: bimg15,
-      title: "title 15",
-      comment: "comment 15",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "16",
-    variant: "focus",
-    front: { title: "Focus", background: fimg16 },
-    back: {
-      image: bimg16,
-      title: "title 16",
-      comment: "comment 16",
-      date: "2022-02-07"
-    }
+    historyId: 4,
+    styleUrl: bimg4,
+    subject: "제목 1",
+    text: "내용 1",
+    photos: {url : fimg4},
   },
 ];
 
 export default function History() {
-  
+  const [myHistories, setmyHistories] = useState([]);
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const getmyHistoriesData = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/history/find/all', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setmyHistories(response.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getmyHistoriesData();
+  }, []);
   return (
       <Section>
       <ScrollToTop />
@@ -234,8 +91,9 @@ export default function History() {
       <div className="overlay-border" />
       <div className="row h-100">
         <div className="col d-flex flex-wrap justify-content-around align-items-center">
-          {cards.map((card) => (
-            <FlipCard key={card.id} card={card} />
+          {cards.map((myHistory) => (
+            // <FlipCard key={myHistory.historyId} myHistory={myHistory} />
+            <FlipCard1 key={myHistory.historyId} myHistory={myHistory} />
           ))}
         </div>
       </div>
@@ -272,6 +130,49 @@ const StyledHistory = styled.div`
     font-family: 'Ubuntu', sans-serif;
     background-color: #000;
 
+    .card {
+    position: absolute
+    top: 50%
+    left: 50%
+    height: 400px
+    width: 300px
+    transform: translate(-50%, -50%)
+    transform-style: preserve-3d
+    perspective: 600px
+    transition: .5s
+    }
+    &:hover .card-front{
+        transform: rotateX(-180deg)
+    }
+
+    &:hover .card-back{
+        transform: rotateX(0deg)
+    }
+.card-front{
+    height: 100%
+    width: 100%
+    background-position: 50% 50%
+    background-size: cover
+    position: absolute
+    top: 0
+    left: 0
+    background-color: #000000
+    backface-visibility: hidden
+    transform: rotateX(0deg)
+    transition: .5s
+    }
+.card-back{
+    height: 100%
+    width: 100%
+    position: absolute
+    top: 0
+    left: 0
+    background-color: #000000
+    backface-visibility: hidden
+    transform: rotateX(180deg)
+    transition: .5s
+}
+
     .container {
       height: 100%;
     }
@@ -303,13 +204,14 @@ const StyledHistory = styled.div`
   margin: 25px 0;
   
 
-  &.hover:hover .flip-card-inner {
+  &.flip-card-inner .showBack {
     transform: rotateY(180deg);
   }
 
   .flip-card-inner {
     z-index: 10;
     backface-visibility: visible;
+    /* -webkit-backface-visibility: hidden; */
     transform-style: preserve-3d;
     transition: .5s linear .1s;
     position: relative;

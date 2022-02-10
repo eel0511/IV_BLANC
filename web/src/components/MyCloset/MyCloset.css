@@ -29,17 +29,13 @@
   background-color : #ed6991;
 }
 
-/* .RadioForm {
-  display: inline;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  background-attachment: fixed;
+.RadioForm {
+  display: flex;
   margin-right: 10px;
   width: 40px;
   height: 40px;
-  /* width: 100%; */
-/* } */ */
+  width: 100%; 
+ }
 
 .form-check-input {
   margin: 4px;

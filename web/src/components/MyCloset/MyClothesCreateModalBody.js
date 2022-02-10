@@ -14,7 +14,10 @@ export default function MyClothesCreateModalBody() {
   const [selectedSize, setSelectedSize] = useState();
   const [selectedSubCategory, setSelectedSubCategory] = useState();
   const [selectedImg, setSelectedImg] = useState();
-  
+
+  const saveFileImage = (e) => { setSelectedImg(URL.createObjectURL(e.target.files[0])); };
+  const deleteFileImage = () => { URL.revokeObjectURL(selectedImg); setSelectedImg(""); };
+
   const Label = styled.label`
   display: inline-block;
   width: 40px;
@@ -104,7 +107,39 @@ const ColorSelectorContainer = styled.div`
   };
 
   return (
-    <ColorSelectorContainer>
+    <>
+    <h1>이미지 미리보기</h1>
+    <table> 
+      <tbody> 
+        <tr> 
+          <td> 
+            <div> 
+              {selectedImg && ( 
+              <img alt="sample" src={URL.createObjectURL(selectedImg)} style={{ margin: "auto", padding:"auto", width: "200px", height: "200px"}} /> )} 
+              <div style={{ alignItems: "center", justifyContent: "center", display:"flex"}} > 
+              <div>
+              <h4>사진 등록</h4>
+              </div>
+              <input name="imgUpload" type="file" accept="image/*" onChange={imgHandleChange} /> 
+              {/* <button 
+              style={{ backgroundColor: "gray", color: "white", width: "55px", height: "40px", cursor: "pointer", }} 
+              onClick={() => deleteFileImage()} > 삭제 </button>  */}
+              </div> 
+              </div> 
+              </td> 
+              </tr> 
+              </tbody> 
+              </table>
+    {/* <div>
+        
+      </div>
+      <input
+        type='file'
+        id='inputImg'
+        accept='image/*'
+        onChange={imgHandleChange}
+      ></input> */}
+      
       <div>
         <h2>색상</h2>
       </div>
@@ -121,13 +156,13 @@ const ColorSelectorContainer = styled.div`
               defaultChecked={selectedColor === colorArray[1] ? true : false}
               onChange={colorHandleChange}
             />
-            {/* <label
+            <label
               className='form-check-label'
               htmlFor={'색상' + colorArray[0]}
             >
               {colorArray[0]}
-            </label> */}
-            <Label 
+            </label>
+            {/* <div 
             id={'색상' + colorArray[1]}
             value={colorArray[1]}
             className='form-check-input'
@@ -140,7 +175,7 @@ const ColorSelectorContainer = styled.div`
 
             >
              <h4> {colorArray[0]} </h4>
-              </Label>
+              </div> */}
           </React.Fragment>
         );
       })}
@@ -266,20 +301,12 @@ const ColorSelectorContainer = styled.div`
             );
           }
         )}
-      </div>
-      <hr />
-      <div>
-        <h2>사진 등록</h2>
-      </div>
-      <input
-        type='file'
-        id='inputImg'
-        accept='image/*'
-        onChange={imgHandleChange}
-      ></input>
+              <hr />
       <Button variant='secondary' onClick={createClothes}>
         등록
       </Button>
-    </ColorSelectorContainer>
+      </div>
+
+    </>
   );
 }

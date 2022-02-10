@@ -89,9 +89,17 @@ const Section = styled.section`
   @media screen and (min-width: 280px) and (max-width: 1080px) {
     .home {
       .content {
-        padding-left: 2rem;
         width: 100%;
-        margin-bottom: 2rem;
+        height: 100vh;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+          justify-content: center;
         .title {
           h1 {
             font-size: 4rem;
