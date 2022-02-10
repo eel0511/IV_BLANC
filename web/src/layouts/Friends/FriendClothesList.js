@@ -9,7 +9,7 @@ import { Modal } from 'react-bootstrap';
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
-import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
+import FriendStyleCreateModalBody from '../../components/Friends/FriendStyleCreateModalBody';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -317,7 +317,7 @@ export default function MyStyleTopbar() {
                     color='success'
                     onClick={handleShow}
                   >
-                    스타일 저장
+                    스타일 추천
                   </Button>
 
                   <Modal
@@ -327,10 +327,10 @@ export default function MyStyleTopbar() {
                     onHide={handleClose}
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>스타일 저장</Modal.Title>
+                      <Modal.Title>스타일 추천</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <FriendStyleCreateModalBody saveClothesId={saveClothesId} />
                     </Modal.Body>
                   </Modal>
 
