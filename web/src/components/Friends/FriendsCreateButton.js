@@ -61,6 +61,7 @@ export default function FriendsCreateButton() {
         </Modal.Body>
         <Modal.Footer>
           <Button
+            className='btn btn-danger'
             onClick={friendRequest}
             style={{ 'background-color': '#ed6991', border: 'none' }}
           >
