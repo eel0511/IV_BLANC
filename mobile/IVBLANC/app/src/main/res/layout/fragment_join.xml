@@ -26,54 +26,54 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/join"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="32dp"
-            android:textSize="24sp"
             android:fontFamily="@font/app_font"
+            android:text="@string/join"
             android:textFontWeight="600"
+            android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
-            app:layout_constraintGuide_percent="0.2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
 
         <LinearLayout
             android:id="@+id/linearLayout_joinF_userInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/guideline"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:baselineAligned="false"
-                android:gravity="top">
+                android:gravity="top"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayout_joinF_email"
                     style="@style/TextInputLayoutStyle"
-                    android:layout_weight="20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="20"
                     android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/editText_joinF_email"
                         style="@style/TextInputStyle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,6 +92,7 @@
                     app:rippleColor="@color/gray_200" />
 
             </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout_joinF_password"
                 style="@style/TextInputLayoutStyle"
@@ -103,8 +104,7 @@
                     android:id="@+id/editText_joinF_password"
                     style="@style/PasswordInputStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,8 +119,7 @@
                     android:id="@+id/editText_joinF_passwordcheck"
                     style="@style/PasswordInputStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -134,7 +133,7 @@
                     android:id="@+id/editText_joinF_name"
                     style="@style/TextInputStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -150,7 +149,7 @@
                     android:id="@+id/editText_joinF_phone"
                     style="@style/NumberInputStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -166,34 +165,36 @@
                     android:id="@+id/editText_joinF_birthday"
                     style="@style/NumberInputStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginBottom="20dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:text="@string/gender"
-                    android:textSize="16sp"
-                    android:layout_marginStart="16dp"/>
+                    android:textSize="16sp" />
 
                 <RadioGroup
                     android:id="@+id/radioGroup_joinF_genders"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="end">
+                    android:gravity="end"
+                    android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/radioButton_joinF_male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/male"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="end"
+                        android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/radioButton_joinF_female"
@@ -212,13 +213,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/black"
-                android:textColor="@color/white"
                 android:insetBottom="0dp"
+                android:text="@string/join"
+                android:textColor="@color/white"
                 app:cornerRadius="20dp"
-                app:rippleColor="@color/gray_200"
-                android:text="@string/join" />
+                app:rippleColor="@color/gray_200" />
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imageButton_back"
+            android:layout_width="50dp"
+            android:layout_height="42dp"
+            android:backgroundTint="@color/ic_launcher_background"
+            android:src="@drawable/ic_back"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

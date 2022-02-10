@@ -3,11 +3,8 @@
 
 .MyClosetClothesItemImg {
   transition: all 0.2s linear;
-}
-
-.MyClosetClothesItemImg:hover {
-  transform: scale(1.15, 1.15);
-  background-color : #ed6991;
+  height: 250px;
+  width: 250px;
 }
 
 /* MyClosetSidebarItem */
@@ -27,6 +24,7 @@
   outline: 0;
   color: white;
   background-color : #ed6991;
+  height: 70px;
 }
 
 /* .RadioForm {
@@ -43,4 +41,15 @@
 
 .form-check-input {
   margin: 4px;
+}
+
+/* card */
+.card {
+  height: 300px;
+  box-shadow: 5px 5px #d3d3d3;
+}
+
+.card:hover {
+  transform: scale(1.10, 1.10);
+  background-color : white;
 }

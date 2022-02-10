@@ -39,6 +39,7 @@ import bimg16 from "../../assets/outfit/42.jfif";
 
 import FlipCard from "./FlipCard";
 import HistoryCreateButton from './HistoryCreateButton';
+import Title from '../../components/Home/Title';
 
 const cards = [
   {
@@ -224,10 +225,13 @@ export default function History() {
   return (
       <Section>
       <ScrollToTop />
-      <Navbar />
-      <>
-      <HistoryCreateButton />
-      </>
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
+      <Title value="HISTORY" />
+      <div style={{ 'margin-top': '1rem' }}>
+      <HistoryCreateButton/>
+      </div>
       <StyledHistory>
       <div className="container">
       <div className="overlay-background" />
@@ -248,7 +252,7 @@ export default function History() {
 
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

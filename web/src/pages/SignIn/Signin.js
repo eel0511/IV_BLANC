@@ -10,7 +10,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import Navbar from '../../components/Navbar';
+import styled from 'styled-components';
+import home from '../../assets/home.png';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
@@ -18,6 +20,7 @@ import axios from 'axios';
 import Container from '@mui/material/Container';
 import AuthSocial from '../../components/login/AuthSocial';
 import setAuthorizationToken from '../../utils/setAuthorizationToken';
+import Title from '../../components/Home/Title';
 
 function Copyright(props) {
   return (
@@ -150,48 +153,35 @@ export default function SignInSide() {
   };
 
   return (
+    <Section>
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
+      <Title value="SIGNIN" />
     <ThemeProvider theme={theme}>
-      <Container component='main'>
-        <Grid container component='main' sx={{ height: '100vh' }}>
-          <CssBaseline />
-          <Grid
-            item
-            xs={false}
-            sm={4}
-            md={7}
-            sx={{
-              backgroundImage: 'url(https://source.unsplash.com/random)',
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: (t) =>
-                t.palette.mode === 'light'
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          />
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            md={5}
+      <Container component='main' maxWidth='xs'>
+        {/* <Grid container component='main' sx={{ height: '100vh' }}> */}
+        <CssBaseline />
+          <Box
             component={Paper}
-            elevation={6}
-            square
+            sx={{
+              marginTop: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
             <Box
-              sx={{
-                my: 8,
-                mx: 4,
+              sx={{ 
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
               }}
             >
               <img
-                src={require('../../assets/logo2.png')}
+                src={require('../../assets/logo.png')}
                 alt='우리로고'
-                width={'300px'}
+                width={'100px'}
               ></img>
               <Typography component='h1' variant='h5'>
                 로그인
@@ -202,6 +192,9 @@ export default function SignInSide() {
                 onSubmit={handleSubmit}
                 sx={{ mt: 1 }}
               >
+                <Grid container spacing={2}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -218,7 +211,11 @@ export default function SignInSide() {
                     {emailMessage}
                   </span>
                 )}
+                </Grid>
+                <Grid item xs={1}></Grid>
 
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
                 <TextField
                   margin='normal'
                   required
@@ -232,7 +229,11 @@ export default function SignInSide() {
                     setPassword(e.target.value);
                   }}
                 />
+                </Grid>
+                <Grid item xs={1}></Grid>
 
+                <Grid item xs={2}></Grid>
+                <Grid item xs={8}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -244,17 +245,29 @@ export default function SignInSide() {
                   }
                   label='아이디 저장'
                 />
-
+                
+                </Grid>
+                <Grid item xs={2}></Grid>
+                
+                <Grid item xs={0.1}></Grid>
+                <Grid item xs={10}>
                 <AuthSocial />
+                </Grid>
 
+
+                
+                <Grid item xs={2}></Grid>
+                <Grid item xs={8}>
                 <Button
                   type='submit'
-                  fullWidth
                   variant='contained'
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mt: 3, mb: 3 , mx: 2, my: 2}}
                 >
                   로그인
                 </Button>
+                </Grid>
+                <Grid item xs={2}></Grid>
+
                 <Grid container spacing={1}>
                   <Grid item xs={4}>
                     <Link href='/findemail' variant='body2'>
@@ -272,12 +285,26 @@ export default function SignInSide() {
                     </Link>
                   </Grid>
                 </Grid>
-                <Copyright sx={{ mt: 5 }} />
+
+                <Grid item xs={12}>
+                <Copyright sx={{ mt: 2 }} />
+                </Grid>
+
+                </Grid>
               </Box>
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
       </Container>
     </ThemeProvider>
+    </Section>
   );
 }
+
+const Section = styled.section`
+  // background-image: url(${home});
+  background-size: cover;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+`;

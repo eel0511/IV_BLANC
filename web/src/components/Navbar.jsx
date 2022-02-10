@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
+import logo2 from "../assets/logo2.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { motion } from "framer-motion";
 import { navAnimation } from "../animations";
 import { useScroll } from "./useScroll";
 import { Link } from 'react-router-dom';
+import Notice from "./Friends/Notice";
+
+function isActive() {
+  return window.location.pathname;
+}
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -23,7 +28,7 @@ export default function Navbar() {
     >
       <div className="brand__container">
       <Link className='brand' to='/'>
-          <img src={logo} alt="Logo" />
+          <img src={logo2} alt="Logo" />
           </Link>
         <div className="toggle">
           {isNavOpen ? (
@@ -39,30 +44,30 @@ export default function Navbar() {
         </div>
       </div>
       <div className={`links ${isNavOpen ? "show" : ""}`}>
-        <ul defaultActiveKey='/'> 
-          <li className="active" >
-          <Link className='navbar-brand' to='/'>Home</Link>
+      <ul> 
+          <li className={(isActive() === '/') ? 'active' : null}>
+          <Link className='nav-link' to='/'>Home</Link>
           </li>
-          <li>
+          <li className={(isActive() === '/mycloset') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/mycloset' >Closet</Link>
           </li>
-          <li>
+          <li className={(isActive() === '/mystyle') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/mystyle'>Pick</Link>
           </li>
-          <li>
-          <Link className='nav-link ' aria-current='page' to='/friends'>Share</Link>
+          <li className={(isActive() === '/friends') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/friends'>Share</Link>
+          </li>
+          <li className={(isActive() === '/history') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/history'>History</Link>
+          </li>
+          <li className={(isActive() === '/signup') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/signup'>SignUp</Link>
+          </li>
+          <li className={(isActive() === '/signin') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/signin'>Sign in</Link>
           </li>
           <li>
-          <Link className='nav-link ' aria-current='page' to='/history'>History</Link>
-          </li>
-          {/* <li>
-            <a href="#contact">Notice</a>
-          </li> */}
-          <li>
-          <Link className='nav-link active' aria-current='page' to='/signup'>SignUp</Link>
-          </li>
-          <li>
-          <Link className='nav-link active' aria-current='page' to='/signin'>Sign in</Link>
+          <Notice />
           </li>
         </ul>
       </div>
@@ -78,11 +83,11 @@ const Nav = styled(motion.nav)`
   /* background-color: #ed6991; */
   color: white;
   .brand__container {
-    margin: 0 2rem;
+    /* margin: 20 20; */
     .brand {
       img {
-          width: 50px;
-          height: 50px;
+          width: 9rem;
+          height: 9rem;
         }
     }
     .toggle {
@@ -93,10 +98,13 @@ const Nav = styled(motion.nav)`
     ul {
       .active {
         a {
+        //   background-color: #ed6991;
+        //   border-radius: 15px;
           border-bottom: 0.2rem solid var(--secondary-color);
         }
       }
       list-style: none;
+      margin-top : 3rem;
       display: flex;
       gap: 3rem;
       li {

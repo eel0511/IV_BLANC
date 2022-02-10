@@ -1,10 +1,12 @@
 package com.strait.ivblanc.src.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -13,13 +15,22 @@ import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentJoinBinding
+import com.strait.ivblanc.src.main.MainActivity
 import com.strait.ivblanc.util.InputValidUtil
 import com.strait.ivblanc.util.Status
 import java.util.*
 
+
 class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind, R.layout.fragment_join) {
     val loginViewModel: LoginViewModel by activityViewModels()
     var isEmailChecked = false
+    var loginActivity : LoginActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loginActivity = activity as LoginActivity
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,7 +41,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         setLayoutWithoutStatusBarHeight(constraintLayout)
         return parent
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -38,6 +48,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
     }
 
     private fun initView() {
+        binding.imageButtonBack.setOnClickListener {
+           loginActivity!!.setFragment(1)
+        }
         binding.buttonJoinFJoin.setOnClickListener {
             if (checkInputForm() && isEmailChecked) {
                 join()
@@ -158,6 +171,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         }
 
         loginViewModel.join(UserForJoin(email, password, passwordCheck, name, gender, age, phoneNumber))
+        loginActivity!!.setFragment(1)
+
     }
 
     private fun checkInputForm(): Boolean {

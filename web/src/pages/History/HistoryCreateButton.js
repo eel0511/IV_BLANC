@@ -10,8 +10,16 @@ export default function HistoryCreateButton() {
 
   return (
     <>
-      <button type='button' className='btn btn-primary' onClick={handleShow}>
-        추억 하기
+      <button
+        type='button'
+        className='btn'
+        style={{
+          'background-color': '#ed6991',
+          'color': 'white'
+        }}
+        onClick={handleShow}
+      >
+        추억하기
       </button>
 
       <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"

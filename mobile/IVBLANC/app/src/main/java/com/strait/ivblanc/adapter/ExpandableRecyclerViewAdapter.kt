@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
+import com.strait.ivblanc.data.model.dto.Style
 import java.lang.Exception
 
 class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapter<ExpandableRecyclerViewAdapter<T>.ViewHolder>() {
@@ -91,6 +92,19 @@ class ExpandableRecyclerViewAdapter<T>(val context: Context): RecyclerView.Adapt
                     }
                     // TODO: 2022/01/24 글라이드 에러 이미지 변경
                     Glide.with(context).load((item.content as Clothes).url).centerCrop().error(R.drawable.circle).into(imageView)
+                }
+                is Style -> {
+                    val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes).also {
+                        it.setOnClickListener{
+                            itemClickListener.onClick(position, CHILD)
+                        }
+                        it.setOnLongClickListener{
+                            itemLongClickListener.onLongClick(position)
+                            true
+                        }
+                    }
+                    // TODO: 2022/01/24 글라이드 에러 이미지 변경
+                    Glide.with(context).load((item.content as Style).url).centerCrop().error(R.drawable.circle).into(imageView)
                 }
             }
         }

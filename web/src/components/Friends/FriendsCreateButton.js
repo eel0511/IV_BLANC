@@ -38,7 +38,7 @@ export default function FriendsCreateButton() {
         className='friedsCreateButton'
         src={require('../../assets/친구등록.png')}
         alt='Create'
-        style={{ width: '100px', height: '100px' }}
+        style={{ width: '100px', height: '100px', color: '#ed6991' }}
         onClick={handleShow}
       />
       <Modal show={show} onHide={handleClose} centered='true'>

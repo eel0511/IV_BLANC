@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".src.styleMaking.StyleMakingActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_styleMaking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar_styleMaking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout_styleMaking_edit"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="3:4"
+            app:layout_constraintEnd_toStartOf="@id/recyclerView_styleMaking_Clothes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_styleMaking"
+            app:layout_constraintVertical_bias="0.0">
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_top"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_hat"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_bottom"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_top"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_outer"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_etc"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_shoes"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_bag"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_hat"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_bag"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_outer"
+                android:clickable="false"/>
+
+            <ImageView
+                android:id="@+id/imageView_styleMaking_etc"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:clickable="false"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imageView_styleMaking_layer"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/defaultIconSize"
+            android:src="@drawable/ic_layer"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_styleMaking"
+            app:layout_constraintStart_toStartOf="@id/recyclerView_styleMaking_Clothes"
+            app:layout_constraintEnd_toEndOf="@id/recyclerView_styleMaking_Clothes"
+            android:background="@color/gray_100"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_styleMaking_Clothes"
+            android:layout_width="@dimen/styleLayerSelectorWidth"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/imageView_styleMaking_layer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout_styleMaking_edit"
+            android:background="@color/gray_100" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintStart_toStartOf="@id/recyclerView_styleMaking_Clothes"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_edit"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayout_styleMaking_edit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_anchor="@+id/constraintLayout_styleMaking"
+        app:layout_anchorGravity="bottom|center" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout_styleMaking_bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:behavior_hideable="false"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="@color/gray_100"
+        app:behavior_peekHeight="90dp"
+        android:padding="@dimen/defaultPadding"
+        android:layout_marginStart="@dimen/defaultMargin"
+        android:layout_marginEnd="@dimen/defaultMargin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout_styleMaking_edit"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle.dropdown"
+            android:id="@+id/textInputLayout_styleMaking_largeCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout_styleMaking_bottomSheet">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView_clothesSelectBottomSheetF_largeCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/TextInputLayoutStyle.dropdown"
+            android:id="@+id/textInputLayout_styleMaking_smallCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet"
+            app:layout_constraintStart_toEndOf="@id/textInputLayout_styleMaking_largeCategory"
+            android:layout_marginStart="@dimen/defaultMargin">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView_clothesSelectBottomSheetF_smallCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_styleMaking_bottomSheet"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="@dimen/defaultPadding"
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout_styleMaking_largeCategory"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout_styleMaking_bottomSheet"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

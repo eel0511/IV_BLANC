@@ -5,6 +5,9 @@ import MyClothesCreateButton from '../../components/MyCloset/MyClothesCreateButt
 export default function MyClosetClothes({ clothesDatas }) {
   return (
     <div className='MyClosetClothes'>
+      <div>
+        <MyClothesCreateButton />
+      </div>
       <div className='container-fluid'>
         <div className='row'>
           {clothesDatas.map((clothesData) => (
@@ -14,7 +17,6 @@ export default function MyClosetClothes({ clothesDatas }) {
           ))}
         </div>
       </div>
-      <MyClothesCreateButton />
     </div>
   );
 }

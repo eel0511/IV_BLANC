@@ -12,7 +12,7 @@ function App() {
         {/* <IvblancNavbar /> */}
         <Routes>
           {routes.map((route) => {
-            return <Route key={route.component} path={route.path} exact element={<route.component />}></Route>;
+            return <Route key={route.component} path={route.path} exact element={<route.component />} />;
           })}
         </Routes>
         <Footer />

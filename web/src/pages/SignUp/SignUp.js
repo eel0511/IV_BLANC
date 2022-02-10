@@ -13,11 +13,15 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
+import Paper from '@mui/material/Paper';
+import Navbar from '../../components/Navbar';
+import styled from 'styled-components';
+import home from '../../assets/home.png';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/signup.scss';
+import Title from '../../components/Home/Title';
 
 function Copyright(props) {
   return (
@@ -257,21 +261,27 @@ export default function SignUp() {
   };
 
   return (
+    <Section>
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
+      <Title value="SIGNUP" />
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
+      <Container component='main' maxWidth='xs' >
         <CssBaseline />
         <Box
+          component={Paper}    
           sx={{
-            marginTop: 8,
+            marginTop: 5,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
           <img
-            src={require('../../assets/logo2.png')}
+            src={require('../../assets/logo.png')}
             alt='우리로고'
-            width={'300px'}
+            width={'100px'}
           ></img>
           <Typography component='h1' variant='h5'>
             회원가입
@@ -283,7 +293,8 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={8}>
+            <Grid item xs={1}></Grid>
+              <Grid item xs={6.5}>
                 <TextField
                   required
                   fullWidth
@@ -300,13 +311,15 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={3.5}>
                 <Button onClick={checkEmail} variant='outlined' sx={{ mt: 1 }}>
-                  중복 확인
+                  중복확인
                 </Button>
               </Grid>
+              <Grid item xs={1}></Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -325,7 +338,9 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -346,7 +361,10 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={1}></Grid>
+
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -362,7 +380,10 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={12} align='left'>
+              <Grid item xs={1}></Grid>
+
+              <Grid item xs={3}></Grid>
+              <Grid item xs={9} align='left'>
                 <FormLabel id='demo-row-radio-buttons-group-label'>
                   성별
                 </FormLabel>
@@ -385,7 +406,9 @@ export default function SignUp() {
                   />
                 </RadioGroup>
               </Grid>
-              <Grid item xs={12}>
+            
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -401,7 +424,10 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={1}></Grid>
+              
+              <Grid item xs={1}></Grid>
+              <Grid item xs={10}>
                 <TextField
                   required
                   fullWidth
@@ -419,26 +445,41 @@ export default function SignUp() {
                   </span>
                 )}
               </Grid>
+              <Grid item xs={1}></Grid>
+
             </Grid>
             <Button
               type='submit'
-              fullWidth
               variant='contained'
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, mx: 2, my: 2}}
             >
               회원가입
             </Button>
             <Grid container justifyContent='flex-end'>
-              <Grid item>
+              <Grid item sx={{ mr: 2 }}>
                 <Link href='/signin' variant='body2'>
                   이미 계정이 있으신가요? 로그인
                 </Link>
               </Grid>
             </Grid>
+
           </Box>
+          <Grid item xs={12}>
+        <Copyright sx={{ mt: 2 }} />
+        </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        
       </Container>
     </ThemeProvider>
+    </Section>
   );
 }
+
+const Section = styled.section`
+  // background-image: url(${home});
+  background-size: cover;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+`;

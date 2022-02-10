@@ -8,7 +8,7 @@ data class Style(
     val createDate: String,
     val favorite: Int,
     val madeby: String,
-    val photoName: String,
+    val photoName: String?,
     val styleDetails: List<StyleDetail>,
     val styleId: Int,
     val updateDate: String,

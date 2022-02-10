@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ivblanc.api.service.*;
+import com.ivblanc.core.entity.User;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,13 +51,18 @@ public class StyleController {
     private final UserService userService;
     private final FcmService fcmService;
     private final FileService fileService;
-
+    private final FriendService friendService;
     @ApiOperation(value = "Style 추가", notes = "여기서 madeby와 userId가 있는데 userId는 실 소유주고 \n"
             + "madeby는 만약 친구가 만들었다면 여기에 만든사람이름을 넣으면 해결되지않을까 싶습니다. 추후 분리가 필요하면 말해주세요")
     @PostMapping(value = "/add")
     public @ResponseBody
-    SingleResult<String> addStyle(@RequestBody List<MakeStyleDetailReqDTO> styleDetails,
+    SingleResult<String> addStyle(@RequestParam("clothesList" ) String list,
                                   @RequestHeader(value = "X-AUTH-TOKEN") String token, final MultipartFile photo) throws Exception {
+        List<MakeStyleDetailReqDTO> styleDetails = new ArrayList<>();
+        String[] temp = list.split(",");
+        for(String s : temp){
+            styleDetails.add(new MakeStyleDetailReqDTO(Integer.parseInt(s.trim())));
+        }
         String url = fileService.upload(photo);
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         if (url.equals("error")) {
@@ -81,11 +87,25 @@ public class StyleController {
     ListResult<Style> findStyle(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception {
         int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
         List<Style> styleList = styleService.findAllByUserId(userId);
-        if (styleList.size() == 0) {
-            throw new ApiMessageException("없는 userId 입니다.");
-        }
         //page 적용하고싶은데 mysql에서는 좀 어려워보임
         return responseService.getListResult(styleList);
+    }
+    @ApiOperation(value = "style 조회(Friend email로) 개개의 옷정보까지 한방에 다줌", notes = "친구의 스타일 전부를 볼 수있습니다.\n"
+            + "여기에는 모든 옷 정보까지 한번에 조회됩니다\n"
+            + "자신의 룩 보기에서 이를 이용해 style을 띄워주고 그 style을 누르면 styledetail들(옷)들이뜨고 개개의 옷을 누르면 옷 정보도 띄울수있게 한번에 정보를 긁어오는것입니다")
+    @GetMapping(value = "/findfriendstyle")
+    public @ResponseBody
+    ListResult<Style> findFriendStyle(@RequestHeader(value = "X-AUTH-TOKEN") String token,@RequestParam String FriendEmail) throws Exception {
+        int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
+        User me = userService.findById(userId);
+        User friend = userService.findByEmail(FriendEmail);
+        if (friendService.isRealFriend(me.getEmail(), friend.getEmail())) {
+            List<Style> styleList = styleService.findAllByUserId(friend.getUserId());
+            return responseService.getListResult(styleList);
+        }
+
+        //page 적용하고싶은데 mysql에서는 좀 어려워보임
+        return responseService.getFailResult(500,"친구가아닙니다",new ArrayList<>());
     }
 
     @ApiOperation(value = "style 삭제")

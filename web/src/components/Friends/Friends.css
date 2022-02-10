@@ -1,34 +1,35 @@
 /* FriendsCreateButton */
 .friedsCreateButton {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top: 0;
   right: 0;
   margin: 50px;
   border-style: solid;
-  border-color: gray;
+  border-color: #ed6991;
   border-radius: 50%;
   cursor: pointer;
+  filter: opacity(0.3) drop-shadow(0 0 0 #ed6991);
 }
 
 /* Notice */
 .Notice {
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 50px;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* margin: 50px; */
   cursor: pointer;
 }
 
 .Notice__icon {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
 }
 
-.Notice__friendRequest {
+/* .Notice__friendRequest {
   display: flex;
   align-items: center;
   padding: 10px;
-}
+} */
 
 /* FriendsListItem */
 
@@ -41,10 +42,14 @@
   margin: 15px;
 }
 
-.friend__plusIcon {
+.friend__link {
   position: relative;
   left: 500px;
+}
+
+.friend__plusIcon {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  color:#ed6991;
 }

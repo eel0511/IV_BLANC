@@ -52,18 +52,20 @@ def removebg():
     fname = secure_filename(f.filename)
     path = os.path.join(fname)
     f.save(path)
-    clothId = request.args.get('clothId', type=str)
+    clothId = request.form.get('clothId', type=str)
     # 저장 된 이미지 확인
     output_path = str(uuid.uuid1()) + ".png"
     print(output_path)
     f = np.fromfile(path)
     result = remove(f)
     img = Image.open(io.BytesIO(result)).convert("RGBA")
-    img = img.resize((192, 256))
-    img.save(output_path, quality=70)
+    img = img.resize((256, 256))
+    img.save(output_path, quality=95)
     fileUpload(output_path)
+    print("clothId"+clothId)
 
     newpath = "https://storage.googleapis.com/iv-blanc.appspot.com/" + output_path
+    print(newpath)
     cur.execute("UPDATE clothes set url = %s where clothes_id = %s", [newpath,clothId])
     cur.fetchall()
     db.commit()

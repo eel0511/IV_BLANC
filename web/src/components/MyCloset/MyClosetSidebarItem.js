@@ -13,6 +13,7 @@ export default function MyClosetSidebarItem({ menu, id, clothesDatas, getFilterM
       // console.log(filterClothesDatas);
       getFilterMyclothes(filterClothesDatas)
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

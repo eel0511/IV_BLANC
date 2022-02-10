@@ -57,18 +57,14 @@ export default function FirendsListItem({ friend }) {
         />
         <h3>{friend.friendName}</h3>
         <Link
-          to={{
-           pathname: '/friends/closet',
-           state: {
-             friendName: `${friend.friendName}`,
-             friendEmail: `${friend.friendEmail}`,
-             friendsClothesList: `${friendsClothesList}`
-           }
+          to={'/friends/closet'}
+          state={{
+            friendName: `${friend.friendName}`,
+            friendEmail: `${friend.friendEmail}`
           }}
+          className='friend__link'
         >
-          <BsPlusCircle 
-            className='friend__plusIcon'
-          />
+          <BsPlusCircle className='friend__plusIcon' />
         </Link>
       </div>
       <div className='friend__body'>
