@@ -437,6 +437,7 @@ export default function MyStyleTopbar() {
                   display: 'flex',
                   justifyContent: 'center',
                   marginTop: '50px',
+                  marginBottom: '50px',
                 }}
               >
                 <Stack direction='row' spacing={2}>
