@@ -296,7 +296,7 @@ export default function MyStyleTopbar() {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
     } else if (Number(category) === 8) {
-      axios
+      await axios
         .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
           headers: {
             'X-AUTH-TOKEN': `${token}`,
@@ -387,6 +387,35 @@ export default function MyStyleTopbar() {
     }
   };
 
+  // let clothesCategory;
+  // if (tab < 8) {
+  //   clothesCategory = (
+  //     <div className='container-fluid'>
+  //       <div className='row'>
+  //         {filterMyClothes.map((clothesData) => (
+  //           <div className='col-4 mt-3' key={clothesData.clothesId}>
+  //             <div className='card h-100'>
+  //               <div className='card-body'>
+  //                 <img
+  //                   className='MyClosetClothesItemImg'
+  //                   src={clothesData.url}
+  //                   alt={clothesData.clothesId}
+  //                   title={clothesData.category}
+  //                   style={{
+  //                     maxWidth: '100%',
+  //                     maxHeight: '100%',
+  //                   }}
+  //                   onClick={saveClothes}
+  //                 />
+  //               </div>
+  //             </div>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <Container fluid='md'>
       <Row xs={1} md={2}>
@@ -416,30 +445,36 @@ export default function MyStyleTopbar() {
             </Nav>
 
             {/* 서버 연동 */}
-            {isData && tab < 8 && filterMyClothes.length > 0 ? (
-              <div className='container-fluid'>
-                <div className='row'>
-                  {filterMyClothes.map((clothesData) => (
-                    <div className='col-4 mt-3' key={clothesData.clothesId}>
-                      <div className='card h-100'>
-                        <div className='card-body'>
-                          <img
-                            className='MyClosetClothesItemImg'
-                            src={clothesData.url}
-                            alt={clothesData.clothesId}
-                            title={clothesData.category}
-                            style={{
-                              maxWidth: '100%',
-                              maxHeight: '100%',
-                            }}
-                            onClick={saveClothes}
-                          />
+            {tab < 8 ? (
+              filterMyClothes.length > 0 ? (
+                <div className='container-fluid'>
+                  <div className='row'>
+                    {filterMyClothes.map((clothesData) => (
+                      <div className='col-4 mt-3' key={clothesData.clothesId}>
+                        <div className='card h-100'>
+                          <div className='card-body'>
+                            <img
+                              className='MyClosetClothesItemImg'
+                              src={clothesData.url}
+                              alt={clothesData.clothesId}
+                              title={clothesData.category}
+                              style={{
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                              }}
+                              onClick={saveClothes}
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <p>등록된 데이터가 없습니다.</p>
+              )
+            ) : styleClothes.length > 0 ? (
+              styleImg(styleClothes)
             ) : (
               <p>등록된 데이터가 없습니다.</p>
             )}
@@ -497,5 +532,31 @@ export default function MyStyleTopbar() {
         </Col>
       </Row>
     </Container>
+  );
+}
+
+function styleImg(styleClothes) {
+  return (
+    <div className='container-fluid'>
+      <div className='row'>
+        {styleClothes.map((clothesData) => (
+          <div className='col-4 mt-3' key={clothesData.styleId}>
+            <div className='card h-100'>
+              <div className='card-body'>
+                <img
+                  className='MyClosetClothesItemImg'
+                  src={clothesData.url}
+                  alt={clothesData.styleId}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
