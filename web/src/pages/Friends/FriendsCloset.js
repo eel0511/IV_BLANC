@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
 import Title from '../../components/Home/Title';
+import FriendsClosetList from '../../layouts/Friends/FriendsClosetList';
 
 export default function FriendsCloset({ location }) {
   console.log(location)
@@ -15,6 +16,7 @@ export default function FriendsCloset({ location }) {
         <Navbar />
       </div>
       <Title value="FRIEND" />
+      <FriendsClosetList />
     </Section>
   );
 }
