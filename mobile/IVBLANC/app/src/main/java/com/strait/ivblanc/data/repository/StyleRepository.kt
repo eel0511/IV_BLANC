@@ -1,5 +1,6 @@
 package com.strait.ivblanc.data.repository
 
+import android.util.Log
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.StyleApi
 import com.strait.ivblanc.data.model.response.StyleAllResponse
@@ -28,7 +29,25 @@ class StyleRepository {
             Resource.error(null, "네트워크 연결을 확인해 주세요")
         }
     }
-    suspend fun findAllFriendStyle(FriendEmail:String):Resource<StyleAllResponse>{
+
+    suspend fun getAllStyles(): Resource<StyleAllResponse> {
+        return try {
+            val response = styleApi.getAllStyles()
+            if (response.isSuccessful) {
+                return if (response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "등록된 스타일 조회를 할 수 없습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getAllStyles: error - ${e.message}")
+            Resource.error(null, "네트워크 연결을 확인해 주세요.")
+        }
+    }
+            suspend fun findAllFriendStyle(FriendEmail:String):Resource<StyleAllResponse>{
         return try{
             val response = styleApi.getAllFriendStyles(FriendEmail)
             if(response.isSuccessful){
