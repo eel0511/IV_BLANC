@@ -387,34 +387,31 @@ export default function MyStyleTopbar() {
     }
   };
 
-  // let clothesCategory;
-  // if (tab < 8) {
-  //   clothesCategory = (
-  //     <div className='container-fluid'>
-  //       <div className='row'>
-  //         {filterMyClothes.map((clothesData) => (
-  //           <div className='col-4 mt-3' key={clothesData.clothesId}>
-  //             <div className='card h-100'>
-  //               <div className='card-body'>
-  //                 <img
-  //                   className='MyClosetClothesItemImg'
-  //                   src={clothesData.url}
-  //                   alt={clothesData.clothesId}
-  //                   title={clothesData.category}
-  //                   style={{
-  //                     maxWidth: '100%',
-  //                     maxHeight: '100%',
-  //                   }}
-  //                   onClick={saveClothes}
-  //                 />
-  //               </div>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  let showImg = (
+    <div className='container-fluid'>
+      <div className='row'>
+        {filterMyClothes.map((clothesData) => (
+          <div className='col-4 mt-3' key={clothesData.clothesId}>
+            <div className='card h-100'>
+              <div className='card-body'>
+                <img
+                  className='MyClosetClothesItemImg'
+                  src={clothesData.url}
+                  alt={clothesData.clothesId}
+                  title={clothesData.category}
+                  style={{
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                  onClick={saveClothes}
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <Container fluid='md'>
@@ -447,36 +444,14 @@ export default function MyStyleTopbar() {
             {/* 서버 연동 */}
             {tab < 8 ? (
               filterMyClothes.length > 0 ? (
-                <div className='container-fluid'>
-                  <div className='row'>
-                    {filterMyClothes.map((clothesData) => (
-                      <div className='col-4 mt-3' key={clothesData.clothesId}>
-                        <div className='card h-100'>
-                          <div className='card-body'>
-                            <img
-                              className='MyClosetClothesItemImg'
-                              src={clothesData.url}
-                              alt={clothesData.clothesId}
-                              title={clothesData.category}
-                              style={{
-                                maxWidth: '100%',
-                                maxHeight: '100%',
-                              }}
-                              onClick={saveClothes}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                showImg
               ) : (
-                <p>등록된 데이터가 없습니다.</p>
+                <NowImg />
               )
             ) : styleClothes.length > 0 ? (
-              styleImg(styleClothes)
+              <StyleImage styleClothes={styleClothes} />
             ) : (
-              <p>등록된 데이터가 없습니다.</p>
+              <NowImg />
             )}
 
             <SelectedImage selectedClothes={selectedClothes} />
@@ -535,7 +510,7 @@ export default function MyStyleTopbar() {
   );
 }
 
-function styleImg(styleClothes) {
+function StyleImage({ styleClothes }) {
   return (
     <div className='container-fluid'>
       <div className='row'>
@@ -559,4 +534,8 @@ function styleImg(styleClothes) {
       </div>
     </div>
   );
+}
+
+function NowImg() {
+  return <p>등록된 데이터가 없습니다.</p>;
 }
