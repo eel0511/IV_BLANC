@@ -163,7 +163,7 @@ public class ClothesController {
     @ApiOperation(value = "beta")
     @PostMapping(value = "/beta")
     public @ResponseBody
-    CommonResult betaservice(final MultipartFile photo) throws Exception {
+    SingleResult<String> betaservice(final MultipartFile photo) throws Exception {
 
         RestTemplate restTemplate = new RestTemplate();
         String sendurl ="http://119.56.162.61:5000/";
