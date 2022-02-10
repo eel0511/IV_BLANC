@@ -416,7 +416,7 @@ export default function MyStyleTopbar() {
             </Nav>
 
             {/* 서버 연동 */}
-            {isData && filterMyClothes.length > 0 ? (
+            {isData && tab < 8 && filterMyClothes.length > 0 ? (
               <div className='container-fluid'>
                 <div className='row'>
                   {filterMyClothes.map((clothesData) => (
