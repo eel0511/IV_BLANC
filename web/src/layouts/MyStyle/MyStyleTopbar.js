@@ -10,6 +10,7 @@ import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
+import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -479,7 +480,7 @@ export default function MyStyleTopbar() {
                       <Modal.Title>AI 스타일링</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody />
+                      <MyStyleAIModalBody />
                     </Modal.Body>
                   </Modal>
 
