@@ -29,6 +29,7 @@ export default function MyStyleTopbar() {
 
   const [isData, setIsData] = useState(false);
   const [clothes, setClothes] = useState([]);
+  const [filterMyClothes, setFilterMyClothes] = useState([]);
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
