@@ -42,10 +42,14 @@
   margin: 15px;
 }
 
-.friend__plusIcon {
+.friend__link {
   position: relative;
   left: 500px;
+}
+
+.friend__plusIcon {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  color:#ed6991;
 }
