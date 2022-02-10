@@ -1,9 +1,7 @@
 package com.strait.ivblanc.src.clothesDetail
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -12,6 +10,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityClothesDetailBinding
 import com.strait.ivblanc.util.CategoryCode
@@ -19,7 +18,7 @@ import com.strait.ivblanc.util.MaterialCode
 
 class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(ActivityClothesDetailBinding::inflate) {
     lateinit var clothes: Clothes
-    val mainViewModel: MainViewModel by viewModels()
+    val clothesViewModel: ClothesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.getParcelableExtra<Clothes>("clothes")?.let {
@@ -30,8 +29,8 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         initFavorite()
 
         //좋아요 하트 실시간 변경, 0 받아오면 오류임
-        mainViewModel.resFavorite.observe(this){
-            if(mainViewModel.resFavorite.value==0){
+        clothesViewModel.resFavorite.observe(this){
+            if(clothesViewModel.resFavorite.value==0){
                 favoriteDialog("error")
             }else{
                 if(clothes.favorite==0){
@@ -77,14 +76,14 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
             when(clothes.favorite) {
                 0 -> {
                     // TODO: 2022/01/31 즐겨찾기 세팅 함수 호출
-                    mainViewModel.addFavorite(clothes.clothesId)
+                    clothesViewModel.addFavorite(clothes.clothesId)
                 }
                 else -> {
                     // TODO: 2022/01/31 즐겨찾기 해제 함수 호출
-                    mainViewModel.deleteFavorite(clothes.clothesId)
+                    clothesViewModel.deleteFavorite(clothes.clothesId)
                 }
             }
-            mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+            clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
         binding.imageViewClothesDetailStyle.setOnClickListener {
             // TODO: 2022/01/31 스타일 생성 화면으로 이동 
