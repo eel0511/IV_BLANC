@@ -25,6 +25,7 @@ import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
+import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
@@ -40,6 +41,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val mainViewModel: MainViewModel by viewModels()
     val friendViewModel: FriendViewModel by viewModels()
     val clothesViewModel: ClothesViewModel by viewModels()
+    val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
 
     companion object {
@@ -53,6 +55,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+        styleViewModel.getAllStyles()
         init()
     }
 
