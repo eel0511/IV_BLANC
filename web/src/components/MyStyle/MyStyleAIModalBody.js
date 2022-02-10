@@ -68,13 +68,15 @@ function MyStyleAIModalBody() {
         </Button>
       </div>
 
-      {selectedImg && AIurl && (
-        <img
-          alt='AI 스타일링 적용'
-          src={AIurl}
-          style={{ marginTop: '30px', width: '400px', height: '400px' }}
-        />
-      )}
+      <div>
+        {selectedImg && AIurl && (
+          <img
+            alt='AI 스타일링 적용'
+            src={AIurl}
+            style={{ marginTop: '30px' }}
+          />
+        )}
+      </div>
     </div>
   );
 }
