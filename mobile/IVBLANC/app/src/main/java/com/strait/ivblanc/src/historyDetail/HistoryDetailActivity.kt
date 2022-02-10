@@ -44,7 +44,9 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     }
 
     private fun setHistoryInfo() {
-        Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryDetailStyle)
+        if(history.styleUrl != null) {
+            Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryDetailStyle)
+        }
 
         binding.textViewHistoryDetailDate.text = history.date
         binding.textViewHistoryDetailSubject.text = history.subject
