@@ -16,9 +16,12 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: DateWithHistory) {
-            item.date?.let {
-                itemView.findViewById<TextView>(R.id.textView_historyCalendar_list_date).text = it.dayOfMonth().asText
+            val textView = itemView.findViewById<TextView>(R.id.textView_historyCalendar_list_date)
+            when(item.date) {
+                null -> textView.text = itemView.resources.getText(R.string.empty)
+                else -> textView.text = item.date.dayOfMonth.toString()
             }
+            // TODO: 2022/02/07 히스토리가 존재할 때 이미지 세팅
             // 히스토리가 존재할 때만 클릭리스너 동작
             item.history?.let {
                 if(this@CalendarAdapter::itemClickListener.isInitialized) {

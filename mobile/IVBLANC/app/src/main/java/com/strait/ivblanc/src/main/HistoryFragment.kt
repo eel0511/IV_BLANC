@@ -53,11 +53,9 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                // TODO: 2022/02/06 캘린더 fragment로 이동
                 0 -> {
                     CalendarFragment()
                 }
-                // TODO: 2022/02/06 지도 fragment로 이동
                 else -> {
                     MapFragment()
                 }
