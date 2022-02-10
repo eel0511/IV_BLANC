@@ -21,6 +21,7 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.FriendViewdata
 import com.strait.ivblanc.data.model.dto.Style
+import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityFriendClosetBinding
@@ -34,7 +35,7 @@ import com.strait.ivblanc.util.CategoryCode
 class FriendCloset :
     BaseActivity<ActivityFriendClosetBinding>(ActivityFriendClosetBinding::inflate) {
     val friendViewModel: FriendViewModel by viewModels()
-    val MainViewModel: MainViewModel by viewModels()
+    val clothesViewModel: ClothesViewModel by viewModels()
     lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,7 +43,7 @@ class FriendCloset :
         var test = intent.getParcelableExtra<FriendViewdata>("test")
         friendViewModel.setToolbarTitle("친구 " + test!!.name + "의 옷장")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
-        MainViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
+        clothesViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
         setToolbar()
         setViewPager()
     }
