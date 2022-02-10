@@ -4,10 +4,7 @@ import com.strait.ivblanc.data.model.response.StyleAllResponse
 import com.strait.ivblanc.data.model.response.StyleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface StyleApi {
     @Multipart
@@ -16,4 +13,7 @@ interface StyleApi {
 
     @GET("/api/style/finduserstyle")
     suspend fun getAllStyles(): Response<StyleAllResponse>
+
+    @GET("/api/style/findfriendstyle")
+    suspend fun getAllFriendStyles(@Query("FriendEmail")FriendEmail:String): Response<StyleAllResponse>
 }
