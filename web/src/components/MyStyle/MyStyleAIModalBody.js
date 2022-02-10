@@ -4,6 +4,7 @@ import { Button, Container, Row, Col } from 'react-bootstrap';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
+  const [AIurl, setAIurl] = useState('');
 
   const imgHandleChange = (e) => {
     console.log(e.target.files);
@@ -14,20 +15,25 @@ function MyStyleAIModalBody() {
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
-    const token =
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
-    axios
-      .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', formData, {
-        headers: {
-          'X-AUTH-TOKEN': `${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log('실패');
-      });
+    const data =
+      'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
+    setAIurl(data);
+
+    // const token =
+    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+    // axios
+    //   .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', formData, {
+    //     headers: {
+    //       'X-AUTH-TOKEN': `${token}`,
+    //     },
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     setAIurl(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log('실패');
+    //   });
   };
 
   return (
@@ -42,36 +48,33 @@ function MyStyleAIModalBody() {
           style={{ margin: 'auto', width: '400px', height: '400px' }}
         />
       )}
-      <input
-        type='file'
-        id='inputImg'
-        accept='image/*'
-        onChange={imgHandleChange}
-      ></input>
-      {/* <Container>
-        <Row>
-          <Col>
-            <Button
-              variant='primary'
-              style={{ float: 'left' }}
-              onClick={createStyle}
-            >
-              확인
-            </Button>
-          </Col>
-          <Col xs={7}></Col>
-          <Col>
-            <Button variant='secondary' onClick={handleClose}>
-              Close
-            </Button>
-          </Col>
-        </Row>
-      </Container> */}
-      <div style={{ marginTop: '30px', float: 'right' }}>
-        <Button variant='primary' onClick={createStyle}>
-          확인
+
+      <div>
+        <input
+          type='file'
+          id='inputImg'
+          accept='image/*'
+          onChange={imgHandleChange}
+        ></input>
+      </div>
+
+      <div style={{ float: 'left' }}>
+        <Button
+          variant='primary'
+          onClick={createStyle}
+          style={{ marginTop: '20px' }}
+        >
+          AI 스타일링 확인
         </Button>
       </div>
+
+      {selectedImg && AIurl && (
+        <img
+          alt='AI 스타일링 적용'
+          src={AIurl}
+          style={{ marginTop: '30px', width: '400px', height: '400px' }}
+        />
+      )}
     </div>
   );
 }
