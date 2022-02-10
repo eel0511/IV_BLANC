@@ -19,6 +19,9 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.styleMaking.StyleMakingActivity"
+            android:exported="false"/>
+        <activity
             android:name=".src.friend.FriendNoti"
             android:exported="false" />
         <activity

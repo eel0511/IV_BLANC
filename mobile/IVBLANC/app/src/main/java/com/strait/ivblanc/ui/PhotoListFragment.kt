@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.strait.ivblanc.R
@@ -12,15 +14,21 @@ import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
+import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
+import com.strait.ivblanc.util.CategoryCode
 
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
 class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
+    private val clothesViewModel: ClothesViewModel by activityViewModels()
+    lateinit var largeCategories: List<String>
+    var smallCategories = listOf<Pair<Int, Int>>()
+
     override fun onResume() {
         super.onResume()
         when(tag) {
@@ -108,13 +116,89 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
         // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
         viewModel.clothesResponseStatus.observe(requireActivity()) {
-            
+
         }
-        viewModel.clothesListLiveData.observe(requireActivity()) {
+        clothesViewModel.clothesListLiveData.observe(requireActivity()) {
             exAdapter.data = it as ArrayList<PhotoItem<T>>
             exAdapter.notifyDataSetChanged()
         }
 
+        if(tag == "clothes") {
+            setDropDown()
+        } else {
+            binding.textInputLayoutPhotoListFCategory.visibility = View.GONE
+            binding.textInputLayoutPhotoListFSmallCategory.visibility = View.GONE
+        }
+    }
+
+    private fun setDropDown() {
+        largeCategories = getLargeCategoryString()
+        // 초기화 시 대분류 전체, 소분류 전체로 세팅
+        binding.autoCompleteTextViewPhotoListFCategory.setText(resources.getText(R.string.total))
+        binding.autoCompleteTextViewPhotoListFSmallCategory.setText(resources.getText(R.string.total))
+
+        val largeCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, largeCategories)
+        binding.autoCompleteTextViewPhotoListFCategory.setAdapter(largeCategoryAdapter)
+
+        // 대분류가 바뀜에 따라 소분류 바꿈
+        clothesViewModel.largeCategory.observe(this) {
+            smallCategories = clothesViewModel.getSmallCategoriesByLargeCategory(it)
+            val smallCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, getSmallCategoryStringByLargeCategory(it))
+            binding.autoCompleteTextViewPhotoListFSmallCategory.setAdapter(smallCategoryAdapter)
+        }
+
+        // 대분류 edittext observe -> viewModel에 대분류 카테고리 변경, 대분류 카테고리로 clothesUpdate
+        // 대분류가 전체라면 소분류도 전체로 변경.
+        binding.autoCompleteTextViewPhotoListFCategory.addTextChangedListener {
+            val largeCategory = clothesViewModel.largeCategorySet.find { pair ->
+                it.toString() == resources.getString(pair.second) && pair.first in 0..9
+            }
+
+            largeCategory?.let {
+                binding.autoCompleteTextViewPhotoListFSmallCategory.setText(resources.getText(R.string.total))
+                clothesViewModel.setLargeCategory(it.first)
+                clothesViewModel.updateClothesByCategory(it.first)
+            }
+        }
+
+        // 소분류 edittext observe -> viewModel 소분류에 맞는 옷 필터링
+        binding.autoCompleteTextViewPhotoListFSmallCategory.addTextChangedListener {
+            if(it.toString().isBlank() || it.toString().isEmpty()) {
+                clothesViewModel.setSmallCategory(CategoryCode.UNSELECTED)
+                return@addTextChangedListener
+            }
+
+            val smallCategory = smallCategories.find { pair ->
+                val string = resources.getString(pair.second)
+                it.toString() == string
+            }
+
+            smallCategory?.let { pair ->
+                if(pair.first != CategoryCode.TOTAL_SMALL) {
+                    clothesViewModel.updateClothesByCategory(pair.first)
+                } else {
+                    // TOTAL_SMALL이라면 대분류로 옷 분류
+                    clothesViewModel.updateClothesByCategory(clothesViewModel.largeCategory.value!!)
+                }
+            }
+        }
+    }
+
+    private fun getLargeCategoryString(): List<String> {
+        val result = mutableListOf<String>()
+        clothesViewModel.largeCategorySet.forEach {
+            result.add(resources.getString(it.second))
+        }
+        return result.toList()
+    }
+
+    private fun getSmallCategoryStringByLargeCategory(largeCategory: Int): List<String> {
+        val result = mutableListOf<String>()
+        result.add(resources.getString(R.string.total))
+        clothesViewModel.getSmallCategoriesByLargeCategory(largeCategory).forEach {
+            result.add(resources.getString(it.second))
+        }
+        return result.toList()
     }
 
     fun showDeleteDialog(item: PhotoItem<*>) {

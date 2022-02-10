@@ -59,8 +59,8 @@ def removebg():
     f = np.fromfile(path)
     result = remove(f)
     img = Image.open(io.BytesIO(result)).convert("RGBA")
-    img = img.resize((192, 256))
-    img.save(output_path, quality=70)
+    img = img.resize((256, 256))
+    img.save(output_path, quality=95)
     fileUpload(output_path)
     print("clothId"+clothId)
 
