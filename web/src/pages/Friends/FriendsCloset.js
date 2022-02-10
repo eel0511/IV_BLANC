@@ -9,7 +9,8 @@ import { useLocation } from 'react-router-dom';
 
 export default function FriendsCloset() {
   let location = useLocation();
-  console.log(location);
+  const friendEmail = location.state.friendEmail;
+  const friendName = location.state.friendName;
 
   return (
     <Section>

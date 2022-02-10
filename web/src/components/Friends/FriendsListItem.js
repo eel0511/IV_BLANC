@@ -60,8 +60,7 @@ export default function FirendsListItem({ friend }) {
           to={'/friends/closet'}
           state={{
             friendName: `${friend.friendName}`,
-            friendEmail: `${friend.friendEmail}`,
-            friendsClothesList,
+            friendEmail: `${friend.friendEmail}`
           }}
           className='friend__link'
         >
