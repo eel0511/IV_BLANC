@@ -14,10 +14,13 @@ import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
+import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
+import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
+import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
 
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
@@ -26,9 +29,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
     private val clothesViewModel: ClothesViewModel by activityViewModels()
+    private val styleViewModel: StyleViewModel by activityViewModels()
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
 
+    // TODO: 2022/02/10 toolbar는 host에서 관리로 변경 
     override fun onResume() {
         super.onResume()
         when(tag) {
@@ -79,7 +84,10 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                                 is Clothes -> {
                                     Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
                                 }
-                                else -> null
+                                is Style -> {
+                                    Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", item)
+                                }
+                                else -> return
                             }
                             startActivity(intent)
                         }
@@ -118,16 +126,31 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         viewModel.clothesResponseStatus.observe(requireActivity()) {
 
         }
-        clothesViewModel.clothesListLiveData.observe(requireActivity()) {
-            exAdapter.data = it as ArrayList<PhotoItem<T>>
-            exAdapter.notifyDataSetChanged()
-        }
 
         if(tag == "clothes") {
             setDropDown()
         } else {
             binding.textInputLayoutPhotoListFCategory.visibility = View.GONE
             binding.textInputLayoutPhotoListFSmallCategory.visibility = View.GONE
+        }
+
+        setObserverLiveData()
+    }
+
+    private fun setObserverLiveData() {
+        when(tag) {
+            "clothes" -> {
+                clothesViewModel.clothesListLiveData.observe(requireActivity()) {
+                    exAdapter.data = it as ArrayList<PhotoItem<T>>
+                    exAdapter.notifyDataSetChanged()
+                }
+            }
+            "style" -> {
+                styleViewModel.styleListLiveData.observe(requireActivity()) {
+                    exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
+                    exAdapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
