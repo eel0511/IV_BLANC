@@ -289,12 +289,11 @@ export default function MyStyleTopbar() {
     const category = e;
     console.log(category);
     setTab(e);
+    setIsData(true);
 
     if (Number(category) === 0) {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
-      if (filterMyClothes.length === 0) setIsData(false);
-      else setIsData(true);
     } else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
@@ -302,9 +301,6 @@ export default function MyStyleTopbar() {
       );
       setFilterMyClothes([]);
       setFilterMyClothes(filterClothesDatas);
-
-      if (filterMyClothes.length === 0) setIsData(false);
-      else setIsData(true);
     }
   };
 
