@@ -260,6 +260,7 @@ export default function MyStyleTopbar() {
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
+  const [AIStyle, setAIStyle] = useState();
 
   const [show, setShow] = useState(false);
 
@@ -373,7 +374,7 @@ export default function MyStyleTopbar() {
       })
       .then((response) => {
         console.log(response.data);
-        setStyleClothes(response.data);
+        setAIStyle(response.data);
       });
   };
 
