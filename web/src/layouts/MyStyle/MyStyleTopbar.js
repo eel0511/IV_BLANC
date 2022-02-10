@@ -261,7 +261,6 @@ export default function MyStyleTopbar() {
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
-  const [AIStyle, setAIStyle] = useState('');
 
   const [show, setShow] = useState(false);
   const [AIshow, setAIShow] = useState(false);
@@ -361,26 +360,6 @@ export default function MyStyleTopbar() {
     } else {
       alert('취소합니다.');
     }
-  };
-
-  const handleShowAIStyle = async (e) => {
-    e.preventDefault();
-
-    // if (selectedClothes.length > 1) {
-    //   alert('상의 하나만 선택해주세요!');
-    //   return;
-    // }
-
-    // await axios
-    //   .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', {
-    //     headers: {
-    //       'X-AUTH-TOKEN': `${token}`,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     setAIStyle(response.data);
-    //   });
   };
 
   let showImg = (
