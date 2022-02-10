@@ -10,7 +10,15 @@ export default function MyClothesCreateButton() {
 
   return (
     <>
-      <button type='button' className='btn btn-primary' onClick={handleShow}>
+      <button
+        type='button'
+        className='btn'
+        style={{
+          'background-color': '#ed6991',
+          'color': 'white'
+        }}
+        onClick={handleShow}
+      >
         등록 하기
       </button>
 

@@ -3,6 +3,7 @@ package com.strait.ivblanc.ui
 import android.graphics.Rect
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.util.*
 
+private const val TAG = "CalendarMonthFragment_debuk"
 class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarMonthBinding>(FragmentCalendarMonthBinding::bind, R.layout.fragment_calendar_month) {
     // viewpager
     private var isInit = false
@@ -47,12 +49,13 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
         setFirstDate()
         setLastDate()
         calendarAdapter = CalendarAdapter()
-        calendarAdapter.data = getDatesOfMonthWithHistory()
         binding.recyclerViewCalendarMonthF.apply {
             layoutManager = GridLayoutManager(requireActivity(), 7, RecyclerView.VERTICAL, false)
             adapter = calendarAdapter
             addItemDecoration(DividerItemDecoration(requireActivity(), RecyclerView.VERTICAL))
         }
+        calendarAdapter.data = getDatesOfMonthWithHistory()
+        calendarAdapter.notifyDataSetChanged()
     }
 
     private fun setFirstDate() {
@@ -66,6 +69,11 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
     private fun getDatesOfMonthWithHistory(): List<DateWithHistory> {
         val result = mutableListOf<DateWithHistory>()
         val day = lastDate.dayOfMonth().get()
+        if(firstDate.dayOfWeek != 7) {
+            for(i in 1..firstDate.dayOfWeek) {
+                result.add(DateWithHistory(null))
+            }
+        }
         for(i in 1..day) {
             result.add(DateWithHistory(DateTime(firstDate.year, firstDate.monthOfYear, firstDate.dayOfMonth.plus(i).minus(1), 0, 0)))
         }

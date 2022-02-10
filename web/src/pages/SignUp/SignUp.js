@@ -21,6 +21,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../styles/signup.scss';
+import Title from '../../components/Home/Title';
 
 function Copyright(props) {
   return (
@@ -261,7 +262,10 @@ export default function SignUp() {
 
   return (
     <Section>
-    <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
+      <Title value="SIGNUP" />
     <ThemeProvider theme={theme}>
       <Container component='main' maxWidth='xs' >
         <CssBaseline />
@@ -472,7 +476,7 @@ export default function SignUp() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

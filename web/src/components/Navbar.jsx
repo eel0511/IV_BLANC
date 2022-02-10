@@ -7,6 +7,11 @@ import { motion } from "framer-motion";
 import { navAnimation } from "../animations";
 import { useScroll } from "./useScroll";
 import { Link } from 'react-router-dom';
+import Notice from "./Friends/Notice";
+
+function isActive() {
+  return window.location.pathname;
+}
 
 export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -39,27 +44,30 @@ export default function Navbar() {
         </div>
       </div>
       <div className={`links ${isNavOpen ? "show" : ""}`}>
-        <ul defaultActiveKey='/'> 
-          <li className="active">
-          <Link className='nav-link' aria-current='page' to='/'>Home</Link>
+      <ul> 
+          <li className={(isActive() === '/') ? 'active' : null}>
+          <Link className='nav-link' to='/'>Home</Link>
           </li>
-          <li className="active">
+          <li className={(isActive() === '/mycloset') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/mycloset' >Closet</Link>
           </li>
-          <li className="active">
+          <li className={(isActive() === '/mystyle') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/mystyle'>Pick</Link>
           </li>
-          <li className="active">
-          <Link className='nav-link ' aria-current='page' to='/friends'>Share</Link>
+          <li className={(isActive() === '/friends') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/friends'>Share</Link>
           </li>
-          <li className="active">
-          <Link className='nav-link ' aria-current='page' to='/history'>History</Link>
+          <li className={(isActive() === '/history') ? 'active' : null}>
+          <Link className='nav-link' aria-current='page' to='/history'>History</Link>
           </li>
-          <li className="active">
+          <li className={(isActive() === '/signup') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/signup'>SignUp</Link>
           </li>
-          <li className="active">
+          <li className={(isActive() === '/signin') ? 'active' : null}>
           <Link className='nav-link' aria-current='page' to='/signin'>Sign in</Link>
+          </li>
+          <li>
+          <Notice />
           </li>
         </ul>
       </div>
@@ -89,10 +97,10 @@ const Nav = styled(motion.nav)`
   .links {
     ul {
       .active {
-        a:hover , a:focus{
-          background-color: #ed6991;
-          border-radius: 15px;
-          /* border-bottom: 0.2rem solid var(--secondary-color); */
+        a {
+        //   background-color: #ed6991;
+        //   border-radius: 15px;
+          border-bottom: 0.2rem solid var(--secondary-color);
         }
       }
       list-style: none;

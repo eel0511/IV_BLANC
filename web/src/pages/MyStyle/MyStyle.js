@@ -5,12 +5,16 @@ import ScrollToTop from '../../components/ScrollToTop';
 import { Container, Row, Col } from 'react-bootstrap';
 import MyStyleTopbar from '../../layouts/MyStyle/MyStyleTopbar';
 import home from '../../assets/home.png';
+import Title from '../../components/Home/Title';
 
 export default function MyStyle() {
   return (
     <Section>
       <ScrollToTop />
-      <Navbar />
+      <div className='MyCloset__Nav'>
+        <Navbar />
+      </div>
+      <Title value="STYLE" />
       <div className='MyStyleContanier'>
         <MyStyleTopbar />
         {/* <Container fluid='md'>
@@ -27,7 +31,7 @@ export default function MyStyle() {
 }
 
 const Section = styled.section`
-  background-image: url(${home});
+  // background-image: url(${home});
   background-size: cover;
   min-height: 100vh;
   background-repeat: no-repeat;

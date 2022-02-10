@@ -1,6 +1,24 @@
 .friend {
+  min-height: 100vh;
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
   object-fit: contain;
-  max-width: 800px;
-  margin-right: auto;
-  margin-left: auto;
+}
+
+.bg1 {
+  position: absolute;
+  top: -60%;
+  left: -5%;
+  z-index: -1;
+}
+.bg2 {
+  position: absolute;
+  right: 0;
+  bottom: 5rem;
+}
+
+.friend__content {
+  width: 829.797px;
+  margin: 0 auto;
 }
