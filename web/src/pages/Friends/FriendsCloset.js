@@ -3,6 +3,7 @@ import home from "../../assets/home.png";
 import styled from "styled-components";
 import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
+import Title from '../../components/Home/Title';
 
 export default function FriendsCloset({ location }) {
   console.log(location)
@@ -13,7 +14,7 @@ export default function FriendsCloset({ location }) {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-      <h1>FriendsCloset</h1>
+      <Title value="FRIEND" />
     </Section>
   );
 }
