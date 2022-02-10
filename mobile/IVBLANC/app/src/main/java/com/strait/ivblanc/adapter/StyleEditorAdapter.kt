@@ -102,7 +102,63 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
 
     fun settingxy(event: MotionEvent,imageView: ImageView){
         Log.d(TAG, "settingxy: "+containerView.x+" "+containerView.y+" "+imageView.x+" "+imageView.y)
-       
+        //우
+        if (imageView.x +imageView.width > containerView.width) {
+            imageView.animate().x(containerView.width.toFloat()-imageView.width)
+                .y(imageView.y)
+                .setDuration(0)
+                .start()
+        }
+        //좌
+        if (imageView.x  < 0) {
+            imageView.animate().x(0f)
+                .y(imageView.y)
+                .setDuration(0)
+                .start()
+        }
+        //하
+        if (imageView.y+imageView.height > containerView.height) {
+            imageView.animate().x(imageView.x)
+                .y(containerView.height.toFloat()-imageView.height)
+                .setDuration(0)
+                .start()
+        }
+        //상
+        if (imageView.y  < 0) {
+            imageView.animate().x(imageView.x)
+                .y(0f)
+                .setDuration(0)
+                .start()
+        }
+        //우하
+       if(imageView.x +imageView.width > containerView.width && imageView.y+imageView.height > containerView.height){
+           imageView.animate().x(containerView.width.toFloat()-imageView.width)
+               .y(containerView.height.toFloat()-imageView.height)
+               .setDuration(0)
+               .start()
+       }
+        //우상
+        if(imageView.x +imageView.width > containerView.width && imageView.y  < 0){
+            imageView.animate().x(containerView.width.toFloat()-imageView.width)
+                .y(0f)
+                .setDuration(0)
+                .start()
+        }
+        //좌하
+        if(imageView.x  < 0 && imageView.y+imageView.height > containerView.height){
+            imageView.animate().x(0f)
+                .y(containerView.height.toFloat()-imageView.height)
+                .setDuration(0)
+                .start()
+        }
+        //좌상
+        if(imageView.x  < 0 &&imageView.y  < 0){
+            imageView.animate().x(0f)
+                .y(0f)
+                .setDuration(0)
+                .start()
+
+        }
     }
     fun changeImageZorder(list: List<Int>) {
         var order = 10F
