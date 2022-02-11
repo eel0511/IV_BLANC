@@ -49,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     lateinit var dialog: Dialog
     private val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
-            mainViewModel.getAllClothesWithCategory(mainViewModel.currentCategory)
+            clothesViewModel.getAllClothesWithCategory(mainViewModel.currentCategory)
         }
     }
 
@@ -145,13 +145,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 when (getCurrentFragmentTag()) {
                     "clothes" -> {
                         View.OnClickListener {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity,
-                                    PhotoSelectActivity::class.java
-                                ).apply {
-                                    putExtra("intend", PhotoSelectActivity.CLOTHES)
-                                })
+                            val intent = Intent(this@MainActivity, PhotoSelectActivity::class.java).apply {
+                                putExtra("intend", PhotoSelectActivity.CLOTHES)
+                            }
+                            addClothesContract.launch(intent)
                         }
                     }
                     "style" -> {
