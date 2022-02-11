@@ -49,13 +49,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
     private var FriendEmail = ""
-    private val itemClickListener = object :StyleEditorAdapter.ItemClickListener{
 
-        override fun onClick(imageView: ImageView) {
-            styleViewModel.changefocus(imageView)
-        }
-
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FriendEmail = intent.getStringExtra("friendEmail")?:""
@@ -96,13 +90,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
 
                 }
             }
-        }
-        styleViewModel.focusedImage.observe(this){
-            if(focusImage!=null && focusImage!=it){
-                focusImage!!.background=null
-            }
-            focusImage=it
-            focusImage!!.setBackgroundResource(R.drawable.kakao)
         }
     }
 
@@ -219,9 +206,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
 
     private fun setStyleEditorAdapter() {
-        styleEditorAdapter = StyleEditorAdapter(binding.constraintLayoutStyleMakingEdit).apply {
-            itemClickListener = this@StyleMakingActivity.itemClickListener
-        }
+        styleEditorAdapter = StyleEditorAdapter(binding.constraintLayoutStyleMakingEdit)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingTop)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingBottom)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingOuter)
