@@ -462,12 +462,14 @@ export default function FirendsListItem({ friend }) {
   return (
     <>
       <div className='friend__header'>
-        <Avatar
-          className='friend__avatar'
-          alt=''
-          src='/static/images/avatar/1.jpg'
-        />
-        <h3>{friend.friendName}</h3>
+        <div className='friend_profile'>
+          <Avatar
+            className='friend__avatar'
+            alt=''
+            src='/static/images/avatar/1.jpg'
+          />
+          <h3>{friend.friendName}</h3>
+        </div>
         <Link
           to={'/friends/closet'}
           state={{

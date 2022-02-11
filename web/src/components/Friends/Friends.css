@@ -41,6 +41,12 @@
 .friend__header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.friend_profile {
+  display: flex;
+  align-items: center;
 }
 
 .friend__avatar {
@@ -49,7 +55,6 @@
 
 .friend__link {
   position: relative;
-  left: 500px;
 }
 
 .friend__plusIcon {

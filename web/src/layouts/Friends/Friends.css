@@ -6,6 +6,9 @@
   object-fit: contain;
 }
 
+.friend__content {
+}
+
 .bg1 {
   position: absolute;
   top: -60%;
