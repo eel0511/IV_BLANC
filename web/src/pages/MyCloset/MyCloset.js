@@ -273,7 +273,10 @@ export default function MyCloset() {
           clothesDatas={myClothes}
           getFilterMyclothes={getFilterMyclothes}
         />
-        <MyClosetClothes clothesDatas={filterMyClothes} />
+        <MyClosetClothes
+          clothesDatas={filterMyClothes}
+          getMyClothesData={getMyClothesData}
+        />
       </div>
     </Section>
   );

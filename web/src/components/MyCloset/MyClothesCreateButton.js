@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import MyClothesCreateModalBody from './MyClothesCreateModalBody';
 
-export default function MyClothesCreateButton() {
+export default function MyClothesCreateButton({ getMyClothesData }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -28,7 +28,7 @@ export default function MyClothesCreateButton() {
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MyClothesCreateModalBody handleClose={handleClose}/>
+          <MyClothesCreateModalBody handleClose={handleClose} getMyClothesData={getMyClothesData} />
         </Modal.Body>
       </Modal>
     </>
