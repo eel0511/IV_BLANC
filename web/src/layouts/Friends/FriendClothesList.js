@@ -9,10 +9,10 @@ import { Modal } from 'react-bootstrap';
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
-import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
-import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
+import FriendStyleCreateModalBody from '../../components/Friends/FriendStyleCrateModalBody';
 
-export default function MyStyleTopbar() {
+
+export default function FriendStyleTopbar({ friendName, friendEmail }) {
   const menus = [
     { name: '전체' },
     { name: '상의' },
@@ -22,7 +22,6 @@ export default function MyStyleTopbar() {
     { name: '가방' },
     { name: '모자' },
     { name: '기타' },
-    { name: '룩' },
   ];
 
   const [tab, setTab] = useState(0);
@@ -143,7 +142,7 @@ export default function MyStyleTopbar() {
       userId: 1,
     },
   ]);
-  const [filterMyClothes, setFilterMyClothes] = useState([
+  const [filterFriendClothes, setFilterFriendClothes] = useState([
     {
       createDate: '2022-02-08T15:51:09',
       updateDate: '2022-02-08T15:51:09',
@@ -273,22 +272,25 @@ export default function MyStyleTopbar() {
 
   const token =
     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
-  const getMyClothesData = () => {
+  const getFriendClothesData = () => {
     axios
-      .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', {
+      .get('http://i6d104.p.ssafy.io:9999/api/clothes/friendclothes', {
         headers: {
           'X-AUTH-TOKEN': `${token}`,
         },
+        params: {
+          email: `${friendEmail}`
+        }
       })
       .then((response) => {
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setClothes(response.data.data);
-        setFilterMyClothes(response.data.data);
+        setFilterFriendClothes(response.data.data);
       });
   };
 
   // useEffect(() => {
-  //   getMyClothesData();
+  //   getFriendClothesData();
   // }, []);
 
   const handleSelect = async (e) => {
@@ -298,26 +300,15 @@ export default function MyStyleTopbar() {
     setIsData(true);
 
     if (Number(category) === 0) {
-      setFilterMyClothes([]);
-      setFilterMyClothes(clothes);
-    } else if (Number(category) === 8) {
-      await axios
-        .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
-          headers: {
-            'X-AUTH-TOKEN': `${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setStyleClothes(response.data.data);
-        });
+      setFilterFriendClothes([]);
+      setFilterFriendClothes(clothes);
     } else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
           parseInt(clothesData.category / 10) === Number(category)
       );
-      setFilterMyClothes([]);
-      setFilterMyClothes(filterClothesDatas);
+      setFilterFriendClothes([]);
+      setFilterFriendClothes(filterClothesDatas);
     }
   };
 
@@ -365,7 +356,7 @@ export default function MyStyleTopbar() {
   let showImg = (
     <div className='container-fluid'>
       <div className='row'>
-        {filterMyClothes.map((clothesData) => (
+        {filterFriendClothes.map((clothesData) => (
           <div className='col-4 mt-3' key={clothesData.clothesId}>
             <div className='card h-100'>
               <div className='card-body'>
@@ -418,7 +409,7 @@ export default function MyStyleTopbar() {
 
             {/* 서버 연동 */}
             {tab < 8 ? (
-              filterMyClothes.length > 0 ? (
+              filterFriendClothes.length > 0 ? (
                 showImg
               ) : (
                 <NowImg />
@@ -446,7 +437,7 @@ export default function MyStyleTopbar() {
                     color='success'
                     onClick={handleShow}
                   >
-                    스타일 저장
+                    스타일 추천
                   </Button>
                   <Modal
                     aria-labelledby='contained-modal-title-vcenter'
@@ -456,10 +447,10 @@ export default function MyStyleTopbar() {
                     onHide={handleClose}
                   >
                     <Modal.Header closeButton>
-                      <Modal.Title>스타일 저장</Modal.Title>
+                      <Modal.Title>스타일 추천</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <FriendStyleCreateModalBody saveClothesId={saveClothesId} />
                     </Modal.Body>
                   </Modal>
 

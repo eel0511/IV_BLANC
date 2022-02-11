@@ -11,18 +11,18 @@ import Notice from '../../components/Friends/Notice';
 
 export default function FriendsList() {
   const [friendsList, setFriendsList] = useState([
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '김나박이',
-    },
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '이나박이',
-    },
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '장나박이',
-    },
+    // {
+    //   friendEmail: 'aaa@bbb.com',
+    //   friendName: '김나박이',
+    // },
+    // {
+    //   friendEmail: 'aaa@bbb.com',
+    //   friendName: '이나박이',
+    // },
+    // {
+    //   friendEmail: 'aaa@bbb.com',
+    //   friendName: '장나박이',
+    // },
   ]);
 
   const token =
@@ -43,9 +43,9 @@ export default function FriendsList() {
       });
   };
 
-  // useEffect(() => {
-  //   getFriendsList();
-  // }, []);
+  useEffect(() => {
+    getFriendsList();
+  }, []);
 
   return (
     <div className='friend'>
