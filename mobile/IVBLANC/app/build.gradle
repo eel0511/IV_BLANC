@@ -57,6 +57,9 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
 
+    //notibadge
+    implementation 'com.nex3z:notification-badge:1.0.4'
+
     // Room
     def room_version = "2.4.0"
     implementation "androidx.room:room-runtime:$room_version"

@@ -57,7 +57,8 @@ class FriendFragment :
 
     fun reloadImages() {
         list.clear()
-        //친구 이메일 넣어야함
+        //자신 이메일
+        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로 
         friendViewModel.getAllFriends("aaa@a.com")
     }
 

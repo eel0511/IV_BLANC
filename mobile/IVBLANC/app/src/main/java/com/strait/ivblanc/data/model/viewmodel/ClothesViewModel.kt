@@ -84,6 +84,7 @@ class ClothesViewModel: ViewModel() {
         val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
         _clothesResponseStatus.postValue(result)
         if(result.status == Status.SUCCESS) {
+            totalClothesList.clear()
             totalClothesList.addAll(result.data!!.dataSet!!)
         }
     }

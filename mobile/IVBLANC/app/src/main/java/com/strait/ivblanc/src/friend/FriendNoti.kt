@@ -1,6 +1,7 @@
 package com.strait.ivblanc.src.friend
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,10 +17,12 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.MyrequestRecyclerViewAdapter
 import com.strait.ivblanc.adapter.NotiRecyclerViewAdapter
 import com.strait.ivblanc.adapter.WaitRecyclerViewAdapter
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Friend
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.databinding.ActivityFriendNotiBinding
+import com.strait.ivblanc.src.main.MainActivity
 
 class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBinding::inflate) {
     val SP_NAME = "fcm_message"
@@ -33,12 +36,14 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     private val myrequestitemClickListener =
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
+                // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
                 friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
                 AcceptDialog(friend.friendName + "님의 요청을 수락했습니다")
             }
         }
     private val waititemClickListener = object : WaitRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friend: Friend) {
+            // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
             friendViewModel.cancelFriend("aaa@a.com", friend.friendEmail)
             AcceptDialog(friend.friendName + "님께의 요청을 취소했습니다.")
         }
@@ -50,7 +55,9 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         super.onCreate(savedInstanceState)
         friendViewModel.setToolbarTitle("알림")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
+        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
         friendViewModel.getmyrequestFriend("aaa@a.com")
+        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
         friendViewModel.getmyWaitFriend("aaa@a.com")
         initMyRequestRecycler()
         initWaitRecycler()
@@ -85,6 +92,8 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             R.drawable.ic_back -> {
                 object : View.OnClickListener {
                     override fun onClick(v: View?) {
+                        Log.d("tetete", "onClick: " + readSharedPreference("fcm").size)
+                        ApplicationClass.livePush.postValue(readSharedPreference("fcm").size)
                         finish()
                     }
                 }
@@ -133,16 +142,18 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         }
     }
 
-    fun initNotiRecylcer(){
+    fun initNotiRecylcer() {
         notiRecyclerViewAdapter = NotiRecyclerViewAdapter()
         binding.notiRecyclerView.apply {
             adapter = notiRecyclerViewAdapter
-            layoutManager = LinearLayoutManager(this@FriendNoti, LinearLayoutManager.VERTICAL, false)
+            layoutManager =
+                LinearLayoutManager(this@FriendNoti, LinearLayoutManager.VERTICAL, false)
 
         }
-        notiRecyclerViewAdapter.notilist=readSharedPreference("fcm")
+        notiRecyclerViewAdapter.notilist = readSharedPreference("fcm")
         notiRecyclerViewAdapter.notifyDataSetChanged()
     }
+
     private fun setToolbarTitle(title: String) {
         binding.toolbarFriend.textViewFriendToolbar.text = title
     }
@@ -179,8 +190,11 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             .show()
     }
 
-    private fun readSharedPreference(key:String): ArrayList<String>{
-        val sp = binding.root.context.getSharedPreferences(SP_NAME, FirebaseMessagingService.MODE_PRIVATE)
+    private fun readSharedPreference(key: String): ArrayList<String> {
+        val sp = binding.root.context.getSharedPreferences(
+            SP_NAME,
+            FirebaseMessagingService.MODE_PRIVATE
+        )
         val gson = Gson()
         val json = sp.getString(key, "") ?: ""
         val type = object : TypeToken<ArrayList<String>>() {}.type
