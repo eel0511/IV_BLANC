@@ -60,8 +60,13 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
         calendarAdapter.itemClickListener = object : CalendarAdapter.ItemClickListener {
             override fun onClick(position: Int) {
                 val item = calendarAdapter.data[position].history
-                val intent = Intent(requireActivity(), HistoryDetailActivity::class.java).putExtra("history", item)
-                startActivity(intent)
+                if(item != null) {
+                    val intent = Intent(
+                        requireActivity(),
+                        HistoryDetailActivity::class.java
+                    ).putExtra("history", item)
+                    startActivity(intent)
+                }
             }
         }
     }
