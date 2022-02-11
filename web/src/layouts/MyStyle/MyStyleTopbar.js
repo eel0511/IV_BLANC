@@ -286,8 +286,22 @@ export default function MyStyleTopbar() {
       });
   };
 
+  const getStyleLook = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setStyleClothes(response.data.data);
+      });
+  };
+
   // useEffect(() => {
   //   getMyClothesData();
+  //   getStyleLook();
   // }, []);
 
   const handleSelect = async (e) => {
@@ -299,17 +313,6 @@ export default function MyStyleTopbar() {
     if (Number(category) === 0) {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
-    } else if (Number(category) === 8) {
-      await axios
-        .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
-          headers: {
-            'X-AUTH-TOKEN': `${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setStyleClothes(response.data.data);
-        });
     } else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
@@ -482,7 +485,11 @@ export default function MyStyleTopbar() {
                       <Modal.Title>스타일 저장</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <MyStyleCreateModalBody
+                        saveClothesId={saveClothesId}
+                        handleClose={handleClose}
+                        getStyleLook={getStyleLook}
+                      />
                     </Modal.Body>
                   </Modal>
 
