@@ -62,6 +62,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
         }
     }
+    private val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == StatusCode.OK) {
+            styleViewModel.getAllStyles()
+        }
+    }
 
     companion object {
         // Notification Channel ID
