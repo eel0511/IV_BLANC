@@ -482,7 +482,10 @@ export default function MyStyleTopbar() {
                       <Modal.Title>스타일 저장</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <MyStyleCreateModalBody
+                        saveClothesId={saveClothesId}
+                        handleClose={handleClose}
+                      />
                     </Modal.Body>
                   </Modal>
 
