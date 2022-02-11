@@ -106,7 +106,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             locationDialog.setContentView(R.layout.dialog_select_location) // xml 레이아웃 파일과 연결
 
             showLocationDialog()
-
         }
     }
 
@@ -162,6 +161,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         })
 
         val localBtn : Button = locationDialog.findViewById(R.id.button_location_get)
+        val etLocation = locationDialog.findViewById<EditText>(R.id.editText_location)
         localBtn.setOnClickListener {
             if (!checkLocationServicesStatus()) {
                 showDialogForLocationServiceSetting();
@@ -175,7 +175,39 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             longitude = gpsTracker!!.getLongitude()
             address = getCurrentAddress(latitude, longitude)
 
-            locationDialog.findViewById<EditText>(R.id.editText_location).setText(address)
+            etLocation.setText(address)
+        }
+
+        val searchBtn : Button = locationDialog.findViewById(R.id.button_location_search)
+        searchBtn.setOnClickListener {
+            var list: List<Address?>? = null
+            val geocoder = Geocoder(this)
+
+            val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
+            try {
+                list = geocoder.getFromLocationName(
+                    str,  // 지역 이름
+                    10
+                ) // 읽을 개수
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
+            }
+
+            if (list != null) {
+                if (list.isEmpty()) {
+                    etLocation.setText("해당되는 주소 정보는 없습니다")
+                } else {
+                    var cut = list[0].toString().split("\"")
+                    etLocation.setText(cut[1])
+
+                    latitude = list[0]!!.latitude
+                    longitude = list[0]!!.longitude
+                    address = cut[1]
+
+                }
+            }
+
         }
 
     }
