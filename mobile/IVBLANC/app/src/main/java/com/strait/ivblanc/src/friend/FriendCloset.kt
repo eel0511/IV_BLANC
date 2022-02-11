@@ -44,6 +44,7 @@ class FriendCloset :
         friendViewModel.setToolbarTitle("친구 " + test!!.name + "의 옷장")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
         clothesViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
+        friendViewModel.getFriendEmail(test!!.email)
         setToolbar()
         setViewPager()
     }
@@ -105,6 +106,7 @@ class FriendCloset :
             R.drawable.ic_back -> {
                 object : View.OnClickListener {
                     override fun onClick(v: View?) {
+                        friendViewModel.getFriendEmail("")
                         finish()
                     }
                 }
