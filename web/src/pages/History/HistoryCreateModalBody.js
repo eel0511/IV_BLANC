@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InputGroup, FormControl, Form } from 'react-bootstrap';
+import { InputGroup, FormControl, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import StyleSelectButton from './StyleSelectButton';
 
@@ -23,20 +23,20 @@ export default function HistoryCreateModalBody() {
     setSelectedImg(e.target.files[0]);
   };
   const styleHandleChange = (e) => {
-    console.log(e.target.files);
-    setSelectedImg(e.target.files[0]);
+    console.log(e.target.value);
+    setSelectedImg(e.target.value);
   };
   const dateHandleChange = (e) => {
     setSelectedDate(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
   const subjectHandleChange = (e) => {
     setSelectedSubject(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
   const textHandleChange = (e) => {
     setSelectedText(e.target.value);
-    // console.log(e.target.value);
+    console.log(e.target.value);
   };
 
   const getMyStylesData = () => {
@@ -57,8 +57,8 @@ export default function HistoryCreateModalBody() {
 
   const createHistories = () => {
     const formData = new FormData();
-    formData.append('photos', selectedImg);
-    formData.append('styleUrl', selectedStyle);
+    formData.append('photoList', selectedImg);
+    formData.append('styleId', Number(selectedStyle.styleId));
     formData.append('date', selectedDate);
     formData.append('subject', selectedSubject);
     formData.append('text', selectedText);
@@ -89,18 +89,18 @@ export default function HistoryCreateModalBody() {
         <div className='col-md-5'>
           <Form.Group controlId='dob'>
             <Form.Label>Select Date</Form.Label>
-            <Form.Control type='date' name='dob' placeholder='Date of Birth' />
+            <Form.Control type='date' name='dob' placeholder='Date of Birth' onChange={dateHandleChange} />
           </Form.Group>
         </div>
       </div>
       <Form.Label>Title</Form.Label>
       <InputGroup className='mb-3'>
-        <FormControl />
+        <FormControl onChange={subjectHandleChange}/>
       </InputGroup>
 
       <InputGroup>
         <InputGroup.Text>Comment</InputGroup.Text>
-        <FormControl as='textarea' aria-label='With textarea' />
+        <FormControl as='textarea' aria-label='With textarea' onChange={textHandleChange}/>
       </InputGroup>
       <hr />
       <h2>스타일가져오기</h2>
@@ -109,6 +109,7 @@ export default function HistoryCreateModalBody() {
           alt={selectedStyle.styleId}
           src={selectedStyle.url}
           style={{ margin: 'auto', maxWidth: '200px', maxHeight: '200px' }}
+          // onChange={styleHandleChange}
         />
       )}
       <div>
@@ -160,6 +161,9 @@ export default function HistoryCreateModalBody() {
           </tr>
         </tbody>
       </table>
+      <Button variant='secondary' onClick={createHistories} >
+        등록
+      </Button>
     </form>
   );
 }

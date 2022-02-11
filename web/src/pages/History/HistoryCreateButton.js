@@ -31,7 +31,7 @@ export default function HistoryCreateButton() {
           <HistoryCreateModalBody />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary"onClick={handleClose}>Save</Button>
+          {/* <Button variant="primary"onClick={handleClose}>Save</Button> */}
           <Button variant='danger' onClick={handleClose}>
             Close
           </Button>
