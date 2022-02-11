@@ -19,4 +19,8 @@ interface StyleApi {
 
     @GET("/api/style/findfriendstyle")
     suspend fun getAllFriendStyles(@Query("FriendEmail")FriendEmail:String): Response<StyleAllResponse>
+
+    @Multipart
+    @POST("/api/style/change")
+    suspend fun updateStyle(@Part image: MultipartBody.Part, @Part clothesList: MultipartBody.Part, @Part styleId: MultipartBody.Part): Response<StyleResponse>
 }
