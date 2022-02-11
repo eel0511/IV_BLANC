@@ -501,6 +501,7 @@ export default function MyStyleTopbar() {
                       <MyStyleCreateModalBody
                         saveClothesId={saveClothesId}
                         handleClose={handleClose}
+                        getStyleLook={getStyleLook}
                       />
                     </Modal.Body>
                   </Modal>
