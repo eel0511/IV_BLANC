@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { useParams } from 'react-router-dom';
 import { display } from '@mui/system';
 
-export default function MyClothesCreateModalBody() {
+export default function MyClothesCreateModalBody({ handleClose }) {
   const [selectedColor, setSelectedColor] = useState('#C14D49');
   const [selectedMaterial, setSelectedMaterial] = useState(1);
   const [selectedMainCategory, setSelectedMainCategory] = useState('상의');
@@ -96,10 +96,15 @@ const ColorSelectorContainer = styled.div`
       }
       )
       .then((response) => {
-        console.log(response)
+        if (response.status === 200 && response.data.msg === '성공') {
+          alert(response.data.msg)
+          handleClose()
+        } else {
+          alert(response.data.msg)
+        }
       })
       .catch((err) => {
-        console.log('실패')
+        console.log(err.msg)
       })
   };
 

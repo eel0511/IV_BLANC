@@ -28,7 +28,7 @@ export default function MyClothesCreateButton() {
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MyClothesCreateModalBody />
+          <MyClothesCreateModalBody handleClose={handleClose}/>
         </Modal.Body>
       </Modal>
     </>
