@@ -29,7 +29,6 @@ class FcmService: FirebaseMessagingService() {
 
     val SP_NAME = "fcm_message"
     var fcmList = ArrayList<String>()
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
@@ -60,12 +59,12 @@ class FcmService: FirebaseMessagingService() {
             fcmList = readSharedPreference("fcm")
             fcmList.add(it.body.toString())
             writeSharedPreference("fcm", fcmList)
-            ApplicationClass.livePush.postValue(!ApplicationClass.livePush.value!!)
+            Log.d("tetete", "onMessageReceived: "+readSharedPreference("fcm").size)
+            ApplicationClass.livePush.postValue(readSharedPreference("fcm").size)
             sendNotification(notificationInfo)
 
         }
     }
-
     override fun onDeletedMessages() {
         super.onDeletedMessages()
     }
