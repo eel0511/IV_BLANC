@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function MyStyleCreateModalBody({ saveClothesId }) {
+function FriendStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
     console.log(e.target.files);
@@ -68,4 +68,4 @@ function MyStyleCreateModalBody({ saveClothesId }) {
   );
 }
 
-export default MyStyleCreateModalBody;
+export default FriendStyleCreateModalBody;
