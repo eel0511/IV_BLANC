@@ -73,13 +73,17 @@ const StyleCarousel = styled.div`
     font-size: 1.2rem;
   }
   .madeby {
-    margin-left: 130px;
+    margin-left: 120px;
   }
   .img 
 {
   width: 100%;
   margin-left: 90px;
   margin-bottom: 50px;
+}
+  .img:hover {
+    border: 10px solid #a35ac5;
+    /* transform: scale(1.1); */
 }
 
 `;
