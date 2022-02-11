@@ -64,7 +64,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }else{
             clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
-
         intent.getParcelableExtra<Style>("style")?.let {
             style = it
         }
@@ -75,6 +74,11 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         setRecyclerView()
         setBottomSheetRecyclerView()
         setObserver()
+        if(this::style.isInitialized) {
+            style.styleDetails.forEach {
+                setClothesToEditor(it.clothes)
+            }
+        }
     }
 
     private fun setObserver() {
@@ -214,11 +218,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingBag)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingHat)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingEtc)
-        if(this::style.isInitialized) {
-            style.styleDetails.forEach {
-                styleEditorAdapter.addOrUpdateClothes(it.clothes)
-            }
-        }
     }
     
     private fun setClothesToEditor(clothes: Clothes) {
