@@ -11,7 +11,11 @@ import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.databinding.ActivityHistoryEditBinding
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.view.Window
 
+import android.app.Dialog
+import android.widget.Button
+import android.widget.TextView
 import com.strait.ivblanc.R
 
 
@@ -21,6 +25,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     lateinit var history: History
     lateinit var location: String
     lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
+    lateinit var locationDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +52,17 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
             val date = history.date.split("-")
-            val dialog = DatePickerDialog(this, R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
+            val dialog = DatePickerDialog(this, com.strait.ivblanc.R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
             dialog.show()
+        }
+
+        binding.textViewHistoryEditSelectLocation.setOnClickListener {
+            locationDialog = Dialog(this@HistoryEditActivity) // Dialog 초기화
+            locationDialog.requestWindowFeature(Window.FEATURE_NO_TITLE) // 타이틀 제거
+            locationDialog.setContentView(R.layout.dialog_select_location) // xml 레이아웃 파일과 연결
+
+            showLocationDialog()
+
         }
     }
 
@@ -83,4 +97,20 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             val newDate = "$year-${monthOfYear+1}-$dayOfMonth"
             binding.textViewHistoryEditSelectDate.text = newDate
         }
+
+    private fun showLocationDialog(){
+        locationDialog.show() // 다이얼로그 띄우기
+
+        val noBtn: TextView = locationDialog.findViewById(R.id.textView_btn_cancel)
+        noBtn.setOnClickListener(View.OnClickListener {
+            locationDialog.dismiss()
+        })
+
+        val saveBtn: TextView = locationDialog.findViewById(R.id.textView_btn_save)
+        saveBtn.setOnClickListener(View.OnClickListener {
+            // TODO: 선택된 주소 정보 세팅
+           finish() // 앱 종료
+        })
+
+    }
 }
