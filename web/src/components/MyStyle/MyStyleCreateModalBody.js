@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function MyStyleCreateModalBody({ saveClothesId, handleClose }) {
+function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
   const [selectedImg, setSelectedImg] = useState();
   const [previewImg, setPreviewImg] = useState();
 
@@ -37,6 +37,7 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose }) {
         console.log(response);
         if (response.status === 200 && response.data.output === 1) {
           alert('등록되었습니다.');
+          getStyleLook();
           handleClose();
         } else if (response.status === 200 && response.data.output === 0) {
           alert(response.data.data);
