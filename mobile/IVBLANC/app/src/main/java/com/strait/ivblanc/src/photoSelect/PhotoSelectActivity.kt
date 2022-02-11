@@ -19,6 +19,7 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.viewmodel.PhotoSelectViewModel
 import com.strait.ivblanc.databinding.ActivityPhotoSelectBinding
 import com.strait.ivblanc.src.process.ProcessActivity
+import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.PermissionUtil
 import com.strait.ivblanc.util.StatusCode
 import java.lang.Exception
@@ -34,9 +35,15 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
     lateinit var permissionUtil: PermissionUtil
     private val photoSelectViewModel: PhotoSelectViewModel by viewModels()
     private var intend = PURE
-    private val addClothesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    // ProcessActivity로 StartForActivityResult 생성
+    // 결과 받으면 MainActivity에 등록된 api에 setResult
+    // 등록 성공 시, 저장한 이미지 파일 삭제
+    private val addClothesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it ->
         if(it.resultCode == StatusCode.OK) {
             setResult(StatusCode.OK)
+            photoSelectViewModel.selectedImgUri?.let { uri ->
+                CaptureUtil.deleteImageByUri(this, uri)
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,9 +105,8 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
                                 val intent = Intent(this@PhotoSelectActivity, ProcessActivity::class.java).apply {
                                     putExtra("uri", photoSelectViewModel.selectedImgUri.toString())
                                 }
-                                startActivity(intent)
+                                addClothesResult.launch(intent)
                             }
-
                         }
                         HISTORY -> {}
                     }
