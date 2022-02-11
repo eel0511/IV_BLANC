@@ -85,4 +85,21 @@ class StyleRepository {
             Resource.error(null, "네트워크 연결을 확인해 주세요.")
         }
     }
+
+    suspend fun updateStyle(image: MultipartBody.Part, clothesList: MultipartBody.Part, styleId: MultipartBody.Part): Resource<StyleResponse> {
+        return try {
+            val response = styleApi.updateStyle(image, clothesList, styleId)
+            if(response.isSuccessful) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "스타일 변경에 실패했습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Resource.error(null, "네트워크 연결을 확인해 주세요")
+        }
+    }
 }
