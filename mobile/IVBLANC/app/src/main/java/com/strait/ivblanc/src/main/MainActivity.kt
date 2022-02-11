@@ -12,15 +12,15 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseActivity
@@ -46,8 +46,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
 
-    lateinit var launcher: ActivityResultLauncher<Intent>
-
     companion object {
         // Notification Channel ID
         const val channel_id = "IVBLANC"
@@ -55,33 +53,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        launcher = registerForActivityResult(
-            StartActivityForResult()
-        ) { result: ActivityResult ->
-            if (result.resultCode == RESULT_OK) {
-                val data = result.data
-                // RESULT_OK일 때 실행할 코드...
-                val num = data!!.getStringExtra("result")
-                Log.d("tetete", "onCreate: "+num)
-                if(num=="0"){
-                    ApplicationClass.livePush.postValue(false)
-                }else{
-                    ApplicationClass.livePush.postValue(true)
-                }
-            }
-        }
+
         getFCM()
         // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         styleViewModel.getAllStyles()
-        ApplicationClass.livePush.observe(this) {
-            if (ApplicationClass.livePush.value == true) {
-                mainViewModel.setTrailingIcon(R.drawable.kakao)
-            } else {
-                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
-            }
+        mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
 
+        ApplicationClass.livePush.observe(this) {
+            if (ApplicationClass.livePush.value!! > 0) {
+                binding.toolbarMain.badge.visibility = View.VISIBLE
+                binding.toolbarMain.badge.setNumber(readSharedPreference("fcm").size)
+            } else {
+                binding.toolbarMain.badge.visibility = View.GONE
+            }
         }
         init()
     }
@@ -187,20 +173,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     else -> View.OnClickListener {}
                 }
-
-
             }
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
                     val intent = Intent(this@MainActivity, FriendNoti::class.java)
-                    launcher.launch(intent)
-
-                }
-            }
-            R.drawable.kakao -> {
-                View.OnClickListener {
-                    val intent = Intent(this@MainActivity, FriendNoti::class.java)
-                    launcher.launch(intent)
+                    startActivity(intent)
 
                 }
             }
@@ -293,4 +270,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             .show()
     }
 
+    private fun readSharedPreference(key: String): ArrayList<String> {
+        val sp = binding.root.context.getSharedPreferences(
+            SP_NAME,
+            FirebaseMessagingService.MODE_PRIVATE
+        )
+        val gson = Gson()
+        val json = sp.getString(key, "") ?: ""
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        val obj: ArrayList<String> = gson.fromJson(json, type) ?: ArrayList()
+        return obj
+    }
 }
