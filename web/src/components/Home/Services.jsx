@@ -27,7 +27,7 @@ function Services() {
       image: service2,
     },
     {
-      type: "Histoty",
+      type: "History",
       text: "소중한 기억과 함께 / 하루를 기록할 수 있는 공간을 만들었습니다.",
       image: service3,
     },

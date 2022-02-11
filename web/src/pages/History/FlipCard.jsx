@@ -1,69 +1,50 @@
 import { useState, useRef } from "react";
 import cn from "classnames";
 import { ReplyFill as Icon } from "react-bootstrap-icons";
-
+import {Button} from "react-bootstrap"
 import styled from "styled-components";
+import axios from 'axios';
 
 function FlipCard({
   myHistory: { historyId, date, subject, text, styleUrl, photos },
 }) {
-  const [showBack, setShowBack] = useState(false);
+  
+  const handleDelete = async (e) => {
+    e.preventDefault();
 
-  // function handleClick() {
-  //   if (variant === "click") {
-  //     setShowBack(!showBack);
-  //   }
-  // }
+    if (window.confirm("진짜 삭제하시겠습니까?")) {
 
-  function handleFocus() {
-    setShowBack(true);
-  }
-
-  // function handleBlur() {
-  //   if (variant === "focus") {
-  //     setShowBack(false);
-  //   }
-  // }
-  const ref = useRef();
+      try {
+        await axios
+          .delete('http://i6d104.p.ssafy.io:9999/api/history/delete', {
+            headers: {
+              'X-AUTH-TOKEN':
+                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+            },
+            params: {
+              historyId: `${historyId}`,
+            },
+          })
+          .then((res) => {
+            console.log('response:', res.data);
+            if (res.status === 200 && res.data.output === 1) {
+              console.log(res.data.msg);
+              alert('삭제되었습니다.');
+            } else if (res.status === 200 && res.data.output === 0) {
+              alert(res.data.msg);
+            } else {
+              alert(res.data.msg);
+            }
+          });
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    } else {
+      alert("취소합니다.");
+    }
+  };
   return (
     <>
-      {/* <div
-      tabIndex={historyId}
-      className={cn("flip-card-outer",  "focus" )}
-      // onClick={handleClick}
-      onFocus={handleFocus}
-      // onBlur={handleBlur}
-    >
-      <div className={cn("flip-card-inner", { showBack })}>
-        <div
-          className="card front"
-          style={{
-            backgroundImage: `linear-gradient(#00000000, #00000050), url(${photos[0].url})`
-          }}
-        >
-          <div className="card-body position-relative d-flex justify-content-center align-items-end">
-          <div className="d-flex flex-column justify-content-center align-items-end">
-              <p className="price">{date}</p>
-            </div>
-            <div className="icon">
-              <Icon size={15} />
-            </div>
-          </div>
-        </div>
-        <div className="card back">
-          <div className="card-body d-flex flex-column justify-content-around align-items-center">
-            <img src={styleUrl} alt={styleUrl} height={200} />
-            <div className="d-flex flex-column justify-content-center align-items-center">
-              <p className="brand">{subject}</p>
-              <p className="name">{text}</p>
-            </div>
-            <div className="icon">
-              <Icon size={25} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> */}
       <HistoryStyle>
         <div className='card-container d-flex align-content-center justify-content-center'>
           <div className='card-body'>
@@ -72,13 +53,23 @@ function FlipCard({
 
                 <form formAction='' className='card-form'>
                   <div className='row'>
-                    <div className='col-xs-6'>
-                      <img src={styleUrl} alt={styleUrl} height={300} />
+                    <div 
+                    className='col-xs-6 d-flex flex-column'
+                    >
+                      <div className="id">{historyId}번째 추억</div>
+                      <img src={styleUrl} alt={styleUrl} height={300} width={500}/>
                     </div>
 
                     <div className='col-xs-6 d-flex flex-column'>
-                      <p>{subject}</p>
-                      <p>{text}</p>
+                      <div className="subject">{subject}</div>
+                      <div className="text">{text}</div>
+                      <Button
+                    variant='danger'
+                    style={{ float: 'left' }}
+                    onClick={handleDelete}
+                  >
+                    삭제
+                  </Button>
                     </div>
                   </div>
                 </form>
@@ -88,20 +79,17 @@ function FlipCard({
             <div className='card-side side-front'>
               <div className='container-fluid'>
                 <div className='row'>
-                  <div
-                    className='col-xs-6'
-                    // style={{
-                    //   backgroundImage: `linear-gradient(#00000000, #00000050), url(${photos[0].url})`,
-                    // }}
-                  >
-                    <div className='col-xs-6 side-front-content d-flex flex-column align-content-center justify-content-center'>
-                    <div>{date}</div>
-                    <img src={photos[0].url} alt={photos[0].url} height={300} />
+                    <div className='col side-front-content d-flex flex-column align-content-center justify-content-center'
+                    // style={{backgroundImage: `url(${photos[0].url})`}}
+                    >
+                    <div className="date">{date}</div>
+                    <img src={photos[0].url} alt={photos[0].url} height={400} width={300}/>
                     </div>
+                    
                   </div>
                 </div>
               </div>
-            </div>
+            
           </div>
         </div>
       </HistoryStyle>
@@ -124,8 +112,27 @@ const HistoryStyle = styled.div`
     z-index: 1;
     margin: 30px 10px 10px 10px;
     width: 300px;
-    height: 400px;
+    height: 450px;
     perspective: 1000px;
+  }
+  .id {
+    margin-top: -30px;
+    margin-bottom: 10px;
+    background-color: #b791e9;
+    color: white;
+    font-size: 1.2rem;
+  }
+  .subject {
+    font-size: 1.2rem;
+  }
+  .text {
+    font-size: 1rem;
+  }
+  .date {
+    font-size: 1.2rem;
+    background-color: #e991a8;
+    color: white;
+    margin: 10px auto;
   }
 
   img {

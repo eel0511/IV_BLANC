@@ -13,56 +13,52 @@ export default function Pricing() {
   const plans = [
     {
       name: "Basic",
-      price: 0,
+      price: "FREE",
     },
     {
       name: "Pro",
-      price: 20000,
+      price: "3만원",
     },
     {
       name: "Expert",
-      price: 50000,
+      price: "5만원",
     },
   ];
   const data = [
     {
-      value: "25 Users per Project",
+      value: "개인별 옷장에 옷 10개 등록 가능",
       type: "Basic",
     },
     {
-      value: "100 Projects",
+      value: "옷의 조합으로 코디 5개 저장 가능",
       type: "Basic",
     },
     {
-      value: "10 TB Cloud Storage",
+      value: "히스토리 사용 가능",
       type: "Basic",
     },
     {
-      value: "50 Reports",
+      value: "친구 요청 가능",
       type: "Basic",
     },
     {
-      value: "100 GB Bandwidth",
-      type: "Basic",
-    },
-    {
-      value: "50 Support Tickets",
-      type: "Basic",
-    },
-    {
-      value: "Online Support",
+      value: "추가로 옷 데이터 30개 저장 가능",
       type: "Pro",
     },
     {
-      value: "Daily Backup",
+      value: "추가로 코디 20개 저장 가능",
       type: "Pro",
     },
     {
-      value: "Priority Assistance",
+      value: "실제 모델에 스타일링 가능",
       type: "Expert",
     },
     {
-      value: "One Click Setup",
+      value: "옷 데이터 무한 저장 가능",
+      type: "Expert",
+    },
+    {
+      value: "코디 무한 저장 가능",
       type: "Expert",
     },
   ];
@@ -161,6 +157,7 @@ const Section = styled.section`
       color: var(--secondary-color);
       text-transform: uppercase;
       letter-spacing: 0.2rem;
+      font-size: 2rem;
     }
     h2 {
       color: var(--primary-color);
@@ -170,7 +167,7 @@ const Section = styled.section`
   .pricing {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 0 10rem;
+    padding: 0 5rem;
     &__plan {
       display: flex;
       flex-direction: column;
@@ -214,6 +211,7 @@ const Section = styled.section`
         }
       }
       &__content {
+        
         &__features {
           list-style-type: none;
           text-align: center;
