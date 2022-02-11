@@ -3,7 +3,6 @@ package com.strait.ivblanc.src.history
 import android.Manifest
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,12 +12,10 @@ import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.databinding.ActivityHistoryEditBinding
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
-import android.view.Window
 
 import android.app.Dialog
 import android.widget.Button
 import android.widget.TextView
-import com.strait.ivblanc.R
 import com.strait.ivblanc.util.GpsTracker
 import android.location.LocationManager
 
@@ -37,17 +34,15 @@ import android.location.Address
 import android.provider.Settings
 import android.util.Log
 import android.widget.EditText
-import androidx.annotation.NonNull
 
 import androidx.core.content.ContextCompat
-import org.w3c.dom.Text
 import java.io.IOException
 import java.lang.IllegalArgumentException
 import java.util.*
+import android.view.*
 
-
-
-
+import android.view.ContextMenu.ContextMenuInfo
+import com.strait.ivblanc.R
 
 
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
@@ -71,12 +66,18 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     private var longitude: Double = 0.0
     lateinit var address: String
 
+    lateinit var tvWeather: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.getParcelableExtra<History>("history")?.let {
             history = it
         } ?: finish()
         location = intent.getStringExtra("location").toString()
+
+        tvWeather = binding.textViewHistoryEditSelectWeather
+        registerForContextMenu(tvWeather)
+
         setClickListeners()
         setHistoryEditInfo()
         setRecyclerView()
@@ -96,7 +97,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
             val date = history.date.split("-")
-            val dialog = DatePickerDialog(this, com.strait.ivblanc.R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
+            val dialog = DatePickerDialog(this, R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
             dialog.show()
         }
 
@@ -136,6 +137,37 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             adapter = historyDetailRecyclerViewAdapter
             layoutManager = LinearLayoutManager(this@HistoryEditActivity, RecyclerView.HORIZONTAL, false)
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenuInfo?
+    ) {
+        val inflater = menuInflater
+        inflater.inflate(com.strait.ivblanc.R.menu.select_weather_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.sunny -> {
+                tvWeather.text = "맑음"
+                return true
+            }
+            R.id.rainy -> {
+                tvWeather.text = "비"
+                return true
+            }
+            R.id.snowy -> {
+                tvWeather.text = "눈"
+                return true
+            }
+            R.id.cloudy -> {
+                tvWeather.text = "흐림"
+                return true
+            }
+        }
+        return super.onContextItemSelected(item)
     }
 
     private val datePickerListener =
@@ -185,10 +217,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
             val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
             try {
-                list = geocoder.getFromLocationName(
-                    str,  // 지역 이름
-                    10
-                ) // 읽을 개수
+                list = geocoder.getFromLocationName(str, 10)
             } catch (e: IOException) {
                 e.printStackTrace()
                 Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
@@ -204,7 +233,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
                     latitude = list[0]!!.latitude
                     longitude = list[0]!!.longitude
                     address = cut[1]
-
                 }
             }
 
