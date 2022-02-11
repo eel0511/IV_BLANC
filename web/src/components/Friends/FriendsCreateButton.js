@@ -63,7 +63,7 @@ export default function FriendsCreateButton() {
           <Button
             className='btn btn-danger'
             onClick={friendRequest}
-            style={{ 'background-color': '#ed6991', border: 'none' }}
+            style={{ 'backgroundColor': '#ed6991', border: 'none' }}
           >
             요청
           </Button>
