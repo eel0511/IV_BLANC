@@ -49,7 +49,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     lateinit var dialog: Dialog
     private val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
-            clothesViewModel.getAllClothesWithCategory(mainViewModel.currentCategory)
+            clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
         }
     }
 
