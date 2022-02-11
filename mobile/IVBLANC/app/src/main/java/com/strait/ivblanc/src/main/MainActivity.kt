@@ -62,6 +62,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
         }
     }
+    private val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == StatusCode.OK) {
+            styleViewModel.getAllStyles()
+        }
+    }
 
     companion object {
         // Notification Channel ID
@@ -174,12 +179,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     "style" -> {
                         View.OnClickListener {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity,
-                                    StyleMakingActivity::class.java
-                                )
+                            val intent = Intent(
+                                this@MainActivity,
+                                StyleMakingActivity::class.java
                             )
+                            addStyleContract.launch(intent)
                         }
                     }
                     "history" -> {

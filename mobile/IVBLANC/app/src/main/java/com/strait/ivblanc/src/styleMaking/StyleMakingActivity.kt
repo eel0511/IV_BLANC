@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.styleMaking
 
+import android.app.Dialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -30,8 +31,17 @@ import com.strait.ivblanc.ui.DeleteDialog
 import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
+import com.strait.ivblanc.util.StatusCode
 
 private const val TAG = "StyleMakingAct_debuk"
+
+/**
+ *StyleMakingActivity의 용도
+ * 자신의 스타일 생성
+ * 자신의 스타일 변경
+ *
+ * 친구의 스타일 생성
+ */
 class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivityStyleMakingBinding::inflate) {
     lateinit var style: Style
     lateinit var styleEditorAdapter: StyleEditorAdapter
@@ -42,6 +52,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     private val clothesViewModel: ClothesViewModel by viewModels()
     private val styleViewModel: StyleViewModel by viewModels()
     lateinit var largeCategories: List<String>
+    lateinit var loadingDialog: Dialog
     var smallCategories = listOf<Pair<Int, Int>>()
     private var FriendEmail = ""
 
@@ -78,15 +89,32 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         styleViewModel.styleResponseStatus.observe(this) {
             when(it.status) {
                 Status.LOADING -> {
-
+                    showLoading()
                 }
                 Status.ERROR -> {
-
+                    dismissLoading()
                 }
                 Status.SUCCESS -> {
-
+                    dismissLoading()
+                    setResult(StatusCode.OK)
                 }
             }
+        }
+    }
+
+    private fun showLoading() {
+        loadingDialog = Dialog(this)
+        loadingDialog.apply {
+            setContentView(R.layout.dialog_loading)
+            window?.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_rectangle, null))
+            setCanceledOnTouchOutside(false)
+            setCancelable(false)
+        }.show()
+    }
+
+    private fun dismissLoading() {
+        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
         }
     }
 
@@ -247,7 +275,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
                     } else {
                         styleViewModel.addStyle(recyclerViewAdapter.data, it)
                     }
-
                 }
                 uri
             }
