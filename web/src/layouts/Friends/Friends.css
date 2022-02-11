@@ -6,9 +6,6 @@
   object-fit: contain;
 }
 
-.friend__content {
-}
-
 .bg1 {
   position: absolute;
   top: -60%;
@@ -22,6 +19,6 @@
 }
 
 .friend__content {
-  width: 829.797px;
+  width: 1000px;
   margin: 0 auto;
 }

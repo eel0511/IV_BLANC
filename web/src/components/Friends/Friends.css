@@ -69,3 +69,19 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.friend__card {
+  width: 190px;
+  height: 190px;
+  box-shadow: 5px 5px #d3d3d3;
+}
+
+.friend__cardImg {
+  height: 190px;
+  width: 190px;
+}
+
+.friend__body {
+  display: flex;
+  justify-content: space-between;
+}
