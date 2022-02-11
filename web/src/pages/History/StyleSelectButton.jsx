@@ -43,9 +43,9 @@ export default function StyleSelectButton({ getImg }) {
           <StyleSelectModalBody getStyleLook={getStyleLook} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='danger' onClick={handleClose}>
+          {/* <Button variant='danger' onClick={handleClose}>
             Close
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
