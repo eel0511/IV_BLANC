@@ -26,15 +26,25 @@ export default function HistoryCreateModalBody() {
   return (
     <div>
       {selectedStyles.map((selectStyle) => (
-        <div key={selectStyle.styleId}>
+        <div>
+        <div 
+          key={selectStyle.styleId}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyItems: "center",
+          }}
+          >
           <img
+            onClick={styleHandleChange}
             src={selectStyle.url}
             alt={selectStyle.styleId}
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
+              maxWidth: "60%",
+              maxHeight: "80%",
             }}
           />
+        </div>
         </div>
       ))}
     </div>
