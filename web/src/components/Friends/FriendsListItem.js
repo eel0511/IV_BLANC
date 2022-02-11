@@ -190,9 +190,9 @@ export default function FriendsListItem({ friend }) {
       });
   };
 
-  useEffect(() => {
-    getFriendsStyleList();
-  }, []);
+  // useEffect(() => {
+  //   getFriendsStyleList();
+  // }, []);
 
   return (
     <>
