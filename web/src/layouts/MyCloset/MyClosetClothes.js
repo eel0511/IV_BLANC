@@ -11,7 +11,7 @@ export default function MyClosetClothes({ clothesDatas }) {
       <div className='container-fluid'>
         <div className='row'>
           {clothesDatas.map((clothesData) => (
-            <div className='col-4 mt-3' key={clothesData.clothesId}>
+            <div className='col-2 mt-3' key={clothesData.clothesId}>
               <MyClosetClothesItem clothesData={clothesData} />
             </div>
           ))}
