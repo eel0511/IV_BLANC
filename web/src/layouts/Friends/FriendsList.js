@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar, Paper, Box } from '@mui/material';
 import './Friends.css';
-import FirendsListItem from '../../components/Friends/FriendsListItem';
+import FriendsListItem from '../../components/Friends/FriendsListItem';
 import pricing1 from "../../assets/pricing1.png";
 import pricing2 from "../../assets/pricing2.png";
 import Title from '../../components/Home/Title';
@@ -16,12 +16,12 @@ export default function FriendsList() {
       friendName: '김나박이',
     },
     {
-      friendEmail: 'aaa@a.com',
-      friendName: '이나박이',
+      friendEmail: 'a@a.com',
+      friendName: 'a',
     },
     {
-      friendEmail: 'b@a.com',
-      friendName: '장나박이',
+      friendEmail: 'ssu@a.com',
+      friendName: 'suza',
     },
   ]);
 
@@ -57,7 +57,7 @@ export default function FriendsList() {
       <div className='friend__content'>
         {friendsList.map((friend, id) => (
           <div key={id}>
-            <FirendsListItem friend={friend} />
+            <FriendsListItem friend={friend} />
           </div>
         ))}
       </div>
