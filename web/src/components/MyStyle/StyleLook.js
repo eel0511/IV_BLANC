@@ -98,7 +98,12 @@ function StyleLook({ selectedClothes }) {
 
   return (
     <div className='Look'>
-      <Button variant='contained' color='success' onClick={saveLook}>
+      <Button
+        variant='contained'
+        color='success'
+        onClick={saveLook}
+        style={{ marginTop: '50px' }}
+      >
         캡처
       </Button>
 

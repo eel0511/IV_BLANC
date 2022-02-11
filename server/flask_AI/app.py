@@ -49,7 +49,7 @@ def start():
     # Threshold.
     # Set values equal to or above 220 to 0.
     # Set values below 220 to 255.
-    th, im_th = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV);
+    th, im_th = cv2.threshold(img, 230, 255, cv2.THRESH_BINARY_INV);
     # Copy the thresholded image.
     im_floodfill = im_th.copy()
 
@@ -79,4 +79,4 @@ def start():
     pair.close()
     test.main()
     fileUpload("results/su/08909_"+fname)
-    return "hello"
+    return "https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_"+fname

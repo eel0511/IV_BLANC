@@ -47,11 +47,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
         <h2>스타일 등록</h2>
       </div>
       {selectedImg && (
-        <img
-          alt='스타일 룩'
-          src={selectedImg}
-          style={{ margin: 'auto', width: '400px', height: '400px' }}
-        />
+        <img alt='스타일 룩' src={selectedImg} style={{ margin: 'auto' }} />
       )}
       <input
         type='file'

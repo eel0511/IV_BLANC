@@ -32,6 +32,10 @@ class StyleViewModel: ViewModel() {
     private val _styleResponseStatus = MutableLiveData<Resource<*>>()
     val styleResponseStatus: LiveData<Resource<*>> get() = _styleResponseStatus
 
+    // 삭제 요청 상태, 로딩, 성공, 에러
+    private val _styleDeleteResponseStatus = MutableLiveData<Resource<*>>()
+    val styleDeleteResponseStatus: LiveData<Resource<*>> get() = _styleDeleteResponseStatus
+
     // 스타일 목록 라이브 데이터
     private val _styleListLiveData = MutableLiveData<List<Style>>()
     val styleListLiveData: LiveData<List<Style>> get() = _styleListLiveData
@@ -145,6 +149,17 @@ class StyleViewModel: ViewModel() {
     // 함수 추출 범위 끝 -----------------------------------------
 
     // 스타일 조회 요청 관련 끝 -----------------------
+
+    // 스타일 삭제 요청 관련 시작 ---------------------
+    fun deleteStyleById(styleId: Int) = viewModelScope.launch {
+        setLoading()
+        ioScope.launch {
+            val response = styleRepository.deleteStyleById(styleId)
+            _styleDeleteResponseStatus.postValue(response)
+        }
+    }
+
+    // 스타일 삭제 요청 관련 끝 ------------------------
 
 
     private fun setLoading() {

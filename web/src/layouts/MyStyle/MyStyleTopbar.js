@@ -10,6 +10,7 @@ import SelectedImage from '../../components/MyStyle/SelectedImage';
 import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
+import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
 
 export default function MyStyleTopbar() {
   const menus = [
@@ -262,9 +263,13 @@ export default function MyStyleTopbar() {
   const [styleClothes, setStyleClothes] = useState([]);
 
   const [show, setShow] = useState(false);
+  const [AIshow, setAIShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleAIClose = () => setAIShow(false);
+  const handleAIShow = () => setAIShow(true);
 
   const token =
     'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
@@ -289,7 +294,7 @@ export default function MyStyleTopbar() {
   const handleSelect = async (e) => {
     const category = e;
     console.log(category);
-    setTab(e);
+    setTab(Number(category));
     setIsData(true);
 
     if (Number(category) === 0) {
@@ -337,36 +342,6 @@ export default function MyStyleTopbar() {
     };
     setSelectedClothes((selectedClothes) => [...selectedClothes, selectedData]);
     setSaveClothesId((saveClothesId) => [...saveClothesId, selectedClothesId]);
-  };
-
-  const saveStyle = async (e) => {
-    e.preventDefault();
-
-    // selectedClothes에서 clothesId만 뽑아야내야 함
-
-    // 백엔드 통신
-    try {
-      await axios
-        .post('http://i6d104.p.ssafy.io:9999/api/style/add', {
-          headers: {
-            'X-AUTH-TOKEN':
-              'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
-          },
-          styleDetails: saveClothesId,
-        })
-        .then((res) => {
-          console.log('response:', res.data);
-          if (res.status === 200 && res.data.output === 1) {
-            alert('스타일 저장 성공!!');
-          } else if (res.status === 200 && res.data.output === 0) {
-            alert(res.data.msg);
-          } else {
-            alert(res.data.msg);
-          }
-        });
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   const showStyle = (e) => {
@@ -462,9 +437,34 @@ export default function MyStyleTopbar() {
                   display: 'flex',
                   justifyContent: 'center',
                   marginTop: '50px',
+                  marginBottom: '50px',
                 }}
               >
                 <Stack direction='row' spacing={2}>
+                  {tab === 1 && (
+                    <Button
+                      variant='contained'
+                      color='secondary'
+                      onClick={handleAIShow}
+                    >
+                      AI 스타일링
+                    </Button>
+                  )}
+                  <Modal
+                    aria-labelledby='contained-modal-title-vcenter'
+                    centered
+                    size='lg'
+                    show={AIshow}
+                    onHide={handleAIClose}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>AI 스타일링</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <MyStyleAIModalBody />
+                    </Modal.Body>
+                  </Modal>
+
                   <Button
                     variant='contained'
                     color='success'
@@ -472,10 +472,10 @@ export default function MyStyleTopbar() {
                   >
                     스타일 저장
                   </Button>
-
                   <Modal
                     aria-labelledby='contained-modal-title-vcenter'
                     centered
+                    size='lg'
                     show={show}
                     onHide={handleClose}
                   >

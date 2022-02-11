@@ -51,7 +51,8 @@ public class ClothesController {
     private final JwtTokenProvider jwtTokenProvider;
     private final FileService fileService;
     private final int PAGE_SIZE = 30;
-
+    private final String sendurl ="http://i6d104.p.ssafy.io:5000/";
+    private final String sendAiurl ="http://119.56.162.61:5000/";
     @ApiOperation(value = "친구옷 조회하기",notes = "친구가 아니면 500")
     @GetMapping(value = "/friendclothes")
     public @ResponseBody
@@ -163,17 +164,17 @@ public class ClothesController {
     @ApiOperation(value = "beta")
     @PostMapping(value = "/beta")
     public @ResponseBody
-    CommonResult betaservice(final MultipartFile photo) throws Exception {
+    SingleResult<String> betaservice(final MultipartFile photo) throws Exception {
 
         RestTemplate restTemplate = new RestTemplate();
-        String sendurl ="http://119.56.162.61:5000/";
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", new MultipartInputStreamFileResource(photo.getInputStream(), photo.getOriginalFilename()));
 
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
-        HttpEntity<String> response = restTemplate.postForEntity(sendurl, requestMessage, String.class);
+        HttpEntity<String> response = restTemplate.postForEntity(sendAiurl, requestMessage, String.class);
 
         return responseService.getSingleResult(response.getBody());
     }
@@ -193,7 +194,7 @@ public class ClothesController {
         clothesSerivce.addClothes(clothes);
         // flask 연동
         RestTemplate restTemplate = new RestTemplate();
-        String sendurl ="http://i6d104.p.ssafy.io:5000/";
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();

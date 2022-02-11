@@ -15,14 +15,22 @@ import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.UserForJoin
 import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentJoinBinding
+import com.strait.ivblanc.src.main.MainActivity
 import com.strait.ivblanc.util.InputValidUtil
 import com.strait.ivblanc.util.Status
 import java.util.*
 
+
 class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind, R.layout.fragment_join) {
     val loginViewModel: LoginViewModel by activityViewModels()
     var isEmailChecked = false
-    private lateinit var callback: OnBackPressedCallback
+    var loginActivity : LoginActivity? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loginActivity = activity as LoginActivity
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,23 +41,6 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         setLayoutWithoutStatusBarHeight(constraintLayout)
         return parent
     }
-    //onBackpress callback 만들어서 넣음
-    //회원가입창에서 뒤로가기로 로그인으로 빠져나올수 있음
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout_login_container, LoginFragment()).commit()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -57,6 +48,9 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
     }
 
     private fun initView() {
+        binding.imageButtonBack.setOnClickListener {
+           loginActivity!!.setFragment(1)
+        }
         binding.buttonJoinFJoin.setOnClickListener {
             if (checkInputForm() && isEmailChecked) {
                 join()
@@ -177,6 +171,8 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         }
 
         loginViewModel.join(UserForJoin(email, password, passwordCheck, name, gender, age, phoneNumber))
+        loginActivity!!.setFragment(1)
+
     }
 
     private fun checkInputForm(): Boolean {

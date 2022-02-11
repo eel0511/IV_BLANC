@@ -67,4 +67,22 @@ class StyleRepository {
             Resource.error(null, "네트워크 연결을 확인해 주세요.")
         }
     }
+
+    suspend fun deleteStyleById(styleId: Int): Resource<StyleResponse> {
+        return try {
+            val response = styleApi.deleteStyleById(styleId)
+            if(response.isSuccessful) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), response.body()!!.message!!)
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getAllStyles: error - ${e.message}")
+            Resource.error(null, "네트워크 연결을 확인해 주세요.")
+        }
+    }
 }

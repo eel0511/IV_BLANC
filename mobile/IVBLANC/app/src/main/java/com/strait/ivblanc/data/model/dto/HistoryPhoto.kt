@@ -8,5 +8,6 @@ data class HistoryPhoto(
     val createDate: String,
     val photoId: Int,
     val updateDate: String,
-    val url: String
+    val url: String,
+    val historyId: Int
 ): Parcelable
