@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function MyStyleCreateModalBody({ saveClothesId }) {
+function FriendStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+    setSelectedImg(e.target.files[0]);
   };
 
   const createStyle = () => {
@@ -68,4 +68,4 @@ function MyStyleCreateModalBody({ saveClothesId }) {
   );
 }
 
-export default MyStyleCreateModalBody;
+export default FriendStyleCreateModalBody;

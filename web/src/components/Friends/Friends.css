@@ -11,6 +11,11 @@
   filter: opacity(0.3) drop-shadow(0 0 0 #ed6991);
 }
 
+.form-control:focus {
+  border-color: #ed6991;
+  box-shadow: inset 0 0 2px #ed6991, 0 0 13px #ed6991;
+}
+
 /* Notice */
 .Notice {
   /* position: absolute; */
@@ -36,6 +41,12 @@
 .friend__header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.friend_profile {
+  display: flex;
+  align-items: center;
 }
 
 .friend__avatar {
@@ -44,7 +55,6 @@
 
 .friend__link {
   position: relative;
-  left: 500px;
 }
 
 .friend__plusIcon {
@@ -52,4 +62,26 @@
   height: 30px;
   cursor: pointer;
   color:#ed6991;
+}
+
+.FriendsAcceptButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friend__card {
+  width: 190px;
+  height: 190px;
+  box-shadow: 5px 5px #d3d3d3;
+  margin-right: 10px;
+}
+
+.friend__cardImg {
+  height: 190px;
+  width: 190px;
+}
+
+.friend__body {
+  display: flex;
 }

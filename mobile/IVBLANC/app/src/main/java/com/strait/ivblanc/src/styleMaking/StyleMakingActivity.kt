@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -29,6 +30,7 @@ import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
+import com.strait.ivblanc.ui.DeleteDialog
 import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
@@ -113,7 +115,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
         val trailingIcon = toolbar.findViewById<ImageView>(R.id.imageView_toolbar_trailingIcon).apply {
             setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_checked, null))
-            setOnClickListener { requestAddStyle() }
+            setOnClickListener { showSaveDialog() }
         }
     }
 
@@ -242,6 +244,14 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         if(this::recyclerViewAdapter.isInitialized) {
             recyclerViewAdapter.addOrUpdateClothes(clothes)
         }
+    }
+
+    private fun showSaveDialog() {
+        DeleteDialog(this)
+            .setContent("스타일을 저장하시겠습니까?")
+            .setNegativeButtonText("취소")
+            .setPositiveButtonText("저장")
+            .setOnPositiveClickListener { requestAddStyle() }.build().show()
     }
 
     private var imageUri: Uri? = null

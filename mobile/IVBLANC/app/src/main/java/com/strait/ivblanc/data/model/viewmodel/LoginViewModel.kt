@@ -11,6 +11,7 @@ import com.strait.ivblanc.data.model.response.EmailCheckResponse
 import com.strait.ivblanc.data.model.response.JoinResponse
 import com.strait.ivblanc.data.model.response.LoginResponse
 import com.strait.ivblanc.data.repository.UserRepository
+import com.strait.ivblanc.util.LoginUtil
 import com.strait.ivblanc.util.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ import kotlinx.coroutines.withContext
 
 class LoginViewModel: ViewModel() {
     val userRepository = UserRepository()
+    var isAutoLogin = LoginUtil.isAutoLogin()
 
     val joinRequestLiveData = MutableLiveData<Resource<JoinResponse?>>()
     val emailCheckRequestLiveData = MutableLiveData<Resource<EmailCheckResponse>>()

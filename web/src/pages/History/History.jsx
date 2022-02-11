@@ -3,225 +3,34 @@ import styled from "styled-components";
 import ScrollToTop from '../../components/ScrollToTop';
 import Navbar from '../../components/Navbar';
 import home from "../../assets/home.png";
-import "bootstrap/dist/css/bootstrap.min.css";
-import fimg1 from "../../assets/images/2.jfif";
-import bimg1 from "../../assets/outfit/1.jfif";
-import fimg2 from "../../assets/images/3.jfif";
-import bimg2 from "../../assets/outfit/2.jfif";
-import fimg3 from "../../assets/images/4.jfif";
-import bimg3 from "../../assets/outfit/3.jfif";
-import fimg4 from "../../assets/images/6.jfif";
-import bimg4 from "../../assets/outfit/4.jfif";
-import fimg5 from "../../assets/images/11.jfif";
-import bimg5 from "../../assets/outfit/5.jfif";
-import fimg6 from "../../assets/images/12.png";
-import bimg6 from "../../assets/outfit/6.jfif";
-import fimg7 from "../../assets/images/13.jfif";
-import bimg7 from "../../assets/outfit/7.jfif";
-import fimg8 from "../../assets/images/21.png";
-import bimg8 from "../../assets/outfit/8.jfif";
-import fimg9 from "../../assets/images/22.jfif";
-import bimg9 from "../../assets/outfit/9.jfif";
-import fimg10 from "../../assets/images/25.jfif";
-import bimg10 from "../../assets/outfit/16.jfif";
-import fimg11 from "../../assets/images/26.jfif";
-import bimg11 from "../../assets/outfit/18.jfif";
-import fimg12 from "../../assets/images/27.png";
-import bimg12 from "../../assets/outfit/24.jfif";
-import fimg13 from "../../assets/images/29.jfif";
-import bimg13 from "../../assets/outfit/30.jfif";
-import fimg14 from "../../assets/images/37.jfif";
-import bimg14 from "../../assets/outfit/36.jfif";
-import fimg15 from "../../assets/images/40.png";
-import bimg15 from "../../assets/outfit/38.jfif";
-import fimg16 from "../../assets/images/41.jfif";
-import bimg16 from "../../assets/outfit/42.jfif";
-
+import axios from 'axios';
+import pricing1 from "../../assets/pricing1.png";
+import pricing2 from "../../assets/pricing2.png";
 import FlipCard from "./FlipCard";
 import HistoryCreateButton from './HistoryCreateButton';
 import Title from '../../components/Home/Title';
 
-const cards = [
-  {
-    id: "1",
-    variant: "focus",
-    front: { title: "Focus", background: fimg1 },
-    back: {
-      image: bimg1,
-      title: "title 1",
-      comment: "comment 1",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "2",
-    variant: "focus",
-    front: { title: "Focus", background: fimg2 },
-    back: {
-      image: bimg2,
-      title: "title 2",
-      comment: "comment 2",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "3",
-    variant: "focus",
-    front: { title: "Focus", background: fimg3 },
-    back: {
-      image: bimg3,
-      title: "title 3",
-      comment: "comment 3",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "4",
-    variant: "focus",
-    front: { title: "Focus", background: fimg4 },
-    back: {
-      image: bimg4,
-      title: "title 4",
-      comment: "comment 4",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "5",
-    variant: "focus",
-    front: { title: "Focus", background: fimg5 },
-    back: {
-      image: bimg5,
-      title: "title 5",
-      comment: "comment 5",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "6",
-    variant: "focus",
-    front: { title: "Focus", background: fimg6 },
-    back: {
-      image: bimg6,
-      title: "title 6",
-      comment: "comment 6",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "7",
-    variant: "focus",
-    front: { title: "Focus", background: fimg7 },
-    back: {
-      image: bimg7,
-      title: "title 7",
-      comment: "comment 7",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "8",
-    variant: "focus",
-    front: { title: "Focus", background: fimg8 },
-    back: {
-      image: bimg8,
-      title: "title 8",
-      comment: "comment 8",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "9",
-    variant: "focus",
-    front: { title: "Focus", background: fimg9 },
-    back: {
-      image: bimg9,
-      title: "title 9",
-      comment: "comment 9",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "10",
-    variant: "focus",
-    front: { title: "Focus", background: fimg10 },
-    back: {
-      image: bimg10,
-      title: "title 10",
-      comment: "comment 10",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "11",
-    variant: "focus",
-    front: { title: "Focus", background: fimg11 },
-    back: {
-      image: bimg11,
-      title: "title 11",
-      comment: "comment 11",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "12",
-    variant: "focus",
-    front: { title: "Focus", background: fimg12 },
-    back: {
-      image: bimg12,
-      title: "title 12",
-      comment: "comment 12",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "13",
-    variant: "focus",
-    front: { title: "Focus", background: fimg13 },
-    back: {
-      image: bimg13,
-      title: "title 13",
-      comment: "comment 13",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "14",
-    variant: "focus",
-    front: { title: "Focus", background: fimg14 },
-    back: {
-      image: bimg14,
-      title: "title 14",
-      comment: "comment 14",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "15",
-    variant: "focus",
-    front: { title: "Focus", background: fimg15 },
-    back: {
-      image: bimg15,
-      title: "title 15",
-      comment: "comment 15",
-      date: "2022-02-07"
-    }
-  },
-  {
-    id: "16",
-    variant: "focus",
-    front: { title: "Focus", background: fimg16 },
-    back: {
-      image: bimg16,
-      title: "title 16",
-      comment: "comment 16",
-      date: "2022-02-07"
-    }
-  },
-];
-
 export default function History() {
-  
+  const [myHistories, setmyHistories] = useState([]);
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const getmyHistoriesData = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/history/find/all', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setmyHistories(response.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getmyHistoriesData();
+  }, []);
   return (
       <Section>
       <ScrollToTop />
@@ -229,6 +38,10 @@ export default function History() {
         <Navbar />
       </div>
       <Title value="HISTORY" />
+      <div className="background">
+        <img src={pricing1} alt="background" className="bg1" />
+        <img src={pricing2} alt="background" className="bg2" />
+      </div>
       <div style={{ 'margin-top': '1rem' }}>
       <HistoryCreateButton/>
       </div>
@@ -238,8 +51,8 @@ export default function History() {
       <div className="overlay-border" />
       <div className="row h-100">
         <div className="col d-flex flex-wrap justify-content-around align-items-center">
-          {cards.map((card) => (
-            <FlipCard key={card.id} card={card} />
+          {myHistories.map((myHistory) => (
+            <FlipCard key={myHistory.historyId} myHistory={myHistory} />
           ))}
         </div>
       </div>
@@ -307,12 +120,12 @@ const StyledHistory = styled.div`
   margin: 25px 0;
   
 
-  &.hover:hover .flip-card-inner {
+  /* &.hover .flip-card-inner {
     transform: rotateY(180deg);
-  }
+  } */
 
   .flip-card-inner {
-    z-index: 10;
+    z-index: 1;
     backface-visibility: visible;
     transform-style: preserve-3d;
     transition: .5s linear .1s;
@@ -336,7 +149,7 @@ const StyledHistory = styled.div`
       
   
       &.front {
-        z-index: 9;
+        z-index: 10;
         transform: rotateY(0);
         background-repeat: no-repeat;
         background-size: cover;
@@ -360,7 +173,7 @@ const StyledHistory = styled.div`
       }
   
       &.back {
-        z-index: 8;
+        z-index: 9;
         transform: rotateY(180deg);
         background-color: #fff;
 

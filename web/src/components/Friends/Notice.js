@@ -19,7 +19,7 @@ export default function Notice() {
   };
 
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
   const getFriendRequestList = () => {
     axios
       .get('http://i6d104.p.ssafy.io:9999/api/friend/friendrequest', {
@@ -27,11 +27,11 @@ export default function Notice() {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          applicant: 'aaa@bbb.com',
+          applicant: 'b@a.com',
         },
       })
       .then((response) => {
-        // console.log(response.data.data);
+        console.log(response.data.data);
         setFriendRequest(response.data.data);
       });
   };
@@ -61,17 +61,17 @@ export default function Notice() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        {{ friendRequest }.length === 0 ? (
-          <div>
-            {friendRequest.map((friend, id) => (
+        <div>
+          {
+            friendRequest.length !== 0
+            ? friendRequest.map((friend, id) => (
               <div className='Notice__friendRequest' key={id}>
                 <FriendsAcceptButton friend={friend} />
               </div>
-            ))}
-          </div>
-        ) : (
-          <h3>새로운 알림이 없습니다.</h3>
-        )}
+            ))
+            : <h3>알림이 없습니다.</h3>
+          }
+        </div>
       </Menu>
     </div>
   );

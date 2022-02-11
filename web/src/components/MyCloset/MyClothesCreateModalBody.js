@@ -104,7 +104,29 @@ const ColorSelectorContainer = styled.div`
   };
 
   return (
-    <ColorSelectorContainer>
+    <>
+    <h1>이미지 미리보기</h1>
+    <table> 
+      <tbody> 
+        <tr> 
+          <td> 
+            <div> 
+              {selectedImg && ( 
+              <img alt="sample" src={URL.createObjectURL(selectedImg)} style={{ margin: "auto", padding:"auto", width: "200px", height: "200px"}} /> )} 
+              <div style={{ alignItems: "center", justifyContent: "center", display:"flex"}} > 
+              <div>
+              <h4>사진 등록</h4>
+              </div>
+              <input name="imgUpload" type="file" accept="image/*" onChange={imgHandleChange} /> 
+              {/* <button 
+              style={{ backgroundColor: "gray", color: "white", width: "55px", height: "40px", cursor: "pointer", }} 
+              onClick={() => deleteFileImage()} > 삭제 </button>  */}
+              </div> 
+              </div> 
+              </td> 
+              </tr> 
+              </tbody> 
+              </table>
       <div>
         <h2>색상</h2>
       </div>
@@ -121,13 +143,13 @@ const ColorSelectorContainer = styled.div`
               defaultChecked={selectedColor === colorArray[1] ? true : false}
               onChange={colorHandleChange}
             />
-            {/* <label
+            <label
               className='form-check-label'
               htmlFor={'색상' + colorArray[0]}
             >
               {colorArray[0]}
-            </label> */}
-            <Label 
+            </label>
+            {/* <Label 
             id={'색상' + colorArray[1]}
             value={colorArray[1]}
             className='form-check-input'
@@ -139,8 +161,8 @@ const ColorSelectorContainer = styled.div`
             color={colorArray[1]} 
 
             >
-             <h4> {colorArray[0]} </h4>
-              </Label>
+            <h4> {colorArray[0]} </h4>
+              </Label> */}
           </React.Fragment>
         );
       })}
@@ -267,7 +289,7 @@ const ColorSelectorContainer = styled.div`
           }
         )}
       </div>
-      <hr />
+      {/* <hr />
       <div>
         <h2>사진 등록</h2>
       </div>
@@ -276,10 +298,10 @@ const ColorSelectorContainer = styled.div`
         id='inputImg'
         accept='image/*'
         onChange={imgHandleChange}
-      ></input>
-      <Button variant='secondary' onClick={createClothes}>
+      ></input> */}
+      <Button variant='secondary' onClick={createClothes} >
         등록
       </Button>
-    </ColorSelectorContainer>
+    </>
   );
 }
