@@ -1,25 +1,18 @@
 package com.strait.ivblanc.adapter
 
-import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
-import androidx.activity.viewModels
-import androidx.core.view.MotionEventCompat
+import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Clothes
-import com.strait.ivblanc.data.model.dto.Friend
-import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
-import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
-import kotlin.math.abs
 
 private const val TAG = "EditorAdapter_debuk"
 
 class StyleEditorAdapter(val containerView: ViewGroup) {
-    lateinit var itemClickListener: ItemClickListener
-    var focusedImageView: ImageView? = null
+    private var _focusedImageView: ImageView? = null
 
     // K = largeCategory, V = clothes
     // 상의, 하의 등 각 카테고리 마다 하나의 아이템만 존재
@@ -34,20 +27,16 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     var eventX = 0f
     var eventY = 0f
 
-    interface ItemClickListener {
-        fun onClick(imageView: ImageView)
-    }
-
     init {
         val scaleGestureDetector = ScaleGestureDetector(
             containerView.context,
             object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
                 override fun onScale(detector: ScaleGestureDetector?): Boolean {
-                    Log.d(TAG, "onScale: ${focusedImageView?.id}")
-                    val scaleFactor = focusedImageView?.scaleX
+                    Log.d(TAG, "onScale: ${_focusedImageView?.id}")
+                    val scaleFactor = _focusedImageView?.scaleX
                     scaleFactor?.let {
-                        focusedImageView?.scaleY = scaleFactor * detector!!.scaleFactor
-                        focusedImageView?.scaleX = scaleFactor * detector!!.scaleFactor
+                        _focusedImageView?.scaleY = scaleFactor * detector!!.scaleFactor
+                        _focusedImageView?.scaleX = scaleFactor * detector!!.scaleFactor
                     }
                     return true
                 }
@@ -56,7 +45,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
         containerView.setOnTouchListener { v, event ->
             // 모든 터치 이벤트는 제스처 디텍터로 전달
             scaleGestureDetector.onTouchEvent(event)
-            focusedImageView?.let {
+            _focusedImageView?.let {
                 // 1개의 포인터만 존재할 때, 이미지 드래그 실행
                 // TODO: 2022/02/08 핀치 줌을 한 뒤, 한 손가락만 놨을 때 드래그 이벤트 발생 방지 추가
                 if (event.pointerCount < 2) {
@@ -171,8 +160,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     fun addImageView(imageView: ImageView) {
         imageViews[imageViews.size + 1] = imageView.apply {
             setOnClickListener {
-                focusedImageView = this
-                itemClickListener.onClick(focusedImageView!!)
+                setFocusedImageView(this)
                 Log.d(TAG, "addImageView: ${this.id}")
             }
             isClickable = false
@@ -180,6 +168,7 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     }
 
     // 카테고리에 해당하는 옷이 추가되거나 변경될 때, 이미지뷰에 세팅
+    // 이때 추가, 변경된 이미지의 뷰로 포커스 이동
     fun addOrUpdateClothes(clothes: Clothes) {
         val largeCategory = getLargeCategory(clothes)
         clothesMap[largeCategory] = clothes
@@ -198,9 +187,25 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
             it.layoutParams.height = 150.dp
             it.visibility = View.VISIBLE
             it.isClickable = true
-            focusedImageView = it
+            setFocusedImageView(it)
             Glide.with(it).load(clothes.url).into(it)
         }
+    }
+
+    private fun setFocusedImageView(imageView: ImageView) {
+        _focusedImageView?.let { image ->
+            deleteFocusedImageIndicator(image)
+        }
+        setFocusedImageIndicator(imageView)
+        _focusedImageView = imageView
+    }
+
+    private fun deleteFocusedImageIndicator(imageView: ImageView) {
+        imageView.background = null
+    }
+
+    private fun setFocusedImageIndicator(imageView: ImageView) {
+        imageView.background = ResourcesCompat.getDrawable(imageView.resources, R.drawable.circle_stroke, null)
     }
 
     private fun removeImage(clothes: Clothes) {
