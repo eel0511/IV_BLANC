@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.history
 
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -39,7 +40,10 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             finish()
         }
         binding.imageViewHistoryDetailEdit.setOnClickListener {
-            // TODO: 히스토리 수정 화면으로 이동
+            val intent = Intent(this, HistoryEditActivity::class.java)
+                .putExtra("history", history)
+                .putExtra("location", getLocation())
+            startActivity(intent)
         }
     }
 
