@@ -1,5 +1,7 @@
 package com.strait.ivblanc.src.history
 
+import android.Manifest
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,15 +19,57 @@ import android.app.Dialog
 import android.widget.Button
 import android.widget.TextView
 import com.strait.ivblanc.R
+import com.strait.ivblanc.util.GpsTracker
+import android.location.LocationManager
+
+import android.content.Intent
+
+import android.content.DialogInterface
+
+import android.widget.Toast
+
+import android.location.Geocoder
+
+import androidx.core.app.ActivityCompat
+
+import android.content.pm.PackageManager
+import android.location.Address
+import android.provider.Settings
+import android.util.Log
+import android.widget.EditText
+import androidx.annotation.NonNull
+
+import androidx.core.content.ContextCompat
+import org.w3c.dom.Text
+import java.io.IOException
+import java.lang.IllegalArgumentException
+import java.util.*
+
+
+
+
 
 
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     ActivityHistoryEditBinding::inflate) {
 
+    private var gpsTracker: GpsTracker? = null
+
+    private val GPS_ENABLE_REQUEST_CODE = 2001
+    private val PERMISSIONS_REQUEST_CODE = 100
+    var REQUIRED_PERMISSIONS = arrayOf<String>(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
     lateinit var history: History
     lateinit var location: String
     lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
     lateinit var locationDialog: Dialog
+
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    lateinit var address: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +121,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         binding.textViewHistoryEditTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
         binding.editTextHistoryEditText.setText(history.text)
 
+        latitude = history.field
+        longitude = history.location
+
         if(history.photos.isEmpty())
             binding.recyclerViewHistoryEditPhoto.visibility = View.GONE
     }
@@ -108,9 +155,147 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val saveBtn: TextView = locationDialog.findViewById(R.id.textView_btn_save)
         saveBtn.setOnClickListener(View.OnClickListener {
-            // TODO: 선택된 주소 정보 세팅
-           finish() // 앱 종료
+            history.field = latitude
+            history.location = longitude
+            binding.textViewHistoryEditSelectLocation.text = address
+            locationDialog.dismiss()
         })
 
+        val localBtn : Button = locationDialog.findViewById(R.id.button_location_get)
+        localBtn.setOnClickListener {
+            if (!checkLocationServicesStatus()) {
+                showDialogForLocationServiceSetting();
+            }else {
+                checkRunTimePermission();
+            }
+
+            gpsTracker = GpsTracker(this@HistoryEditActivity)
+
+            latitude = gpsTracker!!.getLatitude()
+            longitude = gpsTracker!!.getLongitude()
+            address = getCurrentAddress(latitude, longitude)
+
+            locationDialog.findViewById<EditText>(R.id.editText_location).setText(address)
+        }
+
     }
+
+    private fun checkRunTimePermission() {
+
+        //런타임 퍼미션 처리
+        // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
+        val hasFineLocationPermission = ContextCompat.checkSelfPermission(
+            this@HistoryEditActivity,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        val hasCoarseLocationPermission = ContextCompat.checkSelfPermission(
+            this@HistoryEditActivity,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
+            hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED
+        ) {
+
+            // 2. 이미 퍼미션을 가지고 있다면
+            // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
+
+
+            // 3.  위치 값을 가져올 수 있음
+        } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
+
+            // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this@HistoryEditActivity,
+                    REQUIRED_PERMISSIONS[0]
+                )
+            ) {
+
+                // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
+                Toast.makeText(this@HistoryEditActivity, "이 앱을 실행하려면 위치 접근 권한이 필요합니다.", Toast.LENGTH_LONG)
+                    .show()
+                // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                ActivityCompat.requestPermissions(
+                    this@HistoryEditActivity, REQUIRED_PERMISSIONS,
+                    PERMISSIONS_REQUEST_CODE
+                )
+            } else {
+                // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
+                // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
+                ActivityCompat.requestPermissions(
+                    this@HistoryEditActivity, REQUIRED_PERMISSIONS,
+                    PERMISSIONS_REQUEST_CODE
+                )
+            }
+        }
+    }
+
+
+    private fun getCurrentAddress(latitude: Double, longitude: Double): String {
+
+        val geocoder = Geocoder(this, Locale.getDefault())
+        val addresses: List<Address>? = try {
+            geocoder.getFromLocation(
+                latitude,
+                longitude,
+                7
+            )
+        } catch (ioException: IOException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show()
+            return "지오코더 서비스 사용불가"
+        } catch (illegalArgumentException: IllegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show()
+            return "잘못된 GPS 좌표"
+        }
+        if (addresses == null || addresses.size == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show()
+            return "주소 미발견"
+        }
+        val address: Address = addresses[0]
+        return address.getAddressLine(0).toString().toString() + "\n"
+    }
+
+
+    // GPS 활성화를 위한 메소드들
+    private fun showDialogForLocationServiceSetting() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@HistoryEditActivity)
+        builder.setTitle("위치 서비스 비활성화")
+        builder.setMessage(
+            """
+            앱을 사용하기 위해서는 위치 서비스가 필요합니다.
+            위치 설정을 수정하시겠습니까?
+            """.trimIndent()
+        )
+        builder.setCancelable(true)
+        builder.setPositiveButton("설정", DialogInterface.OnClickListener { dialog, id ->
+            val callGPSSettingIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE)
+        })
+        builder.setNegativeButton("취소",
+            DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+        builder.create().show()
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            GPS_ENABLE_REQUEST_CODE ->
+                //사용자가 GPS 활성 시켰는지 검사
+                if (checkLocationServicesStatus()) {
+                    if (checkLocationServicesStatus()) {
+                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음")
+                        checkRunTimePermission()
+                        return
+                    }
+                }
+        }
+    }
+
+    private fun checkLocationServicesStatus(): Boolean {
+        val locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
+        return (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
+    }
+
 }

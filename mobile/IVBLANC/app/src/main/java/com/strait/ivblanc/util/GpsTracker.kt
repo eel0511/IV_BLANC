@@ -22,7 +22,7 @@ import android.util.Log
 
 
 class GpsTracker(context: Context) : Service(), LocationListener {
-    private val mContext: Context
+    private val mContext: Context = context
     private var location: Location? = null
     private var latitude = 0.0
     private var longitude = 0.0
@@ -126,7 +126,6 @@ class GpsTracker(context: Context) : Service(), LocationListener {
     }
 
     init {
-        mContext = context
         getLocation()
     }
 }
