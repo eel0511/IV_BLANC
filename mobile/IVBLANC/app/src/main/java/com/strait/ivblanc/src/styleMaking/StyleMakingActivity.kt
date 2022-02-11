@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.styleMaking
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -45,6 +46,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     var focusImage:ImageView?=null
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
+    private var FriendEmail = ""
     private val itemClickListener = object :StyleEditorAdapter.ItemClickListener{
 
         override fun onClick(imageView: ImageView) {
@@ -54,12 +56,19 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FriendEmail = intent.getStringExtra("friendEmail")?:""
         init()
     }
 
     private fun init() {
         // clothesViewModel에서 모든 옷 요청
-        clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+        if(FriendEmail!=""){
+            Log.d(TAG, "init: "+FriendEmail)
+            clothesViewModel.getAllFriendClothesWithCategory(FriendEmail,CategoryCode.TOTAL)
+        }else{
+            clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
+        }
+
         intent.getParcelableExtra<Style>("style")?.let {
             style = it
         }

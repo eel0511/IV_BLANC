@@ -28,6 +28,8 @@ class FriendViewModel : ViewModel() {
     private val _friendName = MutableLiveData<String>()
     val friendName: LiveData<String> get() = _friendName
 
+    private val _friendEmail = MutableLiveData<String>()
+    val firendEmail : LiveData<String> get() = _friendEmail
     // 툴바 관련 필드
     private val _toolbarTitle = MutableLiveData<String>()
     val toolbarTitle: LiveData<String> get() = _toolbarTitle
@@ -100,6 +102,9 @@ class FriendViewModel : ViewModel() {
 
 
     // friend
+    fun getFriendEmail(email:String)=viewModelScope.launch{
+        _friendEmail.postValue(email)
+    }
     fun getAllFriends(applicant: String) = viewModelScope.launch {
         //친구 리스트를 가져옴
         getFriends(applicant)
