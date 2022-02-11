@@ -7,10 +7,10 @@ import kotlinx.android.parcel.Parcelize
 data class History(
     val createDate: String,
     val date: String,
-    val `field`: Int,
+    val location: Double,
+    val field: Double,
     val historyId: Int,
-    val location: Int,
-    val historyPhotos: List<HistoryPhoto>,
+    val photos: List<HistoryPhoto>,
     val styleUrl: String,
     val subject: String,
     val temperature_high: Int,

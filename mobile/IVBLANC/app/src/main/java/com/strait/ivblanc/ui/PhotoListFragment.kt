@@ -22,6 +22,7 @@ import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.Status
 
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
@@ -156,6 +157,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                     exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()
                 }
+                styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
+                    if(it.status == Status.SUCCESS) {
+                        styleViewModel.getAllStyles()
+                    }
+                }
             }
             "f0"->{
                 clothesViewModel.clothesListLiveData.observe(requireActivity()) {
@@ -251,10 +257,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         }
         DeleteDialog(requireActivity())
             .setContent(content)
-            .setOnPositiveClickListener(object : View.OnClickListener {
-                override fun onClick(p0: View?) {
-                    viewModel.deleteClothesById((item.content as Clothes).clothesId)
+            .setOnPositiveClickListener {
+                when (item.content) {
+                    is Clothes -> viewModel.deleteClothesById((item.content as Clothes).clothesId)
+                    is Style -> styleViewModel.deleteStyleById((item.content as Style).styleId)
                 }
-            }).build().show()
+            }.build().show()
     }
 }

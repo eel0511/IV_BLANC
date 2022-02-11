@@ -22,6 +22,9 @@
             android:name=".src.styleMaking.StyleMakingActivity"
             android:exported="false"/>
         <activity
+            android:name=".src.historyDetail.HistoryDetailActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.friend.FriendNoti"
             android:exported="false" />
         <activity
@@ -72,7 +75,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

@@ -12,10 +12,11 @@ export default function MyClothesCreateButton() {
     <>
       <button
         type='button'
-        className='btn'
+        className='btn btn-danger'
         style={{
           'background-color': '#ed6991',
-          'color': 'white'
+          color: 'white',
+          border: 'none',
         }}
         onClick={handleShow}
       >

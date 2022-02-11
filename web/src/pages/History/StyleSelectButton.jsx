@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import HistoryCreateModalBody from './HistoryCreateModalBody';
+import StyleSelectModalBody from './StyleSelectModalBody';
 
-export default function HistoryCreateButton() {
+export default function StyleSelectButton() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -12,33 +12,25 @@ export default function HistoryCreateButton() {
     <>
       <button
         type='button'
-        className='btn btn-danger'
+        className='btn'
         style={{
           'background-color': '#ed6991',
-          color: 'white',
-          border: 'none',
+          'color': 'white'
         }}
         onClick={handleShow}
       >
-        추억하기
+        스타일 선택
       </button>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        aria-labelledby='contained-modal-title-vcenter'
-        centered
-      >
+      <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
+      centered>
         <Modal.Header closeButton>
-          <Modal.Title>추억 하기</Modal.Title>
+          <Modal.Title>저장된 스타일룩</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <HistoryCreateModalBody />
+          <StyleSelectModalBody />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='primary' onClick={handleClose}>
-            Save
-          </Button>
           <Button variant='danger' onClick={handleClose}>
             Close
           </Button>
