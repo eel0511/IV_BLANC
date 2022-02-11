@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
-import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
