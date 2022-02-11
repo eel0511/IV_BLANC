@@ -1,6 +1,7 @@
 package com.strait.ivblanc.src.friend
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Friend
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.databinding.ActivityFriendNotiBinding
+import com.strait.ivblanc.src.main.MainActivity
 
 class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBinding::inflate) {
     val SP_NAME = "fcm_message"
@@ -89,7 +91,19 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             R.drawable.ic_back -> {
                 object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        finish()
+                        Log.d("tetete", "onClick: "+readSharedPreference("fcm").size)
+                        if(readSharedPreference("fcm").size==0){
+                            val intent = Intent(this@FriendNoti,MainActivity::class.java)
+                            intent.putExtra("result","0")
+                            setResult(RESULT_OK,intent)
+                            finish()
+                        }else{
+                            val intent = Intent(this@FriendNoti,MainActivity::class.java)
+                            intent.putExtra("result","1")
+                            setResult(RESULT_OK,intent)
+                            finish()
+                        }
+
                     }
                 }
             }
