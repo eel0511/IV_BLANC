@@ -68,7 +68,7 @@ public class StyleController {
         if (url.equals("error")) {
             throw new ApiMessageException("파일 올리기 실패");
         }
-        String madeby = userService.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token))).getEmail();
+        String madeby = userService.findById(clothesSerivce.findByClothesId(styleDetails.get(0).getClothesId()).get().getUserId()).getEmail();
         Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, userId, url));
         styleService.addStyle(style);
         styleDetailService.addStyleDetails(style.getStyleDetails());
