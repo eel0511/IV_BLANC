@@ -16,10 +16,12 @@ import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
+import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
+import com.strait.ivblanc.src.friend.FriendCloset
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
@@ -31,6 +33,8 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     private val viewModel: MainViewModel by activityViewModels()
     private val clothesViewModel: ClothesViewModel by activityViewModels()
     private val styleViewModel: StyleViewModel by activityViewModels()
+    private val friendViewModel: FriendViewModel by activityViewModels()
+    private var FriendEmail = ""
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
 
@@ -50,7 +54,9 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        friendViewModel.firendEmail.observe(requireActivity()){
+            FriendEmail = it
+        }
         exAdapter = ExpandableRecyclerViewAdapter(requireActivity())
         exAdapter.itemClickListener = object : ExpandableRecyclerViewAdapter.ItemClickListener {
             override fun onClick(position: Int, viewType: Int) {
@@ -146,6 +152,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         when(tag) {
             // TODO: 2022/02/10 분기 처리 아름답게
             "clothes" -> {
+                binding.fabMain.visibility=View.GONE
                 clothesViewModel.clothesListLiveData.observe(requireActivity()) {
                     Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
                     exAdapter.data = it as ArrayList<PhotoItem<T>>
@@ -153,6 +160,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "style" -> {
+                binding.fabMain.visibility=View.GONE
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
                     exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()
@@ -164,6 +172,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "f0"->{
+                binding.fabMain.visibility=View.GONE
                 clothesViewModel.clothesListLiveData.observe(requireActivity()) {
                     Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
                     exAdapter.data = it as ArrayList<PhotoItem<T>>
@@ -171,6 +180,14 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "f1"->{
+                binding.fabMain.visibility=View.VISIBLE
+                binding.fabMain.setOnClickListener {
+                    val intent = Intent(requireActivity(),StyleMakingActivity::class.java)
+                    intent.putExtra("friendEmail", FriendEmail)
+                    startActivity(intent)
+
+                }
+
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
                     exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()
