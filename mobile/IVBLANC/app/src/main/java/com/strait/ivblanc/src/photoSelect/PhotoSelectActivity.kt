@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import com.strait.ivblanc.data.model.viewmodel.PhotoSelectViewModel
 import com.strait.ivblanc.databinding.ActivityPhotoSelectBinding
 import com.strait.ivblanc.src.process.ProcessActivity
 import com.strait.ivblanc.util.PermissionUtil
+import com.strait.ivblanc.util.StatusCode
 import java.lang.Exception
 
 private const val TAG = "PhotoSelectActivity_해협"
@@ -31,6 +34,11 @@ class PhotoSelectActivity : BaseActivity<ActivityPhotoSelectBinding>(ActivityPho
     lateinit var permissionUtil: PermissionUtil
     private val photoSelectViewModel: PhotoSelectViewModel by viewModels()
     private var intend = PURE
+    private val addClothesResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == StatusCode.OK) {
+            setResult(StatusCode.OK)
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intend = intent.getIntExtra("intend", PURE)
