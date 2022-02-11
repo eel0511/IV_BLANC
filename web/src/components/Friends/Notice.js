@@ -67,11 +67,15 @@ export default function Notice() {
         }}
       >
         <div>
-          {friendRequest.map((friend, id) => (
-            <div className='Notice__friendRequest' key={id}>
-              <FriendsAcceptButton friend={friend} />
-            </div>
-          ))}
+          {
+            friendRequest.length !== 0
+            ? friendRequest.map((friend, id) => (
+              <div className='Notice__friendRequest' key={id}>
+                <FriendsAcceptButton friend={friend} />
+              </div>
+            ))
+            : <h3>알림이 없습니다.</h3>
+          }
         </div>
       </Menu>
     </div>
