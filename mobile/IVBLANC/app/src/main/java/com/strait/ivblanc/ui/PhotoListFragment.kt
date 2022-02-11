@@ -185,12 +185,18 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                     val intent = Intent(requireActivity(),StyleMakingActivity::class.java)
                     intent.putExtra("friendEmail", FriendEmail)
                     startActivity(intent)
-
                 }
 
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
+                    Log.d(TAG, "setObserverLiveData: "+it)
                     exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
                     exAdapter.notifyDataSetChanged()
+                }
+                styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
+                    Log.d(TAG, "setObserverLiveData: "+it)
+                    if(it.status == Status.SUCCESS) {
+                        styleViewModel.getAllFriendStyles(FriendEmail)
+                    }
                 }
             }
         }
