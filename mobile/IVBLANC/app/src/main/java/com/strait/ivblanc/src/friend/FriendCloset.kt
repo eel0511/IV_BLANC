@@ -24,6 +24,7 @@ import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
+import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityFriendClosetBinding
 import com.strait.ivblanc.src.main.FriendFragment
 import com.strait.ivblanc.src.photoSelect.AlbumFragment
@@ -36,6 +37,7 @@ class FriendCloset :
     BaseActivity<ActivityFriendClosetBinding>(ActivityFriendClosetBinding::inflate) {
     val friendViewModel: FriendViewModel by viewModels()
     val clothesViewModel: ClothesViewModel by viewModels()
+    val styleViewModel: StyleViewModel by viewModels()
     lateinit var viewPager: ViewPager2
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -45,6 +47,7 @@ class FriendCloset :
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
         clothesViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
         friendViewModel.getFriendEmail(test!!.email)
+        styleViewModel.getAllFriendStyles(test!!.email)
         setToolbar()
         setViewPager()
     }
