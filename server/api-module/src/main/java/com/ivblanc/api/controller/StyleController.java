@@ -98,8 +98,8 @@ public class StyleController {
             i--;
         }
         Style updatestyle = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, style);
-        //styleService.addStyle(updatestyle);
-        styleDetailService.addStyleDetails(style.getStyleDetails());
+        styleService.addStyle(styleService.updateUrl(updatestyle,url));
+        //styleDetailService.addStyleDetails(style.getStyleDetails());
 
         if (made.getUserId() != owner.getUserId()) {
             fcmService.sendMessageTo(userService.findById(owner.getUserId()).getToken_fcm(), "스타일생성 알림",

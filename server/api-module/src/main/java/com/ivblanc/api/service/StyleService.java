@@ -40,6 +40,10 @@ public class StyleService {
                 .url(url)
                 .build();
     }
+    public Style updateUrl(Style style, String url) {
+        style.setUrl(url);
+        return style;
+    }
 
     public Style updateFavorite(Style style, int favorite) {
         style.setFavorite(favorite);

@@ -44,6 +44,7 @@ public class StyleDetailService {
 			.build();
 	}
 	public Style makeStyleDetailsToReqDTO(List<MakeStyleDetailReqDTO> reqDTOList,Style style){
+		style.setStyleDetails(new ArrayList<>());
 		for (MakeStyleDetailReqDTO m : reqDTOList) {
 			Clothes clothes = clothesSerivce.findByClothesId(m.getClothesId())
 				.orElseThrow(() -> new ApiMessageException("없는 옷 번호입니다"));
