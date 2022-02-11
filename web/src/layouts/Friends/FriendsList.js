@@ -11,18 +11,18 @@ import Notice from '../../components/Friends/Notice';
 
 export default function FriendsList() {
   const [friendsList, setFriendsList] = useState([
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '김나박이',
-    },
-    {
-      friendEmail: 'a@a.com',
-      friendName: 'a',
-    },
-    {
-      friendEmail: 'ssu@a.com',
-      friendName: 'suza',
-    },
+    // {
+    //   friendEmail: 'aaa@bbb.com',
+    //   friendName: '김나박이',
+    // },
+    // {
+    //   friendEmail: 'a@a.com',
+    //   friendName: 'a',
+    // },
+    // {
+    //   friendEmail: 'ssu@a.com',
+    //   friendName: 'suza',
+    // },
   ]);
 
   const token =
