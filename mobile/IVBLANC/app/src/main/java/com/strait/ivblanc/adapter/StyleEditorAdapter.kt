@@ -192,12 +192,19 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
         }
     }
 
-    private fun setFocusedImageView(imageView: ImageView) {
+    fun setFocusedImageView(imageView: ImageView) {
         _focusedImageView?.let { image ->
             deleteFocusedImageIndicator(image)
         }
         setFocusedImageIndicator(imageView)
         _focusedImageView = imageView
+    }
+
+    fun dismissFocusedImageView() {
+        _focusedImageView?.let {
+            deleteFocusedImageIndicator(it)
+        }
+        _focusedImageView = null
     }
 
     private fun deleteFocusedImageIndicator(imageView: ImageView) {
