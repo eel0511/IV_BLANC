@@ -163,6 +163,17 @@ class StyleViewModel: ViewModel() {
 
     // 스타일 삭제 요청 관련 끝 ------------------------
 
+    // 스타일 변경 요청 관련 시작 ---------------------
+    fun updateStyle(clothesList: List<Clothes>, absolutePath: String, styleId: Int) = viewModelScope.launch {
+        setLoading()
+        val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
+        val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
+        val styleIdRequestBody = MultiPartUtil.makeMultiPartBody("styleId", styleId.toString())
+        ioScope.launch {
+            val response = styleRepository.updateStyle(imageRequestBody, clothesRequestBody, styleIdRequestBody)
+            _styleResponseStatus.postValue(response)
+        }
+    }
 
     private fun setLoading() {
         _styleResponseStatus.postValue(Resource.loading(null))
