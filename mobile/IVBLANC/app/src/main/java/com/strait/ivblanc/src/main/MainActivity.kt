@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -19,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
 import com.strait.ivblanc.R
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
@@ -29,8 +33,6 @@ import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
-
-import com.strait.ivblanc.src.process.ProcessActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
@@ -44,6 +46,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
 
+    lateinit var launcher: ActivityResultLauncher<Intent>
+
     companion object {
         // Notification Channel ID
         const val channel_id = "IVBLANC"
@@ -51,11 +55,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        launcher = registerForActivityResult(
+            StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                // RESULT_OK일 때 실행할 코드...
+                val num = data!!.getStringExtra("result")
+                Log.d("tetete", "onCreate: "+num)
+                if(num=="0"){
+                    ApplicationClass.livePush.postValue(false)
+                }else{
+                    ApplicationClass.livePush.postValue(true)
+                }
+            }
+        }
         getFCM()
         // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         styleViewModel.getAllStyles()
+        ApplicationClass.livePush.observe(this) {
+            if (ApplicationClass.livePush.value == true) {
+                mainViewModel.setTrailingIcon(R.drawable.kakao)
+            } else {
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+
+        }
         init()
     }
 
@@ -147,7 +174,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     "style" -> {
                         View.OnClickListener {
-                            startActivity(Intent(this@MainActivity, StyleMakingActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    StyleMakingActivity::class.java
+                                )
+                            )
                         }
                     }
                     "history" -> {
@@ -160,7 +192,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
-                    startActivity(Intent(this@MainActivity, FriendNoti::class.java))
+                    val intent = Intent(this@MainActivity, FriendNoti::class.java)
+                    launcher.launch(intent)
+
+                }
+            }
+            R.drawable.kakao -> {
+                View.OnClickListener {
+                    val intent = Intent(this@MainActivity, FriendNoti::class.java)
+                    launcher.launch(intent)
+
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {
