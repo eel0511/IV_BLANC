@@ -18,7 +18,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.strait.ivblanc.R
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
@@ -29,8 +33,6 @@ import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
-
-import com.strait.ivblanc.src.process.ProcessActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
@@ -51,11 +53,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         getFCM()
         // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
         mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         styleViewModel.getAllStyles()
+        mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+
+        ApplicationClass.livePush.observe(this) {
+            if (ApplicationClass.livePush.value!! > 0) {
+                binding.toolbarMain.badge.visibility = View.VISIBLE
+                binding.toolbarMain.badge.setNumber(readSharedPreference("fcm").size)
+            } else {
+                binding.toolbarMain.badge.visibility = View.GONE
+            }
+        }
         init()
     }
 
@@ -147,7 +160,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     "style" -> {
                         View.OnClickListener {
-                            startActivity(Intent(this@MainActivity, StyleMakingActivity::class.java))
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    StyleMakingActivity::class.java
+                                )
+                            )
                         }
                     }
                     "history" -> {
@@ -155,12 +173,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     else -> View.OnClickListener {}
                 }
-
-
             }
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
-                    startActivity(Intent(this@MainActivity, FriendNoti::class.java))
+                    val intent = Intent(this@MainActivity, FriendNoti::class.java)
+                    startActivity(intent)
+
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {
@@ -252,4 +270,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             .show()
     }
 
+    private fun readSharedPreference(key: String): ArrayList<String> {
+        val sp = binding.root.context.getSharedPreferences(
+            SP_NAME,
+            FirebaseMessagingService.MODE_PRIVATE
+        )
+        val gson = Gson()
+        val json = sp.getString(key, "") ?: ""
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        val obj: ArrayList<String> = gson.fromJson(json, type) ?: ArrayList()
+        return obj
+    }
 }

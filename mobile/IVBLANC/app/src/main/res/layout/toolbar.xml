@@ -8,6 +8,7 @@
     android:elevation="2dp"
     android:background="@color/white">
 
+
         <ImageView
             android:id="@+id/imageView_toolbar_leadingIcon"
             android:layout_width="@dimen/smallIconSize"
@@ -28,5 +29,13 @@
             android:layout_height="@dimen/smallIconSize"
             android:layout_gravity="end"
             tools:background="@drawable/ic_close"/>
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/badge"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="end"
+            android:visibility="gone"
+            nbMaxTextLength="2"/>
+
 
 </androidx.appcompat.widget.Toolbar>
