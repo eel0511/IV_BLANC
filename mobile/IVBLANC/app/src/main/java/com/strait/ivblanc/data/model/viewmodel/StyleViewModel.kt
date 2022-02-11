@@ -40,6 +40,7 @@ class StyleViewModel: ViewModel() {
     private val _styleListLiveData = MutableLiveData<List<Style>>()
     val styleListLiveData: LiveData<List<Style>> get() = _styleListLiveData
 
+
     // 스타일 등록 요청 관련 시작 ------------------------
     fun addStyle(clothesList: List<Clothes>, absolutePath: String) = viewModelScope.launch {
         setLoading()
@@ -75,7 +76,16 @@ class StyleViewModel: ViewModel() {
             }
         }
     }
-
+    fun getAllFriendStyles(FriendEmail:String)=viewModelScope.launch {
+        setLoading()
+        ioScope.launch {
+            val response = styleRepository.getAllFriendStyles(FriendEmail)
+            _styleResponseStatus.postValue(response)
+            if(response.status == Status.SUCCESS) {
+                _styleListLiveData.postValue(response.data!!.dataSet)
+            }
+        }
+    }
     // TODO: 2022/02/10 PhotoItemList로 변환하는 로직 위치, MainViewModel, StyleViewModel
     // 함수 추출 범위 시작 -----------------------------------------
 
