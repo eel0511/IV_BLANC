@@ -2,6 +2,7 @@ package com.strait.ivblanc.config
 
 import android.app.Application
 import android.content.ContentResolver
+import androidx.lifecycle.MutableLiveData
 import com.kakao.sdk.common.KakaoSdk
 import com.naver.maps.map.NaverMapSdk
 import com.ssafy.template.config.ReceivedCookiesInterceptor
@@ -30,6 +31,9 @@ class ApplicationClass: Application() {
         lateinit var sRetrofit: Retrofit
         lateinit var sSharedPreferences: SharedPreferencesUtil
         lateinit var sContentResolver: ContentResolver
+
+        //badge
+        lateinit var livePush:MutableLiveData<Boolean>
     }
 
     override fun onCreate() {
@@ -41,6 +45,9 @@ class ApplicationClass: Application() {
         NaverMapSdk.getInstance(this).setClient(
             NaverMapSdk.NaverCloudPlatformClient("${BuildConfig.NAVER_MAPS_ID}")
         )
+
+        //badge
+        livePush=MutableLiveData(false)
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
