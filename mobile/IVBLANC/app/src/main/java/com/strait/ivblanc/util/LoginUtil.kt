@@ -16,4 +16,8 @@ object LoginUtil {
     fun setAutoLogin(flag: Boolean) {
         preferences.setAutoLogin(flag)
     }
+
+    fun isTokenExisted(): Boolean {
+        return !preferences.getString(ApplicationClass.JWT).isNullOrBlank()
+    }
 }
