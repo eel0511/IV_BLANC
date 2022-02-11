@@ -48,7 +48,7 @@ export default function FriendsCreateButton() {
         <Modal.Body>
           <form>
             <label htmlFor='friendName' className='form-label'>
-              친구 이메일 :
+              친구 이메일
             </label>
             <input
               id='friendName'
@@ -57,9 +57,17 @@ export default function FriendsCreateButton() {
               placeholder='name@example.com'
               onChange={friendNameHandleChange}
             />
-            <Button onClick={friendRequest}>요청</Button>
           </form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className='btn btn-danger'
+            onClick={friendRequest}
+            style={{ 'background-color': '#ed6991', border: 'none' }}
+          >
+            요청
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

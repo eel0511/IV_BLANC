@@ -11,6 +11,11 @@
   filter: opacity(0.3) drop-shadow(0 0 0 #ed6991);
 }
 
+.form-control:focus {
+  border-color: #ed6991;
+  box-shadow: inset 0 0 2px #ed6991, 0 0 13px #ed6991;
+}
+
 /* Notice */
 .Notice {
   /* position: absolute; */
