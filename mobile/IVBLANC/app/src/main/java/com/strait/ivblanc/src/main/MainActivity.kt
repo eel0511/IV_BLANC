@@ -191,7 +191,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
                     val intent = Intent(this@MainActivity, FriendNoti::class.java)
-                    startActivity(intent)
+                    preContractStartActivityResult.launch(intent)
 
                 }
             }
