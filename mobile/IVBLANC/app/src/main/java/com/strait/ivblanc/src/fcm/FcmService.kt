@@ -20,6 +20,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.strait.ivblanc.R
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.src.login.LoginActivity
 
 
@@ -59,6 +60,7 @@ class FcmService: FirebaseMessagingService() {
             fcmList = readSharedPreference("fcm")
             fcmList.add(it.body.toString())
             writeSharedPreference("fcm", fcmList)
+            ApplicationClass.livePush.postValue(!ApplicationClass.livePush.value!!)
             sendNotification(notificationInfo)
 
         }
