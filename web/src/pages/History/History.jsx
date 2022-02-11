@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ScrollToTop from '../../components/ScrollToTop';
 import Navbar from '../../components/Navbar';
 import home from "../../assets/home.png";
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import fimg1 from "../../assets/images/2.jfif";
 import bimg1 from "../../assets/outfit/1.jfif";
@@ -221,7 +222,26 @@ const cards = [
 ];
 
 export default function History() {
-  
+  const [myHistories, setmyHistories] = useState([]);
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const getmyHistoriesData = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/history/find/all', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setmyHistories(response.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getmyHistoriesData();
+  }, []);
   return (
       <Section>
       <ScrollToTop />
