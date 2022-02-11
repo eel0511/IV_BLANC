@@ -25,6 +25,7 @@
             android:id="@+id/constraintLayout_styleMaking_edit"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="3:4"
             app:layout_constraintEnd_toStartOf="@id/recyclerView_styleMaking_Clothes"
@@ -36,59 +37,59 @@
                 android:id="@+id/imageView_styleMaking_top"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_hat"
-                android:clickable="false"/>
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_hat" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_bottom"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_top"
-                android:clickable="false"/>
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_top" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_outer"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:clickable="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_etc"
-                android:clickable="false"/>
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_etc" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_shoes"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_bag"
-                android:clickable="false"/>
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_bag" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_hat"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:clickable="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:clickable="false"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_bag"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:clickable="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_outer"
-                android:clickable="false"/>
+                app:layout_constraintTop_toBottomOf="@+id/imageView_styleMaking_outer" />
 
             <ImageView
                 android:id="@+id/imageView_styleMaking_etc"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:clickable="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:clickable="false"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
