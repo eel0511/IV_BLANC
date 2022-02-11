@@ -5,12 +5,7 @@ import FriendsAcceptButton from './FriendsAcceptButton';
 import axios from 'axios';
 
 export default function Notice() {
-  const [friendRequest, setFriendRequest] = useState([
-    {
-      "friendEmail": "aaa@bbb.com",
-      "friendName": "김나박이"
-    }
-  ]);
+  const [friendRequest, setFriendRequest] = useState([]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
