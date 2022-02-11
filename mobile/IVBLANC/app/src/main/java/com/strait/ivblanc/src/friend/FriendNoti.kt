@@ -33,12 +33,14 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     private val myrequestitemClickListener =
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
+                // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
                 friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
                 AcceptDialog(friend.friendName + "님의 요청을 수락했습니다")
             }
         }
     private val waititemClickListener = object : WaitRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friend: Friend) {
+            // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
             friendViewModel.cancelFriend("aaa@a.com", friend.friendEmail)
             AcceptDialog(friend.friendName + "님께의 요청을 취소했습니다.")
         }
@@ -50,7 +52,9 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         super.onCreate(savedInstanceState)
         friendViewModel.setToolbarTitle("알림")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
+        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
         friendViewModel.getmyrequestFriend("aaa@a.com")
+        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
         friendViewModel.getmyWaitFriend("aaa@a.com")
         initMyRequestRecycler()
         initWaitRecycler()
