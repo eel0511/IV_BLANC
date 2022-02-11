@@ -179,12 +179,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                     "style" -> {
                         View.OnClickListener {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity,
-                                    StyleMakingActivity::class.java
-                                )
+                            val intent = Intent(
+                                this@MainActivity,
+                                StyleMakingActivity::class.java
                             )
+                            addStyleContract.launch(intent)
                         }
                     }
                     "history" -> {
