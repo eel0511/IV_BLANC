@@ -57,8 +57,10 @@ flask_AI 안의 app.py (스프링의 /api/clothes/beta 에 쓰임)
 
 VITON-HD 설정
 
-https://github.com/shadow2496/VITON-HD
-
+https://github.com/shadow2496/VITON-HD를 클론하여 Installation 과정을 거치고
+그 안에 flask_AI 의 app.py를 위치시키고(파이어베이스 json도 위치) 
+test.py 는 flask_AI의 test.py 를 덮어씌움
+따로 train은 시키지않고 pre_train model을 사용함
 
 
 ---

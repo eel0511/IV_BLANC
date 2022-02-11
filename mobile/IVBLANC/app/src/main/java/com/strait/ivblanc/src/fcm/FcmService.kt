@@ -20,6 +20,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.strait.ivblanc.R
+import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.src.login.LoginActivity
 
 
@@ -28,7 +29,6 @@ class FcmService: FirebaseMessagingService() {
 
     val SP_NAME = "fcm_message"
     var fcmList = ArrayList<String>()
-
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
@@ -59,11 +59,12 @@ class FcmService: FirebaseMessagingService() {
             fcmList = readSharedPreference("fcm")
             fcmList.add(it.body.toString())
             writeSharedPreference("fcm", fcmList)
+            Log.d("tetete", "onMessageReceived: "+readSharedPreference("fcm").size)
+            ApplicationClass.livePush.postValue(readSharedPreference("fcm").size)
             sendNotification(notificationInfo)
 
         }
     }
-
     override fun onDeletedMessages() {
         super.onDeletedMessages()
     }

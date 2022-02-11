@@ -61,5 +61,9 @@ class CaptureUtil {
             }
             return absolutPath
         }
+
+        fun deleteImageByUri(context: Context, uri: Uri) {
+            context.contentResolver.delete(uri, null,null)
+        }
     }
 }

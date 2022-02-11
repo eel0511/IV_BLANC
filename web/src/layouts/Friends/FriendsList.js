@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Avatar, Paper, Box } from '@mui/material';
 import './Friends.css';
-import FirendsListItem from '../../components/Friends/FriendsListItem';
+import FriendsListItem from '../../components/Friends/FriendsListItem';
 import pricing1 from "../../assets/pricing1.png";
 import pricing2 from "../../assets/pricing2.png";
 import Title from '../../components/Home/Title';
@@ -11,18 +11,18 @@ import Notice from '../../components/Friends/Notice';
 
 export default function FriendsList() {
   const [friendsList, setFriendsList] = useState([
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '김나박이',
-    },
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '이나박이',
-    },
-    {
-      friendEmail: 'aaa@bbb.com',
-      friendName: '장나박이',
-    },
+    // {
+    //   friendEmail: 'aaa@bbb.com',
+    //   friendName: '김나박이',
+    // },
+    // {
+    //   friendEmail: 'a@a.com',
+    //   friendName: 'a',
+    // },
+    // {
+    //   friendEmail: 'ssu@a.com',
+    //   friendName: 'suza',
+    // },
   ]);
 
   const token =
@@ -34,7 +34,7 @@ export default function FriendsList() {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          applicant: 'abc@naver.com', // 로그인한 사용자 email
+          applicant: 'b@a.com', // 로그인한 사용자 email
         },
       })
       .then((response) => {
@@ -57,7 +57,7 @@ export default function FriendsList() {
       <div className='friend__content'>
         {friendsList.map((friend, id) => (
           <div key={id}>
-            <FirendsListItem friend={friend} />
+            <FriendsListItem friend={friend} />
           </div>
         ))}
       </div>

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Navbar from '../../components/Navbar';
 import ScrollToTop from '../../components/ScrollToTop';
 import Title from '../../components/Home/Title';
-import FriendsClosetList from '../../layouts/Friends/FriendClothesList';
+import FriendStyleTopbar from '../../layouts/Friends/FriendClothesList';
 import { useLocation } from 'react-router-dom';
 
 export default function FriendsCloset() {
@@ -19,7 +19,7 @@ export default function FriendsCloset() {
         <Navbar />
       </div>
       <Title value='FRIEND' />
-      <FriendsClosetList friendName={friendName} friendEmail={friendEmail}/>
+      <FriendStyleTopbar friendName={friendName} friendEmail={friendEmail}/>
     </Section>
   );
 }
