@@ -36,4 +36,9 @@ class SharedPreferencesUtil(context: Context) {
     fun getAutoLoginFlag():Boolean {
         return preferences.getBoolean(ApplicationClass.AUTO_LOGIN, false)
     }
+
+    fun deleteString(key: String) {
+        val editor = preferences.edit()
+        editor.remove(key).apply()
+    }
 }
