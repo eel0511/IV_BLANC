@@ -34,7 +34,7 @@ export default function FriendsList() {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          applicant: 'abc@naver.com', // 로그인한 사용자 email
+          applicant: 'b@a.com', // 로그인한 사용자 email
         },
       })
       .then((response) => {

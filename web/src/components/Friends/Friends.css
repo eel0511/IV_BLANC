@@ -58,3 +58,9 @@
   cursor: pointer;
   color:#ed6991;
 }
+
+.FriendsAcceptButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
