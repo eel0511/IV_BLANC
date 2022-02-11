@@ -1,11 +1,8 @@
 package com.strait.ivblanc.src.styleMaking
 
-import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,7 +24,6 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
-import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
 import com.strait.ivblanc.ui.DeleteDialog
@@ -45,7 +41,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
     private val clothesViewModel: ClothesViewModel by viewModels()
     private val styleViewModel: StyleViewModel by viewModels()
-    var focusImage:ImageView?=null
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
     private var FriendEmail = ""
@@ -64,9 +59,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }else{
             clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
-        intent.getParcelableExtra<Style>("style")?.let {
-            style = it
-        }
         bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
         setToolbar()
         setBottomSheetDropDown()
@@ -74,9 +66,10 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         setRecyclerView()
         setBottomSheetRecyclerView()
         setObserver()
-        if(this::style.isInitialized) {
-            style.styleDetails.forEach {
-                setClothesToEditor(it.clothes)
+        intent.getParcelableExtra<Style>("style")?.let {
+            style = it
+            style.styleDetails.forEach { styleDetail ->
+                setClothesToEditor(styleDetail.clothes)
             }
         }
     }
@@ -235,13 +228,12 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             .setContent("스타일을 저장하시겠습니까?")
             .setNegativeButtonText("취소")
             .setPositiveButtonText("저장")
-            .setOnPositiveClickListener { requestAddStyle() }.build().show()
+            .setOnPositiveClickListener { requestUploadStyle() }.build().show()
     }
 
     private var imageUri: Uri? = null
-    // 스타일 생성 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
-    private fun requestAddStyle() {
-
+    // 스타일 생성, 변경 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
+    private fun requestUploadStyle() {
         if(this:: styleEditorAdapter.isInitialized && this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
             // 포커스 이미지 해제
             styleEditorAdapter.dismissFocusedImageView()
@@ -250,10 +242,17 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
 
                 // 이미지 저장이 이뤄진 후, contentResolver로 이미지 파일의 실제 경로를 이용하여 스타일 등록 요청
                 CaptureUtil.getAbsolutePathFromImageUri(this, uri)?.let {
-                    styleViewModel.addStyle(recyclerViewAdapter.data, it)
+                    if(this::style.isInitialized) {
+                        styleViewModel.updateStyle(recyclerViewAdapter.data, it, style.styleId)
+                    } else {
+                        styleViewModel.addStyle(recyclerViewAdapter.data, it)
+                    }
+
                 }
                 uri
             }
         }
     }
+
+
 }
