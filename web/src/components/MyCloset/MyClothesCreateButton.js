@@ -14,7 +14,7 @@ export default function MyClothesCreateButton() {
         type='button'
         className='btn btn-danger'
         style={{
-          'background-color': '#ed6991',
+          'backgroundColor': '#ed6991',
           color: 'white',
           border: 'none',
         }}

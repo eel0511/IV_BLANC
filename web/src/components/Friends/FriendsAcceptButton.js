@@ -11,7 +11,7 @@ export default function FriendsAcceptButton({ friend }) {
         headers: {
           'X-AUTH-TOKEN': `${token}`,
         },
-        applicant: 'abc@naver.com', // 로그인한 사용자 email
+        applicant: 'b@a.com', // 로그인한 사용자 email
         friendName: `${friend.friendEmail}`,
       })
       .then(() => {
@@ -21,9 +21,11 @@ export default function FriendsAcceptButton({ friend }) {
 
   return (
     <>
-      <Avatar alt='' src='/static/images/avatar/1.jpg' />
-      {friend.friendName}
-      <MenuItem onClick={friendsAcceptRequest}>수락</MenuItem>
+      <div className='FriendsAcceptButton'>
+        <Avatar alt='' src='/static/images/avatar/1.jpg' />
+        {friend.friendName}
+        <MenuItem onClick={friendsAcceptRequest}>수락</MenuItem>
+      </div>
     </>
   );
 }

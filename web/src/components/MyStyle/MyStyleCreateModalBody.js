@@ -6,7 +6,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+    setSelectedImg(e.target.files[0]);
   };
 
   const createStyle = () => {
