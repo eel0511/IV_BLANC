@@ -16,6 +16,7 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.viewmodel.ProcessViewModel
 import com.strait.ivblanc.databinding.ActivityProcessBinding
 import com.strait.ivblanc.util.Status
+import com.strait.ivblanc.util.StatusCode
 
 class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBinding::inflate) {
     lateinit var viewPager: ViewPager2
@@ -49,6 +50,7 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
                 Status.SUCCESS -> {
                     dismissLoading()
                     toast("옷 등록이 완료되었습니다.", Toast.LENGTH_SHORT)
+                    setResult(StatusCode.OK)
                 }
                 Status.LOADING -> {
                     showLoading()
