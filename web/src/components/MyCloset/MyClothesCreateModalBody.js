@@ -155,12 +155,15 @@ export default function MyClothesCreateModalBody({
           </tr>
         </tbody>
       </table>
-      <div>
+      <hr />
+      <div className='create__color'>
+      <div className='col-3'>
         <h2>색상</h2>
       </div>
+      <div className='container row'>
       {Object.entries(codeData['colors']).map((colorArray) => {
         return (
-          <React.Fragment key={colorArray[1]}>
+          <div key={colorArray[1]} className='col-3'>
             <input
               id={'색상' + colorArray[1]}
               value={colorArray[1]}
@@ -171,10 +174,10 @@ export default function MyClothesCreateModalBody({
               onChange={colorHandleChange}
             />
             <label
-              className='form-check-label'
-              htmlFor={'색상' + colorArray[0]}
+              className='form-check-label create__colorLabel'
+              htmlFor={'색상' + colorArray[1]}
+              style={{ backgroundColor: colorArray[1]}}
             >
-              {colorArray[0]}
             </label>
             {/* <Label 
             id={'색상' + colorArray[1]}
@@ -190,9 +193,11 @@ export default function MyClothesCreateModalBody({
             >
             <h4> {colorArray[0]} </h4>
               </Label> */}
-          </React.Fragment>
+          </div>
         );
       })}
+      </div>
+      </div>
       <hr />
       <div>
         <h2>소재</h2>
