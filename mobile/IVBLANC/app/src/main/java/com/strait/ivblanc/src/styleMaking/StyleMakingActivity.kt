@@ -242,8 +242,10 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     private var imageUri: Uri? = null
     // 스타일 생성 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
     private fun requestAddStyle() {
-        if(this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
 
+        if(this:: styleEditorAdapter.isInitialized && this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
+            // 포커스 이미지 해제
+            styleEditorAdapter.dismissFocusedImageView()
             // 이미지 저장이 성공적으로 이뤄지면 imageUri 값 할당
             imageUri = CaptureUtil.saveCapture(binding.constraintLayoutStyleMakingEdit)?.let { uri ->
 
