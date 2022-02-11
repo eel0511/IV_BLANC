@@ -108,6 +108,8 @@ export default function HistoryCreateModalBody() {
         <img
           alt={selectedStyle.styleId}
           src={selectedStyle.url}
+          date={selectedStyle.createDate}
+          madeby={selectedStyle.madeby}
           style={{ margin: 'auto', maxWidth: '200px', maxHeight: '200px' }}
           // onChange={styleHandleChange}
         />
