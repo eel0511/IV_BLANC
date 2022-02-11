@@ -1,7 +1,5 @@
 package com.strait.ivblanc.data.model.viewmodel
 
-import android.net.Uri
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -43,7 +41,7 @@ class StyleViewModel: ViewModel() {
         val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
         val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
         ioScope.launch {
-            val response = styleRepository.addClothes(imageRequestBody, clothesRequestBody)
+            val response = styleRepository.addStyle(imageRequestBody, clothesRequestBody)
             _styleResponseStatus.postValue(response)
         }
     }

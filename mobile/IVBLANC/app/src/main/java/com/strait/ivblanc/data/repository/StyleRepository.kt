@@ -15,7 +15,7 @@ class StyleRepository {
     val styleApi = ApplicationClass.sRetrofit.create(StyleApi::class.java)
 
     // Multipart form data 요청
-    suspend fun addClothes(image: MultipartBody.Part, clothesList: MultipartBody.Part): Resource<StyleResponse> {
+    suspend fun addStyle(image: MultipartBody.Part, clothesList: MultipartBody.Part): Resource<StyleResponse> {
         return try {
             val response = styleApi.addStyle(image, clothesList)
             if(response.isSuccessful) {
