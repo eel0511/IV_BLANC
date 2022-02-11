@@ -4,6 +4,8 @@ import { Button } from 'react-bootstrap';
 
 function MyStyleCreateModalBody({ saveClothesId }) {
   const [selectedImg, setSelectedImg] = useState();
+  const [previewImg, setPreviewImg] = useState();
+
   const imgHandleChange = (e) => {
     console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
