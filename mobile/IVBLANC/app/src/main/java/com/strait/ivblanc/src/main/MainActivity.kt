@@ -1,17 +1,16 @@
 package com.strait.ivblanc.src.main
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -45,6 +44,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val clothesViewModel: ClothesViewModel by viewModels()
     val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
+    private val preContractStartActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.let {
+                    setFragment(PhotoListFragment<Style>(), it.getStringExtra("result")!!)
+                    val item: MenuItem =
+                        binding.bottomNavMain.menu.findItem(R.id.nav_style).setChecked(true)
+                }
+            }
+        }
 
     companion object {
         // Notification Channel ID
@@ -177,7 +186,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             R.drawable.ic_baseline_notifications_24 -> {
                 View.OnClickListener {
                     val intent = Intent(this@MainActivity, FriendNoti::class.java)
-                    startActivity(intent)
+                    preContractStartActivityResult.launch(intent)
 
                 }
             }

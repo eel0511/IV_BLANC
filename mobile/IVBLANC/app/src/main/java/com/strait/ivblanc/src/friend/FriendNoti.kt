@@ -49,6 +49,19 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         }
 
     }
+    private val notiitemClickListener = object : NotiRecyclerViewAdapter.ItemClickListener{
+        override fun onClick(text: String) {
+            if(text.contains("만들었습니다")){
+                ApplicationClass.livePush.postValue(readSharedPreference("fcm").size)
+                val intent = Intent(this@FriendNoti,MainActivity::class.java)
+                intent.putExtra("result","style")
+                ApplicationClass.livePush.postValue(readSharedPreference("fcm").size)
+                setResult(RESULT_OK,intent)
+                finish()
+            }
+        }
+
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -143,7 +156,9 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
     }
 
     fun initNotiRecylcer() {
-        notiRecyclerViewAdapter = NotiRecyclerViewAdapter()
+        notiRecyclerViewAdapter = NotiRecyclerViewAdapter().apply {
+            itemClickListener = this@FriendNoti.notiitemClickListener
+        }
         binding.notiRecyclerView.apply {
             adapter = notiRecyclerViewAdapter
             layoutManager =

@@ -1,7 +1,6 @@
 package com.strait.ivblanc.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -14,7 +13,7 @@ import com.strait.ivblanc.databinding.ListMyrequestItemBinding
 import com.strait.ivblanc.src.fcm.FcmService
 
 class NotiRecyclerViewAdapter() : RecyclerView.Adapter<NotiRecyclerViewAdapter.ViewHolder>() {
-
+    lateinit var itemClickListener: ItemClickListener
     val SP_NAME = "fcm_message"
     var notilist = FcmService().fcmList
 
@@ -26,6 +25,14 @@ class NotiRecyclerViewAdapter() : RecyclerView.Adapter<NotiRecyclerViewAdapter.V
             img.setImageResource(R.drawable.kakao)
             text.text = item
             button.setImageResource(R.drawable.ic_close)
+            text.setOnClickListener {
+                itemClickListener.onClick(text.text as String)
+                if(text.text.contains("만들었습니다")){
+                    notilist.remove(item)
+                    writeSharedPreference("fcm", notilist)
+                    notifyDataSetChanged()
+                }
+            }
             button.setOnClickListener {
                 notilist.remove(item)
                 writeSharedPreference("fcm", notilist)
@@ -56,6 +63,6 @@ class NotiRecyclerViewAdapter() : RecyclerView.Adapter<NotiRecyclerViewAdapter.V
     override fun getItemCount(): Int = notilist.size
 
     interface ItemClickListener {
-        fun onClick()
+        fun onClick(text:String)
     }
 }
