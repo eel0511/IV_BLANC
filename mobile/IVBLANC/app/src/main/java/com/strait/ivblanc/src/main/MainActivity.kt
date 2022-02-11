@@ -12,6 +12,9 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -36,6 +39,7 @@ import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.StatusCode
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -45,6 +49,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val clothesViewModel: ClothesViewModel by viewModels()
     val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
+    private val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if(it.resultCode == StatusCode.OK) {
+            clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
+        }
+    }
 
     companion object {
         // Notification Channel ID
@@ -149,13 +158,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 when (getCurrentFragmentTag()) {
                     "clothes" -> {
                         View.OnClickListener {
-                            startActivity(
-                                Intent(
-                                    this@MainActivity,
-                                    PhotoSelectActivity::class.java
-                                ).apply {
-                                    putExtra("intend", PhotoSelectActivity.CLOTHES)
-                                })
+                            val intent = Intent(this@MainActivity, PhotoSelectActivity::class.java).apply {
+                                putExtra("intend", PhotoSelectActivity.CLOTHES)
+                            }
+                            addClothesContract.launch(intent)
                         }
                     }
                     "style" -> {
