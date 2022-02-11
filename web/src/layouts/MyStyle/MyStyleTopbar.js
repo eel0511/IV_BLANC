@@ -286,9 +286,23 @@ export default function MyStyleTopbar() {
       });
   };
 
-  // useEffect(() => {
-  //   getMyClothesData();
-  // }, []);
+  const getStyleLook = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setStyleClothes(response.data.data);
+      });
+  };
+
+  useEffect(() => {
+    getMyClothesData();
+    getStyleLook();
+  }, []);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -299,18 +313,20 @@ export default function MyStyleTopbar() {
     if (Number(category) === 0) {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
-    } else if (Number(category) === 8) {
-      await axios
-        .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
-          headers: {
-            'X-AUTH-TOKEN': `${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setStyleClothes(response.data.data);
-        });
-    } else {
+    }
+    // else if (Number(category) === 8) {
+    //   await axios
+    //     .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+    //       headers: {
+    //         'X-AUTH-TOKEN': `${token}`,
+    //       },
+    //     })
+    //     .then((response) => {
+    //       console.log(response.data.data);
+    //       setStyleClothes(response.data.data);
+    //     });
+    // }
+    else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
           parseInt(clothesData.category / 10) === Number(category)
