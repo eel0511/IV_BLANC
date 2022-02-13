@@ -97,6 +97,10 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
                 Status.SUCCESS -> {
                     dismissLoading()
                     setResult(StatusCode.OK)
+                    imageUri?.let { uri ->
+                        CaptureUtil.deleteImageByUri(this, uri)
+                    }
+
                 }
             }
         }
