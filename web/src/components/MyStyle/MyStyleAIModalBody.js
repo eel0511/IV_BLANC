@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import './MyStyleImg.css';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
@@ -58,14 +58,15 @@ function MyStyleAIModalBody() {
         ></input>
       </div>
 
-      <div style={{ float: 'left' }}>
-        <Button
-          variant='primary'
+      <div className='Look' style={{ float: 'left' }}>
+        <button
+          type='button'
+          className='btn btn-danger'
           onClick={createStyle}
           style={{ marginTop: '20px' }}
         >
           AI 스타일링 확인
-        </Button>
+        </button>
       </div>
 
       <div>
