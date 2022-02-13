@@ -85,7 +85,7 @@ const StyleCarousel = styled.div`
   margin-bottom: 50px;
 }
 
-  .img:hover {
+.img:hover {
     border: 10px solid #a35ac5;
     /* transform: scale(1.1); */
 }
