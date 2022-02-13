@@ -66,6 +66,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:hint="0"
+            android:maxLength="4"
             android:textAlignment="textEnd"
             android:textSize="18sp" />
 
@@ -100,6 +101,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:hint="0"
+            android:maxLength="4"
             android:textAlignment="textEnd"
             android:textSize="18sp" />
 
