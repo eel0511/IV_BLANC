@@ -253,6 +253,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     private fun showTemperatureDialog(){
         temperatureDialog.show() // 다이얼로그 띄우기
 
+        var etTempHigh = temperatureDialog.findViewById<EditText>(R.id.editText_temp_high)
+        var etTempLow = temperatureDialog.findViewById<EditText>(R.id.editText_temp_low)
+
         val noBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_cancel)
         noBtn.setOnClickListener(View.OnClickListener {
             temperatureDialog.dismiss()
@@ -260,58 +263,31 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val saveBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_save)
         saveBtn.setOnClickListener(View.OnClickListener {
-//            history.temperature_high= latitude
-//            history.location = longitude
-//            binding.textViewHistoryEditSelectLocation.text = address
+            history.temperature_high= etTempHigh.text.toString().toInt()
+            history.temperature_low = etTempLow.text.toString().toInt()
+            binding.textViewHistoryEditTemperature.text = etTempHigh.text.toString() + "°C/" + etTempLow.text.toString().toInt() + "°C/"
             locationDialog.dismiss()
         })
 
-//        val localBtn : Button = locationDialog.findViewById(R.id.button_location_get)
-//        val etLocation = locationDialog.findViewById<EditText>(R.id.editText_location)
-//        localBtn.setOnClickListener {
-//            if (!checkLocationServicesStatus()) {
-//                showDialogForLocationServiceSetting();
-//            }else {
-//                checkRunTimePermission();
-//            }
-//
-//            gpsTracker = GpsTracker(this@HistoryEditActivity)
-//
-//            latitude = gpsTracker!!.getLatitude()
-//            longitude = gpsTracker!!.getLongitude()
-//            address = getCurrentAddress(latitude, longitude)
-//
-//            etLocation.setText(address)
-//        }
-//
-//        val searchBtn : Button = locationDialog.findViewById(R.id.button_location_search)
-//        searchBtn.setOnClickListener {
-//            var list: List<Address?>? = null
-//            val geocoder = Geocoder(this)
-//
-//            val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
-//            try {
-//                list = geocoder.getFromLocationName(str, 10)
-//            } catch (e: IOException) {
-//                e.printStackTrace()
-//                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
-//            }
-//
-//            if (list != null) {
-//                if (list.isEmpty()) {
-//                    //TODO : Toast 띄워주는걸로 바꾸기
-//                    etLocation.setText("해당되는 주소 정보는 없습니다")
-//                } else {
-//                    var cut = list[0].toString().split("\"")
-//                    etLocation.setText(cut[1])
-//
-//                    latitude = list[0]!!.latitude
-//                    longitude = list[0]!!.longitude
-//                    address = cut[1]
-//                }
-//            }
-//
-//        }
+        val findLocalBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu1)
+        findLocalBtn.setOnClickListener {
+            etTempHigh.isEnabled = false
+            etTempLow.isEnabled = false
+
+        }
+
+        val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
+        findSettingBtn.setOnClickListener {
+            etTempHigh.isEnabled = false
+            etTempLow.isEnabled = false
+
+        }
+
+        val writeOwnBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu3)
+        writeOwnBtn.setOnClickListener {
+            etTempHigh.isEnabled = true
+            etTempLow.isEnabled = true
+        }
 
     }
 
