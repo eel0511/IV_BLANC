@@ -61,6 +61,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     lateinit var location: String
     lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
     lateinit var locationDialog: Dialog
+    lateinit var temperatureDialog: Dialog
 
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
@@ -107,6 +108,14 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             locationDialog.setContentView(R.layout.dialog_select_location) // xml 레이아웃 파일과 연결
 
             showLocationDialog()
+        }
+
+        binding.textViewHistoryEditTemperature.setOnClickListener {
+            temperatureDialog = Dialog(this@HistoryEditActivity)
+            temperatureDialog.requestWindowFeature((Window.FEATURE_NO_TITLE))
+            temperatureDialog.setContentView(R.layout.dialog_select_temperature)
+
+            showTemperatureDialog()
         }
     }
 
@@ -225,6 +234,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
             if (list != null) {
                 if (list.isEmpty()) {
+                    //TODO : Toast 띄워주는걸로 바꾸기
                     etLocation.setText("해당되는 주소 정보는 없습니다")
                 } else {
                     var cut = list[0].toString().split("\"")
@@ -237,6 +247,71 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             }
 
         }
+
+    }
+
+    private fun showTemperatureDialog(){
+        temperatureDialog.show() // 다이얼로그 띄우기
+
+        val noBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_cancel)
+        noBtn.setOnClickListener(View.OnClickListener {
+            temperatureDialog.dismiss()
+        })
+
+        val saveBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_save)
+        saveBtn.setOnClickListener(View.OnClickListener {
+//            history.temperature_high= latitude
+//            history.location = longitude
+//            binding.textViewHistoryEditSelectLocation.text = address
+            locationDialog.dismiss()
+        })
+
+//        val localBtn : Button = locationDialog.findViewById(R.id.button_location_get)
+//        val etLocation = locationDialog.findViewById<EditText>(R.id.editText_location)
+//        localBtn.setOnClickListener {
+//            if (!checkLocationServicesStatus()) {
+//                showDialogForLocationServiceSetting();
+//            }else {
+//                checkRunTimePermission();
+//            }
+//
+//            gpsTracker = GpsTracker(this@HistoryEditActivity)
+//
+//            latitude = gpsTracker!!.getLatitude()
+//            longitude = gpsTracker!!.getLongitude()
+//            address = getCurrentAddress(latitude, longitude)
+//
+//            etLocation.setText(address)
+//        }
+//
+//        val searchBtn : Button = locationDialog.findViewById(R.id.button_location_search)
+//        searchBtn.setOnClickListener {
+//            var list: List<Address?>? = null
+//            val geocoder = Geocoder(this)
+//
+//            val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
+//            try {
+//                list = geocoder.getFromLocationName(str, 10)
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
+//            }
+//
+//            if (list != null) {
+//                if (list.isEmpty()) {
+//                    //TODO : Toast 띄워주는걸로 바꾸기
+//                    etLocation.setText("해당되는 주소 정보는 없습니다")
+//                } else {
+//                    var cut = list[0].toString().split("\"")
+//                    etLocation.setText(cut[1])
+//
+//                    latitude = list[0]!!.latitude
+//                    longitude = list[0]!!.longitude
+//                    address = cut[1]
+//                }
+//            }
+//
+//        }
 
     }
 
