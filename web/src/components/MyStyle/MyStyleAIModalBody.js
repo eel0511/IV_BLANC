@@ -14,6 +14,12 @@ function MyStyleAIModalBody() {
   };
 
   const createStyle = () => {
+    console.log(selectedImg);
+    if (selectedImg === undefined) {
+      alert('사진을 등록해주세요!');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
@@ -73,7 +79,7 @@ function MyStyleAIModalBody() {
       </div>
 
       <div>
-        {selectedImg && AIurl && (
+        {AIurl && (
           <img
             alt='AI 스타일링 적용'
             src={AIurl}
