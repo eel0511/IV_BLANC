@@ -71,6 +71,19 @@ const Section = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  .background {
+    .bg1 {
+      position: absolute;
+      top: -60%;
+      left: -5%;
+      z-index: -1;
+    }
+    .bg2 {
+      position: absolute;
+      right: 0;
+      bottom: 5rem;
+    }
+  }
 `;
 
 const StyledHistory = styled.div`
