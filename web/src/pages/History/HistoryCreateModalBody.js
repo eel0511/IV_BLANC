@@ -88,7 +88,7 @@ export default function HistoryCreateModalBody() {
       style={{ maxWidth: '100%', width: 'auto'}}
     >
       <Row>
-        <Col xs={4} md={4}>
+        <Col xs={4} md={4} style={{ borderRight: '6px solid #ed6991'}}>
         
           <Form.Group controlId='dob'>
             <Form.Label>Select Date</Form.Label>
@@ -117,7 +117,10 @@ export default function HistoryCreateModalBody() {
       </Col>
 
       <Col xs={4} md={4}>
-      <div className='d-flex flex-column align-content-center justify-content-center'>
+      <div 
+        className='d-flex flex-column align-content-center justify-content-center'
+        
+        >
         <div
           style={{ marginLeft: "23%", marginBottom: "2%",}}
         >

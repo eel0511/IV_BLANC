@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { BsBehance, BsFacebook, BsTwitter, BsYoutube } from "react-icons/bs";
+import { BsYoutube } from "react-icons/bs";
 import { useScroll } from "./useScroll";
 import { footerLogoAnimations, footerTextAnimations } from "../animations";
 import { motion } from "framer-motion";
@@ -29,9 +29,6 @@ function Footer() {
           duration: 0.8,
         }}
       >
-        <BsTwitter />
-        <BsFacebook />
-        <BsYoutube />
       </motion.div>
     </Foot>
   );
