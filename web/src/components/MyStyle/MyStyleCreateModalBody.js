@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import './MyStyleImg.css';
 
 function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
   const [selectedImg, setSelectedImg] = useState();
@@ -64,10 +64,10 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
         accept='image/*'
         onChange={imgHandleChange}
       ></input>
-      <div style={{ marginTop: '30px', float: 'right' }}>
-        <Button variant='primary' onClick={createStyle}>
+      <div className='Look' style={{ marginTop: '30px', float: 'right' }}>
+        <button type='button' className='btn btn-danger' onClick={createStyle}>
           등록
-        </Button>
+        </button>
       </div>
     </div>
   );

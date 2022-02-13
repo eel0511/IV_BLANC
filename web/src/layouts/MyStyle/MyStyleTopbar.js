@@ -365,28 +365,28 @@ export default function MyStyleTopbar() {
   };
 
   let showImg = (
-    <div className='container-fluid'>
-      <div className='row'>
-        {filterMyClothes.map((clothesData) => (
-          <div className='col-4 mt-3' key={clothesData.clothesId}>
-            <div className='card h-100'>
-              <div className='card-body'>
-                <img
-                  className='MyClosetClothesItemImg'
-                  src={clothesData.url}
-                  alt={clothesData.clothesId}
-                  title={clothesData.category}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                  }}
-                  onClick={saveClothes}
-                />
-              </div>
+    <div className='row'>
+      {filterMyClothes.map((clothesData) => (
+        <div className='col-3 mt-4' key={clothesData.clothesId}>
+          <div className='card h-100'>
+            <div className='card-body'>
+              <img
+                className='MyClosetClothesItemImg'
+                src={clothesData.url}
+                alt={clothesData.clothesId}
+                title={clothesData.category}
+                style={{
+                  width: '110px',
+                  height: '110px',
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                }}
+                onClick={saveClothes}
+              />
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 

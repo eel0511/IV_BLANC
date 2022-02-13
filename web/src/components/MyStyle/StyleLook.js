@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import html2canvas from 'html2canvas';
-import Button from '@mui/material/Button';
 import './MyStyleImg.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -98,14 +97,9 @@ function StyleLook({ selectedClothes }) {
 
   return (
     <div className='Look'>
-      <Button
-        variant='contained'
-        color='success'
-        onClick={saveLook}
-        style={{ marginTop: '50px' }}
-      >
+      <button type='button' className='btn btn-danger' onClick={saveLook}>
         캡처
-      </Button>
+      </button>
 
       <div id='StyleImg'>
         <Container>
