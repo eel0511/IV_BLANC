@@ -51,26 +51,25 @@ function FlipCard({
             <div className='card-side side-back'>
               <div className='container-fluid'>
 
-                <form formAction='' className='card-form'>
-                  <div className='row'>
+                <form formAction='' className=''>
+                  <div className='d-flex flex-column'>
                     <div 
-                    className='col-xs-6 d-flex flex-column'
-                    >
-                      <div className="id">{historyId}번째 추억</div>
+                    className=' d-flex flex-column historycover'>
+                      <div className="id mt-2">{historyId}번째 추억</div>
                       <img src={styleUrl} alt={styleUrl} height={300} width={500}/>
                     </div>
 
-                    <div className='col-xs-6 d-flex flex-column'>
+                    <div className=' d-flex flex-column'>
                       <div className="subject">{subject}</div>
                       <div className="text">{text}</div>
-                      <Button
+                    </div>
+                    <Button
                     variant='danger'
-                    style={{ float: 'left' }}
+                    style={{ marginLeft: '60%' ,backgroundColor: '#662d91', color: 'white', borderStyle: 'none'}}
                     onClick={handleDelete}
                   >
                     삭제
                   </Button>
-                    </div>
                   </div>
                 </form>
               </div>
@@ -78,12 +77,17 @@ function FlipCard({
 
             <div className='card-side side-front'>
               <div className='container-fluid'>
-                <div className='row'>
-                    <div className='col side-front-content d-flex flex-column align-content-center justify-content-center'
-                    // style={{backgroundImage: `url(${photos[0].url})`}}
+                <div className=''>
+                    <div className=' d-flex flex-column align-content-center justify-content-center'
+                    style={{
+                      // backgroundImage: `url(${photos[0].url})`
+
+                    }}
                     >
                     <div className="date">{date}</div>
+                    <div className="frontImg">
                     <img src={photos[0].url} alt={photos[0].url} height={400} width={300}/>
+                    </div>
                     </div>
                     
                   </div>
@@ -115,6 +119,11 @@ const HistoryStyle = styled.div`
     height: 450px;
     perspective: 1000px;
   }
+  .historycover {
+    img {
+      object-fit: fill;
+    }
+  }
   .id {
     margin-top: -30px;
     margin-bottom: 10px;
@@ -132,9 +141,13 @@ const HistoryStyle = styled.div`
     font-size: 1.2rem;
     background-color: #e991a8;
     color: white;
-    margin: 10px auto;
+    margin-top: 30px ;
   }
-
+  .frontImg {
+    margin-bottom: 30px;
+    border-radius: 30px;
+    
+  }
   img {
     max-width: 100%;
     max-height: 100%;
@@ -188,7 +201,7 @@ const HistoryStyle = styled.div`
   /*- Back side -*/
   .side-back {
     z-index: 2;
-    padding: 32px;
+    /* padding: 32px; */
     text-align: center;
     transform: rotateY(180deg);
   }

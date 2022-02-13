@@ -51,7 +51,7 @@ export default function History() {
       <div className="overlay-border" />
       <div className="row h-100">
         <div className="col d-flex flex-wrap justify-content-around align-items-center">
-          {myHistories.map((myHistory) => (
+          {myHistories && myHistories.map((myHistory) => (
             <FlipCard key={myHistory.historyId} myHistory={myHistory} />
           ))}
         </div>

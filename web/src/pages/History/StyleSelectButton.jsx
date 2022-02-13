@@ -37,7 +37,9 @@ export default function StyleSelectButton({ getImg }) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>저장된 스타일룩</Modal.Title>
+          <Modal.Title
+            style={{ marginLeft: "30%", }}
+          >저장된 스타일룩</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <StyleSelectModalBody getStyleLook={getStyleLook} />

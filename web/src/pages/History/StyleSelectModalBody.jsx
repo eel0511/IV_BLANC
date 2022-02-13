@@ -51,8 +51,11 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
               src={selectStyle.url}
               alt={selectStyle.styleId}
               style={{
-                maxWidth: "60%",
-                maxHeight: "80%",
+                width: '40vh',
+                height: '50vh',
+                objectFit: 'fill',
+                borderRadius: '1rem',
+
               }}
             />
           </Carousel.Item>
@@ -81,10 +84,9 @@ const StyleCarousel = styled.div`
   margin-left: 90px;
   margin-bottom: 50px;
 }
-  .img:hover {
+
+.img:hover {
     border: 10px solid #a35ac5;
     /* transform: scale(1.1); */
 }
-
 `;
-
