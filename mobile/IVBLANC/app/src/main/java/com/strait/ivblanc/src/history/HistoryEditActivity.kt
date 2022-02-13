@@ -271,15 +271,11 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val findLocalBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu1)
         findLocalBtn.setOnClickListener {
-            etTempHigh.isEnabled = false
-            etTempLow.isEnabled = false
 
         }
 
         val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
         findSettingBtn.setOnClickListener {
-            etTempHigh.isEnabled = false
-            etTempLow.isEnabled = false
 
         }
 
