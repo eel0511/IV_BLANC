@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { InputGroup, FormControl, Form, Button } from 'react-bootstrap';
-import axios from 'axios';
-import StyleSelectButton from './StyleSelectButton';
+import React, { useState } from "react";
+import { InputGroup, FormControl, Form, Button, Row, Col } from "react-bootstrap";
+import axios from "axios";
+import StyleSelectButton from "./StyleSelectButton";
 
 export default function HistoryCreateModalBody() {
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState("");
 
   const onLoadFile = (e) => {
     const file = e.target.files;
@@ -41,40 +41,40 @@ export default function HistoryCreateModalBody() {
 
   const getMyStylesData = () => {
     axios
-      .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+      .get("http://i6d104.p.ssafy.io:9999/api/style/finduserstyle", {
         headers: {
-          'X-AUTH-TOKEN': `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY`,
+          "X-AUTH-TOKEN": `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY`,
         },
       })
       .then((response) => {
         // console.log(response.data.data);
         // setSelectedStyle(response.data.data.url);
         console.log(response.data.data);
-        console.log('성공');
+        console.log("성공");
         setSelectedStyle(response.data.data);
       });
   };
 
   const createHistories = () => {
     const formData = new FormData();
-    formData.append('photoList', selectedImg);
-    formData.append('styleId', Number(selectedStyle.styleId));
-    formData.append('date', selectedDate);
-    formData.append('subject', selectedSubject);
-    formData.append('text', selectedText);
+    formData.append("photoList", selectedImg);
+    formData.append("styleId", Number(selectedStyle.styleId));
+    formData.append("date", selectedDate);
+    formData.append("subject", selectedSubject);
+    formData.append("text", selectedText);
 
     axios
-      .post('http://i6d104.p.ssafy.io:9999/api/history/add', formData, {
+      .post("http://i6d104.p.ssafy.io:9999/api/history/add", formData, {
         headers: {
-          'X-AUTH-TOKEN':
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          "X-AUTH-TOKEN":
+            "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY",
         },
       })
       .then((response) => {
         console.log(response);
       })
       .catch((err) => {
-        console.log('실패');
+        console.log("실패");
       });
   };
 
@@ -84,43 +84,70 @@ export default function HistoryCreateModalBody() {
   };
 
   return (
-    <form>
-      <div className='row'>
-        <div className='col-md-5'>
+    <Form
+      style={{ maxWidth: '100%', width: 'auto'}}
+    >
+      <Row>
+        <Col xs={4} md={4}>
+        
           <Form.Group controlId='dob'>
             <Form.Label>Select Date</Form.Label>
-            <Form.Control type='date' name='dob' placeholder='Date of Birth' onChange={dateHandleChange} />
+            <Form.Control
+              type='date'
+              name='dob'
+              placeholder='Date of Birth'
+              onChange={dateHandleChange}
+            />
           </Form.Group>
-        </div>
-      </div>
-      <Form.Label>Title</Form.Label>
+        
+        <Form.Label>Title</Form.Label>
       <InputGroup className='mb-3'>
-        <FormControl onChange={subjectHandleChange}/>
+        <FormControl onChange={subjectHandleChange} />
       </InputGroup>
 
       <InputGroup>
         <InputGroup.Text>Comment</InputGroup.Text>
-        <FormControl as='textarea' aria-label='With textarea' onChange={textHandleChange}/>
-      </InputGroup>
-      <hr />
-      <h2>스타일가져오기</h2>
-      {selectedStyle && (
-        <img
-          alt={selectedStyle.styleId}
-          src={selectedStyle.url}
-          date={selectedStyle.createDate}
-          madeby={selectedStyle.madeby}
-          style={{ margin: 'auto', maxWidth: '200px', maxHeight: '200px' }}
-          // onChange={styleHandleChange}
+        <FormControl
+          rows={12}
+          as='textarea'
+          aria-label='With textarea'
+          onChange={textHandleChange}
         />
-      )}
-      <div>
-        <StyleSelectButton getImg={getImg} />
+      </InputGroup>
+      </Col>
+
+      <Col xs={4} md={4}>
+      <div className='d-flex flex-column align-content-center justify-content-center'>
+        <div
+          style={{ marginLeft: "23%", marginBottom: "2%",}}
+        >
+          <h3>스타일가져오기</h3>
+        </div>
+        <div>
+          {selectedStyle && (
+            <img
+              alt={selectedStyle.styleId}
+              src={selectedStyle.url}
+              date={selectedStyle.createDate}
+              madeby={selectedStyle.madeby}
+              style={{ marginLeft: "2%", maxWidth: "300px", maxHeight: "400px" }}
+              // onChange={styleHandleChange}
+            />
+          )}
+          <div 
+            style={{ marginLeft: "30%", marginBottom: "2%",}}
+          >
+            <StyleSelectButton getImg={getImg} />
+          </div>
+        </div>
       </div>
 
-      <hr />
+      </Col>
 
-      <h1>이미지 미리보기</h1>
+      <Col xs={4} md={4}>
+      <h3
+        style={{ marginLeft: "18%", }}
+      >이미지 미리보기</h3>
       <table>
         <tbody>
           <tr>
@@ -131,24 +158,23 @@ export default function HistoryCreateModalBody() {
                     alt='sample'
                     src={URL.createObjectURL(selectedImg)}
                     style={{
-                      margin: 'auto',
-                      padding: 'auto',
-                      width: '200px',
-                      height: '200px',
+                      marginLeft: "2%",
+                      width: "300px",
+                      height: "400px",
                     }}
                   />
                 )}
                 <div
                   style={{
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    display: 'flex',
+                    alignItems: "center",
+                    justifyContent: "center",
+                    display: "flex",
                   }}
                 >
-                  <div>
-                    <h4>사진 등록</h4>
-                  </div>
+                  
                   <input
+                    style={{ marginLeft: "26%", marginTop: "10%", backgroundColor: '#ed6991',
+                    color: 'white',}}
                     name='imgUpload'
                     type='file'
                     accept='image/*'
@@ -163,9 +189,15 @@ export default function HistoryCreateModalBody() {
           </tr>
         </tbody>
       </table>
-      <Button variant='secondary' onClick={createHistories} >
+      </Col>
+      </Row>
+      <hr></hr>
+      <Button 
+      style={{ marginLeft: "26%", marginTop: "1%", backgroundColor: '#662d91',
+      color: 'white', borderStyle: 'none' , fontSize: '1.2rem', padding: '1% 20%'}}
+      onClick={createHistories}>
         등록
       </Button>
-    </form>
+    </Form>
   );
 }
