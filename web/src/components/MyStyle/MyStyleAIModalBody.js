@@ -4,17 +4,20 @@ import './MyStyleImg.css';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
+  const [previewImg, setPreviewImg] = useState();
   const [AIurl, setAIurl] = useState('');
 
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+    setSelectedImg(e.target.files[0]);
+    setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const createStyle = () => {
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
+    // 임시 데이터
     const data =
       'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
     setAIurl(data);
@@ -44,7 +47,7 @@ function MyStyleAIModalBody() {
       {selectedImg && (
         <img
           alt='적용할 옷'
-          src={selectedImg}
+          src={previewImg}
           style={{ margin: 'auto', width: '400px', height: '400px' }}
         />
       )}
