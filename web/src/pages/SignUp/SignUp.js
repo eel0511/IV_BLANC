@@ -20,7 +20,7 @@ import home from '../../assets/home.png';
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../../styles/signup.scss';
+import './signup.css';
 import Title from '../../components/Home/Title';
 
 function Copyright(props) {
@@ -265,212 +265,215 @@ export default function SignUp() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-      <Title value="SIGNUP" />
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs' >
-        <CssBaseline />
-        <Box
-          component={Paper}    
-          sx={{
-            marginTop: 5,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <img
-            src={require('../../assets/logo.png')}
-            alt='우리로고'
-            width={'100px'}
-          ></img>
-          <Typography component='h1' variant='h5'>
-            회원가입
-          </Typography>
+      <Title value='SIGNUP' />
+      <ThemeProvider theme={theme}>
+        <Container component='main' maxWidth='xs'>
+          <CssBaseline />
           <Box
-            component='form'
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            component={Paper}
+            sx={{
+              marginTop: 5,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            <Grid container spacing={2}>
-            <Grid item xs={1}></Grid>
-              <Grid item xs={6.5}>
-                <TextField
-                  required
-                  fullWidth
-                  id='email'
-                  label='이메일'
-                  name='email'
-                  autoComplete='email'
-                  value={email}
-                  onChange={onChangeEmail}
-                />
-                {email.length > 0 && (
-                  <span className={`message ${isEmail ? 'success' : 'error'}`}>
-                    {emailMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={3.5}>
-                <Button onClick={checkEmail} variant='outlined' sx={{ mt: 1 }}>
-                  중복확인
-                </Button>
-              </Grid>
-              <Grid item xs={1}></Grid>
-
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  name='password'
-                  label='비밀번호'
-                  type='password'
-                  id='password'
-                  autoComplete='new-password'
-                  onChange={onChangePassword}
-                />
-                {password.length > 0 && (
-                  <span
-                    className={`message ${isPassword ? 'success' : 'error'}`}
-                  >
-                    {passwordMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  name='password_chk'
-                  label='비밀번호 확인'
-                  type='password'
-                  id='password'
-                  autoComplete='new-password'
-                  onChange={onChangePasswordConfirm}
-                />
-                {passwordConfirm.length > 0 && (
-                  <span
-                    className={`message ${
-                      isPasswordConfirm ? 'success' : 'error'
-                    }`}
-                  >
-                    {passwordConfirmMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={1}></Grid>
-
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  id='name'
-                  label='이름'
-                  name='name'
-                  autoComplete='family-name'
-                  onChange={onChangeName}
-                />
-                {name.length > 0 && (
-                  <span className={`message ${isName ? 'success' : 'error'}`}>
-                    {nameMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={1}></Grid>
-
-              <Grid item xs={3}></Grid>
-              <Grid item xs={9} align='left'>
-                <FormLabel id='demo-row-radio-buttons-group-label'>
-                  성별
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby='demo-row-radio-buttons-group-label'
-                  name='gender'
-                  value={gender}
-                  onChange={onChangeGender}
-                >
-                  <FormControlLabel
-                    value='female'
-                    control={<Radio />}
-                    label='Female'
-                  />
-                  <FormControlLabel
-                    value='male'
-                    control={<Radio />}
-                    label='Male'
-                  />
-                </RadioGroup>
-              </Grid>
-            
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  id='age'
-                  label='나이'
-                  name='age'
-                  autoComplete='age'
-                  onChange={onChangeAge}
-                />
-                {isNaN(age) && (
-                  <span className={`message ${isAge ? 'success' : 'error'}`}>
-                    {ageMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={1}></Grid>
-              
-              <Grid item xs={1}></Grid>
-              <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  id='phoneNum'
-                  label='전화번호'
-                  name='phoneNum'
-                  autoComplete='phoneNumber'
-                  onChange={onChangePhoneNum}
-                />
-                {phoneNum.length > 0 && (
-                  <span
-                    className={`message ${isPhoneNum ? 'success' : 'error'}`}
-                  >
-                    {phoneNumMessage}
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={1}></Grid>
-
-            </Grid>
-            <Button
-              type='submit'
-              variant='contained'
-              sx={{ mt: 3, mb: 2, mx: 2, my: 2}}
-            >
+            <img
+              src={require('../../assets/logo.png')}
+              alt='우리로고'
+              width={'100px'}
+            ></img>
+            <Typography component='h1' variant='h5'>
               회원가입
-            </Button>
-            <Grid container justifyContent='flex-end'>
-              <Grid item sx={{ mr: 2 }}>
-                <Link href='/signin' variant='body2'>
-                  이미 계정이 있으신가요? 로그인
-                </Link>
-              </Grid>
-            </Grid>
+            </Typography>
+            <Box
+              component='form'
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 3 }}
+            >
+              <Grid container spacing={2}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={6.5}>
+                  <TextField
+                    required
+                    fullWidth
+                    id='email'
+                    label='이메일'
+                    name='email'
+                    autoComplete='email'
+                    value={email}
+                    onChange={onChangeEmail}
+                  />
+                  {email.length > 0 && (
+                    <span
+                      className={`message ${isEmail ? 'success' : 'error'}`}
+                    >
+                      {emailMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={3.5}>
+                  <Button
+                    onClick={checkEmail}
+                    variant='outlined'
+                    sx={{ mt: 1 }}
+                  >
+                    중복확인
+                  </Button>
+                </Grid>
+                <Grid item xs={1}></Grid>
 
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    required
+                    fullWidth
+                    name='password'
+                    label='비밀번호'
+                    type='password'
+                    id='password'
+                    autoComplete='new-password'
+                    onChange={onChangePassword}
+                  />
+                  {password.length > 0 && (
+                    <span
+                      className={`message ${isPassword ? 'success' : 'error'}`}
+                    >
+                      {passwordMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    required
+                    fullWidth
+                    name='password_chk'
+                    label='비밀번호 확인'
+                    type='password'
+                    id='password'
+                    autoComplete='new-password'
+                    onChange={onChangePasswordConfirm}
+                  />
+                  {passwordConfirm.length > 0 && (
+                    <span
+                      className={`message ${
+                        isPasswordConfirm ? 'success' : 'error'
+                      }`}
+                    >
+                      {passwordConfirmMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={1}></Grid>
+
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    required
+                    fullWidth
+                    id='name'
+                    label='이름'
+                    name='name'
+                    autoComplete='family-name'
+                    onChange={onChangeName}
+                  />
+                  {name.length > 0 && (
+                    <span className={`message ${isName ? 'success' : 'error'}`}>
+                      {nameMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={1}></Grid>
+
+                <Grid item xs={3}></Grid>
+                <Grid item xs={9} align='left'>
+                  <FormLabel id='demo-row-radio-buttons-group-label'>
+                    성별
+                  </FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby='demo-row-radio-buttons-group-label'
+                    name='gender'
+                    value={gender}
+                    onChange={onChangeGender}
+                  >
+                    <FormControlLabel
+                      value='female'
+                      control={<Radio />}
+                      label='Female'
+                    />
+                    <FormControlLabel
+                      value='male'
+                      control={<Radio />}
+                      label='Male'
+                    />
+                  </RadioGroup>
+                </Grid>
+
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    required
+                    fullWidth
+                    id='age'
+                    label='나이'
+                    name='age'
+                    autoComplete='age'
+                    onChange={onChangeAge}
+                  />
+                  {isNaN(age) && (
+                    <span className={`message ${isAge ? 'success' : 'error'}`}>
+                      {ageMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={1}></Grid>
+
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <TextField
+                    required
+                    fullWidth
+                    id='phoneNum'
+                    label='전화번호'
+                    name='phoneNum'
+                    autoComplete='phoneNumber'
+                    onChange={onChangePhoneNum}
+                  />
+                  {phoneNum.length > 0 && (
+                    <span
+                      className={`message ${isPhoneNum ? 'success' : 'error'}`}
+                    >
+                      {phoneNumMessage}
+                    </span>
+                  )}
+                </Grid>
+                <Grid item xs={1}></Grid>
+              </Grid>
+              <Button
+                type='submit'
+                variant='contained'
+                sx={{ mt: 3, mb: 2, mx: 2, my: 2 }}
+              >
+                회원가입
+              </Button>
+              <Grid container justifyContent='flex-end'>
+                <Grid item sx={{ mr: 2 }}>
+                  <Link href='/signin' variant='body2'>
+                    이미 계정이 있으신가요? 로그인
+                  </Link>
+                </Grid>
+              </Grid>
+            </Box>
+            <Grid item xs={12}>
+              <Copyright sx={{ mt: 2 }} />
+            </Grid>
           </Box>
-          <Grid item xs={12}>
-        <Copyright sx={{ mt: 2 }} />
-        </Grid>
-        </Box>
-        
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
     </Section>
   );
 }
