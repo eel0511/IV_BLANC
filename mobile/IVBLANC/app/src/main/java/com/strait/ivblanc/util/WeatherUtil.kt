@@ -15,8 +15,8 @@ import java.net.URLEncoder
 class WeatherUtil {
     private var nx = "60" //위도
     private var ny = "125" //경도
-    private var baseDate = "20210531" //조회하고싶은 날짜
-    private val baseTime = "0500" //조회하고싶은 시간
+    private var baseDate = "20220214" //조회하고싶은 날짜
+    private val baseTime = "0200" //조회하고싶은 시간
     private val type = "json" //조회하고 싶은 type(json, xml 중 고름)
 
     private var temp_high = "0"
@@ -28,6 +28,8 @@ class WeatherUtil {
         val serviceKey = "zkRWa0Rhm9r4fYLj0DzsDezuSW%2FjBzuU3nAUHBSEtZizlGvabVXjN1ozTeDEBQDTZTJBMuXtKI%2FARKHcjw6T0Q%3D%3D"
         val urlBuilder = StringBuilder(apiUrl)
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey)
+        urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + "1")
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + "1000")
         urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "="
                 + URLEncoder.encode(nx, "UTF-8")) //경도
         urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "="
@@ -72,24 +74,29 @@ class WeatherUtil {
 
         // body 로 부터 items 찾기
         val items = JSONObject(body).getString("items")
-        Log.i("ITEMS", items)
 
         // items로 부터 itemlist 를 받기
         var jsonObj = JSONObject(items)
         val jsonArray = jsonObj.getJSONArray("item")
-//        for (i in 0 until jsonArray.length()) {
-//            jsonObj = jsonArray.getJSONObject(i)
-            jsonObj = jsonArray.getJSONObject(0)
+        Log.d("WEATHER_LENGTH", "${jsonArray.length()}")
+        for (i in 0 until jsonArray.length()) {
+            jsonObj = jsonArray.getJSONObject(i)
+
             val fcstValue = jsonObj.getString("fcstValue")
             val category = jsonObj.getString("category")
+
+            val baseD = jsonObj.getString("baseDate")
+            val fcstD = jsonObj.getString("fcstDate")
+            if(!baseD.equals(fcstD)) continue
+
             if (category == "TMN") {
                 temp_low = fcstValue
             }
             if (category == "TMX") {
                 temp_high = fcstValue
             }
-            Log.i("WEATER_TAG", "temp_low = $temp_low, temp_high = $temp_high")
-//        }
+            Log.i("WEATHER_TAG", "temp_low = $temp_low, temp_high = $temp_high")
+        }
         return "$temp_low/$temp_high"
     } // end of lookUpWeather
 }
