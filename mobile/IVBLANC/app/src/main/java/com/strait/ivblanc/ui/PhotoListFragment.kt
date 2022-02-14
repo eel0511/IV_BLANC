@@ -172,6 +172,14 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             "f0"->{
                 binding.fabMain.visibility=View.GONE
                 clothesViewModel.clothesList.observe(requireActivity()) {
+                    photoListRVAdapter.setDatas(it as List<T>)
+                }
+                clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
+                    if(it.isNotEmpty()) {
+                        binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
+                    } else {
+                        binding.linearLayoutPhotoListFRecent.visibility = View.GONE
+                    }
                     horizontalRVAdapter.setDatas(it as List<T>)
                 }
             }
