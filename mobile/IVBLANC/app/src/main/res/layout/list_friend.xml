@@ -2,25 +2,106 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
     android:background="@drawable/list_box"
-    android:padding="@dimen/defaultPadding"
+    android:padding="0dp"
     tools:context=".src.main.FriendFragment">
 
+
+    <ImageView
+        android:id="@+id/no_item_text"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/main_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pick" />
+
+    <ImageView
+        android:id="@+id/no_item_text2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="253dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/main_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pick" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/list_friend_cloth2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="72dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_cloth1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="72dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_cloth3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_cloth4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toEndOf="@+id/list_friend_cloth3"
+            app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth2"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/list_box"
-        android:backgroundTint="#EFEFEF"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/latest_box"
+        android:backgroundTint="@color/ivblanc_newpurple"
         android:gravity="center"
         android:text="style"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth1" />
+        app:layout_constraintTop_toBottomOf="@+id/list_friend_name" />
 
     <TextView
         android:id="@+id/list_friend_name"
@@ -30,6 +111,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="16dp"
         android:text="친구이름 님의 옷장"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -37,116 +119,68 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <ImageView
-        android:id="@+id/list_friend_style1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_style4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth1"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_style2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_style3"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth4"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_style3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_style2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_style4"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth3"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_style4"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_style3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_style1"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth2"
-        tools:src="@tools:sample/avatars" />
-
-
-    <ImageView
-        android:id="@+id/list_friend_cloth1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_cloth2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth1"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_cloth3"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toStartOf="@+id/list_friend_cloth4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth2"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
-        tools:src="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/list_friend_cloth4"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        android:padding="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/list_friend_cloth3"
-        app:layout_constraintTop_toBottomOf="@+id/list_friend_name"
-        tools:src="@tools:sample/avatars" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/list_box"
-        android:backgroundTint="#EFEFEF"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="260dp"
+        android:background="@drawable/latest_box"
+        android:backgroundTint="@color/ivblanc_newpink"
         android:gravity="center"
         android:text="clothes"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_friend_name" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/list_friend_style3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="72dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_style1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="72dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_style4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toEndOf="@+id/list_friend_style2"
+            app:layout_constraintTop_toBottomOf="@+id/list_friend_style3"
+            tools:src="@tools:sample/avatars" />
+
+        <ImageView
+            android:id="@+id/list_friend_style2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

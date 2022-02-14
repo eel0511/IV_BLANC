@@ -8,11 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.*
-import com.strait.ivblanc.data.model.response.ClothesResponse
-import com.strait.ivblanc.data.model.response.FriendListResponse
-import com.strait.ivblanc.data.model.response.FriendResponse
+import com.strait.ivblanc.data.model.response.*
 import com.strait.ivblanc.data.repository.ClothesRepository
 import com.strait.ivblanc.data.repository.FriendRepository
+import com.strait.ivblanc.data.repository.StyleRepository
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
@@ -29,7 +28,8 @@ class FriendViewModel : ViewModel() {
     val friendName: LiveData<String> get() = _friendName
 
     private val _friendEmail = MutableLiveData<String>()
-    val firendEmail : LiveData<String> get() = _friendEmail
+    val firendEmail: LiveData<String> get() = _friendEmail
+
     // 툴바 관련 필드
     private val _toolbarTitle = MutableLiveData<String>()
     val toolbarTitle: LiveData<String> get() = _toolbarTitle
@@ -73,9 +73,12 @@ class FriendViewModel : ViewModel() {
         get() = _clothesListLiveData
 
     // 옷관련 필드 끝
+
+    private val styleRepository = StyleRepository()
+    private lateinit var friendViewdata: FriendViewdata
+
     //친구 관련
     private val friendRepository = FriendRepository()
-
 
     private val _acceptfriendName = MutableLiveData<String>()
     val acceptfriendName: LiveData<String> get() = _acceptfriendName
@@ -102,9 +105,10 @@ class FriendViewModel : ViewModel() {
 
 
     // friend
-    fun setFriendEmail(email:String)=viewModelScope.launch{
+    fun setFriendEmail(email: String) = viewModelScope.launch {
         _friendEmail.postValue(email)
     }
+
     fun getAllFriends(applicant: String) = viewModelScope.launch {
         //친구 리스트를 가져옴
         getFriends(applicant)
@@ -113,6 +117,7 @@ class FriendViewModel : ViewModel() {
         //가져온 친구리스트로 각각 옷을 뽑아옴
         totalFriendList.forEach {
             getAllFriendClothes(it.friendEmail, it.friendName)
+            getAllFriendStyle(it.friendEmail, it.friendName)
         }
 
         //최종 친구목록 보여질 것
@@ -123,11 +128,16 @@ class FriendViewModel : ViewModel() {
         setLoading()
         //default data
         var u =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/f66a9264-2c71-497d-83d2-255c0802f3c0.png")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/800e1d66-51d2-4fc4-a3ba-e15c1bc86af4.png")
+        var u2 =
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/9561bef2-b824-47ea-957a-b6567d93c44e.png")
         val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
         _friendResponseStatus.postValue(result)
         Log.d("aaaa", "getAllFriendClothes: " + result)
 
+        friendViewdata =
+            FriendViewdata(name, email, u, u, u, u, u, u, u, u)
+        //clothes
         if (result.status == Status.SUCCESS) {
             var list = arrayListOf<Uri>()
             for (i in result.data!!.dataSet!!.indices) {
@@ -139,13 +149,49 @@ class FriendViewModel : ViewModel() {
             while (list.size < 4) {
                 list.add(u)
             }
-            var friendViewdata =
+
+            // style
+            val result2: Resource<StyleAllResponse> = styleRepository.getAllFriendStyles(email)
+            _friendResponseStatus.postValue(result2)
+
+            friendViewdata =
                 FriendViewdata(name, email, list[0], list[1], list[2], list[3], u, u, u, u)
-            if (!totalFriendViewdataList.contains(friendViewdata)) {
-                totalFriendViewdataList.addAll(listOf(friendViewdata))
-            }
         }
         Log.d("aaaa", "getAllFriendClothes: " + totalFriendViewdataList)
+    }
+
+    suspend fun getAllFriendStyle(email: String, name: String) = withContext(Dispatchers.Main) {
+        setLoading()
+        //default data
+        var u =
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/800e1d66-51d2-4fc4-a3ba-e15c1bc86af4.png")
+        var u2 =
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/9561bef2-b824-47ea-957a-b6567d93c44e.png")
+
+        // style
+        val result2: Resource<StyleAllResponse> = styleRepository.getAllFriendStyles(email)
+        _friendResponseStatus.postValue(result2)
+
+        if (result2.status == Status.SUCCESS) {
+            var stylelist = arrayListOf<Uri>()
+            for (i in result2.data!!.dataSet!!.indices) {
+                if (i == 4) break
+                if (result2.data!!.dataSet!![i].url != "NULL" && result2.data!!.dataSet!![i].url != null) {
+                    stylelist.add(Uri.parse(result2.data!!.dataSet!![i].url))
+                }
+            }
+            while (stylelist.size < 4) {
+                stylelist.add(u)
+            }
+            friendViewdata.style1 = stylelist[0]
+            friendViewdata.style2 = stylelist[1]
+            friendViewdata.style3 = stylelist[2]
+            friendViewdata.style4 = stylelist[3]
+
+        }
+        if (!totalFriendViewdataList.contains(friendViewdata)) {
+            totalFriendViewdataList.addAll(listOf(friendViewdata))
+        }
     }
 
     suspend fun getFriends(applicant: String) = withContext(Dispatchers.IO) {
@@ -194,21 +240,22 @@ class FriendViewModel : ViewModel() {
 
 
     suspend fun cancelWaitFriend(applicant: String, FriendEmail: String) =
-          withContext(Dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             val result: Resource<FriendResponse> =
                 friendRepository.cancelFriend(FriendForUpload(applicant, FriendEmail))
-            Log.d("ssss", "cancelWaitFriend: "+result)
+            Log.d("ssss", "cancelWaitFriend: " + result)
             _friendResponseStatus.postValue(result)
             if (result.status == Status.SUCCESS) {
                 _acceptfriendName.postValue(result.data!!.data!!.friendName)
             }
         }
-    fun cancelFriend(applicant: String,FriendEmail: String)= viewModelScope.launch {
-        Log.d("ssss1111", "cancelFriend: "+totalWaitFriendList)
-        cancelWaitFriend(applicant,FriendEmail)
+
+    fun cancelFriend(applicant: String, FriendEmail: String) = viewModelScope.launch {
+        Log.d("ssss1111", "cancelFriend: " + totalWaitFriendList)
+        cancelWaitFriend(applicant, FriendEmail)
         getWaitFriend(applicant)
         _friendWaitListLiveData.postValue(totalWaitFriendList)
-        Log.d("ssss2222", "cancelFriend: "+totalWaitFriendList)
+        Log.d("ssss2222", "cancelFriend: " + totalWaitFriendList)
     }
 
     suspend fun getWaitFriend(applicant: String) = withContext(Dispatchers.IO) {
@@ -251,7 +298,7 @@ class FriendViewModel : ViewModel() {
             }
         }
 
-    //friend end
+//friend end
 
     private fun setLoading() = _friendResponseStatus.postValue(Resource.loading(null))
 

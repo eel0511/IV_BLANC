@@ -12,8 +12,8 @@ data class FriendViewdata(
     val cloth2: Uri,
     val cloth3: Uri,
     val cloth4: Uri,
-    val style1: Uri,
-    val style2: Uri,
-    val style3: Uri,
-    val style4: Uri,
+    var style1: Uri,
+    var style2: Uri,
+    var style3: Uri,
+    var style4: Uri,
 ): Parcelable

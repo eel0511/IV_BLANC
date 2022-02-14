@@ -22,9 +22,9 @@ class WaitRecyclerViewAdapter() : RecyclerView.Adapter<WaitRecyclerViewAdapter.V
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
         fun bind(item: Friend) {
-            img.setImageResource(R.drawable.kakao)
+            img.setImageResource(R.drawable.newlogo)
             text.text = item.friendName + "님의 수락을 기다리는 중입니다."
-            button.setImageResource(R.drawable.ic_close)
+            button.setImageResource(R.drawable.ic_close_white)
             button.setOnClickListener {
                 itemClickListener.onClick(item)
             }
