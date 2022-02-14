@@ -1,93 +1,95 @@
 package com.strait.ivblanc.util
 
-import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import com.strait.ivblanc.R
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
-
-const val SERVICE_KEY = "zkRWa0Rhm9r4fYLj0DzsDezuSW%2FjBzuU3nAUHBSEtZizlGvabVXjN1ozTeDEBQDTZTJBMuXtKI%2FARKHcjw6T0Q%3D%3D"
-
-val num_of_rows = 10
-val page_no = 1
-val data_type = "JSON"
-val base_time = 1100
-val base_data = 20200808
-val nx = "55"
-val ny = "127"
-
-data class WEATHER (
-    val response : RESPONSE
-)
-data class RESPONSE (
-    val header : HEADER,
-    val body : BODY
-)
-data class HEADER(
-    val resultCode : Int,
-    val resultMsg : String
-)
-data class BODY(
-    val dataType : String,
-    val items : ITEMS
-)
-data class ITEMS(
-    val item : List<ITEM>
-)
-data class ITEM(
-    val baseData : Int,
-    val baseTime : Int,
-    val category : String
-)
-
-interface WeatherInterface {
-    @GET("getVilageFcst?serviceKey=${SERVICE_KEY}")
-    fun getWeather(
-        @Query("dataType") data_type : String,
-        @Query("numOfRows") num_of_rows : Int,
-        @Query("pageNo") page_no : Int,
-        @Query("base_date") base_date : Int,
-        @Query("base_time") base_time : Int,
-        @Query("nx") nx : String,
-        @Query("ny") ny : String
-    ): Call<WEATHER>
-}
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.lang.StringBuilder
+import java.net.HttpURLConnection
+import java.net.URL
+import java.net.URLEncoder
 
 
-private val retrofit = Retrofit.Builder()
-    .baseUrl("http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/") // 마지막 / 반드시 들어가야 함
-    .addConverterFactory(GsonConverterFactory.create()) // converter 지정
-    .build() // retrofit 객체 생성
+class WeatherUtil {
+    private var nx = "60" //위도
+    private var ny = "125" //경도
+    private var baseDate = "20210531" //조회하고싶은 날짜
+    private val baseTime = "0500" //조회하고싶은 시간
+    private val type = "json" //조회하고 싶은 type(json, xml 중 고름)
 
-object ApiObject {
-    val retrofitService: WeatherInterface by lazy {
-        retrofit.create(WeatherInterface::class.java)
-    }
-}
+    private var temp_high = "0"
+    private var temp_low = "0"
 
-class WeatherUtil : AppCompatActivity() {
+    @Throws(IOException::class, JSONException::class)
+    fun lookUpWeather(nx: String, ny: String, baseDate: String) : String{
+        val apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+        val serviceKey = "zkRWa0Rhm9r4fYLj0DzsDezuSW%2FjBzuU3nAUHBSEtZizlGvabVXjN1ozTeDEBQDTZTJBMuXtKI%2FARKHcjw6T0Q%3D%3D"
+        val urlBuilder = StringBuilder(apiUrl)
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + serviceKey)
+        urlBuilder.append("&" + URLEncoder.encode("nx", "UTF-8") + "="
+                + URLEncoder.encode(nx, "UTF-8")) //경도
+        urlBuilder.append("&" + URLEncoder.encode("ny", "UTF-8") + "="
+                + URLEncoder.encode(ny, "UTF-8")) //위도
+        urlBuilder.append("&" + URLEncoder.encode("base_date", "UTF-8") + "="
+                + URLEncoder.encode(baseDate, "UTF-8")) /* 조회하고싶은 날짜*/
+        urlBuilder.append("&" + URLEncoder.encode("base_time", "UTF-8") + "="
+                + URLEncoder.encode(baseTime, "UTF-8")) /* 조회하고싶은 시간 AM 02시부터 3시간 단위 */
+        urlBuilder.append("&" + URLEncoder.encode("dataType", "UTF-8") + "="
+                + URLEncoder.encode(type, "UTF-8")) /* 타입 */
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        /*
+         * GET방식으로 전송해서 파라미터 받아오기
+         */
+        val url = URL(urlBuilder.toString())
+        val conn = url.openConnection() as HttpURLConnection
+        conn.requestMethod = "GET"
+        conn.setRequestProperty("Content-type", "application/json")
+        println("Response code: " + conn.responseCode)
+        val rd: BufferedReader = if (conn.responseCode in 200..300) {
+            BufferedReader(InputStreamReader(conn.inputStream))
+        } else {
+            BufferedReader(InputStreamReader(conn.errorStream))
+        }
 
-        val call = ApiObject.retrofitService.getWeather(data_type, num_of_rows, page_no, base_data, base_time, nx, ny)
-        call.enqueue(object : retrofit2.Callback<WEATHER>{
-            override fun onResponse(call: Call<WEATHER>, response: Response<WEATHER>) {
-                if (response.isSuccessful){
-                    Log.d("api", response.body().toString())
-                    Log.d("api", response.body()!!.response.body.items.item.toString())
-                    Log.d("api", response.body()!!.response.body.items.item[0].category)
-                }
+        val sb = StringBuilder()
+        var line: String?
+        while (rd.readLine().also { line = it } != null) {
+            sb.append(line)
+        }
+        rd.close()
+        conn.disconnect()
+        val result = sb.toString()
+
+        //=======이 밑에 부터는 json에서 데이터 파싱해 오는 부분이다=====//
+
+        // response 키를 가지고 데이터를 파싱
+        val response = JSONObject(result).getString("response")
+
+        // response 로 부터 body 찾기
+        val body = JSONObject(response).getString("body")
+
+        // body 로 부터 items 찾기
+        val items = JSONObject(body).getString("items")
+        Log.i("ITEMS", items)
+
+        // items로 부터 itemlist 를 받기
+        var jsonObj = JSONObject(items)
+        val jsonArray = jsonObj.getJSONArray("item")
+//        for (i in 0 until jsonArray.length()) {
+//            jsonObj = jsonArray.getJSONObject(i)
+            jsonObj = jsonArray.getJSONObject(0)
+            val fcstValue = jsonObj.getString("fcstValue")
+            val category = jsonObj.getString("category")
+            if (category == "TMN") {
+                temp_low = fcstValue
             }
-            override fun onFailure(call: Call<WEATHER>, t: Throwable) {
-                Log.d("api fail : ", t.message!!)
+            if (category == "TMX") {
+                temp_high = fcstValue
             }
-        })
-    }
+            Log.i("WEATER_TAG", "temp_low = $temp_low, temp_high = $temp_high")
+//        }
+        return "$temp_low/$temp_high"
+    } // end of lookUpWeather
 }
