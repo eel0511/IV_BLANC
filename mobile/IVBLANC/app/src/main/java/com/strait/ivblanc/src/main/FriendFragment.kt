@@ -28,16 +28,18 @@ import kotlinx.coroutines.*
 
 class FriendFragment :
     BaseFragment<FragmentFriendBinding>(FragmentFriendBinding::bind, R.layout.fragment_friend) {
-
+    companion object {
+        val FRIEND_INFO = "friendInfo"
+    }
     lateinit var friendRecyclerViewAdapter: FriendRecyclerViewAdapter
     private val viewModel: MainViewModel by activityViewModels()
     private val friendViewModel: FriendViewModel by activityViewModels()
     var list = arrayListOf<FriendViewdata>()
+
     private val itemClickListener = object : FriendRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friendViewdata: FriendViewdata) {
             val intent = Intent(requireActivity(), FriendCloset::class.java)
-            intent.putExtra("test", friendViewdata)
-
+            intent.putExtra(FRIEND_INFO, friendViewdata)
             startActivity(intent)
         }
     }
@@ -45,7 +47,6 @@ class FriendFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
     }
 
     override fun onResume() {
