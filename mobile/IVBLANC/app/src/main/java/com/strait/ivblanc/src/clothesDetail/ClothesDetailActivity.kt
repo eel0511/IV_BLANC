@@ -75,11 +75,9 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         binding.imageViewClothesDetailFavorite.setOnClickListener {
             when(clothes.favorite) {
                 0 -> {
-                    // TODO: 2022/01/31 즐겨찾기 세팅 함수 호출
                     clothesViewModel.addFavorite(clothes.clothesId)
                 }
                 else -> {
-                    // TODO: 2022/01/31 즐겨찾기 해제 함수 호출
                     clothesViewModel.deleteFavorite(clothes.clothesId)
                 }
             }
