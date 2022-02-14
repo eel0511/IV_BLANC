@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/list_box"
-    android:padding="@dimen/defaultPadding"
+    android:padding="0dp"
     tools:context=".src.main.FriendFragment">
 
 
@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginStart="236dp"
+        android:layout_marginStart="250dp"
         android:layout_marginTop="128dp"
         android:gravity="center"
         android:text="스타일이 없습니다\n\n 등록해주세요"
@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/list_friend_cloth2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="72dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -41,8 +41,8 @@
 
         <ImageView
             android:id="@+id/list_friend_cloth1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="72dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -50,17 +50,17 @@
 
         <ImageView
             android:id="@+id/list_friend_cloth3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:src="@tools:sample/avatars" />
 
         <ImageView
             android:id="@+id/list_friend_cloth4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toEndOf="@+id/list_friend_cloth3"
             app:layout_constraintTop_toBottomOf="@+id/list_friend_cloth2"
@@ -127,8 +127,8 @@
 
         <ImageView
             android:id="@+id/list_friend_style3"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="72dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -136,8 +136,8 @@
 
         <ImageView
             android:id="@+id/list_friend_style1"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="72dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -145,9 +145,9 @@
 
         <ImageView
             android:id="@+id/list_friend_style4"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toEndOf="@+id/list_friend_style2"
             app:layout_constraintTop_toBottomOf="@+id/list_friend_style3"
@@ -155,8 +155,8 @@
 
         <ImageView
             android:id="@+id/list_friend_style2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:src="@tools:sample/avatars" />
