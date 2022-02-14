@@ -100,7 +100,7 @@ public class FriendController {
 		friendService.addFriend(req);
 		User friend = userService.findByEmail(req.getFriendName());
 		if(friend==null){
-			throw new ApiMessageException("없는 아매알 입니다");
+			throw new ApiMessageException("없는 이메일 입니다");
 		}
 		//fcm 없을시 추가만됨
 		if(friend.getToken_fcm()==null||friend.getToken_fcm().length()<10){
