@@ -34,11 +34,12 @@
             app:layout_constraintTop_toTopOf="@id/constraintLayout_photoListF"
             app:layout_constraintBottom_toBottomOf="@id/constraintLayout_photoListF"
             style="@style/TextInputLayoutStyle.dropdown">
+
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteTextView_photoListF_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"/>
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

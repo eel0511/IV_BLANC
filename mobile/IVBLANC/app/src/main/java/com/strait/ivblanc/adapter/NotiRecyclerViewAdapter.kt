@@ -23,9 +23,10 @@ class NotiRecyclerViewAdapter() : RecyclerView.Adapter<NotiRecyclerViewAdapter.V
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
         fun bind(item: String) {
-            img.setImageResource(R.drawable.kakao)
+            img.setImageResource(R.drawable.newlogo)
             text.text = item
-            button.setImageResource(R.drawable.ic_close)
+            button.setImageResource(R.drawable.ic_close_white)
+
             text.setOnClickListener {
                 itemClickListener.onClick(text.text as String)
                 if(text.text.contains("만들었습니다")){
