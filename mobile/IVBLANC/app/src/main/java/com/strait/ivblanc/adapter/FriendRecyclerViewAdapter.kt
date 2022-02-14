@@ -27,7 +27,7 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<FriendRecyclerViewAdapt
         private val style4 = itemView.findViewById<ImageView>(R.id.list_friend_style4)
 
         fun bind(item: FriendViewdata) {
-            Name.text = item.name
+            Name.text = item.name+"님의 옷장"
             Glide.with(cloth1).load(item.cloth1).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth1)
             Glide.with(cloth2).load(item.cloth2).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth2)
             Glide.with(cloth3).load(item.cloth3).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth3)
