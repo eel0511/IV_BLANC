@@ -11,13 +11,12 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Paper from '@mui/material/Paper';
 import Navbar from '../../components/Navbar';
 import styled from 'styled-components';
 import home from '../../assets/home.png';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
@@ -96,7 +95,7 @@ export default function SignUp() {
 
     try {
       await axios
-        .get('http://localhost:9999/api/sign/checkEmail', {
+        .get('http://i6d104.p.ssafy.io:9999/api/sign/checkEmail', {
           // i6d104.p.ssafy.io:9999
           params: {
             email: tmpEmail,
@@ -235,7 +234,7 @@ export default function SignUp() {
     // 백엔드 통신
     try {
       await axios
-        .post('http://localhost:9999/api/sign/signup', {
+        .post('http://i6d104.p.ssafy.io:9999/api/sign/signup', {
           // i6d104.p.ssafy.io:9999
           email: data.get('email'),
           password: data.get('password'),
