@@ -16,6 +16,7 @@ class HorizontalRVAdapter<T>: RecyclerView.Adapter<HorizontalRVAdapter<T>.ViewHo
         const val STYLE = 1
     }
     private var data = mutableListOf<T>()
+    lateinit var itemClickListener: ItemClickListener
 
     fun setData(dataList: List<T>) {
         data = dataList.toMutableList()
@@ -23,6 +24,12 @@ class HorizontalRVAdapter<T>: RecyclerView.Adapter<HorizontalRVAdapter<T>.ViewHo
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener { if(this@HorizontalRVAdapter::itemClickListener.isInitialized) {
+                itemClickListener.onClick(adapterPosition)
+            }}
+        }
+
         fun bind(data: T) {
             when(data) {
                 is Clothes -> {
@@ -57,5 +64,9 @@ class HorizontalRVAdapter<T>: RecyclerView.Adapter<HorizontalRVAdapter<T>.ViewHo
             is Clothes -> CLOTHES
             else -> STYLE
         }
+    }
+
+    interface ItemClickListener {
+        fun onClick(position: Int)
     }
 }
