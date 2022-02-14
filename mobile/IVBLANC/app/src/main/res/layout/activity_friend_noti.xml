@@ -44,7 +44,7 @@
         android:id="@+id/myrequest_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="dp"
+        android:layout_marginTop="0dp"
         android:background="@drawable/border_friend"
         android:gravity="center"
         android:text="받은 요청"
