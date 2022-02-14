@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
-    android:background="@drawable/list_box">
+    android:background="@drawable/latest_box">
 
     <ImageView
         android:id="@+id/imageView_photoItem_clothes"

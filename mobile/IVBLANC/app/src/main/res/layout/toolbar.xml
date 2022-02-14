@@ -4,16 +4,16 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/defaultPadding"
+    android:background="@color/ivblanc_purple"
     android:elevation="2dp"
-    android:background="@color/white">
+    android:paddingEnd="@dimen/defaultPadding">
 
 
         <ImageView
             android:id="@+id/imageView_toolbar_leadingIcon"
             android:layout_width="@dimen/smallIconSize"
             android:layout_height="@dimen/smallIconSize"
-            tools:background="@drawable/ic_close"/>
+            tools:background="@drawable/ic_close" />
 
         <TextView
             android:id="@+id/textView_toolbar"
@@ -21,21 +21,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="제목"/>
+            tools:text="제목" />
 
         <ImageView
             android:id="@+id/imageView_toolbar_trailingIcon"
             android:layout_width="@dimen/smallIconSize"
             android:layout_height="@dimen/smallIconSize"
             android:layout_gravity="end"
-            tools:background="@drawable/ic_close"/>
+            tools:background="@drawable/ic_close" />
+
         <com.nex3z.notificationbadge.NotificationBadge
             android:id="@+id/badge"
+            nbMaxTextLength="2"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_gravity="end"
-            android:visibility="gone"
-            nbMaxTextLength="2"/>
+            android:visibility="gone" />
 
 
 </androidx.appcompat.widget.Toolbar>

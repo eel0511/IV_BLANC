@@ -78,6 +78,7 @@ class FriendCloset :
         val viewPagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
         val tabLayout = binding.tabLayoutFriend
+        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.ivblanc_pink_complementary))
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "clothes"
