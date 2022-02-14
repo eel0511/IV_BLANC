@@ -4,13 +4,14 @@
     android:id="@+id/friend_toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/ivblanc_purple"
     android:paddingEnd="@dimen/defaultPadding">
 
         <ImageView
             android:id="@+id/imageView_friend_toolbar_leadingIcon"
             android:layout_width="@dimen/smallIconSize"
             android:layout_height="@dimen/smallIconSize"
-            tools:background="@drawable/ic_close"/>
+            tools:background="@drawable/ic_close" />
 
         <TextView
             android:id="@+id/textView_friend_toolbar"
@@ -18,13 +19,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="at"/>
+            tools:text="at" />
 
         <ImageView
             android:id="@+id/imageView_friend_toolbar_trailingIcon"
             android:layout_width="@dimen/smallIconSize"
             android:layout_height="@dimen/smallIconSize"
             android:layout_gravity="end"
-            tools:background="@drawable/ic_close"/>
+            tools:background="@drawable/ic_close" />
 
 </androidx.appcompat.widget.Toolbar>
