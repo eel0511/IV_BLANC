@@ -57,6 +57,9 @@ public class StyleController {
         User owner = userService.findById(clothesSerivce.findByClothesId(styleDetails.get(0).getClothesId()).get().getUserId());
 
         String madeby = made.getName();
+        if (made.getUserId() != owner.getUserId()) {
+            madeby = "친구 "+ made.getName();
+        }
         Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, owner.getUserId(), url));
         styleService.addStyle(style);
         styleDetailService.addStyleDetails(style.getStyleDetails());
@@ -87,7 +90,9 @@ public class StyleController {
         User made = userService.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token)));
         User owner = userService.findById(clothesSerivce.findByClothesId(styleDetails.get(0).getClothesId()).get().getUserId());
         String madeby = made.getName();
-
+        if (made.getUserId() != owner.getUserId()) {
+            madeby = "친구 "+ made.getName();
+        }
         Style style = styleService.findByStyleId(styleId).get();
         int size = style.getStyleDetails().size();
         for (int i = 0; i < size; i++) {
