@@ -34,6 +34,10 @@ class StyleViewModel: ViewModel() {
     private val _styleListLiveData = MutableLiveData<List<Style>>()
     val styleListLiveData: LiveData<List<Style>> get() = _styleListLiveData
 
+    // 최근 등록된 스타일 목록 라이브 데이터
+   private val _recentlyAddedStyleList = MutableLiveData<List<Style>>()
+    val recentlyAddedStyleList: LiveData<List<Style>> get() = _recentlyAddedStyleList
+
 
     // 스타일 등록 요청 관련 시작 ------------------------
     fun addStyle(clothesList: List<Clothes>, absolutePath: String) = viewModelScope.launch {
@@ -65,6 +69,7 @@ class StyleViewModel: ViewModel() {
             _styleResponseStatus.postValue(response)
             if(response.status == Status.SUCCESS) {
                 _styleListLiveData.postValue(response.data!!.dataSet)
+                _recentlyAddedStyleList.postValue(getCreatedRecentlyItemList(response.data.dataSet!!.toMutableList()))
             }
         }
     }
@@ -75,12 +80,14 @@ class StyleViewModel: ViewModel() {
             _styleResponseStatus.postValue(response)
             if(response.status == Status.SUCCESS) {
                 _styleListLiveData.postValue(response.data!!.dataSet)
+                _recentlyAddedStyleList.postValue(getCreatedRecentlyItemList(response.data.dataSet!!.toMutableList()))
             }
         }
     }
     // TODO: 2022/02/10 PhotoItemList로 변환하는 로직 위치, MainViewModel, StyleViewModel
     // 함수 추출 범위 시작 -----------------------------------------
 
+    @Deprecated("ExpandableRecyclerView 폐기")
     fun makePhotoItemList(filteredList: MutableList<Style>): List<PhotoItem<Style>> {
         val photoItemList = mutableListOf<PhotoItem<Style>>()
         val recentlyCreatedItemList = getCreatedRecentlyItemList(filteredList)
@@ -116,6 +123,7 @@ class StyleViewModel: ViewModel() {
     }
 
     // List<Style>을 List<PhotoItem<Style>>로 변환
+    @Deprecated("ExpandableRecyclerView 폐기")
     private fun getPhotoItemList(list: MutableList<Style>): List<PhotoItem<Style>> {
         val result = mutableListOf<PhotoItem<Style>>()
         list.forEach { item ->
