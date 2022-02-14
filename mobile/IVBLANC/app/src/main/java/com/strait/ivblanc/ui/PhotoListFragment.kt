@@ -13,13 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
-import com.strait.ivblanc.adapter.BottomSheetClothesRVAdapter
-import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.adapter.HorizontalRVAdapter
 import com.strait.ivblanc.adapter.PhotoListRVAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Clothes
-import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
@@ -27,7 +24,6 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
-import com.strait.ivblanc.src.friend.FriendCloset
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
@@ -63,8 +59,8 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         super.onViewCreated(view, savedInstanceState)
         friendViewModel.firendEmail.observe(requireActivity()){
             FriendEmail = it
-        }
 
+        }
         horizontalRVAdapter = HorizontalRVAdapter()
         horizontalRVAdapter.itemClickListener = object: HorizontalRVAdapter.ItemClickListener {
             override fun onClick(position: Int) {
@@ -139,7 +135,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         when(tag) {
             // TODO: 2022/02/10 분기 처리 아름답게
             "clothes" -> {
-                binding.fabMain.visibility=View.GONE
                 clothesViewModel.clothesList.observe(this) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
@@ -153,7 +148,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "style" -> {
-                binding.fabMain.visibility=View.GONE
                 styleViewModel.styleListLiveData.observe(this) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
@@ -170,7 +164,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "f0"->{
-                binding.fabMain.visibility=View.GONE
                 clothesViewModel.clothesList.observe(requireActivity()) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
