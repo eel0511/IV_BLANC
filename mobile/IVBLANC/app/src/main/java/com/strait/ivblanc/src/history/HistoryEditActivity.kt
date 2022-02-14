@@ -232,6 +232,10 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             val geocoder = Geocoder(this)
 
             val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
+            Log.d("EDIT_HISTORY", "str = $str")
+            if(str == null || str.isEmpty()){
+                Toast.makeText(this, "검색할 위치정보를 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
             try {
                 list = geocoder.getFromLocationName(str, 10)
             } catch (e: IOException) {
@@ -241,8 +245,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
             if (list != null) {
                 if (list.isEmpty()) {
-                    //TODO : Toast 띄워주는걸로 바꾸기
-                    etLocation.setText("해당되는 주소 정보는 없습니다")
+                    Toast.makeText(this, "해당되는 주소 정보는 없습니다", Toast.LENGTH_SHORT).show()
                 } else {
                     var cut = list[0].toString().split("\"")
                     etLocation.setText(cut[1])
@@ -294,11 +297,15 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
         findSettingBtn.setOnClickListener {
-            Thread {
-                var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), today).split("/")
-                etTempLow.setText(str[0])
-                etTempHigh.setText(str[1])
-            }.start()
+            if(history.location == null || history.field == null){
+                Toast.makeText(this, "위치 정보를 먼저 설정해주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                Thread {
+                    var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), today).split("/")
+                    etTempLow.setText(str[0])
+                    etTempHigh.setText(str[1])
+                }.start()
+            }
         }
 
         val writeOwnBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu3)
