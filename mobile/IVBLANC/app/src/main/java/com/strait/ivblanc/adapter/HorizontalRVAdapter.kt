@@ -15,10 +15,10 @@ class HorizontalRVAdapter<T>: RecyclerView.Adapter<HorizontalRVAdapter<T>.ViewHo
         const val CLOTHES = 0
         const val STYLE = 1
     }
-    private var data = mutableListOf<T>()
+    var data = mutableListOf<T>()
     lateinit var itemClickListener: ItemClickListener
 
-    fun setData(dataList: List<T>) {
+    fun setDatas(dataList: List<T>) {
         data = dataList.toMutableList()
         notifyDataSetChanged()
     }
