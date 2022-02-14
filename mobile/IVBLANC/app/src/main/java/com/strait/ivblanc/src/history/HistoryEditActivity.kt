@@ -45,6 +45,7 @@ import android.view.ContextMenu.ContextMenuInfo
 import com.strait.ivblanc.R
 import com.strait.ivblanc.util.WeatherUtil
 import java.net.MalformedURLException
+import java.text.SimpleDateFormat
 
 
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
@@ -82,6 +83,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         location = intent.getStringExtra("location").toString()
 
         weatherUtil = WeatherUtil()
+        gpsTracker = GpsTracker(this@HistoryEditActivity)
 
         tvWeather = binding.textViewHistoryEditSelectWeather
         registerForContextMenu(tvWeather)
@@ -217,8 +219,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
                 checkRunTimePermission();
             }
 
-            gpsTracker = GpsTracker(this@HistoryEditActivity)
-
             latitude = gpsTracker!!.getLatitude()
             longitude = gpsTracker!!.getLongitude()
             address = getCurrentAddress(latitude, longitude)
@@ -263,6 +263,11 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         var etTempHigh = temperatureDialog.findViewById<EditText>(R.id.editText_temp_high)
         var etTempLow = temperatureDialog.findViewById<EditText>(R.id.editText_temp_low)
 
+
+        val date = Date(System.currentTimeMillis());
+        val sdf = SimpleDateFormat("yyyyMMdd");
+        val today = sdf.format(date);
+
         val noBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_cancel)
         noBtn.setOnClickListener(View.OnClickListener {
             temperatureDialog.dismiss()
@@ -270,17 +275,18 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val saveBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_save)
         saveBtn.setOnClickListener(View.OnClickListener {
-            history.temperature_high= etTempHigh.text.toString().toInt()
-            history.temperature_low = etTempLow.text.toString().toInt()
-            binding.textViewHistoryEditTemperature.text = etTempHigh.text.toString() + "°C/" + etTempLow.text.toString().toInt() + "°C/"
-            locationDialog.dismiss()
+            history.temperature_high= etTempHigh.text.toString().toDouble().toInt()
+            history.temperature_low = etTempLow.text.toString().toDouble().toInt()
+            binding.textViewHistoryEditTemperature.text = etTempHigh.text.toString() + "°C/" + etTempLow.text.toString() + "°C"
+
+            temperatureDialog.dismiss()
         })
 
         val findLocalBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu1)
         findLocalBtn.setOnClickListener {
-
             Thread {
-                var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), "20220214").split("/")
+                var str = weatherUtil.lookUpWeather(gpsTracker!!.getLatitude().toInt().toString(), gpsTracker!!.getLongitude().toInt().toString(), today).split("/")
+                Log.d("HISTORYEDIT", "latitude = ${gpsTracker!!.getLatitude()}, longitude = ${gpsTracker!!.getLongitude()}" )
                 etTempLow.setText(str[0])
                 etTempHigh.setText(str[1])
             }.start()
@@ -288,7 +294,11 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
         findSettingBtn.setOnClickListener {
-
+            Thread {
+                var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), today).split("/")
+                etTempLow.setText(str[0])
+                etTempHigh.setText(str[1])
+            }.start()
         }
 
         val writeOwnBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu3)
