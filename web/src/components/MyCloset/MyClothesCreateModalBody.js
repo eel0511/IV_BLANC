@@ -157,14 +157,29 @@ export default function MyClothesCreateModalBody({
       </table>
       <hr />
       <div className='create__color'>
-      <div className='col-3'>
-        <h2>색상</h2>
-      </div>
-      <div className='container row'>
-      {Object.entries(codeData['colors']).map((colorArray) => {
-        return (
-          <div key={colorArray[1]} className='col-3'>
-            <input
+        <div className='col-3'>
+          <h2>색상</h2>
+        </div>
+        <div className='container row'>
+        {Object.entries(codeData['colors']).map((colorArray) => {
+          return (
+            <div key={colorArray[1]} className='col-3'>
+              <input
+                id={'색상' + colorArray[1]}
+                value={colorArray[1]}
+                className='form-check-input'
+                type='radio'
+                name='colorGroup'
+                defaultChecked={selectedColor === colorArray[1] ? true : false}
+                onChange={colorHandleChange}
+              />
+              <label
+                className='form-check-label create__colorLabel'
+                htmlFor={'색상' + colorArray[1]}
+                style={{ backgroundColor: colorArray[1]}}
+              >
+              </label>
+              {/* <Label 
               id={'색상' + colorArray[1]}
               value={colorArray[1]}
               className='form-check-input'
@@ -172,84 +187,75 @@ export default function MyClothesCreateModalBody({
               name='colorGroup'
               defaultChecked={selectedColor === colorArray[1] ? true : false}
               onChange={colorHandleChange}
-            />
-            <label
-              className='form-check-label create__colorLabel'
-              htmlFor={'색상' + colorArray[1]}
-              style={{ backgroundColor: colorArray[1]}}
-            >
-            </label>
-            {/* <Label 
-            id={'색상' + colorArray[1]}
-            value={colorArray[1]}
-            className='form-check-input'
-            type='radio'
-            name='colorGroup'
-            defaultChecked={selectedColor === colorArray[1] ? true : false}
-            onChange={colorHandleChange}
-            htmlFor={colorArray[0]} 
-            color={colorArray[1]} 
+              htmlFor={colorArray[0]} 
+              color={colorArray[1]} 
 
-            >
-            <h4> {colorArray[0]} </h4>
-              </Label> */}
-          </div>
-        );
-      })}
+              >
+              <h4> {colorArray[0]} </h4>
+                </Label> */}
+            </div>
+          );
+        })}
+        </div>
       </div>
+      <hr />
+      <div className='create__color'>
+        <div className='col-3'>
+          <h2>소재</h2>
+        </div>
+        <div className='container row'>
+          {Object.entries(codeData['material']).map((materialArray) => {
+            return (
+              <div key={materialArray[1]} className='col-3'>
+                <input
+                  id={'소재' + materialArray[0]}
+                  value={materialArray[1]}
+                  className='form-check-input'
+                  type='radio'
+                  name='materialGroup'
+                  defaultChecked={
+                    selectedMaterial === materialArray[1] ? true : false
+                  }
+                  onChange={materialHandleChange}
+                />
+                <label
+                  className='form-check-label'
+                  htmlFor={'소재' + materialArray[0]}
+                >
+                  {materialArray[0]}
+                </label>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <hr />
       <div>
-        <h2>소재</h2>
+        <div>
+          <h2>시즌</h2>
+        </div>
+        {Object.entries(codeData['season']).map((seasonArray) => {
+          return (
+            <React.Fragment key={seasonArray[1]}>
+              <input
+                id={'시즌' + seasonArray[0]}
+                value={seasonArray[1]}
+                className='form-check-input'
+                type='radio'
+                name='seasonGroup'
+                defaultChecked={selectedSeason === seasonArray[1] ? true : false}
+                onChange={seasonHandleChange}
+              />
+              <label
+                className='form-check-label'
+                htmlFor={'시즌' + seasonArray[0]}
+              >
+                {seasonArray[0]}
+              </label>
+            </React.Fragment>
+          );
+        })}
       </div>
-      {Object.entries(codeData['material']).map((materialArray) => {
-        return (
-          <React.Fragment key={materialArray[1]}>
-            <input
-              id={'소재' + materialArray[0]}
-              value={materialArray[1]}
-              className='form-check-input'
-              type='radio'
-              name='materialGroup'
-              defaultChecked={
-                selectedMaterial === materialArray[1] ? true : false
-              }
-              onChange={materialHandleChange}
-            />
-            <label
-              className='form-check-label'
-              htmlFor={'소재' + materialArray[0]}
-            >
-              {materialArray[0]}
-            </label>
-          </React.Fragment>
-        );
-      })}
-      <hr />
-      <div>
-        <h2>시즌</h2>
-      </div>
-      {Object.entries(codeData['season']).map((seasonArray) => {
-        return (
-          <React.Fragment key={seasonArray[1]}>
-            <input
-              id={'시즌' + seasonArray[0]}
-              value={seasonArray[1]}
-              className='form-check-input'
-              type='radio'
-              name='seasonGroup'
-              defaultChecked={selectedSeason === seasonArray[1] ? true : false}
-              onChange={seasonHandleChange}
-            />
-            <label
-              className='form-check-label'
-              htmlFor={'시즌' + seasonArray[0]}
-            >
-              {seasonArray[0]}
-            </label>
-          </React.Fragment>
-        );
-      })}
       <hr />
       <div>
         <h2>사이즈</h2>
