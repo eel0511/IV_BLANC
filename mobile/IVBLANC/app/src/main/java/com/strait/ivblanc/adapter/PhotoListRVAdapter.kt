@@ -26,9 +26,17 @@ class PhotoListRVAdapter<T>: RecyclerView.Adapter<PhotoListRVAdapter<T>.ViewHold
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener { if(this@PhotoListRVAdapter::itemClickListener.isInitialized) {
-                itemClickListener.onClick(adapterPosition)
-            }}
+            itemView.setOnClickListener {
+                if(this@PhotoListRVAdapter::itemClickListener.isInitialized) {
+                   itemClickListener.onClick(adapterPosition)
+                }
+            }
+            itemView.setOnLongClickListener {
+                if(this@PhotoListRVAdapter::itemLongClickListener.isInitialized) {
+                    itemLongClickListener.onLongClick(adapterPosition)
+                }
+                true
+            }
         }
 
         fun bind(data: T) {
@@ -41,7 +49,11 @@ class PhotoListRVAdapter<T>: RecyclerView.Adapter<PhotoListRVAdapter<T>.ViewHold
                     else favoriteImageView.visibility = View.GONE
                 }
                 is Style -> {
-
+                    val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_style)
+                    Glide.with(itemView).load(data.url).into(imageView)
+                    val favoriteImageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_style_favorite)
+                    if(data.favorite == 1) favoriteImageView.visibility = View.VISIBLE
+                    else favoriteImageView.visibility = View.GONE
                 }
             }
         }
@@ -50,7 +62,8 @@ class PhotoListRVAdapter<T>: RecyclerView.Adapter<PhotoListRVAdapter<T>.ViewHold
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         when(viewType) {
             STYLE -> {
-
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.list_photo_item_style, parent, false)
+                return ViewHolder(view)
             }
         }
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_photo_item_clothes, parent, false)
