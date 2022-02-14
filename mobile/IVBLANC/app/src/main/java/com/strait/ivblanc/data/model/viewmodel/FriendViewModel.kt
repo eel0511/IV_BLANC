@@ -123,7 +123,7 @@ class FriendViewModel : ViewModel() {
         setLoading()
         //default data
         var u =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/00e3e841-0ec1-4261-909a-52ff448af69a.jpeg")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/f66a9264-2c71-497d-83d2-255c0802f3c0.png")
         val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
         _friendResponseStatus.postValue(result)
         Log.d("aaaa", "getAllFriendClothes: " + result)
