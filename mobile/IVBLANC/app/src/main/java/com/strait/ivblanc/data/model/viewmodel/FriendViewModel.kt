@@ -102,7 +102,7 @@ class FriendViewModel : ViewModel() {
 
 
     // friend
-    fun getFriendEmail(email:String)=viewModelScope.launch{
+    fun setFriendEmail(email:String)=viewModelScope.launch{
         _friendEmail.postValue(email)
     }
     fun getAllFriends(applicant: String) = viewModelScope.launch {

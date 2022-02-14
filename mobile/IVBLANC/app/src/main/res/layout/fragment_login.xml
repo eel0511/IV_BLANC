@@ -65,7 +65,6 @@
         android:id="@+id/checkbox_loginF_autoLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checked="true"
         android:text="@string/autoLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
