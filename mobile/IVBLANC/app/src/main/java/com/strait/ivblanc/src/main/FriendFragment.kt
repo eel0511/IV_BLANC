@@ -22,6 +22,7 @@ import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.databinding.FragmentFriendBinding
 import com.strait.ivblanc.databinding.FragmentHistoryBinding
 import com.strait.ivblanc.src.friend.FriendCloset
+import com.strait.ivblanc.util.LoginUtil
 import kotlinx.coroutines.*
 
 
@@ -56,10 +57,10 @@ class FriendFragment :
     }
 
     fun reloadImages() {
-        list.clear()
-        //자신 이메일
-        // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로 
-        friendViewModel.getAllFriends("aaa@a.com")
+        LoginUtil.getUserInfo()?.let {
+            list.clear()
+            friendViewModel.getAllFriends(it.email)
+        }
     }
 
     fun init() {
