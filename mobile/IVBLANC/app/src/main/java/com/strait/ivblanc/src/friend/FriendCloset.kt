@@ -45,17 +45,19 @@ class FriendCloset :
         super.onCreate(savedInstanceState)
         intent.getParcelableExtra<FriendViewdata>(FriendFragment.FRIEND_INFO)?.let {
             friendInfo = it
+            friendViewModel.setFriendEmail(it.email)
             friendViewModel.setToolbarTitle("친구 " + friendInfo.name + "의 옷장")
             friendViewModel.setLeadingIcon(R.drawable.ic_back)
             clothesViewModel.getAllFriendClothesWithCategory(friendInfo.email,CategoryCode.TOTAL)
             styleViewModel.getAllFriendStyles(friendInfo.email)
             setViewPager()
+            setToolbar()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        setToolbar()
+        styleViewModel.getAllFriendStyles(friendInfo.email)
     }
 
     private fun setToolbar() {
