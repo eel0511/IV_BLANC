@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="현재 날짜, 장소로 자동 입력 ▾"
+        android:text="현재 위치로 자동 입력 ▾"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
-        android:text="설정된 날짜, 장소로 자동 입력 ▾"
+        android:text="설정된 위치로 자동 입력 ▾"
         android:textColor="@color/black"
         android:textSize="18sp" />
 
