@@ -51,8 +51,8 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
               src={selectStyle.url}
               alt={selectStyle.styleId}
               style={{
-                width: '40vh',
-                height: '50vh',
+                width: '60%',
+                height: '50%',
                 objectFit: 'fill',
                 borderRadius: '1rem',
 
