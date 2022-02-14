@@ -63,6 +63,7 @@ class LoginFragment :
             when (it.status) {
                 Status.SUCCESS -> {
                     LoginUtil.setAutoLogin(loginViewModel.isAutoLogin)
+                    LoginUtil.saveUserInfo(it.data!!.dataSet!!)
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
                     dismissLoading()
