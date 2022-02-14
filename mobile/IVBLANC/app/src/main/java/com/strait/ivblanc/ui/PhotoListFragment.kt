@@ -283,14 +283,13 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     fun showDeleteDialog(item: Any) {
         val content: String = when(item) {
             is Clothes -> "이 옷을 삭제하시겠습니까?"
-            // TODO: 2022/01/26 룩 type으로 변경
             else -> "이 룩을 삭제하시겠습니까?"
         }
         DeleteDialog(requireActivity())
             .setContent(content)
             .setOnPositiveClickListener {
                 when (item) {
-                    is Clothes -> viewModel.deleteClothesById((item).clothesId)
+                    is Clothes -> clothesViewModel.deleteClothesById((item).clothesId)
                     is Style -> styleViewModel.deleteStyleById((item).styleId)
                 }
             }.build().show()
