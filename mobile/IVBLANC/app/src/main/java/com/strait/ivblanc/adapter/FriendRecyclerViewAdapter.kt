@@ -25,15 +25,35 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<FriendRecyclerViewAdapt
         private val style2 = itemView.findViewById<ImageView>(R.id.list_friend_style2)
         private val style3 = itemView.findViewById<ImageView>(R.id.list_friend_style3)
         private val style4 = itemView.findViewById<ImageView>(R.id.list_friend_style4)
-        private val non_text = itemView.findViewById<TextView>(R.id.no_item_text)
+        private val non_text = itemView.findViewById<ImageView>(R.id.no_item_text)
+        private val non_text2 = itemView.findViewById<ImageView>(R.id.no_item_text2)
+
+
+
 
         fun bind(item: FriendViewdata) {
+
             Name.text = item.name+"님의 옷장"
-            if(item.style1==item.style2&&item.style2==item.style3&&item.style3==item.style4){
+
+            if(item.cloth1==item.cloth2&&item.cloth2==item.cloth3&&item.cloth3==item.cloth4){
+                non_text2.visibility=View.VISIBLE
+                cloth1.visibility=View.GONE
+                cloth2.visibility=View.GONE
+                cloth3.visibility=View.GONE
+                cloth4.visibility=View.GONE
+            }else{
+                non_text2.visibility=View.GONE
+                cloth1.visibility=View.VISIBLE
+                cloth2.visibility=View.VISIBLE
+                cloth3.visibility=View.VISIBLE
+                cloth4.visibility=View.VISIBLE
                 Glide.with(cloth1).load(item.cloth1).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth1)
                 Glide.with(cloth2).load(item.cloth2).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth2)
                 Glide.with(cloth3).load(item.cloth3).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth3)
                 Glide.with(cloth4).load(item.cloth4).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth4)
+            }
+
+            if(item.style1==item.style2&&item.style2==item.style3&&item.style3==item.style4){
                 non_text.visibility=View.VISIBLE
                 style1.visibility=View.GONE
                 style2.visibility=View.GONE
@@ -45,10 +65,6 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<FriendRecyclerViewAdapt
                 style2.visibility=View.VISIBLE
                 style3.visibility=View.VISIBLE
                 style4.visibility=View.VISIBLE
-                Glide.with(cloth1).load(item.cloth1).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth1)
-                Glide.with(cloth2).load(item.cloth2).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth2)
-                Glide.with(cloth3).load(item.cloth3).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth3)
-                Glide.with(cloth4).load(item.cloth4).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(cloth4)
                 Glide.with(style1).load(item.style1).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(style1)
                 Glide.with(style2).load(item.style2).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(style2)
                 Glide.with(style3).load(item.style3).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).centerCrop().into(style3)
