@@ -26,29 +26,36 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
     setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
 
     let mainCategory = '';
-    switch (clothesData.category / 10) {
+    switch (parseInt(clothesData.category / 10)) {
       case 1:
         mainCategory = codeData['category'].상의;
         break;
       case 2:
         mainCategory = codeData['category'].하의;
         break;
-      case 4:
+      case 3:
         mainCategory = codeData['category'].아우터;
         break;
-      case 5:
+      case 4:
         mainCategory = codeData['category'].신발;
         break;
-      case 6:
+      case 5:
         mainCategory = codeData['category'].가방;
         break;
-      default:
+      case 6:
         mainCategory = codeData['category'].모자;
+        break;
+      default:
+        mainCategory = codeData['category'].기타;
         break;
     }
 
     // console.log(mainCategory);
-    // console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
+    // console.log(
+    //   Object.keys(mainCategory).find(
+    //     (key) => mainCategory[key] === clothesData.category
+    //   )
+    // );
     setCategory(
       Object.keys(mainCategory).find(
         (key) => mainCategory[key] === clothesData.category

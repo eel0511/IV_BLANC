@@ -24,8 +24,8 @@ export default function Home() {
       <Video />
       <Pricing />
       <Testimonials />
-      <Skills />
-      <Contact />
+      {/* <Skills />
+      <Contact /> */}
     </motion.div>
   );
 }

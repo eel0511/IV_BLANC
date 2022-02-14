@@ -1,7 +1,5 @@
 package com.strait.ivblanc.data.model.viewmodel
 
-import android.net.Uri
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,10 +22,6 @@ class StyleViewModel: ViewModel() {
     private val styleRepository = StyleRepository()
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
-    // focus
-    private val _focusedImage = MutableLiveData<ImageView>()
-    var focusedImage : LiveData<ImageView> = _focusedImage
-
     // 네트워크 요청 상태, 로딩, 성공, 에러
     private val _styleResponseStatus = MutableLiveData<Resource<*>>()
     val styleResponseStatus: LiveData<Resource<*>> get() = _styleResponseStatus
@@ -47,13 +41,11 @@ class StyleViewModel: ViewModel() {
         val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
         val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
         ioScope.launch {
-            val response = styleRepository.addClothes(imageRequestBody, clothesRequestBody)
+            val response = styleRepository.addStyle(imageRequestBody, clothesRequestBody)
             _styleResponseStatus.postValue(response)
         }
     }
-    fun changefocus(imageView: ImageView){
-        _focusedImage.postValue(imageView)
-    }
+
     private fun makeClothesIdString(clothesList: List<Clothes>): String {
         val value = StringBuilder().apply {
             clothesList.forEach {
@@ -171,6 +163,17 @@ class StyleViewModel: ViewModel() {
 
     // 스타일 삭제 요청 관련 끝 ------------------------
 
+    // 스타일 변경 요청 관련 시작 ---------------------
+    fun updateStyle(clothesList: List<Clothes>, absolutePath: String, styleId: Int) = viewModelScope.launch {
+        setLoading()
+        val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
+        val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
+        val styleIdRequestBody = MultiPartUtil.makeMultiPartBody("styleId", styleId.toString())
+        ioScope.launch {
+            val response = styleRepository.updateStyle(imageRequestBody, clothesRequestBody, styleIdRequestBody)
+            _styleResponseStatus.postValue(response)
+        }
+    }
 
     private fun setLoading() {
         _styleResponseStatus.postValue(Resource.loading(null))

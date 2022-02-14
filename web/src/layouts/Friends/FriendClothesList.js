@@ -7,10 +7,8 @@ import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
-import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 import FriendStyleCreateModalBody from '../../components/Friends/FriendStyleCreateModalBody';
-
 
 export default function FriendStyleTopbar({ friendName, friendEmail }) {
   const menus = [
@@ -279,8 +277,8 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          email: `${friendEmail}`
-        }
+          email: `${friendEmail}`,
+        },
       })
       .then((response) => {
         console.log(response.data.data);
@@ -450,7 +448,9 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
                       <Modal.Title>스타일 추천</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <FriendStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <FriendStyleCreateModalBody
+                        saveClothesId={saveClothesId}
+                      />
                     </Modal.Body>
                   </Modal>
 

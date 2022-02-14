@@ -176,6 +176,7 @@ const Section = styled.section`
       color: var(--primary-color);
       text-transform: uppercase;
       letter-spacing: 0.2rem;
+      font-size: 2rem;
     }
     h2 {
       color: white;

@@ -10,25 +10,25 @@ export default function Blog() {
   const [element, controls] = useScroll();
   const blogsData = [
     {
-      title: "첫번째 코디",
-      type: "코멘트",
+      title: "2022-02-18",
+      type: "IV BLANC와 함께",
       img: "1.jfif",
       description:
-        "comment",
+        "추억하다!",
     },
     {
-      title: "두번째 코디",
-      type: "코멘트",
+      title: "2022-02-18",
+      type: "소중한 기억일 수록",
       img: "2.jfif",
       description:
-        "comment",
+        "잊혀지기 쉽습니다!",
     },
     {
-      title: "세번째 코디",
-      type: "코멘트",
+      title: "2022-02-18",
+      type: "히스토리를 통해",
       img: "3.jfif",
       description:
-        "comment",
+        "나의 하루를 기록하세요!",
     },
   ];
   return (
@@ -120,6 +120,8 @@ const Section = styled.section`
         color: var(--primary-color);
       }
       .more {
+        margin-top: 50px;
+        margin-left: 40px;
         display: flex;
         align-items: center;
         gap: 1rem;

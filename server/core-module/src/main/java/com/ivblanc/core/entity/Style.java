@@ -59,4 +59,8 @@ public class Style extends BaseEntity {
 		styleDetail.setStyle(this);
 		this.styleDetails.add(styleDetail);
 	}
+	public void delete(StyleDetail styleDetail){
+		this.styleDetails.remove(styleDetail);
+		styleDetail.setStyle(null);
+	}
 }
