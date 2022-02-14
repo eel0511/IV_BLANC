@@ -35,7 +35,6 @@ import com.strait.ivblanc.util.Status
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
 class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
-    lateinit var exAdapter: ExpandableRecyclerViewAdapter<T>
     lateinit var horizontalRVAdapter: HorizontalRVAdapter<T>
     lateinit var photoListRVAdapter: PhotoListRVAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
@@ -117,79 +116,6 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             layoutManager = GridLayoutManager(requireContext(), 3)
         }
 
-
-//        exAdapter = ExpandableRecyclerViewAdapter(requireActivity())
-//        exAdapter.itemClickListener = object : ExpandableRecyclerViewAdapter.ItemClickListener {
-//            override fun onClick(position: Int, viewType: Int) {
-//                when(viewType) {
-//                    ExpandableRecyclerViewAdapter.HEADER -> {
-//                        val data = this@PhotoListFragment.exAdapter.data
-//                        var count = 0
-//                        val item = data[position]
-//                        // invisibleItems가 있을 때 펼침
-//                        if(!item.isInvisibleItemsNull() && item.invisibleItems?.size?:0 != 0) {
-//                            var index = position + 1
-//                            for(i in item.invisibleItems!!) {
-//                                data.add(index, PhotoItem(ExpandableRecyclerViewAdapter.CHILD, content = i))
-//                                index++
-//                            }
-//                            exAdapter.notifyItemRangeInserted(position + 1, index - position - 1)
-//                            item.clearInvisibleItem()
-//                        }
-//                        // invisibleItems가 없을 때 접음
-//                        else if(!item.isInvisibleItemsNull() && item.invisibleItems!!.size == 0) { // invisibleItems가 없을 때
-//                            while (data.size > position + 1 && data[position + 1].type == ExpandableRecyclerViewAdapter.CHILD) {
-//                                item.addInvisibleItem(data.removeAt(position + 1).content!!)
-//                                count++
-//                            }
-//                            exAdapter.notifyItemRangeRemoved(position + 1, count)
-//                        }
-//                    }
-//                    // TODO: 2022/01/30 data.content type에 따라 분기
-//                    ExpandableRecyclerViewAdapter.CHILD -> {
-//                        exAdapter.data[position].content?.let { item ->
-//                            val intent = when(item) {
-//                                is Clothes -> {
-//                                    Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
-//                                }
-//                                is Style -> {
-//                                    Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", item)
-//                                }
-//                                else -> return
-//                            }
-//                            startActivity(intent)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
-        // 아이템 뷰타입이 child일 때만 longClickListener 작동
-//        exAdapter.itemLongClickListener = object : ExpandableRecyclerViewAdapter.ItemLongClickListener {
-//            override fun onLongClick(position: Int) {
-//                val item = exAdapter.data[position]
-//                if(item.type == ExpandableRecyclerViewAdapter.CHILD) {
-//                    showDeleteDialog(item)
-//                }
-//            }
-//        }
-//
-//        binding.recyclerViewPhotoListF.apply {
-//            this.adapter = exAdapter
-//            layoutManager = GridLayoutManager(requireContext(), 3).also {
-//
-//                it.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-//                    override fun getSpanSize(position: Int): Int {
-//                        return if(this@PhotoListFragment.exAdapter.data[position].type == ExpandableRecyclerViewAdapter.HEADER) { // header면 전체 칸 차지
-//                            3
-//                        } else {
-//                            1
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
         // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
         viewModel.clothesResponseStatus.observe(requireActivity()) {
 
@@ -214,13 +140,10 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             // TODO: 2022/02/10 분기 처리 아름답게
             "clothes" -> {
                 binding.fabMain.visibility=View.GONE
-                clothesViewModel.clothesList.observe(requireActivity()) {
-                    Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
-//                    exAdapter.data = it as ArrayList<PhotoItem<T>>
-//                    exAdapter.notifyDataSetChanged()
+                clothesViewModel.clothesList.observe(this) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
-                clothesViewModel.recentlyAddedClothesList.observe(requireActivity()) {
+                clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
                     if(it.isNotEmpty()) {
                         binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
                     } else {
@@ -231,10 +154,15 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             }
             "style" -> {
                 binding.fabMain.visibility=View.GONE
-                styleViewModel.styleListLiveData.observe(requireActivity()) {
-                    exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
-                    exAdapter.notifyDataSetChanged()
+                styleViewModel.styleListLiveData.observe(this) {
+                    photoListRVAdapter.setDatas(it as List<T>)
                 }
+                styleViewModel.recentlyAddedStyleList.observe(this) {
+                    if(it.isNotEmpty()) {
+                        horizontalRVAdapter.setDatas(it as List<T>)
+                    }
+                }
+
                 styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
                     if(it.status == Status.SUCCESS) {
                         styleViewModel.getAllStyles()
@@ -243,10 +171,8 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             }
             "f0"->{
                 binding.fabMain.visibility=View.GONE
-                clothesViewModel.clothesListLiveData.observe(requireActivity()) {
-                    Log.d("aaaaaaaa", "setObserverLiveData: "+clothesViewModel.clothesListLiveData.value)
-                    exAdapter.data = it as ArrayList<PhotoItem<T>>
-                    exAdapter.notifyDataSetChanged()
+                clothesViewModel.clothesList.observe(requireActivity()) {
+                    horizontalRVAdapter.setDatas(it as List<T>)
                 }
             }
             "f1"->{
@@ -259,9 +185,13 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
                     Log.d(TAG, "setObserverLiveData: "+it)
-                    exAdapter.data = styleViewModel.makePhotoItemList(it.toMutableList()) as ArrayList<PhotoItem<T>>
-                    exAdapter.notifyDataSetChanged()
+                    photoListRVAdapter.setDatas(it as List<T>)
                 }
+
+                styleViewModel.recentlyAddedStyleList.observe(requireActivity()) {
+                    horizontalRVAdapter.setDatas(it as List<T>)
+                }
+
                 styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
                     Log.d(TAG, "setObserverLiveData: "+it)
                     if(it.status == Status.SUCCESS) {
