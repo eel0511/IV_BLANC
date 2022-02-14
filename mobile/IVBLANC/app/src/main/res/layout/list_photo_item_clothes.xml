@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageView_photoItem_favorite"
-        android:layout_width="@dimen/smallIconSize"
-        android:layout_height="@dimen/smallIconSize"
+        android:layout_width="@dimen/favoriteIconSize"
+        android:layout_height="@dimen/favoriteIconSize"
         android:layout_marginTop="@dimen/defaultMargin"
         android:layout_marginEnd="@dimen/defaultMargin"
         android:background="@drawable/ic_heart_filled"
