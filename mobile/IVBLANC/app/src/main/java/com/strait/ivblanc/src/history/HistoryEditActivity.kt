@@ -43,6 +43,8 @@ import android.view.*
 
 import android.view.ContextMenu.ContextMenuInfo
 import com.strait.ivblanc.R
+import com.strait.ivblanc.util.WeatherUtil
+import java.net.MalformedURLException
 
 
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
@@ -59,7 +61,10 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
     lateinit var history: History
     lateinit var location: String
+
     lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
+    lateinit var weatherUtil: WeatherUtil
+
     lateinit var locationDialog: Dialog
     lateinit var temperatureDialog: Dialog
 
@@ -75,6 +80,8 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             history = it
         } ?: finish()
         location = intent.getStringExtra("location").toString()
+
+        weatherUtil = WeatherUtil()
 
         tvWeather = binding.textViewHistoryEditSelectWeather
         registerForContextMenu(tvWeather)
@@ -272,6 +279,11 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         val findLocalBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu1)
         findLocalBtn.setOnClickListener {
 
+            Thread {
+                var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), "20220214").split("/")
+                etTempLow.setText(str[0])
+                etTempHigh.setText(str[1])
+            }.start()
         }
 
         val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
