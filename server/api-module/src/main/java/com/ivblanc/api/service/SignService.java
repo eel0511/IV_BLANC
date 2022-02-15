@@ -115,8 +115,8 @@ public class SignService {
 
         ResponseCookie rCookie = ResponseCookie.from("JWT", token)
             .path("/")
-            .secure(true)
-            .sameSite("None")
+            .secure(false)
+            .sameSite("Lax")
             .httpOnly(false)
             .domain("i6d104.p.ssafy.io")
             .maxAge(1000 * 1000)
