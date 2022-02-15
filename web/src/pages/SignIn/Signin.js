@@ -158,7 +158,7 @@ export default function SignInSide() {
   return (
     <Section>
       <div className='MyCloset__Nav'>
-        <Navbar token={token}/>
+        <Navbar />
       </div>
       <Title value='SIGNIN' />
       <ThemeProvider theme={theme}>
