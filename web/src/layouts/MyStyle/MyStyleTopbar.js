@@ -262,7 +262,7 @@ export default function MyStyleTopbar() {
   const [isShowLook, setIsShowLook] = useState(false);
   const [isClickLook, setIsClickLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
-  const [styleLook, setStyleLook] = useState();
+  const [styleLook, setStyleLook] = useState({});
 
   const [show, setShow] = useState(false);
   const [AIshow, setAIShow] = useState(false);
@@ -350,14 +350,9 @@ export default function MyStyleTopbar() {
   };
 
   const showStyle = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     setIsClickLook(false);
     setIsShowLook(true);
-    const data = {
-      styleId: Number(e.target.alt),
-      url: e.target.src,
-    };
-    setStyleLook(data);
   };
 
   const handleInitiate = async (e) => {
@@ -373,10 +368,16 @@ export default function MyStyleTopbar() {
   };
 
   const showLook = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(e);
     setIsClickLook(true);
     setIsShowLook(false);
+    const data = {
+      styleId: Number(e.target.alt),
+      url: e.target.src,
+    };
+    console.log(data);
+    setStyleLook(data);
   };
 
   let showImg = (
