@@ -19,6 +19,9 @@
         android:theme="@style/Theme.IVBLANC"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".src.history.StyleSelectActivity"
+            android:exported="true" />
+        <activity
             android:name=".src.history.HistoryEditActivity"
             android:exported="true" />
         <activity
