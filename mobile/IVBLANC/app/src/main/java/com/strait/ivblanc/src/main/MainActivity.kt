@@ -36,6 +36,7 @@ import com.strait.ivblanc.src.friend.FriendNoti
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
+import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.StatusCode
 
@@ -77,8 +78,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onCreate(savedInstanceState)
 
         getFCM()
-        // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
-        mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         styleViewModel.getAllStyles()
         mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
@@ -109,7 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
                 // Style로 변경
                 R.id.nav_style -> {
-                    setFragment(PhotoListFragment<Style>(), "style")
+                    setFragment(StylePhotoListFragment(), "style")
                     true
                 }
                 R.id.nav_history -> {
