@@ -135,7 +135,13 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
-            val date = history.date.split("-")
+            val date: List<String>
+            if(history.historyId != 0){
+                date = history.date.split("-")
+            } else {
+                date = getToday("yyyy-MM-dd").split("-")
+            }
+
             val dialog = DatePickerDialog(this, R.style.MySpinnerDatePickerStyle, datePickerListener, date[0].toInt(), date[1].toInt()-1, date[2].toInt())
             dialog.show()
         }
@@ -280,16 +286,19 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
     }
 
+    private fun getToday(pattern: String): String {
+        val date = Date(System.currentTimeMillis());
+        val sdf = SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
+
     private fun showTemperatureDialog(){
         temperatureDialog.show() // 다이얼로그 띄우기
 
         var etTempHigh = temperatureDialog.findViewById<EditText>(R.id.editText_temp_high)
         var etTempLow = temperatureDialog.findViewById<EditText>(R.id.editText_temp_low)
 
-
-        val date = Date(System.currentTimeMillis());
-        val sdf = SimpleDateFormat("yyyyMMdd");
-        val today = sdf.format(date);
+        val today = getToday("yyyyMMdd")
 
         val noBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_btn_cancel)
         noBtn.setOnClickListener(View.OnClickListener {
