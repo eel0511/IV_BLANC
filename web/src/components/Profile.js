@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BsPersonCircle } from 'react-icons/bs';
 import { Menu } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -14,8 +15,10 @@ export default function Profile() {
     setAnchorEl(null);
   };
 
+  let navigate = useNavigate();
   const logOut = () => {
-    console.log('hello');
+    localStorage.removeItem('jwt');
+    navigate('/');
   };
 
   return (
