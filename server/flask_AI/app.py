@@ -79,7 +79,7 @@ def start2():
 
     # Display images.
     maskpath = os.path.join("./datasets/test/cloth-mask/"+fname)
-    # cv2.imshow("Foreground", im_out)
+   # cv2.imshow("Foreground", im_out)
     cv2.waitKey(0)
 
     im_out = cv2.resize(im_out, (192, 256))
@@ -90,6 +90,7 @@ def start2():
     test.main()
     fileUpload("results/su/07573_"+fname)
     return "https://storage.googleapis.com/iv-blanc.appspot.com/results/su/07573_"+fname
+
 @app.route("/",methods=['POST'])
 def start():
     f = request.files['file']
@@ -125,7 +126,7 @@ def start():
 
     # Display images.
     maskpath = os.path.join("./datasets/test/cloth-mask/"+fname)
-    # cv2.imshow("Foreground", im_out)
+   # cv2.imshow("Foreground", im_out)
     cv2.waitKey(0)
 
     im_out = cv2.resize(im_out, (192, 256))
