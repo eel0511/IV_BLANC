@@ -104,20 +104,22 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             finish()
         }
         binding.textViewHistoryEditSave.setOnClickListener {
-
-            history.weather = binding.textViewHistoryEditSelectWeather.text.toString()
+            history.date = binding.textViewHistoryEditSelectDate.text.toString()
             history.subject = binding.editTextHistoryEditSubject.text.toString()
             history.text = binding.editTextHistoryEditText.text.toString()
 
             if(history.historyId != 0){
-                history.date = binding.textViewHistoryEditSelectDate.text.toString()
+                history.weather = binding.textViewHistoryEditSelectWeather.text.toString()
+
                 historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather,
                     history.temperature_low, history.temperature_high, history.text, history.subject, history.styleUrl)
                 Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                if(history.date == "" || styleId == 0){
+                if(history.date == "날짜 선택 > ") {
                     Toast.makeText(this, "날짜를 선택해주세요", Toast.LENGTH_SHORT).show()
+                } else if(styleId == 0) {
+                    Toast.makeText(this, "스타일을 선택해주세요", Toast.LENGTH_SHORT).show()
                 } else {
                     historyViewModel.addHistory(history.location, history.field, history.date, history.weather,
                         history.temperature_low, history.temperature_high, history.text, history.subject, styleId, emptyList() )

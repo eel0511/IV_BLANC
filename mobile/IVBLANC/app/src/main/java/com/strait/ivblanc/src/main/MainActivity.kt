@@ -159,7 +159,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                                     this@MainActivity,
                                     StyleSelectActivity::class.java
                                 ).apply {
-                                    putExtra("history", History("", "", 0.0,0.0, 0, emptyList(), "", "", 0, 0, "", "", 0, ""))
+                                    putExtra("history", History("", "", 0.0,0.0, 0, emptyList(), "", "", 0, 0, "", "", 0, "맑음"))
                                 }
                             )
                         }
