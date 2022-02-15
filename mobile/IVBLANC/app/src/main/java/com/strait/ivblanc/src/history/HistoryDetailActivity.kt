@@ -15,10 +15,12 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.HistoryDetailRecyclerViewAdapter
+import com.strait.ivblanc.adapter.PhotoRecyclerViewAdapter
 import com.strait.ivblanc.data.model.dto.HistoryPhoto
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.ui.DeleteDialog
@@ -90,6 +92,22 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
                     }
                 }
                 historyViewModel.addHistoryPhotos(history.historyId, absolutePathList)
+            }
+        })
+        galleryFragment.show(supportFragmentManager, "photo")
+    }
+
+    // TODO: 2022/02/16 사진 한장만 선택 가능하게 변경 
+    private fun showGalleryDialogForUpdate(photo: HistoryPhoto) {
+        val galleryFragment = HistoryPhotoFragment(object: HistoryPhotoFragment.ImageSelectedListener {
+            override fun getResult(imageUris: List<Uri>) {
+                (supportFragmentManager.findFragmentByTag("photo") as DialogFragment).dismiss()
+                if(imageUris.isEmpty()) return
+
+                val absolutePath = CaptureUtil.getAbsolutePathFromImageUri(this@HistoryDetailActivity, imageUris[0])
+                absolutePath?.let {
+                    historyViewModel.updateHistoryPhotos(photo.photoId, absolutePath)
+                }
             }
         })
         galleryFragment.show(supportFragmentManager, "photo")
@@ -170,7 +188,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             .setContent("이미지를 변경하시겠습니까?")
             .setNegativeButtonText("수정")
             .setOnNegativeClickListener {
-
+                showGalleryDialogForUpdate(photo)
             }
             .setPositiveButtonText("삭제")
             .setOnPositiveClickListener {
