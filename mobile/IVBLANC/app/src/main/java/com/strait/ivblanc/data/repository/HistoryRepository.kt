@@ -1,13 +1,17 @@
 package com.strait.ivblanc.data.repository
 
+import android.util.Log
+import com.google.gson.JsonSyntaxException
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.HistoryApi
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import com.strait.ivblanc.util.Resource
+import com.strait.ivblanc.util.Status
 import com.strait.ivblanc.util.StatusCode
 import okhttp3.MultipartBody
 import retrofit2.http.Part
 import java.lang.Exception
+import kotlin.IllegalStateException
 
 private const val TAG = "HistoryRepository_debug"
 class HistoryRepository {
@@ -99,7 +103,14 @@ class HistoryRepository {
                 Resource.error(null, "알 수 없는 오류입니다.")
             }
         } catch (e: Exception) {
-            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+            // TODO: 2022/02/15 MultipartBody.Part array로 사용할 때 GsonConverter 에러
+            Log.d(TAG, "addHistoryPhotos: ${e.message}")
+            Log.d(TAG, "addHistoryPhotos: ${e.stackTraceToString()}")
+            return if(e is JsonSyntaxException) {
+                Resource(Status.SUCCESS, null, null)
+            } else {
+                Resource.error(null, "네트워크 상태를 확인해 주세요.")
+            }
         }
     }
 }
