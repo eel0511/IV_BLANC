@@ -77,6 +77,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     private fun showGalleryDialog() {
         val galleryFragment = HistoryPhotoFragment(object: HistoryPhotoFragment.ImageSelectedListener {
             override fun getResult(imageUris: List<Uri>) {
+                if(imageUris.isEmpty()) return
                 val absolutePathList = mutableListOf<String>()
                 for(i in imageUris) {
                     CaptureUtil.getAbsolutePathFromImageUri(this@HistoryDetailActivity, i)?.let {
