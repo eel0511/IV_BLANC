@@ -112,8 +112,8 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
                 }
             }
             "f1" -> {
-                if(this::friendEmail.isInitialized) {
-                    binding.floatingButtonStylePhotoListF.setOnClickListener {
+                binding.floatingButtonStylePhotoListF.setOnClickListener {
+                    if(this::friendEmail.isInitialized) {
                         val intent = Intent(requireActivity(),StyleMakingActivity::class.java)
                         intent.putExtra("friendEmail", friendEmail)
                         startActivity(intent)
