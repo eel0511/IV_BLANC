@@ -25,14 +25,11 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_style_select)
 
         setRecyclerView()
 
         styleViewModel.styleListLiveData.observe(this) {
-//            Log.d(TAG, "setRecyclerView: $it")
             styleSelectRVA.data = it
-//            Log.d(TAG, "getData: ${styleSelectRVA.data}")
             Log.d(TAG, "getItemCount: ${styleSelectRVA.getItemCount()}")
             styleSelectRVA.notifyDataSetChanged()
         }
@@ -40,13 +37,16 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
 
     private fun setRecyclerView(){
 
+
         styleSelectRVA = StyleSelectRecyclerViewAdapter()
 
         styleViewModel.getAllStyles()
 
+        binding.recyclerViewStyleList.adapter = styleSelectRVA
         binding.recyclerViewStyleList.apply {
-            layoutManager = GridLayoutManager(this@StyleSelectActivity, 3, RecyclerView.VERTICAL, false)
             adapter = styleSelectRVA
+            layoutManager = GridLayoutManager(this@StyleSelectActivity, 3, RecyclerView.VERTICAL, false)
+
         }
 
         styleSelectRVA.itemClickListener = object : StyleSelectRecyclerViewAdapter.ItemClickListener{

@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.*
 
-private const val TAG = "StyleSelect"
+private const val TAG = "StyleSelect_RVA"
 class StyleSelectRecyclerViewAdapter(): RecyclerView.Adapter<StyleSelectRecyclerViewAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
-    var data :List<Style> = emptyList()
+    var data :List<Style> = listOf()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Style) {
@@ -22,11 +22,14 @@ class StyleSelectRecyclerViewAdapter(): RecyclerView.Adapter<StyleSelectRecycler
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        return ViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.list_photo_item_clothes, parent, false)
         )
+
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
 
