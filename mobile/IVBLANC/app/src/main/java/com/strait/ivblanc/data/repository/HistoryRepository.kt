@@ -67,9 +67,9 @@ class HistoryRepository {
 
     suspend fun updateHistory(historyId: MultipartBody.Part, location: MultipartBody.Part, field: MultipartBody.Part, date: MultipartBody.Part, weather: MultipartBody.Part,
                               temperature_low: MultipartBody.Part, temperature_high: MultipartBody.Part, text: MultipartBody.Part, subject: MultipartBody.Part,
-                              styleId: MultipartBody.Part): Resource<HistoryResponse> {
+                              styleUrl: MultipartBody.Part): Resource<HistoryResponse> {
         return try{
-            val response = historyApi.updateHistory(historyId, location, field, date, weather, temperature_low, temperature_high, text, subject, styleId)
+            val response = historyApi.updateHistory(historyId, location, field, date, weather, temperature_low, temperature_high, text, subject, styleUrl)
             if(response.isSuccessful) {
                 return if(response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
                     Resource.success(response.body()!!)

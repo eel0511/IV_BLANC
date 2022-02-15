@@ -35,7 +35,7 @@ interface HistoryApi {
                               , @Part temperature_high: MultipartBody.Part
                               , @Part text: MultipartBody.Part
                               , @Part subject: MultipartBody.Part
-                              , @Part styleId: MultipartBody.Part): Response<HistoryResponse>
+                              , @Part styleUrl: MultipartBody.Part): Response<HistoryResponse>
 
     @Multipart
         @POST("/api/history/add")
