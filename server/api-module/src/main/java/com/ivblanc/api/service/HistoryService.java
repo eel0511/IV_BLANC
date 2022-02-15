@@ -128,14 +128,6 @@ public class HistoryService {
 		String[] date = req.getDate().split("-");
 		LocalDateTime dt = LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0);
 
-		String url = null;
-		Optional<Style> style = styleService.findByStyleId(req.getStyleId());
-		if(style == null){
-			throw new ApiMessageException("존재하지 않는 style id입니다.");
-		} else {
-			url = style.get().getUrl();
-		}
-
 		history.setLocation(req.getLatitude());
 		history.setField(req.getLongitude());
 		history.setDate(dt);
@@ -144,7 +136,7 @@ public class HistoryService {
 		history.setTemperature_high(req.getTemperature_high());
 		history.setText(req.getText());
 		history.setSubject(req.getSubject());
-		history.setStyleUrl(url);
+		history.setStyleUrl(req.getStyleUrl());
 
 		historyRepository.save(history);
 	}
