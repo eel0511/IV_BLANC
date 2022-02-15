@@ -53,7 +53,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
 
-    // TODO: 2022/02/10 toolbar는 host에서 관리로 변경 
+    // TODO: 2022/02/10 toolbar는 host에서 관리로 변경
     override fun onResume() {
         super.onResume()
         when (tag) {
@@ -174,6 +174,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     private fun setObserverLiveData() {
         clothesViewModel.clothesList.observe(this) {
             photoListRVAdapter.setDatas(it)
+
         }
         clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {

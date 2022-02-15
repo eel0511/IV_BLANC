@@ -55,6 +55,8 @@ class FriendFragment :
         viewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
         viewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
         reloadImages()
+        Log.d("zczczc", ": "+friendViewModel.friendListLiveData.value)
+
     }
 
     fun reloadImages() {
@@ -74,15 +76,21 @@ class FriendFragment :
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
 
-        friendViewModel.friendListLiveData.observe(requireActivity()) {
-            list.clear()
-            Log.d("list", "reloadImages: " + it + it.size)
-            it.forEach {
-                Log.d("friendlist", "reloadImages: " + it)
-                list.add(it)
+        friendViewModel.friendListLiveData.observe(this) {
+            if(it.isEmpty()){
+                binding.nonFriendImg.visibility=View.VISIBLE
+            }else{
+                Log.d("zczczc", ": "+friendViewModel.friendListLiveData.value)
+                binding.nonFriendImg.visibility=View.GONE
+                list.clear()
+                Log.d("list", "reloadImages: " + it + it.size)
+                it.forEach {
+                    Log.d("friendlist", "reloadImages: " + it)
+                    list.add(it)
+                }
+                friendRecyclerViewAdapter.friendViewdata = list
+                friendRecyclerViewAdapter.notifyDataSetChanged()
             }
-            friendRecyclerViewAdapter.friendViewdata = list
-            friendRecyclerViewAdapter.notifyDataSetChanged()
         }
 
     }

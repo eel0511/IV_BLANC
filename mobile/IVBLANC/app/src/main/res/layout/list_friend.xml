@@ -13,9 +13,9 @@
 
     <ImageView
         android:id="@+id/no_item_text"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="260dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="245dp"
         android:layout_marginTop="85dp"
         android:layout_marginBottom="50dp"
         android:gravity="center"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/main_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pick" />
+        app:srcCompat="@drawable/nofriendclothes" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

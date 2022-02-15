@@ -32,7 +32,6 @@ class FriendRecyclerViewAdapter() : RecyclerView.Adapter<FriendRecyclerViewAdapt
 
 
         fun bind(item: FriendViewdata) {
-
             Name.text = item.name+"님의 옷장"
 
             if(item.cloth1==item.cloth2&&item.cloth2==item.cloth3&&item.cloth3==item.cloth4){
