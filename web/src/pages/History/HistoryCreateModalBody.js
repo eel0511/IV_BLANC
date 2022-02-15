@@ -10,7 +10,10 @@ import {
 import axios from 'axios';
 import StyleSelectButton from './StyleSelectButton';
 
-export default function HistoryCreateModalBody() {
+export default function HistoryCreateModalBody({
+  getmyHistoriesData,
+  handleClose,
+}) {
   const [files, setFiles] = useState('');
 
   const onLoadFile = (e) => {
@@ -79,7 +82,16 @@ export default function HistoryCreateModalBody() {
         },
       })
       .then((response) => {
-        console.log(response);
+        if (response.status === 200 && response.data.output === 1) {
+          console.log(response);
+          alert('등록 되었습니다!');
+          getmyHistoriesData();
+          handleClose();
+        } else if (response.status === 200 && response.data.output === 0) {
+          alert(response.data.msg);
+        } else {
+          alert(response.data.msg);
+        }
       })
       .catch((err) => {
         console.log('실패');
