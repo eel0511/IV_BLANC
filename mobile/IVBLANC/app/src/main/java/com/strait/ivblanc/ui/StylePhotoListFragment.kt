@@ -2,12 +2,17 @@ package com.strait.ivblanc.ui
 
 import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.HorizontalRVAdapter
 import com.strait.ivblanc.adapter.PhotoListRVAdapter
@@ -91,12 +96,12 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
             "f1" -> {
                 horizontalRVAdapter.itemClickListener = object: HorizontalRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        // TODO: 2022/02/15 친구 스타일 클릭 리스너
+                        showStyleDialog(horizontalRVAdapter.data[position].url)
                     }
                 }
                 photoListRVAdapter.itemClickListener = object: PhotoListRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        // TODO: 2022/02/15 친구 스타일 클릭 리스너
+                        showStyleDialog(horizontalRVAdapter.data[position].url)
                     }
                 }
             }
@@ -152,6 +157,28 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
             .setOnPositiveClickListener {
                 styleViewModel.deleteStyleById(item.styleId)
             }.build().show()
+    }
+
+    fun showStyleDialog(url: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_style, null)
+
+        val dialogphoto = dialogView.findViewById<ImageView>(R.id.dialog_image)
+        Glide.with(dialogphoto).load(Uri.parse(url))
+            .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+            .into(dialogphoto)
+
+        val adb =android.app.AlertDialog.Builder(requireContext(), R.style.MyDialogTheme).setView(dialogView)
+        val dialog = adb.create()
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window!!.attributes)
+        lp.width = 900
+        lp.height = 1200
+
+        dialog.show()
+        val window = dialog.getWindow();
+        if (window != null) {
+            window.setAttributes(lp)
+        }
     }
 
 }
