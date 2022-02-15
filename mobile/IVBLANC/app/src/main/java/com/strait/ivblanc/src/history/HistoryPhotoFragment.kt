@@ -1,60 +1,93 @@
 package com.strait.ivblanc.src.history
 
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
+import com.strait.ivblanc.adapter.PhotoRecyclerViewAdapter
+import com.strait.ivblanc.adapter.StyleSelectRecyclerViewAdapter
+import com.strait.ivblanc.databinding.FragmentHistoryPhotoBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryPhotoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class HistoryPhotoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class HistoryPhotoFragment(val imageSelectedListener: ImageSelectedListener) : DialogFragment() {
+    private lateinit var binding: FragmentHistoryPhotoBinding
+    private lateinit var photoSelectRecyclerViewAdapter: PhotoRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history_photo, container, false)
+    ): View {
+        binding = FragmentHistoryPhotoBinding.bind(inflater.inflate(R.layout.fragment_history_photo, container, false))
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HistoryPhotoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HistoryPhotoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init()
+    }
+
+    private fun init() {
+        isCancelable = true
+        setRecyclerView()
+    }
+
+    private fun setRecyclerView() {
+        photoSelectRecyclerViewAdapter = PhotoRecyclerViewAdapter().apply {
+            itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
+                override fun onClick(uri: Uri) {
+                    imageSelectedListener.getImageUri(uri)
+                    dismiss()
                 }
             }
+            uris = setImageUrisFromCursor(getPhotoCursor())
+            notifyDataSetChanged()
+        }
+        binding.recyclerViewHistoryPhotoF.apply {
+            adapter = photoSelectRecyclerViewAdapter
+            layoutManager = GridLayoutManager(requireActivity(), 4, RecyclerView.VERTICAL, false)
+        }
+    }
+
+    fun setImageUrisFromCursor(cursor: Cursor):List<Uri> {
+        val list = mutableListOf<Uri>()
+        cursor.use {
+            val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            while(cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                val uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id.toString())
+                list.add(uri)
+            }
+        }
+        return list
+    }
+
+    // content resolver로 이미지 커서 가져오기
+    fun getPhotoCursor(): Cursor {
+        val resolver = requireActivity().contentResolver
+        var queryUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+
+        val img = arrayOf(
+            MediaStore.Images.ImageColumns._ID,
+            MediaStore.Images.ImageColumns.DISPLAY_NAME,
+            MediaStore.Images.ImageColumns.DATE_TAKEN,
+            MediaStore.Images.ImageColumns.DATA
+        )
+
+        val orderBy = MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC"
+
+        queryUri = queryUri.buildUpon().build()
+        return resolver.query(queryUri, img, null, null, orderBy)!!
+    }
+
+    interface ImageSelectedListener {
+        fun getImageUri(uri: Uri)
     }
 }
