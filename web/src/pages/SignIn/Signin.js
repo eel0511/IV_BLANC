@@ -152,6 +152,27 @@ export default function SignInSide() {
     }
   };
 
+  // 사용자 정보 조회 후 이름, 이메일 로컬 스토리지에 저장
+  const getUserInfo = async () => {
+    try {
+      await axios
+        .post(
+          'http://i6d104.p.ssafy.io:9999/api/user/info', {
+            headers: {
+              'X-AUTH-TOKEN': localStorage.getItem('JWT')
+            }
+          }
+        )
+        .then((res) => {
+          // console.log(res.data.data);
+          localStorage.setItem('name', res.data.data.name);
+          localStorage.setItem('email', res.data.data.email);
+        })
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Section>
       <div className='MyCloset__Nav'>
