@@ -13,11 +13,13 @@ import com.strait.ivblanc.data.model.response.FriendResponse
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.data.repository.HistoryRepository
+import com.strait.ivblanc.util.MultiPartUtil
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 
 class HistoryViewModel: ViewModel() {
     val historyRepository = HistoryRepository()
@@ -87,7 +89,16 @@ class HistoryViewModel: ViewModel() {
         _historyListLiveData.postValue(totalHistoryList)
     }
 
-
+    suspend fun addHistoryPhotos(historyId: Int, absolutePathList: List<String>) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = historyRepository.addHistoryPhotos(
+                MultiPartUtil.makeMultiPartBody("historyId", historyId.toString())
+                , MultiPartUtil.makeMultiPartBodyFileArray("photoList", absolutePathList, "image/*")
+            )
+            _historyResponseStatus.postValue(result)
+        }
+    }
 
     private fun setLoading() = _historyResponseStatus.postValue(Resource.loading(null))
 
