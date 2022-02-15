@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.HistoryApi
 import com.strait.ivblanc.data.model.response.HistoryResponse
+import com.strait.ivblanc.data.model.response.HistorySimpleResponse
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
 import com.strait.ivblanc.util.StatusCode
@@ -90,7 +91,7 @@ class HistoryRepository {
         }
     }
 
-    suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: Array<MultipartBody.Part>): Resource<HistoryResponse> {
+    suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: Array<MultipartBody.Part>): Resource<HistorySimpleResponse> {
         return try {
             val response = historyApi.addHistoryPhotos(historyId, photoList)
             if(response.isSuccessful) {
@@ -103,18 +104,12 @@ class HistoryRepository {
                 Resource.error(null, "알 수 없는 오류입니다.")
             }
         } catch (e: Exception) {
-            // TODO: 2022/02/15 MultipartBody.Part array로 사용할 때 GsonConverter 에러
             Log.d(TAG, "addHistoryPhotos: ${e.message}")
-            Log.d(TAG, "addHistoryPhotos: ${e.stackTraceToString()}")
-            return if(e is JsonSyntaxException) {
-                Resource(Status.SUCCESS, null, null)
-            } else {
-                Resource.error(null, "네트워크 상태를 확인해 주세요.")
-            }
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
 
-    suspend fun deleteHistoryPhoto(photoId: Int): Resource<HistoryResponse> {
+    suspend fun deleteHistoryPhoto(photoId: Int): Resource<HistorySimpleResponse> {
         return try {
             val response = historyApi.deleteHistoryPhoto(photoId)
             if(response.isSuccessful) {
