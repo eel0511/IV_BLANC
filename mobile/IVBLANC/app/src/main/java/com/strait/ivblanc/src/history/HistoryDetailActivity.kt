@@ -9,6 +9,7 @@ import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.databinding.ActivityHistoryDetailBinding
 
 import android.location.Address
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,6 +46,18 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
                 .putExtra("location", getLocation())
             startActivity(intent)
         }
+        binding.imageViewHistoryDetailAddPhoto.setOnClickListener {
+            showGalleryDialog()
+        }
+    }
+
+    private fun showGalleryDialog() {
+        val galleryFragment = HistoryPhotoFragment(object: HistoryPhotoFragment.ImageSelectedListener {
+            override fun getImageUri(uri: Uri) {
+
+            }
+        })
+        galleryFragment.show(supportFragmentManager, "photo")
     }
 
     private fun setHistoryInfo() {
