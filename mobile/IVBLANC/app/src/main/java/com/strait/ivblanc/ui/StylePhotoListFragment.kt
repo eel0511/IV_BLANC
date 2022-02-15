@@ -19,8 +19,10 @@ import com.strait.ivblanc.adapter.PhotoListRVAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
+import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentStylePhotoListBinding
+import com.strait.ivblanc.src.main.MainActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.Status
 
@@ -75,14 +77,18 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
             "style" -> {
                 horizontalRVAdapter.itemClickListener = object: HorizontalRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        val intent = Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", horizontalRVAdapter.data[position])
-                        startActivity(intent)
+                        if(requireActivity() is MainActivity) {
+                            val intent = Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", horizontalRVAdapter.data[position])
+                            (requireActivity() as MainActivity).addStyleContract.launch(intent)
+                        }
                     }
                 }
                 photoListRVAdapter.itemClickListener = object: PhotoListRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        val intent = Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", photoListRVAdapter.data[position])
-                        startActivity(intent)
+                        if(requireActivity() is MainActivity) {
+                            val intent = Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", photoListRVAdapter.data[position])
+                            (requireActivity() as MainActivity).addStyleContract.launch(intent)
+                        }
                     }
                 }
                 photoListRVAdapter.itemLongClickListener = object : PhotoListRVAdapter.ItemLongClickListener {
