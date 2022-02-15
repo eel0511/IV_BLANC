@@ -4,6 +4,7 @@ import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.api.HistoryApi
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import com.strait.ivblanc.util.Resource
+import com.strait.ivblanc.util.StatusCode
 import okhttp3.MultipartBody
 import retrofit2.http.Part
 import java.lang.Exception
@@ -81,6 +82,23 @@ class HistoryRepository {
             }
         } catch (e: Exception) {
             val msg = e.message
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
+
+    suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: MultipartBody.Part): Resource<HistoryResponse> {
+        return try {
+            val response = historyApi.addHistoryPhotos(historyId, photoList)
+            if(response.isSuccessful) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(null, "히스토리 사진 업로드에 실패했습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
