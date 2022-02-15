@@ -15,7 +15,7 @@ function isActive() {
   return window.location.pathname;
 }
 
-export default function Navbar() {
+export default function Navbar({ token }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [element, controls] = useScroll();
   const html = document.querySelector('html');
@@ -72,25 +72,34 @@ export default function Navbar() {
               History
             </Link>
           </li>
-          <li className={isActive() === '/signup' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/signup'>
-              SignUp
-            </Link>
-          </li>
-          <li className={isActive() === '/signin' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/signin'>
-              Sign in
-            </Link>
-          </li>
-          <li>
-            <Notice />
-          </li>
-          <li>
-            <Profile />
-          </li>
-          <li>
-            <CreateJWT />
-          </li>
+          
+          {
+            token === ''
+            ? <>
+              <li className={isActive() === '/signup' ? 'active' : null}>
+                <Link className='nav-link' aria-current='page' to='/signup'>
+                  SignUp
+                </Link>
+              </li>
+              <li className={isActive() === '/signin' ? 'active' : null}>
+                <Link className='nav-link' aria-current='page' to='/signin'>
+                  Sign in
+                </Link>
+              </li>
+              </>
+            : <>
+                <li>
+                  <Notice />
+                </li>
+                <li>
+                  <Profile />
+                </li>
+                <li>
+                  <CreateJWT />
+                </li>
+              </>
+          }
+          
         </ul>
       </div>
     </Nav>

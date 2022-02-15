@@ -69,6 +69,7 @@ export default function SignInSide() {
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
+  const [token, setToken] = useState('');
 
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState('');
@@ -136,8 +137,8 @@ export default function SignInSide() {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
-            const token = getCookie('JWT');
-            console.log(token);
+            setToken(getCookie('JWT'));
+            // console.log(token);
             localStorage.setItem('JWT', token);
             localStorage.setItem('name', res.data.data.name);
             localStorage.setItem('email', res.data.data.email);
@@ -157,7 +158,7 @@ export default function SignInSide() {
   return (
     <Section>
       <div className='MyCloset__Nav'>
-        <Navbar />
+        <Navbar token={token}/>
       </div>
       <Title value='SIGNIN' />
       <ThemeProvider theme={theme}>
