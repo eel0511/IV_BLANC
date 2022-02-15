@@ -6,6 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.main.MapFragment">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.naver.maps.map.MapView
         android:id="@+id/mapView_mapF"
         android:layout_width="match_parent"
