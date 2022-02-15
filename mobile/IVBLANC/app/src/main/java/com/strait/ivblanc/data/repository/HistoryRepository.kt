@@ -87,7 +87,7 @@ class HistoryRepository {
 
     suspend fun addHistory(location: MultipartBody.Part, field: MultipartBody.Part, date: MultipartBody.Part, weather: MultipartBody.Part,
                               temperature_low: MultipartBody.Part, temperature_high: MultipartBody.Part, text: MultipartBody.Part, subject: MultipartBody.Part,
-                                styleId: MultipartBody.Part, photoList: MultipartBody.Part): Resource<HistoryResponse> {
+                                styleId: MultipartBody.Part, photoList: Array<MultipartBody.Part>): Resource<HistoryResponse> {
         return try{
             val response = historyApi.addHistory(location, field, date, weather, temperature_low, temperature_high, text, subject, styleId, photoList)
             if(response.isSuccessful) {
