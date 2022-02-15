@@ -67,8 +67,8 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
       )
     );
     setMaterial(
-      Object.keys(codeData['material']).find(
-        (key) => codeData['material'][key] === clothesData.material
+      Object.keys(codeData['material2']).find(
+        (key) => codeData['material2'][key] === clothesData.material
       )
     );
     setSeason(
