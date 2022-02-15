@@ -18,7 +18,7 @@ export default function Profile() {
   let navigate = useNavigate();
   const logOut = () => {
     localStorage.removeItem('JWT');
-    navigate('/');
+    navigate('/signin');
   };
 
   return (
