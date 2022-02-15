@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.PhotoListFragment" >
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/FloatingButton"
         android:id="@+id/fabMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="@dimen/defaultPadding"
+        android:layout_marginEnd="@dimen/defaultPadding"
         android:src="@drawable/ic_add"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_photoListF"
         android:layout_width="match_parent"
