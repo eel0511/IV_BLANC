@@ -112,6 +112,27 @@ class HistoryViewModel: ViewModel() {
         }
     }
 
+    fun addHistory(location: Double, field: Double, date: String, weather: String, temperature_low: Int,
+                      temperature_high: Int, text: String, subject: String, styleId: Int, absolutePathList: List<String>) = viewModelScope.launch {
+        setLoading()
+        val locationRequestBody = MultiPartUtil.makeMultiPartBody("latitude", location.toString())
+        val fieldRequestBody = MultiPartUtil.makeMultiPartBody("longitude", field.toString())
+        val dateRequestBody = MultiPartUtil.makeMultiPartBody("date", date)
+        val weatherRequestBody = MultiPartUtil.makeMultiPartBody("weather", weather)
+        val tempLowUrlRequestBody = MultiPartUtil.makeMultiPartBody("temperature_low", temperature_low.toString())
+        val tempHighRequestBody = MultiPartUtil.makeMultiPartBody("temperature_high", temperature_high.toString())
+        val textRequestBody = MultiPartUtil.makeMultiPartBody("text", text)
+        val subjectRequestBody = MultiPartUtil.makeMultiPartBody("subject", subject)
+        val styleIdRequestBody = MultiPartUtil.makeMultiPartBody("styleId", styleId.toString())
+        val photoListRequestBody = MultiPartUtil.makeMultiPartBodyFileArray("photoList", absolutePathList, "image/*")
+
+        ioScope.launch {
+            val response = historyRepository.addHistory(locationRequestBody, fieldRequestBody, dateRequestBody, weatherRequestBody, tempLowUrlRequestBody,
+                tempHighRequestBody, textRequestBody, subjectRequestBody, styleIdRequestBody, photoListRequestBody)
+            _historyResponseStatus.postValue(response)
+        }
+    }
+
     private fun setLoading() = _historyResponseStatus.postValue(Resource.loading(null))
 
 }
