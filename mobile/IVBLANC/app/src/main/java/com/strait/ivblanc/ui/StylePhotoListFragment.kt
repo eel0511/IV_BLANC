@@ -138,6 +138,11 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
 
     private fun setObserver(tag: String) {
         styleViewModel.styleListLiveData.observe(viewLifecycleOwner) {
+            if(it.isEmpty()){
+                binding.noStyle.visibility=View.VISIBLE
+            }else{
+                binding.noStyle.visibility=View.GONE
+            }
             photoListRVAdapter.setDatas(it as List<Style>)
         }
         styleViewModel.recentlyAddedStyleList.observe(viewLifecycleOwner) {

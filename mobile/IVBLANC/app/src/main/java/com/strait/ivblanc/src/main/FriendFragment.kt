@@ -70,7 +70,7 @@ class FriendFragment :
                 LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         }
 
-        friendViewModel.friendListLiveData.observe(this) {
+        friendViewModel.friendListLiveData.observe(viewLifecycleOwner) {
             if(it.isEmpty()){
                 binding.nonFriendImg.visibility=View.VISIBLE
             }else{
