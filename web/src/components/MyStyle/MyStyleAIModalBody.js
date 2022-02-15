@@ -28,8 +28,8 @@ function MyStyleAIModalBody() {
       'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
     setAIurl(data);
 
-    // const token =
-    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+    // const token = localStorage.getItem('JWT');
+    // // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
     // axios
     //   .post('http://i6d104.p.ssafy.io:9999/api/clothes/beta', formData, {
     //     headers: {
