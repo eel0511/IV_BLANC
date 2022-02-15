@@ -5,29 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="1dp"
-    android:background="@drawable/list_box">
+    android:background="@drawable/latest_box">
 
     <ImageView
-        android:id="@+id/imageView_photoItem_style"
+        android:id="@+id/imageView_photoItem_clothes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="2dp"
-        app:layout_constraintDimensionRatio="3:4"
+        android:padding="10dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
-        android:id="@+id/imageView_photoItem_style_favorite"
-        android:layout_width="@dimen/favoriteIconSize"
-        android:layout_height="@dimen/favoriteIconSize"
-        app:layout_constraintEnd_toEndOf="@+id/imageView_photoItem_style"
-        app:layout_constraintTop_toTopOf="@+id/imageView_photoItem_style"
+        android:id="@+id/imageView_photoItem_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
-        android:background="@drawable/ic_heart_filled"
-        android:backgroundTint="@color/red_300"
+        android:background="@drawable/ic_baseline_radio_button_unchecked_24"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        app:layout_constraintEnd_toEndOf="@+id/imageView_photoItem_clothes"
+        app:layout_constraintTop_toTopOf="@+id/imageView_photoItem_clothes"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

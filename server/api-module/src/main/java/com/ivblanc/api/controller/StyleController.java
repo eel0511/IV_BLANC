@@ -56,13 +56,16 @@ public class StyleController {
         }
         User owner = userService.findById(clothesSerivce.findByClothesId(styleDetails.get(0).getClothesId()).get().getUserId());
 
-        String madeby = made.getEmail();
+        String madeby = made.getName();
+        if (made.getUserId() != owner.getUserId()) {
+            madeby = "친구 "+ made.getName();
+        }
         Style style = styleDetailService.makeStyleDetailsToReqDTO(styleDetails, styleService.makeStyle(madeby, owner.getUserId(), url));
         styleService.addStyle(style);
         styleDetailService.addStyleDetails(style.getStyleDetails());
         if (made.getUserId() != owner.getUserId()) {
             fcmService.sendMessageTo(userService.findById(owner.getUserId()).getToken_fcm(), "스타일생성 알림",
-                    userService.findByEmail(madeby).getName() + "님이 만들었습니다");
+                    madeby + "님이 스타일을 만들었습니다");
         }
         return responseService.getSingleResult(style.getStyleId() + "번 스타일 추가완료");
     }
@@ -86,8 +89,10 @@ public class StyleController {
 
         User made = userService.findById(Integer.parseInt(jwtTokenProvider.getUserPk(token)));
         User owner = userService.findById(clothesSerivce.findByClothesId(styleDetails.get(0).getClothesId()).get().getUserId());
-        String madeby = made.getEmail();
-
+        String madeby = made.getName();
+        if (made.getUserId() != owner.getUserId()) {
+            madeby = "친구 "+ made.getName();
+        }
         Style style = styleService.findByStyleId(styleId).get();
         int size = style.getStyleDetails().size();
         for (int i = 0; i < size; i++) {
@@ -103,7 +108,7 @@ public class StyleController {
 
         if (made.getUserId() != owner.getUserId()) {
             fcmService.sendMessageTo(userService.findById(owner.getUserId()).getToken_fcm(), "스타일생성 알림",
-                    userService.findByEmail(madeby).getName() + "님이 만들었습니다");
+                    madeby + "님이 스타일을 만들었습니다");
         }
         return responseService.getSingleResult(updatestyle.getStyleId() + "번 스타일 추가완료");
     }

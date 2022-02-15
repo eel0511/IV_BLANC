@@ -23,7 +23,7 @@ class MyrequestRecyclerViewAdapter():RecyclerView.Adapter<MyrequestRecyclerViewA
         private val text = itemView.findViewById<TextView>(R.id.myreques_text)
         private val button = itemView.findViewById<ImageButton>(R.id.my_request_button)
         fun bind(item: Friend){
-            img.setImageResource(R.drawable.kakao)
+            img.setImageResource(R.drawable.newlogo)
             text.text = item.friendName+"님이 친구 요청을 보내셨습니다."
             button.setOnClickListener {
                 itemClickListener.onClick(item)

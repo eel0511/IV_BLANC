@@ -1,0 +1,9 @@
+.message.success {
+  text-align: left;
+  color: #21af21;
+}
+
+.message.error {
+  text-align: left;
+  color: #ff2727;
+}

@@ -11,9 +11,11 @@
     <dimen name="loadingProgressSize">48dp</dimen>
     <dimen name="defaultIconSize">32dp</dimen>
     <dimen name="smallIconSize">24dp</dimen>
+    <dimen name="favoriteIconSize">18dp</dimen>
     <dimen name="photoBoxSize">300dp</dimen>
     <dimen name="cameraButtonSize">48dp</dimen>
     <dimen name="colorPickSize">32dp</dimen>
     <dimen name="materialPickSize">48dp</dimen>
     <dimen name="styleLayerSelectorWidth">84dp</dimen>
+    <dimen name="horizontalRecyclerViewHeight">64dp</dimen>
 </resources>

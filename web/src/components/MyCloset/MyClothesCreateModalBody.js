@@ -92,8 +92,8 @@ export default function MyClothesCreateModalBody({
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/clothes/add', formData, {
         headers: {
-          'X-AUTH-TOKEN':
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          'X-AUTH-TOKEN': localStorage.getItem('JWT'),
+          // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
         },
       })
       .then((response) => {
@@ -161,25 +161,26 @@ export default function MyClothesCreateModalBody({
           <h2>색상</h2>
         </div>
         <div className='container row'>
-        {Object.entries(codeData['colors']).map((colorArray) => {
-          return (
-            <div key={colorArray[1]} className='col-3'>
-              <input
-                id={'색상' + colorArray[1]}
-                value={colorArray[1]}
-                className='form-check-input'
-                type='radio'
-                name='colorGroup'
-                defaultChecked={selectedColor === colorArray[1] ? true : false}
-                onChange={colorHandleChange}
-              />
-              <label
-                className='form-check-label create__colorLabel'
-                htmlFor={'색상' + colorArray[1]}
-                style={{ backgroundColor: colorArray[1]}}
-              >
-              </label>
-              {/* <Label 
+          {Object.entries(codeData['colors']).map((colorArray) => {
+            return (
+              <div key={colorArray[1]} className='col-3'>
+                <input
+                  id={'색상' + colorArray[1]}
+                  value={colorArray[1]}
+                  className='form-check-input'
+                  type='radio'
+                  name='colorGroup'
+                  defaultChecked={
+                    selectedColor === colorArray[1] ? true : false
+                  }
+                  onChange={colorHandleChange}
+                />
+                <label
+                  className='form-check-label create__colorLabel'
+                  htmlFor={'색상' + colorArray[1]}
+                  style={{ backgroundColor: colorArray[1] }}
+                ></label>
+                {/* <Label 
               id={'색상' + colorArray[1]}
               value={colorArray[1]}
               className='form-check-input'
@@ -193,9 +194,9 @@ export default function MyClothesCreateModalBody({
               >
               <h4> {colorArray[0]} </h4>
                 </Label> */}
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
         </div>
       </div>
       <hr />
@@ -243,7 +244,9 @@ export default function MyClothesCreateModalBody({
                 className='form-check-input'
                 type='radio'
                 name='seasonGroup'
-                defaultChecked={selectedSeason === seasonArray[1] ? true : false}
+                defaultChecked={
+                  selectedSeason === seasonArray[1] ? true : false
+                }
                 onChange={seasonHandleChange}
               />
               <label

@@ -36,7 +36,6 @@ class StyleRecyclerViewAdapter(val editorAdapter: StyleEditorAdapter): RecyclerV
         data.removeAt(startPosition)
         data.add(endPosition, item)
         notifyItemMoved(startPosition, endPosition)
-        // TODO: 2022/02/08 Editor View의 이미지 z 값 바꾸기
         notifyToStyleEditor()
         return true
     }
