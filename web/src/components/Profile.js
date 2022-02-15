@@ -15,7 +15,7 @@ export default function Profile() {
   };
 
   return (
-    <div className='Profile'>
+    <div className='Profile' style={{ cursor: 'pointer' }}>
       <BsPersonCircle
         className='Profile__icon'
         id='basic-button'
@@ -23,6 +23,7 @@ export default function Profile() {
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        style={{ width: '35px', height: '35px' }}
       />
       <Menu
         id='basic-menu'
