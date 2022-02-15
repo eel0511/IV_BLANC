@@ -74,7 +74,7 @@ class HistoryRepository {
                 return if(response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
                     Resource.success(response.body()!!)
                 } else {
-                    Resource.error(response.body(), "히스토리 데이터가 없습니다.")
+                    Resource.error(response.body(), "히스토리 업데이트에 실패했습니다.")
                 }
             } else {
                 Resource.error(null, "알 수 없는 오류입니다.")
