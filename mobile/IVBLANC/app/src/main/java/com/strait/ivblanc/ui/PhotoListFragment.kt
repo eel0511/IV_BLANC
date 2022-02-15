@@ -174,6 +174,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     private fun setObserverLiveData() {
         clothesViewModel.clothesList.observe(this) {
             photoListRVAdapter.setDatas(it)
+
         }
         clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
