@@ -27,8 +27,8 @@ interface HistoryApi {
     @Multipart
     @PUT("/api/history/update")
     suspend fun updateHistory(@Part historyId: MultipartBody.Part
-                              , @Part latitude: MultipartBody.Part
-                              , @Part longitude: MultipartBody.Part
+                              , @Part location: MultipartBody.Part
+                              , @Part field: MultipartBody.Part
                               , @Part date: MultipartBody.Part
                               , @Part weather: MultipartBody.Part
                               , @Part temperature_low: MultipartBody.Part
@@ -39,8 +39,8 @@ interface HistoryApi {
 
     @Multipart
         @POST("/api/history/add")
-    suspend fun addHistory(@Part latitude: MultipartBody.Part
-                           , @Part longitude: MultipartBody.Part
+    suspend fun addHistory(@Part location: MultipartBody.Part
+                           , @Part field: MultipartBody.Part
                            , @Part date: MultipartBody.Part
                            , @Part weather: MultipartBody.Part
                            , @Part temperature_low: MultipartBody.Part
