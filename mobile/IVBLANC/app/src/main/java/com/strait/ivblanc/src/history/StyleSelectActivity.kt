@@ -31,6 +31,10 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
         setClickListeners()
         setRecyclerView()
 
+        if(history.historyId == 0){
+            binding.textViewHistoryEditTitle.text = "히스토리 만들기"
+        }
+
         styleViewModel.styleListLiveData.observe(this) {
             styleSelectRVA.data = it
             Log.d(TAG, "getItemCount: ${styleSelectRVA.getItemCount()}")

@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
@@ -28,6 +29,7 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
+import com.strait.ivblanc.src.history.StyleSelectActivity
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 
 import com.strait.ivblanc.src.process.ProcessActivity
@@ -151,7 +153,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         }
                     }
                     "history" -> {
-                        View.OnClickListener { toast("히스토리 생성 Activity로 이동", Toast.LENGTH_SHORT) }
+                        View.OnClickListener {
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    StyleSelectActivity::class.java
+                                ).apply {
+                                    putExtra("history", History("", "", 0.0,0.0, 0, emptyList(), "", "", 0, 0, "", "", 0, ""))
+                                }
+                            )
+                        }
                     }
                     else -> View.OnClickListener {}
                 }
