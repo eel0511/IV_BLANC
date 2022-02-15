@@ -547,7 +547,7 @@ export default function MyStyleTopbar() {
         </Col>
         <Col sm={8}>
           {isShowLook && <StyleLook selectedClothes={selectedClothes} />}
-          {isClickLook && <ShowLookImg />}
+          {isClickLook && <ShowLookImg styleLook={styleLook} />}
         </Col>
       </Row>
     </Container>
