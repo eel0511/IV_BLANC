@@ -68,7 +68,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
                     toast("업로드 중", Toast.LENGTH_SHORT)
                 }
                 Status.ERROR -> {
-                    toast("실패", Toast.LENGTH_SHORT)
+                    toast(it.message.toString(), Toast.LENGTH_SHORT)
                 }
             }
         }
@@ -86,7 +86,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
                         )
                     }
                 }
-                historyViewModel.addHistoryPhotos(0, absolutePathList)
+                historyViewModel.addHistoryPhotos(history.historyId, absolutePathList)
             }
         })
         galleryFragment.show(supportFragmentManager, "photo")
