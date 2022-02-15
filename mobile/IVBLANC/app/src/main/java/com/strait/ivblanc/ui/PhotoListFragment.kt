@@ -2,24 +2,26 @@ package com.strait.ivblanc.ui
 
 import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.strait.ivblanc.R
-import com.strait.ivblanc.adapter.BottomSheetClothesRVAdapter
-import com.strait.ivblanc.adapter.ExpandableRecyclerViewAdapter
 import com.strait.ivblanc.adapter.HorizontalRVAdapter
 import com.strait.ivblanc.adapter.PhotoListRVAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.Clothes
-import com.strait.ivblanc.data.model.dto.PhotoItem
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
@@ -27,14 +29,18 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
-import com.strait.ivblanc.src.friend.FriendCloset
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
 
+
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
-class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhotoListBinding::bind, R.layout.fragment_photo_list) {
+
+class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
+    FragmentPhotoListBinding::bind,
+    R.layout.fragment_photo_list
+) {
     lateinit var horizontalRVAdapter: HorizontalRVAdapter<T>
     lateinit var photoListRVAdapter: PhotoListRVAdapter<T>
     private val viewModel: MainViewModel by activityViewModels()
@@ -48,7 +54,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     // TODO: 2022/02/10 toolbar는 host에서 관리로 변경 
     override fun onResume() {
         super.onResume()
-        when(tag) {
+        when (tag) {
             "clothes" -> {
                 viewModel.setToolbarTitle("옷")
             }
@@ -59,18 +65,50 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         viewModel.setLeadingIcon(R.drawable.ic_add)
     }
 
+    fun dialog(url: String) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_style, null)
+
+        val dialogphoto = dialogView.findViewById<ImageView>(R.id.dialog_image)
+        Glide.with(dialogphoto).load(Uri.parse(url))
+            .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
+            .into(dialogphoto)
+
+        val adb =android.app.AlertDialog.Builder(requireContext(), R.style.MyDialogTheme).setView(dialogView)
+        val dialog = adb.create()
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window!!.attributes)
+        lp.width = 900
+        lp.height = 1200
+
+        dialog.show()
+        val window = dialog.getWindow();
+        if (window != null) {
+            window.setAttributes(lp)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        friendViewModel.firendEmail.observe(requireActivity()){
+        friendViewModel.firendEmail.observe(requireActivity()) {
             FriendEmail = it
         }
 
         horizontalRVAdapter = HorizontalRVAdapter()
-        horizontalRVAdapter.itemClickListener = object: HorizontalRVAdapter.ItemClickListener {
+        horizontalRVAdapter.itemClickListener = object : HorizontalRVAdapter.ItemClickListener {
             override fun onClick(position: Int) {
-                val intent = when(val item = horizontalRVAdapter.data[position]) {
-                    is Clothes -> Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
-                    is Style -> Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", item)
+                val intent = when (val item = horizontalRVAdapter.data[position]) {
+                    is Clothes -> Intent(
+                        requireActivity(),
+                        ClothesDetailActivity::class.java
+                    ).putExtra("clothes", item)
+                    is Style -> {
+
+                        Intent(requireActivity(), StyleMakingActivity::class.java).putExtra(
+                            "style",
+                            item
+                        )
+
+                    }
                     else -> return
                 }
                 startActivity(intent)
@@ -80,7 +118,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         binding.recyclerViewPhotoListFHorizontal.apply {
             adapter = horizontalRVAdapter
             layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
-            addItemDecoration(object: RecyclerView.ItemDecoration() {
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
                     outRect: Rect,
                     view: View,
@@ -94,22 +132,39 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         }
 
         photoListRVAdapter = PhotoListRVAdapter()
-        photoListRVAdapter.itemClickListener = object: PhotoListRVAdapter.ItemClickListener {
+        photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
             override fun onClick(position: Int) {
-                val intent = when(val item = horizontalRVAdapter.data[position]) {
-                    is Clothes -> Intent(requireActivity(), ClothesDetailActivity::class.java).putExtra("clothes", item)
-                    is Style -> Intent(requireActivity(), StyleMakingActivity::class.java).putExtra("style", item)
+                val intent = when (val item = horizontalRVAdapter.data[position]) {
+                    is Clothes -> Intent(
+                        requireActivity(),
+                        ClothesDetailActivity::class.java
+                    ).putExtra("clothes", item)
+                    is Style -> {
+                        if(friendViewModel.toolbarTitle.value!!.contains("친구")){
+                            dialog(item.url)
+                            null
+                        }else{
+                            Intent(requireActivity(), StyleMakingActivity::class.java).putExtra(
+                                "style",
+                                item
+                            )
+                        }
+
+                    }
                     else -> return
                 }
-                startActivity(intent)
+                if(intent!=null){
+                    startActivity(intent)
+                }
             }
         }
-        photoListRVAdapter.itemLongClickListener = object : PhotoListRVAdapter.ItemLongClickListener {
-            override fun onLongClick(position: Int) {
-                val item = photoListRVAdapter.data[position] as Any
-                showDeleteDialog(item)
+        photoListRVAdapter.itemLongClickListener =
+            object : PhotoListRVAdapter.ItemLongClickListener {
+                override fun onLongClick(position: Int) {
+                    val item = photoListRVAdapter.data[position] as Any
+                    showDeleteDialog(item)
+                }
             }
-        }
 
         binding.recyclerViewPhotoListF.apply {
             adapter = photoListRVAdapter
@@ -122,12 +177,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         }
 
         // TODO: 2022/02/10 tag 분기.. 
-        if(tag == "clothes") {
+        if (tag == "clothes") {
             setDropDown()
-        }else if(tag=="f0"){
+        } else if (tag == "f0") {
             setDropDown()
-        }
-        else {
+        } else {
             binding.textInputLayoutPhotoListFCategory.visibility = View.GONE
             binding.textInputLayoutPhotoListFSmallCategory.visibility = View.GONE
         }
@@ -136,15 +190,15 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     }
 
     private fun setObserverLiveData() {
-        when(tag) {
+        when (tag) {
             // TODO: 2022/02/10 분기 처리 아름답게
             "clothes" -> {
-                binding.fabMain.visibility=View.GONE
+                binding.fabMain.visibility = View.GONE
                 clothesViewModel.clothesList.observe(this) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
-                    if(it.isNotEmpty()) {
+                    if (it.isNotEmpty()) {
                         binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
                     } else {
                         binding.linearLayoutPhotoListFRecent.visibility = View.GONE
@@ -153,29 +207,29 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
             }
             "style" -> {
-                binding.fabMain.visibility=View.GONE
+                binding.fabMain.visibility = View.GONE
                 styleViewModel.styleListLiveData.observe(this) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 styleViewModel.recentlyAddedStyleList.observe(this) {
-                    if(it.isNotEmpty()) {
+                    if (it.isNotEmpty()) {
                         horizontalRVAdapter.setDatas(it as List<T>)
                     }
                 }
 
                 styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
-                    if(it.status == Status.SUCCESS) {
+                    if (it.status == Status.SUCCESS) {
                         styleViewModel.getAllStyles()
                     }
                 }
             }
-            "f0"->{
-                binding.fabMain.visibility=View.GONE
+            "f0" -> {
+                binding.fabMain.visibility = View.GONE
                 clothesViewModel.clothesList.observe(requireActivity()) {
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
-                    if(it.isNotEmpty()) {
+                    if (it.isNotEmpty()) {
                         binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
                     } else {
                         binding.linearLayoutPhotoListFRecent.visibility = View.GONE
@@ -183,16 +237,16 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                     horizontalRVAdapter.setDatas(it as List<T>)
                 }
             }
-            "f1"->{
-                binding.fabMain.visibility=View.VISIBLE
+            "f1" -> {
+                binding.fabMain.visibility = View.VISIBLE
                 binding.fabMain.setOnClickListener {
-                    val intent = Intent(requireActivity(),StyleMakingActivity::class.java)
+                    val intent = Intent(requireActivity(), StyleMakingActivity::class.java)
                     intent.putExtra("friendEmail", FriendEmail)
                     startActivity(intent)
                 }
 
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
-                    Log.d(TAG, "setObserverLiveData: "+it)
+                    Log.d(TAG, "setObserverLiveData: " + it)
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
 
@@ -201,8 +255,8 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
                 }
 
                 styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
-                    Log.d(TAG, "setObserverLiveData: "+it)
-                    if(it.status == Status.SUCCESS) {
+                    Log.d(TAG, "setObserverLiveData: " + it)
+                    if (it.status == Status.SUCCESS) {
                         styleViewModel.getAllFriendStyles(FriendEmail)
                     }
                 }
@@ -216,13 +270,18 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
         binding.autoCompleteTextViewPhotoListFCategory.setText(resources.getText(R.string.total))
         binding.autoCompleteTextViewPhotoListFSmallCategory.setText(resources.getText(R.string.total))
 
-        val largeCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, largeCategories)
+        val largeCategoryAdapter =
+            ArrayAdapter(requireActivity(), R.layout.list_category_item, largeCategories)
         binding.autoCompleteTextViewPhotoListFCategory.setAdapter(largeCategoryAdapter)
 
         // 대분류가 바뀜에 따라 소분류 바꿈
         clothesViewModel.largeCategory.observe(this) {
             smallCategories = clothesViewModel.getSmallCategoriesByLargeCategory(it)
-            val smallCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, getSmallCategoryStringByLargeCategory(it))
+            val smallCategoryAdapter = ArrayAdapter(
+                requireActivity(),
+                R.layout.list_category_item,
+                getSmallCategoryStringByLargeCategory(it)
+            )
             binding.autoCompleteTextViewPhotoListFSmallCategory.setAdapter(smallCategoryAdapter)
         }
 
@@ -242,7 +301,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
 
         // 소분류 edittext observe -> viewModel 소분류에 맞는 옷 필터링
         binding.autoCompleteTextViewPhotoListFSmallCategory.addTextChangedListener {
-            if(it.toString().isBlank() || it.toString().isEmpty()) {
+            if (it.toString().isBlank() || it.toString().isEmpty()) {
                 clothesViewModel.setSmallCategory(CategoryCode.UNSELECTED)
                 return@addTextChangedListener
             }
@@ -253,7 +312,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
             }
 
             smallCategory?.let { pair ->
-                if(pair.first != CategoryCode.TOTAL_SMALL) {
+                if (pair.first != CategoryCode.TOTAL_SMALL) {
                     clothesViewModel.updateClothesByCategory(pair.first)
                 } else {
                     // TOTAL_SMALL이라면 대분류로 옷 분류
@@ -281,7 +340,7 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(FragmentPhot
     }
 
     fun showDeleteDialog(item: Any) {
-        val content: String = when(item) {
+        val content: String = when (item) {
             is Clothes -> "이 옷을 삭제하시겠습니까?"
             else -> "이 룩을 삭제하시겠습니까?"
         }
