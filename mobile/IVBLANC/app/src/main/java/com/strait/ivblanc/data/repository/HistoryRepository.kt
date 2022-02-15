@@ -86,7 +86,7 @@ class HistoryRepository {
         }
     }
 
-    suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: MultipartBody.Part): Resource<HistoryResponse> {
+    suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: Array<MultipartBody.Part>): Resource<HistoryResponse> {
         return try {
             val response = historyApi.addHistoryPhotos(historyId, photoList)
             if(response.isSuccessful) {
