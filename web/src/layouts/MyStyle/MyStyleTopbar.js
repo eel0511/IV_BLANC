@@ -442,30 +442,27 @@ export default function MyStyleTopbar() {
                 <NowImg />
               )
             ) : styleClothes.length > 0 ? (
-              <div className='container-fluid'>
-                <div className='row'>
-                  {styleClothes.map((clothesData) => (
-                    <div className='col-4 mt-3' key={clothesData.styleId}>
-                      <div className='card h-100'>
-                        <div className='card-body'>
-                          <img
-                            className='MyClosetClothesItemImg'
-                            src={clothesData.url}
-                            alt={clothesData.styleId}
-                            style={{
-                              maxWidth: '100%',
-                              maxHeight: '100%',
-                            }}
-                            onClick={showLook}
-                          />
-                        </div>
+              <div className='row'>
+                {styleClothes.map((clothesData) => (
+                  <div className='col-4 mt-4' key={clothesData.styleId}>
+                    <div className='card h-100'>
+                      <div className='card-body'>
+                        <img
+                          className='MyClosetClothesItemImg'
+                          src={clothesData.url}
+                          alt={clothesData.styleId}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                          }}
+                          onClick={showLook}
+                        />
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             ) : (
-              // <StyleImage styleClothes={styleClothes} />
               <NowImg />
             )}
 
@@ -554,33 +551,6 @@ export default function MyStyleTopbar() {
     </Container>
   );
 }
-
-// function StyleImage({ styleClothes }) {
-//   return (
-//     <div className='container-fluid'>
-//       <div className='row'>
-//         {styleClothes.map((clothesData) => (
-//           <div className='col-4 mt-3' key={clothesData.styleId}>
-//             <div className='card h-100'>
-//               <div className='card-body'>
-//                 <img
-//                   className='MyClosetClothesItemImg'
-//                   src={clothesData.url}
-//                   alt={clothesData.styleId}
-//                   style={{
-//                     maxWidth: '100%',
-//                     maxHeight: '100%',
-//                   }}
-//                   // onClick={showLook}
-//                 />
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 function NowImg() {
   return <p>등록된 데이터가 없습니다.</p>;
