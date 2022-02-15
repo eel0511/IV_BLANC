@@ -29,6 +29,8 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.FragmentPhotoListBinding
 import com.strait.ivblanc.src.clothesDetail.ClothesDetailActivity
+import com.strait.ivblanc.src.main.MainActivity
+import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
@@ -72,7 +74,6 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
         viewModel.clothesResponseStatus.observe(requireActivity()) {
 
         }
-
     }
 
     private fun init(tag: String?) {
@@ -81,6 +82,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
         setDropDown()
         setRecyclerViewClickListener(tag)
         setObserverLiveData()
+        setFloatingButton(tag)
     }
 
     private fun setRecyclerViewClickListener(tag: String) {
@@ -180,6 +182,25 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
                 binding.linearLayoutPhotoListFRecent.visibility = View.GONE
             }
             horizontalRVAdapter.setDatas(it)
+        }
+    }
+
+    private fun setFloatingButton(tag: String) {
+        when(tag) {
+            "clothes" -> {
+                binding.fabMain.setOnClickListener {
+                    if(requireActivity() is MainActivity) {
+                        val intent = Intent(requireActivity(), PhotoSelectActivity::class.java).apply {
+                            putExtra("intend", PhotoSelectActivity.CLOTHES)
+                        }
+                        (requireActivity() as MainActivity).addClothesContract.launch(intent)
+                    }
+
+                }
+            }
+            "f0" -> {
+                binding.fabMain.visibility = View.GONE
+            }
         }
     }
 
