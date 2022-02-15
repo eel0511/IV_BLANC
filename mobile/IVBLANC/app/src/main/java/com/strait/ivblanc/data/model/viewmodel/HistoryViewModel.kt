@@ -13,6 +13,7 @@ import com.strait.ivblanc.data.model.response.FriendResponse
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.data.repository.HistoryRepository
+import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.MultiPartUtil
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
@@ -104,6 +105,16 @@ class HistoryViewModel: ViewModel() {
         setLoading()
         withContext(Dispatchers.IO) {
             val result = historyRepository.deleteHistoryPhoto(photoId)
+            _historyResponseStatus.postValue(result)
+        }
+    }
+
+    fun updateHistoryPhotos(photoId: Int, absolutePath: String) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = historyRepository.updateHistoryPhoto(
+                MultiPartUtil.makeMultiPartBody("photoId", photoId.toString())
+                , MultiPartUtil.makeMultiPartBodyFile("newPhoto", absolutePath, "image/*"))
             _historyResponseStatus.postValue(result)
         }
     }
