@@ -1,9 +1,18 @@
 import React from 'react';
 
-function ShowLookImg() {
+function ShowLookImg({ styleLook }) {
   return (
-    <div className='Look'>
-      <div id='StyleImg'></div>
+    <div
+      className='Look'
+      style={{ marginTop: '100px', verticalAlign: 'middle' }}
+    >
+      <div id='LookImg'>
+        <img
+          className='MyStyleLook'
+          src={styleLook.url}
+          alt={styleLook.styleId}
+        />
+      </div>
     </div>
   );
 }
