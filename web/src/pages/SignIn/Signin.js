@@ -139,6 +139,8 @@ export default function SignInSide() {
             const token = getCookie('JWT');
             console.log(token);
             localStorage.setItem('JWT', token);
+            localStorage.setItem('name', res.data.data.name);
+            localStorage.setItem('email', res.data.data.email);
             setAuthorizationToken(token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
@@ -147,27 +149,6 @@ export default function SignInSide() {
             alert(res.data.msg);
           }
         });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // 사용자 정보 조회 후 이름, 이메일 로컬 스토리지에 저장
-  const getUserInfo = async () => {
-    try {
-      await axios
-        .post(
-          'http://i6d104.p.ssafy.io:9999/api/user/info', {
-            headers: {
-              'X-AUTH-TOKEN': localStorage.getItem('JWT')
-            }
-          }
-        )
-        .then((res) => {
-          // console.log(res.data.data);
-          localStorage.setItem('name', res.data.data.name);
-          localStorage.setItem('email', res.data.data.email);
-        })
     } catch (err) {
       console.error(err);
     }
