@@ -58,12 +58,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 }
             }
         }
-    private val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
             clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
         }
     }
-    private val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
             styleViewModel.getAllStyles()
         }
@@ -93,7 +93,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         init()
     }
 
-    // TODO: 2022/02/03 nav fragment 추가 및 style generic 추가
     private fun init() {
         setToolbar()
         // 첫 화면 세팅
