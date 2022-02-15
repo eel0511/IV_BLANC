@@ -67,6 +67,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
     lateinit var history: History
     lateinit var location: String
+    var styleId: Int = 0
 
     lateinit var weatherUtil: WeatherUtil
 
@@ -85,6 +86,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             history = it
         } ?: finish()
         location = intent.getStringExtra("location").toString()
+        styleId = intent.getIntExtra("styleId", 0)
 
         weatherUtil = WeatherUtil()
         gpsTracker = GpsTracker(this@HistoryEditActivity)
@@ -102,15 +104,27 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             finish()
         }
         binding.textViewHistoryEditSave.setOnClickListener {
-            history.date = binding.textViewHistoryEditSelectDate.text.toString()
+
             history.weather = binding.textViewHistoryEditSelectWeather.text.toString()
             history.subject = binding.editTextHistoryEditSubject.text.toString()
             history.text = binding.editTextHistoryEditText.text.toString()
 
-            historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather, history.temperature_low,
-                                                history.temperature_high, history.text, history.subject, history.styleUrl)
-            Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
-            finish()
+            if(history.historyId != 0){
+                history.date = binding.textViewHistoryEditSelectDate.text.toString()
+                historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather,
+                    history.temperature_low, history.temperature_high, history.text, history.subject, history.styleUrl)
+                Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                if(history.date == "" || styleId == 0){
+                    Toast.makeText(this, "날짜를 선택해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    historyViewModel.addHistory(history.location, history.field, history.date, history.weather,
+                        history.temperature_low, history.temperature_high, history.text, history.subject, styleId, emptyList() )
+                    Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
         }
 
         binding.imageViewHistoryEditStyle.setOnClickListener {
@@ -148,11 +162,15 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryEditStyle)
         }
 
+        if(history.historyId == 0){
+            binding.textViewHistoryEditTitle.text = "히스토리 만들기"
+        } else {
+            binding.textViewHistoryEditSelectDate.text = history.date
+            binding.textViewHistoryEditSelectLocation.text = location
+            binding.textViewHistoryEditTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
+        }
 
-        binding.textViewHistoryEditSelectDate.text = history.date
         binding.editTextHistoryEditSubject.setText(history.subject)
-        binding.textViewHistoryEditSelectLocation.text = location
-        binding.textViewHistoryEditTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
         binding.editTextHistoryEditText.setText(history.text)
 
         latitude = history.field

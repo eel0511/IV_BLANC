@@ -69,6 +69,7 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
                     val intent = Intent(this@StyleSelectActivity, HistoryEditActivity::class.java)
                         .putExtra("history", history)
                         .putExtra("location", location)
+                        .putExtra("styleId", style.styleId)
                     startActivity(intent)
 
                 }

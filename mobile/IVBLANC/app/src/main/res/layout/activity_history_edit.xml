@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="2022-02-02 > "
+                    android:text="날짜 선택 > "
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -117,7 +117,7 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="서웉특별시 강남구 도산대로 317 > "
+                    android:text="장소 입력 > "
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -146,7 +146,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="맑음"
+                    android:text="-"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
@@ -156,8 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginRight="8dp"
-                    android:text="5°C/-3°C"
+                    android:text="기온 입력 >"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
