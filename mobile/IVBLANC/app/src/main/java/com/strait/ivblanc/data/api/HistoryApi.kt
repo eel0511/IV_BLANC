@@ -62,5 +62,5 @@ interface HistoryApi {
     @Multipart
     @PUT("/api/history/photo/update")
     suspend fun updateHistoryPhotos(@Part photoId: MultipartBody.Part
-                                 , @Part newPhoto: MultipartBody.Part): Response<HistoryResponse>
+                                 , @Part newPhoto: MultipartBody.Part): Response<HistorySimpleResponse>
 }
