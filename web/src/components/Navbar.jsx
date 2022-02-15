@@ -9,6 +9,7 @@ import { useScroll } from './useScroll';
 import { Link } from 'react-router-dom';
 import Notice from './Friends/Notice';
 import Profile from './Profile';
+import CreateJWT from './CreateJWT';
 
 function isActive() {
   return window.location.pathname;
@@ -86,6 +87,9 @@ export default function Navbar() {
           </li>
           <li>
             <Profile />
+          </li>
+          <li>
+            <CreateJWT />
           </li>
         </ul>
       </div>
