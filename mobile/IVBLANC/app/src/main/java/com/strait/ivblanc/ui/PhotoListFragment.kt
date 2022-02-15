@@ -37,12 +37,12 @@ import com.strait.ivblanc.util.Status
 // TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
 
-class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
+class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     FragmentPhotoListBinding::bind,
     R.layout.fragment_photo_list
 ) {
-    lateinit var horizontalRVAdapter: HorizontalRVAdapter<T>
-    lateinit var photoListRVAdapter: PhotoListRVAdapter<T>
+    lateinit var horizontalRVAdapter: HorizontalRVAdapter<Clothes>
+    lateinit var photoListRVAdapter: PhotoListRVAdapter<Clothes>
     private val viewModel: MainViewModel by activityViewModels()
     private val clothesViewModel: ClothesViewModel by activityViewModels()
     private val styleViewModel: StyleViewModel by activityViewModels()
@@ -65,55 +65,85 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
         viewModel.setLeadingIcon(R.drawable.ic_add)
     }
 
-    fun dialog(url: String) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_style, null)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        init(tag)
+        // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
+        viewModel.clothesResponseStatus.observe(requireActivity()) {
 
-        val dialogphoto = dialogView.findViewById<ImageView>(R.id.dialog_image)
-        Glide.with(dialogphoto).load(Uri.parse(url))
-            .diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true)
-            .into(dialogphoto)
+        }
 
-        val adb =android.app.AlertDialog.Builder(requireContext(), R.style.MyDialogTheme).setView(dialogView)
-        val dialog = adb.create()
-        val lp = WindowManager.LayoutParams()
-        lp.copyFrom(dialog.window!!.attributes)
-        lp.width = 900
-        lp.height = 1200
+    }
 
-        dialog.show()
-        val window = dialog.getWindow();
-        if (window != null) {
-            window.setAttributes(lp)
+    private fun init(tag: String?) {
+        tag?: return
+        setRecyclerView()
+        setDropDown()
+        setRecyclerViewClickListener(tag)
+        setObserverLiveData()
+    }
+
+    private fun setRecyclerViewClickListener(tag: String) {
+        when(tag) {
+            // 내 옷
+            "clothes" -> {
+                horizontalRVAdapter.itemClickListener = object : HorizontalRVAdapter.ItemClickListener {
+                    override fun onClick(position: Int) {
+                        val item = horizontalRVAdapter.data[position]
+                        val intent = Intent(
+                            requireActivity(),
+                            ClothesDetailActivity::class.java
+                        ).putExtra("clothes", item)
+                        startActivity(intent)
+                    }
+                }
+                photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
+                    override fun onClick(position: Int) {
+                        val item = horizontalRVAdapter.data[position]
+                        val intent = Intent(
+                            requireActivity(),
+                            ClothesDetailActivity::class.java
+                        ).putExtra("clothes", item)
+                        startActivity(intent)
+                    }
+                }
+                photoListRVAdapter.itemLongClickListener =
+                    object : PhotoListRVAdapter.ItemLongClickListener {
+                        override fun onLongClick(position: Int) {
+                            val item = photoListRVAdapter.data[position]
+                            showDeleteDialog(item)
+                        }
+                    }
+
+            }
+            // 친구 옷
+            "f0" -> {
+                horizontalRVAdapter.itemClickListener = object : HorizontalRVAdapter.ItemClickListener {
+                    override fun onClick(position: Int) {
+                        val item = horizontalRVAdapter.data[position]
+                        val intent = Intent(
+                            requireActivity(),
+                            ClothesDetailActivity::class.java
+                        ).putExtra("clothes", item).putExtra("friend", "friend")
+                        startActivity(intent)
+                    }
+                }
+                photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
+                    override fun onClick(position: Int) {
+                        val item = horizontalRVAdapter.data[position]
+                        val intent = Intent(
+                            requireActivity(),
+                            ClothesDetailActivity::class.java
+                        ).putExtra("clothes", item).putExtra("friend", "friend")
+                        startActivity(intent)
+                    }
+                }
+            }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        friendViewModel.firendEmail.observe(requireActivity()) {
-            FriendEmail = it
-
-        }
+    private fun setRecyclerView() {
         horizontalRVAdapter = HorizontalRVAdapter()
-        horizontalRVAdapter.itemClickListener = object : HorizontalRVAdapter.ItemClickListener {
-            override fun onClick(position: Int) {
-                val intent = when (val item = horizontalRVAdapter.data[position]) {
-                    is Clothes -> Intent(
-                        requireActivity(),
-                        ClothesDetailActivity::class.java
-                    ).putExtra("clothes", item)
-                    is Style -> {
-
-                        Intent(requireActivity(), StyleMakingActivity::class.java).putExtra(
-                            "style",
-                            item
-                        )
-
-                    }
-                    else -> return
-                }
-                startActivity(intent)
-            }
-        }
 
         binding.recyclerViewPhotoListFHorizontal.apply {
             adapter = horizontalRVAdapter
@@ -132,132 +162,24 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
         }
 
         photoListRVAdapter = PhotoListRVAdapter()
-        photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
-            override fun onClick(position: Int) {
-                val intent = when (val item = horizontalRVAdapter.data[position]) {
-                    is Clothes -> Intent(
-                        requireActivity(),
-                        ClothesDetailActivity::class.java
-                    ).putExtra("clothes", item)
-                    is Style -> {
-                        if(friendViewModel.toolbarTitle.value!!.contains("친구")){
-                            dialog(item.url)
-                            null
-                        }else{
-                            Intent(requireActivity(), StyleMakingActivity::class.java).putExtra(
-                                "style",
-                                item
-                            )
-                        }
-
-                    }
-                    else -> return
-                }
-                if(intent!=null){
-                    startActivity(intent)
-                }
-            }
-        }
-        photoListRVAdapter.itemLongClickListener =
-            object : PhotoListRVAdapter.ItemLongClickListener {
-                override fun onLongClick(position: Int) {
-                    val item = photoListRVAdapter.data[position] as Any
-                    showDeleteDialog(item)
-                }
-            }
 
         binding.recyclerViewPhotoListF.apply {
             adapter = photoListRVAdapter
             layoutManager = GridLayoutManager(requireContext(), 3)
         }
-
-        // TODO: 2022/01/26 통신 상태에 따라 로딩 뷰 제공
-        viewModel.clothesResponseStatus.observe(requireActivity()) {
-
-        }
-
-        // TODO: 2022/02/10 tag 분기.. 
-        if (tag == "clothes") {
-            setDropDown()
-        } else if (tag == "f0") {
-            setDropDown()
-        } else {
-            binding.textInputLayoutPhotoListFCategory.visibility = View.GONE
-            binding.textInputLayoutPhotoListFSmallCategory.visibility = View.GONE
-        }
-
-        setObserverLiveData()
     }
 
     private fun setObserverLiveData() {
-        when (tag) {
-            // TODO: 2022/02/10 분기 처리 아름답게
-            "clothes" -> {
-                clothesViewModel.clothesList.observe(this) {
-                    photoListRVAdapter.setDatas(it as List<T>)
-                }
-                clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
-                    if (it.isNotEmpty()) {
-                        binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
-                    } else {
-                        binding.linearLayoutPhotoListFRecent.visibility = View.GONE
-                    }
-                    horizontalRVAdapter.setDatas(it as List<T>)
-                }
+        clothesViewModel.clothesList.observe(this) {
+            photoListRVAdapter.setDatas(it)
+        }
+        clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
+            } else {
+                binding.linearLayoutPhotoListFRecent.visibility = View.GONE
             }
-            "style" -> {
-                styleViewModel.styleListLiveData.observe(this) {
-                    photoListRVAdapter.setDatas(it as List<T>)
-                }
-                styleViewModel.recentlyAddedStyleList.observe(this) {
-                    if (it.isNotEmpty()) {
-                        horizontalRVAdapter.setDatas(it as List<T>)
-                    }
-                }
-
-                styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
-                    if (it.status == Status.SUCCESS) {
-                        styleViewModel.getAllStyles()
-                    }
-                }
-            }
-            "f0"->{
-                clothesViewModel.clothesList.observe(requireActivity()) {
-                    photoListRVAdapter.setDatas(it as List<T>)
-                }
-                clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
-                    if (it.isNotEmpty()) {
-                        binding.linearLayoutPhotoListFRecent.visibility = View.VISIBLE
-                    } else {
-                        binding.linearLayoutPhotoListFRecent.visibility = View.GONE
-                    }
-                    horizontalRVAdapter.setDatas(it as List<T>)
-                }
-            }
-            "f1" -> {
-                binding.fabMain.visibility = View.VISIBLE
-                binding.fabMain.setOnClickListener {
-                    val intent = Intent(requireActivity(), StyleMakingActivity::class.java)
-                    intent.putExtra("friendEmail", FriendEmail)
-                    startActivity(intent)
-                }
-
-                styleViewModel.styleListLiveData.observe(requireActivity()) {
-                    Log.d(TAG, "setObserverLiveData: " + it)
-                    photoListRVAdapter.setDatas(it as List<T>)
-                }
-
-                styleViewModel.recentlyAddedStyleList.observe(requireActivity()) {
-                    horizontalRVAdapter.setDatas(it as List<T>)
-                }
-
-                styleViewModel.styleDeleteResponseStatus.observe(requireActivity()) {
-                    Log.d(TAG, "setObserverLiveData: " + it)
-                    if (it.status == Status.SUCCESS) {
-                        styleViewModel.getAllFriendStyles(FriendEmail)
-                    }
-                }
-            }
+            horizontalRVAdapter.setDatas(it)
         }
     }
 
@@ -336,18 +258,12 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
         return result.toList()
     }
 
-    fun showDeleteDialog(item: Any) {
-        val content: String = when (item) {
-            is Clothes -> "이 옷을 삭제하시겠습니까?"
-            else -> "이 룩을 삭제하시겠습니까?"
-        }
+    fun showDeleteDialog(item: Clothes) {
+        val content = "이 옷을 삭제하시겠습니까?"
         DeleteDialog(requireActivity())
             .setContent(content)
             .setOnPositiveClickListener {
-                when (item) {
-                    is Clothes -> clothesViewModel.deleteClothesById((item).clothesId)
-                    is Style -> styleViewModel.deleteStyleById((item).styleId)
-                }
+                clothesViewModel.deleteClothesById((item).clothesId)
             }.build().show()
     }
 }
