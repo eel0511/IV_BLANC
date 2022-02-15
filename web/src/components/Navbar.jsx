@@ -1,23 +1,25 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import logo2 from "../assets/logo2.png";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { MdClose } from "react-icons/md";
-import { motion } from "framer-motion";
-import { navAnimation } from "../animations";
-import { useScroll } from "./useScroll";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import logo2 from '../assets/logo2.png';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { MdClose } from 'react-icons/md';
+import { motion } from 'framer-motion';
+import { navAnimation } from '../animations';
+import { useScroll } from './useScroll';
 import { Link } from 'react-router-dom';
-import Notice from "./Friends/Notice";
+import Notice from './Friends/Notice';
+import Profile from './Profile';
+import CreateJWT from './CreateJWT';
 
 function isActive() {
   return window.location.pathname;
 }
 
-export default function Navbar() {
+export default function Navbar({ token }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [element, controls] = useScroll();
-  const html = document.querySelector("html");
-  html.addEventListener("click", (e) => setIsNavOpen(false));
+  const html = document.querySelector('html');
+  html.addEventListener('click', (e) => setIsNavOpen(false));
   return (
     <Nav
       state={isNavOpen ? 1 : 0}
@@ -26,11 +28,11 @@ export default function Navbar() {
       ref={element}
       animate={controls}
     >
-      <div className="brand__container">
-      <Link className='brand' to='/'>
-          <img src={logo2} alt="Logo" />
-          </Link>
-        <div className="toggle">
+      <div className='brand__container'>
+        <Link className='brand' to='/'>
+          <img src={logo2} alt='Logo' />
+        </Link>
+        <div className='toggle'>
           {isNavOpen ? (
             <MdClose onClick={() => setIsNavOpen(false)} />
           ) : (
@@ -43,32 +45,61 @@ export default function Navbar() {
           )}
         </div>
       </div>
-      <div className={`links ${isNavOpen ? "show" : ""}`}>
-      <ul> 
-          <li className={(isActive() === '/') ? 'active' : null}>
-          <Link className='nav-link' to='/'>Home</Link>
+      <div className={`links ${isNavOpen ? 'show' : ''}`}>
+        <ul>
+          <li className={isActive() === '/' ? 'active' : null}>
+            <Link className='nav-link' to='/'>
+              Home
+            </Link>
           </li>
-          <li className={(isActive() === '/mycloset') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/mycloset' >Closet</Link>
+          <li className={isActive() === '/mycloset' ? 'active' : null}>
+            <Link className='nav-link' aria-current='page' to='/mycloset'>
+              Closet
+            </Link>
           </li>
-          <li className={(isActive() === '/mystyle') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/mystyle'>Pick</Link>
+          <li className={isActive() === '/mystyle' ? 'active' : null}>
+            <Link className='nav-link' aria-current='page' to='/mystyle'>
+              Pick
+            </Link>
           </li>
-          <li className={(isActive() === '/friends') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/friends'>Share</Link>
+          <li className={isActive() === '/friends' ? 'active' : null}>
+            <Link className='nav-link' aria-current='page' to='/friends'>
+              Share
+            </Link>
           </li>
-          <li className={(isActive() === '/history') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/history'>History</Link>
+          <li className={isActive() === '/history' ? 'active' : null}>
+            <Link className='nav-link' aria-current='page' to='/history'>
+              History
+            </Link>
           </li>
-          <li className={(isActive() === '/signup') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/signup'>SignUp</Link>
-          </li>
-          <li className={(isActive() === '/signin') ? 'active' : null}>
-          <Link className='nav-link' aria-current='page' to='/signin'>Sign in</Link>
-          </li>
-          <li>
-          <Notice />
-          </li>
+          
+          {
+            token === ''
+            ? <>
+              <li className={isActive() === '/signup' ? 'active' : null}>
+                <Link className='nav-link' aria-current='page' to='/signup'>
+                  SignUp
+                </Link>
+              </li>
+              <li className={isActive() === '/signin' ? 'active' : null}>
+                <Link className='nav-link' aria-current='page' to='/signin'>
+                  Sign in
+                </Link>
+              </li>
+              </>
+            : <>
+                <li>
+                  <Notice />
+                </li>
+                <li>
+                  <Profile />
+                </li>
+                <li>
+                  <CreateJWT />
+                </li>
+              </>
+          }
+          
         </ul>
       </div>
     </Nav>
@@ -86,9 +117,9 @@ const Nav = styled(motion.nav)`
     /* margin: 20 20; */
     .brand {
       img {
-          width: 9rem;
-          height: 9rem;
-        }
+        width: 9rem;
+        height: 9rem;
+      }
     }
     .toggle {
       display: none;
@@ -98,13 +129,13 @@ const Nav = styled(motion.nav)`
     ul {
       .active {
         a {
-        //   background-color: #ed6991;
-        //   border-radius: 15px;
+          //   background-color: #ed6991;
+          //   border-radius: 15px;
           border-bottom: 0.2rem solid var(--secondary-color);
         }
       }
       list-style: none;
-      margin-top : 3rem;
+      margin-top: 3rem;
       display: flex;
       gap: 3rem;
       li {
@@ -147,7 +178,7 @@ const Nav = styled(motion.nav)`
       overflow-x: hidden;
       top: 0;
       right: 0;
-      width: ${({ state }) => (state ? "60%" : "0%")};
+      width: ${({ state }) => (state ? '60%' : '0%')};
       height: 100vh;
       background-color: var(--secondary-color);
       opacity: 0;
