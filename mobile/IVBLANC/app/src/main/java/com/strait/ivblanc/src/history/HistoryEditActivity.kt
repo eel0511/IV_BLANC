@@ -42,8 +42,10 @@ import java.util.*
 import android.view.*
 
 import android.view.ContextMenu.ContextMenuInfo
+import androidx.activity.viewModels
 import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.Style
+import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.WeatherUtil
 import java.net.MalformedURLException
@@ -54,6 +56,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     ActivityHistoryEditBinding::inflate) {
 
     private var gpsTracker: GpsTracker? = null
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     private val GPS_ENABLE_REQUEST_CODE = 2001
     private val PERMISSIONS_REQUEST_CODE = 100
@@ -65,7 +68,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     lateinit var history: History
     lateinit var location: String
 
-    lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
     lateinit var weatherUtil: WeatherUtil
 
     lateinit var locationDialog: Dialog
@@ -100,7 +102,15 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             finish()
         }
         binding.textViewHistoryEditSave.setOnClickListener {
-            // TODO: 수정된 히스토리 저장
+            history.date = binding.textViewHistoryEditSelectDate.text.toString()
+            history.weather = binding.textViewHistoryEditSelectWeather.text.toString()
+            history.subject = binding.editTextHistoryEditSubject.text.toString()
+            history.text = binding.editTextHistoryEditText.text.toString()
+
+            historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather, history.temperature_low,
+                                                history.temperature_high, history.text, history.subject, history.styleUrl)
+            Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         binding.imageViewHistoryEditStyle.setOnClickListener {
@@ -196,8 +206,8 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val saveBtn: TextView = locationDialog.findViewById(R.id.textView_btn_save)
         saveBtn.setOnClickListener(View.OnClickListener {
-            history.field = latitude
-            history.location = longitude
+            history.field = longitude
+            history.location = latitude
             binding.textViewHistoryEditSelectLocation.text = address
             locationDialog.dismiss()
         })

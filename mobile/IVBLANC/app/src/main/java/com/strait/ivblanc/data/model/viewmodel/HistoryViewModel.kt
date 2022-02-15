@@ -91,7 +91,7 @@ class HistoryViewModel: ViewModel() {
         _historyListLiveData.postValue(totalHistoryList)
     }
 
-    suspend fun updateHistory(historyId: Int, location: Double, field: Double, date: String, weather: String, temperature_low: Int,
+    fun updateHistory(historyId: Int, location: Double, field: Double, date: String, weather: String, temperature_low: Int,
                               temperature_high: Int, text: String, subject: String, styleUrl: String) = viewModelScope.launch {
         setLoading()
         val historyIdRequestBody = MultiPartUtil.makeMultiPartBody("historyId", historyId.toString())
@@ -111,7 +111,7 @@ class HistoryViewModel: ViewModel() {
             _historyResponseStatus.postValue(response)
         }
     }
-    
+
     private fun setLoading() = _historyResponseStatus.postValue(Resource.loading(null))
 
 }
