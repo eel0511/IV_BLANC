@@ -350,7 +350,7 @@ export default function MyStyleTopbar() {
 
   const showStyle = (e) => {
     e.preventDefault();
-
+    setIsClickLook(false);
     setIsShowLook(true);
   };
 
@@ -369,6 +369,7 @@ export default function MyStyleTopbar() {
   const showLook = (e) => {
     e.preventDefault();
     setIsClickLook(true);
+    setIsShowLook(false);
   };
 
   let showImg = (
