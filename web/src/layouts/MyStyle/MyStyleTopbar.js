@@ -262,6 +262,7 @@ export default function MyStyleTopbar() {
   const [isShowLook, setIsShowLook] = useState(false);
   const [isClickLook, setIsClickLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
+  const [styleLook, setStyleLook] = useState();
 
   const [show, setShow] = useState(false);
   const [AIshow, setAIShow] = useState(false);
@@ -352,6 +353,11 @@ export default function MyStyleTopbar() {
     e.preventDefault();
     setIsClickLook(false);
     setIsShowLook(true);
+    const data = {
+      styleId: Number(e.target.alt),
+      url: e.target.src,
+    };
+    setStyleLook(data);
   };
 
   const handleInitiate = async (e) => {
@@ -368,6 +374,7 @@ export default function MyStyleTopbar() {
 
   const showLook = (e) => {
     e.preventDefault();
+    console.log(e);
     setIsClickLook(true);
     setIsShowLook(false);
   };
