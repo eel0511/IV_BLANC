@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.history
 
+import android.app.Dialog
 import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
@@ -18,7 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.HistoryDetailRecyclerViewAdapter
+import com.strait.ivblanc.data.model.dto.HistoryPhoto
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
+import com.strait.ivblanc.ui.DeleteDialog
 import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.Status
 
@@ -150,10 +153,28 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         historyDetailRecyclerViewAdapter = HistoryDetailRecyclerViewAdapter()
         historyDetailRecyclerViewAdapter.apply {
             data = history.photos
+            itemLongClickListener = object: HistoryDetailRecyclerViewAdapter.ItemLongClickListener {
+                override fun onClick(photo: HistoryPhoto) {
+                    showSelectDialog(photo)
+                }
+            }
         }
         binding.recyclerViewHistoryDetailPhoto.apply {
             adapter = historyDetailRecyclerViewAdapter
             layoutManager = LinearLayoutManager(this@HistoryDetailActivity, RecyclerView.HORIZONTAL, false)
         }
+    }
+
+    private fun showSelectDialog(photo: HistoryPhoto) {
+        DeleteDialog(this)
+            .setContent("이미지를 변경하시겠습니까?")
+            .setNegativeButtonText("수정")
+            .setOnNegativeClickListener {
+
+            }
+            .setPositiveButtonText("삭제")
+            .setOnPositiveClickListener {
+                historyViewModel.deleteHistoryPhoto(photo.photoId)
+            }.build().show()
     }
 }
