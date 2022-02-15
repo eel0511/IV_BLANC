@@ -3,7 +3,7 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { Menu } from '@mui/material';
 
 export default function Profile() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
