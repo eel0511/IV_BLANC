@@ -153,7 +153,8 @@
         android:layout_marginEnd="@dimen/defaultMargin"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="@color/ivblanc_newpink"
-        android:padding="@dimen/defaultPadding"
+        android:paddingStart="@dimen/defaultPadding"
+        android:paddingEnd="@dimen/defaultPadding"
         app:behavior_hideable="false"
         app:behavior_peekHeight="90dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
@@ -161,12 +162,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraintLayout_styleMaking_edit">
 
+        <View
+            android:layout_width="80dp"
+            android:layout_height="6dp"
+            android:background="@drawable/rounded_rectangle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="12dp"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_styleMaking_largeCategory"
             style="@style/TextInputLayoutStyle.dropdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:endIconTint="@color/white"
+            android:layout_marginTop="@dimen/defaultPadding"
             app:layout_constraintStart_toStartOf="@id/constraintLayout_styleMaking_bottomSheet"
             app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet">
 
@@ -184,6 +195,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_marginTop="@dimen/defaultPadding"
             app:endIconTint="@color/white"
             app:layout_constraintStart_toEndOf="@id/textInputLayout_styleMaking_largeCategory"
             app:layout_constraintTop_toTopOf="@id/constraintLayout_styleMaking_bottomSheet">

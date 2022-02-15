@@ -104,6 +104,10 @@
         <item name="android:textSize">@dimen/subtitleTextSize</item>
     </style>
 
+    <style name="FloatingButton">
+        <item name="backgroundTint">@color/ivblanc_newpink</item>
+    </style>
+
     <style name="Text.Title" parent="Text.Base">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">@dimen/titleTextSize</item>

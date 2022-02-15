@@ -28,9 +28,9 @@ export default function History() {
       });
   };
 
-  useEffect(() => {
-    getmyHistoriesData();
-  }, []);
+  // useEffect(() => {
+  //   getmyHistoriesData();
+  // }, []);
   return (
     <Section>
       <ScrollToTop />

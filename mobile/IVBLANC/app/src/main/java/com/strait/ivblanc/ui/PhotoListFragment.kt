@@ -174,11 +174,13 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     private fun setObserverLiveData() {
         clothesViewModel.clothesList.observe(this) {
             photoListRVAdapter.setDatas(it)
+
             if(it.isEmpty()){
                 binding.noClothes.visibility=View.VISIBLE
             }else{
                 binding.noClothes.visibility=View.GONE
             }
+
         }
         clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
