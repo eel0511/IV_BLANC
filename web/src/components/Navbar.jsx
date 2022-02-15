@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import logo2 from '../assets/logo2.png';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -15,11 +15,24 @@ function isActive() {
   return window.location.pathname;
 }
 
-export default function Navbar({ token }) {
+export default function Navbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [element, controls] = useScroll();
   const html = document.querySelector('html');
   html.addEventListener('click', (e) => setIsNavOpen(false));
+
+  // JWT 있는지 없는지 찾기
+  const [isToken, setIsToken] = useState(false);
+  useEffect(() => {
+    let keys = Object.keys(localStorage);
+    for(let key of keys) {
+      if (key === 'JWT') {
+        setIsToken(true);
+        // console.log('true')
+      }
+    }
+  }, []);
+
   return (
     <Nav
       state={isNavOpen ? 1 : 0}
@@ -74,7 +87,7 @@ export default function Navbar({ token }) {
           </li>
           
           {
-            token === ''
+             isToken === false
             ? <>
               <li className={isActive() === '/signup' ? 'active' : null}>
                 <Link className='nav-link' aria-current='page' to='/signup'>
