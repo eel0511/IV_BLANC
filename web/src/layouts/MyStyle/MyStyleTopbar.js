@@ -366,6 +366,11 @@ export default function MyStyleTopbar() {
     }
   };
 
+  const showLook = (e) => {
+    e.preventDefault();
+    setIsClickLook(true);
+  };
+
   let showImg = (
     <div className='row'>
       {filterMyClothes.map((clothesData) => (
@@ -428,8 +433,30 @@ export default function MyStyleTopbar() {
                 <NowImg />
               )
             ) : styleClothes.length > 0 ? (
-              <StyleImage styleClothes={styleClothes} />
+              <div className='container-fluid'>
+                <div className='row'>
+                  {styleClothes.map((clothesData) => (
+                    <div className='col-4 mt-3' key={clothesData.styleId}>
+                      <div className='card h-100'>
+                        <div className='card-body'>
+                          <img
+                            className='MyClosetClothesItemImg'
+                            src={clothesData.url}
+                            alt={clothesData.styleId}
+                            style={{
+                              maxWidth: '100%',
+                              maxHeight: '100%',
+                            }}
+                            onClick={showLook}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ) : (
+              // <StyleImage styleClothes={styleClothes} />
               <NowImg />
             )}
 
@@ -535,6 +562,7 @@ function StyleImage({ styleClothes }) {
                     maxWidth: '100%',
                     maxHeight: '100%',
                   }}
+                  // onClick={showLook}
                 />
               </div>
             </div>
