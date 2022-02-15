@@ -124,15 +124,4 @@
         app:srcCompat="@drawable/noclothes"
         tools:src="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/no_style"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="82dp"
-        android:layout_marginTop="176dp"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pick"
-        tools:src="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.StylePhotoListFragment">
 
+    <ImageView
+        android:id="@+id/no_style"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="176dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/pick"
+        tools:src="@tools:sample/avatars" />
+
     <LinearLayout
         android:id="@+id/linearLayout_stylePhotoListF_recent"
         android:layout_width="match_parent"
