@@ -15,5 +15,14 @@ class MultiPartUtil {
         fun makeMultiPartBody(name: String, value: String): MultipartBody.Part {
             return MultipartBody.Part.createFormData(name, value)
         }
+
+        fun makeMultiPartBodyFileArray(name: String, absolutePathList: List<String>, mediaType: String): Array<MultipartBody.Part> {
+            val files = mutableListOf<MultipartBody.Part>()
+            absolutePathList.forEach { absolutePath ->
+                files.add(makeMultiPartBodyFile(name, absolutePath, mediaType))
+            }
+            return files.toTypedArray()
+        }
+
     }
 }
