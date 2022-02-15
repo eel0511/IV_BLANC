@@ -134,26 +134,36 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/defaultMargin"
                 android:orientation="horizontal"
-                android:weightSum="5">
+                android:weightSum="6">
 
                 <TextView
                     android:id="@+id/textView_historyEdit_photo"
-                    android:layout_width="350dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:text="오늘의 사진"
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text=""
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
 
                 <ImageView
                     android:id="@+id/imageView_historyDetail_addPhoto"
                     android:layout_width="@dimen/defaultIconSize"
-                    android:layout_height="@dimen/defaultIconSize"
-                    android:layout_gravity="end"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/defaultMargin"
-                    android:background="@drawable/ic_add"
+                    android:paddingStart="16dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
