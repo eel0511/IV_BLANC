@@ -52,16 +52,19 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryDetailStyle)
         }
 
+        if(history.subject == ""){
+            binding.textViewHistoryDetailSubject.text = "제목 없음"
+        } else {
+            binding.textViewHistoryDetailSubject.text = history.subject
+        }
+
         binding.textViewHistoryDetailDate.text = history.date
-        binding.textViewHistoryDetailSubject.text = history.subject
         binding.textViewHistoryDetailLocation.text = getLocation()
         binding.textViewHistoryDetailTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
         binding.textViewHistoryDetailText.text = history.text
 
-        if(history.photos.size == 0)
+        if(history.photos.isEmpty())
             binding.recyclerViewHistoryDetailPhoto.visibility = View.GONE
-
-
 
         if(history.weather == "맑음"){
             binding.imageViewHistoryDetailWeather.setImageResource(R.drawable.icon_weather_sunny_48);
@@ -91,8 +94,6 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             e.printStackTrace()
             Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
         }
-
-//        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
 
         if (list != null && !list.isEmpty()) {
             var cut = list.get(0).toString().split("\"")
