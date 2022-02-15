@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.api
 
 import com.strait.ivblanc.data.model.response.HistoryResponse
+import com.strait.ivblanc.data.model.response.HistorySimpleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -53,10 +54,10 @@ interface HistoryApi {
     @Multipart
     @POST("/api/history/photo/add")
     suspend fun addHistoryPhotos(@Part historyId: MultipartBody.Part
-                                , @Part photoList: Array<MultipartBody.Part>): Response<HistoryResponse>
+                                , @Part photoList: Array<MultipartBody.Part>): Response<HistorySimpleResponse>
 
     @DELETE("/api/history/photo/delete")
-    suspend fun deleteHistoryPhoto(@Query("photoId") photoId: Int): Response<HistoryResponse>
+    suspend fun deleteHistoryPhoto(@Query("photoId") photoId: Int): Response<HistorySimpleResponse>
 
     @Multipart
     @PUT("/api/history/photo/update")
