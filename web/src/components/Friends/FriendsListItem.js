@@ -165,15 +165,15 @@ export default function FriendsListItem({ friend }) {
   ]);
 
   const getFiveStyle = () => {
-    const result =[];
+    const result = [];
     for (let i = 0; i < 5; i++) {
       result.push(friendsStyleList[i]);
     }
     return result;
   };
 
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const token = localStorage.getItem('JWT');
+  // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
   const getFriendsStyleList = () => {
     axios
       .get('http://i6d104.p.ssafy.io:9999/api/style/findfriendstyle', {
@@ -190,9 +190,9 @@ export default function FriendsListItem({ friend }) {
       });
   };
 
-  // useEffect(() => {
-  //   getFriendsStyleList();
-  // }, []);
+  useEffect(() => {
+    getFriendsStyleList();
+  }, []);
 
   return (
     <>
@@ -217,38 +217,37 @@ export default function FriendsListItem({ friend }) {
         </Link>
       </div>
       <div className='friend__body'>
-        {
-          friendsStyleList.length === 0
-          ? <div className='friend__card'>
+        {friendsStyleList.length === 0 ? (
+          <div className='friend__card'>
+            <div className='friend__cardBody'>
+              <h2 className='friend__text'>저장된 룩이 없습니다.</h2>
+            </div>
+          </div>
+        ) : friendsStyleList.length < 5 ? (
+          friendsStyleList.map((friendStyle, id) => (
+            <div className='friend__card' key={id}>
               <div className='friend__cardBody'>
-                <h2 className='friend__text'>저장된 룩이 없습니다.</h2>
+                <img
+                  className='friend__cardImg'
+                  src={friendStyle.url}
+                  alt='img'
+                />
               </div>
             </div>
-          : ( friendsStyleList.length < 5
-              ? friendsStyleList.map((friendStyle, id) => (
-                <div className='friend__card' key={id}>
-                  <div className='friend__cardBody'>
-                    <img
-                      className='friend__cardImg'
-                      src={friendStyle.url}
-                      alt='img'
-                    />
-                  </div>
-                </div>
-              ))
-              : getFiveStyle().map((friendStyle, id) => (
-                <div className='friend__card' key={id}>
-                  <div className='friend__cardBody'>
-                    <img
-                      className='friend__cardImg'
-                      src={friendStyle.url}
-                      alt='img'
-                    />
-                  </div>
-                </div>
-              ))
-            )
-        }
+          ))
+        ) : (
+          getFiveStyle().map((friendStyle, id) => (
+            <div className='friend__card' key={id}>
+              <div className='friend__cardBody'>
+                <img
+                  className='friend__cardImg'
+                  src={friendStyle.url}
+                  alt='img'
+                />
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </>
   );
