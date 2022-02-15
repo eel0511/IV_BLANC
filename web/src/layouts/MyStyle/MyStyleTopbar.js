@@ -8,6 +8,7 @@ import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import StyleLook from '../../components/MyStyle/StyleLook';
+import ShowLookImg from '../../components/MyStyle/ShowLookImg';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
 
@@ -511,6 +512,7 @@ export default function MyStyleTopbar() {
         </Col>
         <Col sm={8}>
           {isShowLook && <StyleLook selectedClothes={selectedClothes} />}
+          {isClickLook && <ShowLookImg />}
         </Col>
       </Row>
     </Container>
