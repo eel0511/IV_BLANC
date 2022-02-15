@@ -139,6 +139,8 @@ export default function SignInSide() {
             const token = getCookie('JWT');
             console.log(token);
             localStorage.setItem('JWT', token);
+            localStorage.setItem('name', res.data.data.name);
+            localStorage.setItem('email', res.data.data.email);
             setAuthorizationToken(token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
