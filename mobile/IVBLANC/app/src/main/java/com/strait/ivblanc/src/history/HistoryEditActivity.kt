@@ -94,12 +94,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         setHistoryEditInfo()
     }
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume: styleUrl = ${history.styleUrl}")
-        Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryEditStyle)
-    }
-
     private fun setClickListeners() {
         binding.imageViewHistoryEditClose.setOnClickListener {
             // TODO: 정말 나갈건지 다이얼로그 띄워서 물어보기
@@ -113,6 +107,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             startActivity(Intent(this, StyleSelectActivity::class.java)
                 .putExtra("history", history)
                 .putExtra("location", location))
+            finish()
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {

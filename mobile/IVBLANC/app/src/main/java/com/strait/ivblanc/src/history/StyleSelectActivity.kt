@@ -66,8 +66,9 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
                         .putExtra("history", history)
                         .putExtra("location", location)
                     startActivity(intent)
-                }
 
+                }
+                finish()
             }
         }
 
