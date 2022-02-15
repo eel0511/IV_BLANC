@@ -28,9 +28,9 @@ export default function History() {
       });
   };
 
-  // useEffect(() => {
-  //   getmyHistoriesData();
-  // }, []);
+  useEffect(() => {
+    getmyHistoriesData();
+  }, []);
   return (
     <Section>
       <ScrollToTop />
@@ -43,7 +43,7 @@ export default function History() {
         <img src={pricing2} alt='background' className='bg2' />
       </div>
       <div style={{ 'margin-top': '1rem' }}>
-        <HistoryCreateButton />
+        <HistoryCreateButton getmyHistoriesData={getmyHistoriesData} />
       </div>
       <StyledHistory>
         <div className='container'>
@@ -53,7 +53,11 @@ export default function History() {
             <div className='col d-flex flex-wrap justify-content-around align-items-center'>
               {myHistories &&
                 myHistories.map((myHistory) => (
-                  <FlipCard key={myHistory.historyId} myHistory={myHistory} />
+                  <FlipCard
+                    key={myHistory.historyId}
+                    myHistory={myHistory}
+                    getmyHistoriesData={getmyHistoriesData}
+                  />
                 ))}
             </div>
           </div>

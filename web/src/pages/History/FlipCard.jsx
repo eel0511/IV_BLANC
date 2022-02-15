@@ -7,6 +7,7 @@ import axios from 'axios';
 
 function FlipCard({
   myHistory: { historyId, date, subject, text, styleUrl, photos },
+  getmyHistoriesData,
 }) {
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ function FlipCard({
             if (res.status === 200 && res.data.output === 1) {
               console.log(res.data.msg);
               alert('삭제되었습니다.');
+              getmyHistoriesData();
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
