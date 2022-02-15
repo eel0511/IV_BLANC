@@ -48,12 +48,12 @@ interface HistoryApi {
                            , @Part text: MultipartBody.Part
                            , @Part subject: MultipartBody.Part
                            , @Part styleId: MultipartBody.Part
-                           , @Part photoList: MultipartBody.Part): Response<HistoryResponse>
+                           , @Part photoList: Array<MultipartBody.Part>): Response<HistoryResponse>
 
     @Multipart
     @POST("/api/history/photo/add")
     suspend fun addHistoryPhotos(@Part historyId: MultipartBody.Part
-                                , @Part photoList: MultipartBody.Part): Response<HistoryResponse>
+                                , @Part photoList: Array<MultipartBody.Part>): Response<HistoryResponse>
 
     @DELETE("/api/history/photo/delete")
     suspend fun deleteHistoryPhoto(@Query("photoId") photoId: Int): Response<HistoryResponse>
