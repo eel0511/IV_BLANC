@@ -12,18 +12,24 @@ import android.location.Address
 import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.strait.ivblanc.R
 import com.strait.ivblanc.adapter.HistoryDetailRecyclerViewAdapter
+import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
+import com.strait.ivblanc.util.CaptureUtil
+import com.strait.ivblanc.util.Status
 
 import java.io.IOException
 
-
+private const val TAG = "HistoryDetailActivity_debuk"
 class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
     ActivityHistoryDetailBinding::inflate) {
     lateinit var history: History
     lateinit var historyDetailRecyclerViewAdapter: HistoryDetailRecyclerViewAdapter
+    private val historyViewModel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +40,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         setHistoryInfo()
         setClickListeners()
         setRecyclerView()
+        setObserverLiveData()
     }
 
     private fun setClickListeners() {
@@ -51,10 +58,34 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
         }
     }
 
+    private fun setObserverLiveData() {
+        historyViewModel.historyResponseStatus.observe(this) {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    toast("성공", Toast.LENGTH_SHORT)
+                }
+                Status.LOADING -> {
+                    toast("업로드 중", Toast.LENGTH_SHORT)
+                }
+                Status.ERROR -> {
+                    toast("실패", Toast.LENGTH_SHORT)
+                }
+            }
+        }
+    }
+
     private fun showGalleryDialog() {
         val galleryFragment = HistoryPhotoFragment(object: HistoryPhotoFragment.ImageSelectedListener {
-            override fun getImageUri(uri: Uri) {
-
+            override fun getResult(imageUris: List<Uri>) {
+                val absolutePathList = mutableListOf<String>()
+                for(i in imageUris) {
+                    CaptureUtil.getAbsolutePathFromImageUri(this@HistoryDetailActivity, i)?.let {
+                        absolutePathList.add(
+                            it
+                        )
+                    }
+                }
+                historyViewModel.addHistoryPhotos(0, absolutePathList)
             }
         })
         galleryFragment.show(supportFragmentManager, "photo")
