@@ -26,7 +26,7 @@ interface HistoryApi {
 
     @Multipart
     @PUT("/api/history/update")
-    suspend fun updateHistory(@Query("historyId") historyId: Int
+    suspend fun updateHistory(@Part historyId: MultipartBody.Part
                               , @Part latitude: MultipartBody.Part
                               , @Part longitude: MultipartBody.Part
                               , @Part date: MultipartBody.Part
