@@ -96,7 +96,7 @@ class FriendCloset :
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> PhotoListFragment<Clothes>()
+                0 -> PhotoListFragment()
                 else -> StylePhotoListFragment()
             }
         }

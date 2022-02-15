@@ -52,7 +52,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.let {
-                    setFragment(PhotoListFragment<Style>(), it.getStringExtra("result")!!)
+                    setFragment(StylePhotoListFragment(), it.getStringExtra("result")!!)
                     val item: MenuItem =
                         binding.bottomNavMain.menu.findItem(R.id.nav_style).setChecked(true)
                 }
@@ -97,13 +97,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun init() {
         setToolbar()
         // 첫 화면 세팅
-        setFragment(PhotoListFragment<Clothes>(), "clothes")
+        setFragment(PhotoListFragment(), "clothes")
 
         // nav click 시 fragment 변경
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_clothes -> {
-                    setFragment(PhotoListFragment<Clothes>(), "clothes")
+                    setFragment(PhotoListFragment(), "clothes")
                     true
                 }
                 // Style로 변경
