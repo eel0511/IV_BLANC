@@ -27,23 +27,11 @@
   height: 70px;
 }
 
-/* .RadioForm {
-  display: inline;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  background-attachment: fixed;
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  /* width: 100%; */
-/* } */ */
-
 .form-check-input {
   margin: 4px;
 }
 
-/* card */
+
 .card {
   height: 300px;
   box-shadow: 5px 5px #d3d3d3;
