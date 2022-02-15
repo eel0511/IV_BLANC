@@ -113,4 +113,22 @@ class HistoryRepository {
             }
         }
     }
+
+    suspend fun deleteHistoryPhoto(photoId: Int): Resource<HistoryResponse> {
+        return try {
+            val response = historyApi.deleteHistoryPhoto(photoId)
+            if(response.isSuccessful) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body()!!, "히스토리 사진 삭제에 실패했습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "deleteHistoryPhoto: ${e.message}")
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
 }
