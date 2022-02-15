@@ -129,6 +129,36 @@
                 android:layout_marginBottom="@dimen/defaultMargin"
                 android:text="내용내용내용" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/defaultMargin"
+                android:orientation="horizontal"
+                android:weightSum="5">
+
+                <TextView
+                    android:id="@+id/textView_historyEdit_photo"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:text="오늘의 사진"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+
+                <ImageView
+                    android:id="@+id/imageView_historyDetail_addPhoto"
+                    android:layout_width="@dimen/defaultIconSize"
+                    android:layout_height="@dimen/defaultIconSize"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="@dimen/defaultMargin"
+                    android:background="@drawable/ic_add"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -92,7 +92,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         setClickListeners()
         setHistoryEditInfo()
-        setRecyclerView()
     }
 
     override fun onResume() {
@@ -108,9 +107,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
         binding.textViewHistoryEditSave.setOnClickListener {
             // TODO: 수정된 히스토리 저장
-        }
-        binding.imageViewHistoryEditAddPhoto.setOnClickListener {
-            // TODO: 앨범 사진 선택 화면으로 이동
         }
 
         binding.imageViewHistoryEditStyle.setOnClickListener {
@@ -156,20 +152,6 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         latitude = history.field
         longitude = history.location
-
-        if(history.photos.isEmpty())
-            binding.recyclerViewHistoryEditPhoto.visibility = View.GONE
-    }
-
-    private fun setRecyclerView(){
-        historyDetailRecyclerViewAdapter = HistoryDetailRecyclerViewAdapter()
-        historyDetailRecyclerViewAdapter.apply {
-            data = history.photos
-        }
-        binding.recyclerViewHistoryEditPhoto.apply {
-            adapter = historyDetailRecyclerViewAdapter
-            layoutManager = LinearLayoutManager(this@HistoryEditActivity, RecyclerView.HORIZONTAL, false)
-        }
     }
 
     override fun onCreateContextMenu(
