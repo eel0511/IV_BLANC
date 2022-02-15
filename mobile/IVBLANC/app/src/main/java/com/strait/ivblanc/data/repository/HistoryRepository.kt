@@ -126,4 +126,22 @@ class HistoryRepository {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
+
+    suspend fun updateHistoryPhoto(photoId: MultipartBody.Part, newPhoto: MultipartBody.Part): Resource<HistorySimpleResponse> {
+        return try {
+            val response = historyApi.updateHistoryPhotos(photoId, newPhoto)
+            if(response.isSuccessful) {
+                return if(response.code() == StatusCode.OK && response.body()!!.output == 1) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(null, "히스토리 사진 수정에 실패했습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "addHistoryPhotos: ${e.message}")
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
 }
