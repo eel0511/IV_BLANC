@@ -118,8 +118,10 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
         when(tag) {
             "style" -> {
                 binding.floatingButtonStylePhotoListF.setOnClickListener {
-                    val intent = Intent(requireActivity(),StyleMakingActivity::class.java)
-                    startActivity(intent)
+                    if(requireActivity() is MainActivity) {
+                        val intent = Intent(requireActivity(), StyleMakingActivity::class.java)
+                        (requireActivity() as MainActivity).addStyleContract.launch(intent)
+                    }
                 }
             }
             "f1" -> {
