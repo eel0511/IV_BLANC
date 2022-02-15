@@ -49,7 +49,7 @@ import com.strait.ivblanc.util.WeatherUtil
 import java.net.MalformedURLException
 import java.text.SimpleDateFormat
 
-
+private const val TAG = "HistoryEdit"
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     ActivityHistoryEditBinding::inflate) {
 
@@ -95,6 +95,12 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         setRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume: styleUrl = ${history.styleUrl}")
+        Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryEditStyle)
+    }
+
     private fun setClickListeners() {
         binding.imageViewHistoryEditClose.setOnClickListener {
             // TODO: 정말 나갈건지 다이얼로그 띄워서 물어보기
@@ -108,7 +114,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
 
         binding.imageViewHistoryEditStyle.setOnClickListener {
-            startActivity(Intent(this, StyleSelectActivity::class.java))
+            startActivity(Intent(this, StyleSelectActivity::class.java)
+                .putExtra("history", history)
+                .putExtra("location", location))
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
@@ -135,9 +143,10 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     }
 
     private fun setHistoryEditInfo() {
-        if(history.styleUrl != null) {
+        if (history.styleUrl != null) {
             Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryEditStyle)
         }
+
 
         binding.textViewHistoryEditSelectDate.text = history.date
         binding.editTextHistoryEditSubject.setText(history.subject)

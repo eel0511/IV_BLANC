@@ -19,6 +19,14 @@ class StyleSelectRecyclerViewAdapter(): RecyclerView.Adapter<StyleSelectRecycler
         fun bind(item: Style) {
             val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_clothes)
             Glide.with(imageView).load(item.url).centerCrop().error(R.drawable.circle).into(imageView)
+
+            item.let {
+                if(this@StyleSelectRecyclerViewAdapter::itemClickListener.isInitialized) {
+                    itemView.setOnClickListener {
+                        itemClickListener.onClick(adapterPosition)
+                    }
+                }
+            }
         }
     }
 
@@ -39,6 +47,6 @@ class StyleSelectRecyclerViewAdapter(): RecyclerView.Adapter<StyleSelectRecycler
     }
 
     interface ItemClickListener {
-        fun onClick(style: Style)
+        fun onClick(position: Int)
     }
 }
