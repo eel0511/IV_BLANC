@@ -89,7 +89,7 @@ class HistoryViewModel: ViewModel() {
         _historyListLiveData.postValue(totalHistoryList)
     }
 
-    suspend fun addHistoryPhotos(historyId: Int, absolutePathList: List<String>) = viewModelScope.launch {
+    fun addHistoryPhotos(historyId: Int, absolutePathList: List<String>) = viewModelScope.launch {
         setLoading()
         withContext(Dispatchers.IO) {
             val result = historyRepository.addHistoryPhotos(
