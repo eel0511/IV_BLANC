@@ -181,7 +181,7 @@ public class ClothesController {
     @ApiOperation(value = "betaurl")
     @PostMapping(value = "/betaurl")
     public @ResponseBody
-    SingleResult<String> betaservice(@RequestParam String url) throws Exception {
+    SingleResult<String> betaurlservice(@RequestParam String url) throws Exception {
 
         RestTemplate restTemplate = new RestTemplate();
 
