@@ -186,7 +186,7 @@ public class ClothesController {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("url",url);
         HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
