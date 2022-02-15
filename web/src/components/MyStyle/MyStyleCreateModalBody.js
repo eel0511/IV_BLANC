@@ -29,8 +29,8 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/style/add', formData, {
         headers: {
-          'X-AUTH-TOKEN':
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          'X-AUTH-TOKEN': localStorage.getItem('JWT'),
+          // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
         },
       })
       .then((response) => {
