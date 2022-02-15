@@ -75,16 +75,8 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
 
         val adb =android.app.AlertDialog.Builder(requireContext(), R.style.MyDialogTheme).setView(dialogView)
         val dialog = adb.create()
-        val lp = WindowManager.LayoutParams()
-        lp.copyFrom(dialog.window!!.attributes)
-        lp.width = 900
-        lp.height = 1200
-
         dialog.show()
-        val window = dialog.getWindow();
-        if (window != null) {
-            window.setAttributes(lp)
-        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -195,6 +187,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
             "clothes" -> {
                 binding.fabMain.visibility = View.GONE
                 clothesViewModel.clothesList.observe(this) {
+                    if(it.isEmpty()){
+                        binding.noClothes.visibility=View.VISIBLE
+                    }else{
+                        binding.noClothes.visibility=View.GONE
+                    }
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
@@ -209,6 +206,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
             "style" -> {
                 binding.fabMain.visibility = View.GONE
                 styleViewModel.styleListLiveData.observe(this) {
+                    if(it.isEmpty()){
+                        binding.noStyle.visibility=View.VISIBLE
+                    }else{
+                        binding.noStyle.visibility=View.GONE
+                    }
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 styleViewModel.recentlyAddedStyleList.observe(this) {
@@ -226,6 +228,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
             "f0" -> {
                 binding.fabMain.visibility = View.GONE
                 clothesViewModel.clothesList.observe(requireActivity()) {
+                    if(it.isEmpty()){
+                        binding.noClothes.visibility=View.VISIBLE
+                    }else{
+                        binding.noClothes.visibility=View.GONE
+                    }
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
                 clothesViewModel.recentlyAddedClothesList.observe(viewLifecycleOwner) {
@@ -246,6 +253,11 @@ class PhotoListFragment<T> : BaseFragment<FragmentPhotoListBinding>(
                 }
 
                 styleViewModel.styleListLiveData.observe(requireActivity()) {
+                    if(it.isEmpty()){
+                        binding.noStyle.visibility=View.VISIBLE
+                    }else{
+                        binding.noStyle.visibility=View.GONE
+                    }
                     Log.d(TAG, "setObserverLiveData: " + it)
                     photoListRVAdapter.setDatas(it as List<T>)
                 }
