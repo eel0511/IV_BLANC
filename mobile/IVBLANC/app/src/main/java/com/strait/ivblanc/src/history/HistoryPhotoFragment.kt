@@ -20,6 +20,7 @@ import com.strait.ivblanc.databinding.FragmentHistoryPhotoBinding
 class HistoryPhotoFragment(val imageSelectedListener: ImageSelectedListener) : DialogFragment() {
     private lateinit var binding: FragmentHistoryPhotoBinding
     private lateinit var photoSelectRecyclerViewAdapter: PhotoRecyclerViewAdapter
+    private val uriSet = mutableSetOf<Uri>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +38,21 @@ class HistoryPhotoFragment(val imageSelectedListener: ImageSelectedListener) : D
     private fun init() {
         isCancelable = true
         setRecyclerView()
+        binding.buttonHistoryPhotoF.setOnClickListener {
+            imageSelectedListener.getResult(uriSet.toList())
+            dismiss()
+        }
     }
 
     private fun setRecyclerView() {
         photoSelectRecyclerViewAdapter = PhotoRecyclerViewAdapter().apply {
             itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
-                override fun onClick(uri: Uri) {
-                    imageSelectedListener.getImageUri(uri)
-                    dismiss()
+                override fun onClick(uri: Uri, view: View, position: Int) {
+                    if(uriSet.contains(uri)) {
+                        uriSet.remove(uri)
+                    } else {
+                        uriSet.add(uri)
+                    }
                 }
             }
             uris = setImageUrisFromCursor(getPhotoCursor())
@@ -88,6 +96,6 @@ class HistoryPhotoFragment(val imageSelectedListener: ImageSelectedListener) : D
     }
 
     interface ImageSelectedListener {
-        fun getImageUri(uri: Uri)
+        fun getResult(imageUris: List<Uri>)
     }
 }
