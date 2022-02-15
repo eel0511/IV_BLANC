@@ -26,21 +26,21 @@ interface HistoryApi {
 
     @Multipart
     @PUT("/api/history/update")
-    suspend fun updateHistory(@Query("historyId") historyId: Int
-                              , @Part latitude: MultipartBody.Part
-                              , @Part longitude: MultipartBody.Part
+    suspend fun updateHistory(@Part historyId: MultipartBody.Part
+                              , @Part location: MultipartBody.Part
+                              , @Part field: MultipartBody.Part
                               , @Part date: MultipartBody.Part
                               , @Part weather: MultipartBody.Part
                               , @Part temperature_low: MultipartBody.Part
                               , @Part temperature_high: MultipartBody.Part
                               , @Part text: MultipartBody.Part
                               , @Part subject: MultipartBody.Part
-                              , @Part styleId: MultipartBody.Part)
+                              , @Part styleUrl: MultipartBody.Part): Response<HistoryResponse>
 
     @Multipart
         @POST("/api/history/add")
-    suspend fun addHistory(@Part latitude: MultipartBody.Part
-                           , @Part longitude: MultipartBody.Part
+    suspend fun addHistory(@Part location: MultipartBody.Part
+                           , @Part field: MultipartBody.Part
                            , @Part date: MultipartBody.Part
                            , @Part weather: MultipartBody.Part
                            , @Part temperature_low: MultipartBody.Part

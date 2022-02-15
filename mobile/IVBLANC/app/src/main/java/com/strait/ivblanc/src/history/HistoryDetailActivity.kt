@@ -1,5 +1,6 @@
-package com.strait.ivblanc.src.historyDetail
+package com.strait.ivblanc.src.history
 
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import com.bumptech.glide.Glide
@@ -39,7 +40,10 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             finish()
         }
         binding.imageViewHistoryDetailEdit.setOnClickListener {
-            // TODO: 히스토리 수정 화면으로 이동
+            val intent = Intent(this, HistoryEditActivity::class.java)
+                .putExtra("history", history)
+                .putExtra("location", getLocation())
+            startActivity(intent)
         }
     }
 
@@ -88,7 +92,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
         }
 
-        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
+//        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
 
         if (list != null && !list.isEmpty()) {
             var cut = list.get(0).toString().split("\"")
