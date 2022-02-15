@@ -84,4 +84,24 @@ class HistoryRepository {
             Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
+
+    suspend fun addHistory(location: MultipartBody.Part, field: MultipartBody.Part, date: MultipartBody.Part, weather: MultipartBody.Part,
+                              temperature_low: MultipartBody.Part, temperature_high: MultipartBody.Part, text: MultipartBody.Part, subject: MultipartBody.Part,
+                                styleId: MultipartBody.Part, photoList: MultipartBody.Part): Resource<HistoryResponse> {
+        return try{
+            val response = historyApi.addHistory(location, field, date, weather, temperature_low, temperature_high, text, subject, styleId, photoList)
+            if(response.isSuccessful) {
+                return if(response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "히스토리 업로드에 실패했습니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            val msg = e.message
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
 }
