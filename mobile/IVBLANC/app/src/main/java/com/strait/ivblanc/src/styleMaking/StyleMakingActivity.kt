@@ -71,7 +71,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
             clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
         bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
-        setToolbar()
         setBottomSheetDropDown()
         setStyleEditorAdapter()
         setRecyclerView()
@@ -79,9 +78,12 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         setObserver()
         intent.getParcelableExtra<Style>("style")?.let {
             style = it
+            setToolbar("Edit Style")
             style.styleDetails.forEach { styleDetail ->
                 setClothesToEditor(styleDetail.clothes)
             }
+        }?: run {
+            setToolbar("Make Style")
         }
     }
 
@@ -100,7 +102,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
                     imageUri?.let { uri ->
                         CaptureUtil.deleteImageByUri(this, uri)
                     }
-
                 }
             }
         }
@@ -122,9 +123,9 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
     }
 
-    private fun setToolbar() {
+    private fun setToolbar(title: String) {
         val toolbar = binding.toolbarStyleMaking.toolbar
-        toolbar.findViewById<TextView>(R.id.textView_toolbar).text = "스타일 만들기"
+        toolbar.findViewById<TextView>(R.id.textView_toolbar).text = title
         val leadingIcon = toolbar.findViewById<ImageView>(R.id.imageView_toolbar_leadingIcon).apply {
             setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_back, null))
             setOnClickListener { finish() }

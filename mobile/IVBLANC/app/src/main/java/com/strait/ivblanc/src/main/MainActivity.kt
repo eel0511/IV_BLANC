@@ -137,6 +137,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun setFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout_main_container, fragment, tag).commit()
+        when(tag) {
+            "clothes" -> {
+                setToolbarTitle(resources.getString(R.string.closetEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "style" -> {
+                setToolbarTitle(resources.getString(R.string.pickEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "history" -> {
+                setToolbarTitle(resources.getString(R.string.historyEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "friend" -> {
+                setToolbarTitle(resources.getString(R.string.shareEn))
+                mainViewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+        }
     }
 
 
@@ -194,7 +216,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 View.OnClickListener {
                     val intent = Intent(this@MainActivity, FriendNoti::class.java)
                     preContractStartActivityResult.launch(intent)
-
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {

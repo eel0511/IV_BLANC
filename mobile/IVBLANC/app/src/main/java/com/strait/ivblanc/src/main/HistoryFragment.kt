@@ -42,12 +42,6 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(FragmentHistoryBind
         }.attach()
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.setToolbarTitle(resources.getString(R.string.history))
-        mainViewModel.setLeadingIcon(R.drawable.ic_add)
-    }
-
     private inner class ViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         override fun getItemCount(): Int = 2
 

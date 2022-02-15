@@ -32,7 +32,6 @@ class FriendFragment :
         val FRIEND_INFO = "friendInfo"
     }
     lateinit var friendRecyclerViewAdapter: FriendRecyclerViewAdapter
-    private val viewModel: MainViewModel by activityViewModels()
     private val friendViewModel: FriendViewModel by activityViewModels()
     var list = arrayListOf<FriendViewdata>()
 
@@ -51,12 +50,7 @@ class FriendFragment :
 
     override fun onResume() {
         super.onResume()
-        viewModel.setToolbarTitle("친구")
-        viewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
-        viewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
         reloadImages()
-        Log.d("zczczc", ": "+friendViewModel.friendListLiveData.value)
-
     }
 
     fun reloadImages() {

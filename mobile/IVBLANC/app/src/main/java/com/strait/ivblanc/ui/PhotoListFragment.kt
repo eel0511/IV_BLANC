@@ -36,9 +36,7 @@ import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
 
 
-// TODO: 2022/02/04 generic 오용, 리팩터링 필수
 private const val TAG = "PhotoListFragment_debuk"
-
 class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     FragmentPhotoListBinding::bind,
     R.layout.fragment_photo_list
@@ -47,25 +45,8 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
     lateinit var photoListRVAdapter: PhotoListRVAdapter<Clothes>
     private val viewModel: MainViewModel by activityViewModels()
     private val clothesViewModel: ClothesViewModel by activityViewModels()
-    private val styleViewModel: StyleViewModel by activityViewModels()
-    private val friendViewModel: FriendViewModel by activityViewModels()
-    private var FriendEmail = ""
     lateinit var largeCategories: List<String>
     var smallCategories = listOf<Pair<Int, Int>>()
-
-    // TODO: 2022/02/10 toolbar는 host에서 관리로 변경
-    override fun onResume() {
-        super.onResume()
-        when (tag) {
-            "clothes" -> {
-                viewModel.setToolbarTitle("옷")
-            }
-            "style" -> {
-                viewModel.setToolbarTitle("스타일")
-            }
-        }
-        viewModel.setLeadingIcon(R.drawable.ic_add)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

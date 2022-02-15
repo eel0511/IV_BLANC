@@ -116,4 +116,8 @@
     <string name="thursday">목</string>
     <string name="friday">금</string>
     <string name="saturday">토</string>
+    <string name="closetEn">Closet</string>
+    <string name="pickEn">Pick</string>
+    <string name="shareEn">Share</string>
+    <string name="historyEn">History</string>
 </resources>
