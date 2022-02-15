@@ -1,25 +1,23 @@
-import { useState, useRef } from "react";
-import cn from "classnames";
-import { ReplyFill as Icon } from "react-bootstrap-icons";
-import {Button} from "react-bootstrap"
-import styled from "styled-components";
+import { useState, useRef } from 'react';
+import cn from 'classnames';
+import { ReplyFill as Icon } from 'react-bootstrap-icons';
+import { Button } from 'react-bootstrap';
+import styled from 'styled-components';
 import axios from 'axios';
 
 function FlipCard({
   myHistory: { historyId, date, subject, text, styleUrl, photos },
 }) {
-  
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    if (window.confirm("진짜 삭제하시겠습니까?")) {
-
+    if (window.confirm('진짜 삭제하시겠습니까?')) {
       try {
         await axios
           .delete('http://i6d104.p.ssafy.io:9999/api/history/delete', {
             headers: {
-              'X-AUTH-TOKEN':
-                'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+              'X-AUTH-TOKEN': localStorage.getItem('JWT'),
+              // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
             params: {
               historyId: `${historyId}`,
@@ -40,7 +38,7 @@ function FlipCard({
         console.error(err.response.data);
       }
     } else {
-      alert("취소합니다.");
+      alert('취소합니다.');
     }
   };
   return (
@@ -50,26 +48,34 @@ function FlipCard({
           <div className='card-body'>
             <div className='card-side side-back'>
               <div className='container-fluid'>
-
                 <form formAction='' className=''>
                   <div className='d-flex flex-column'>
-                    <div 
-                    className=' d-flex flex-column historycover'>
-                      <div className="id mt-2">{historyId}번째 추억</div>
-                      <img src={styleUrl} alt={styleUrl} height={300} width={500}/>
+                    <div className=' d-flex flex-column historycover'>
+                      <div className='id mt-2'>{historyId}번째 추억</div>
+                      <img
+                        src={styleUrl}
+                        alt={styleUrl}
+                        height={300}
+                        width={500}
+                      />
                     </div>
 
                     <div className=' d-flex flex-column'>
-                      <div className="subject">{subject}</div>
-                      <div className="text">{text}</div>
+                      <div className='subject'>{subject}</div>
+                      <div className='text'>{text}</div>
                     </div>
                     <Button
-                    variant='danger'
-                    style={{ marginLeft: '60%' ,backgroundColor: '#662d91', color: 'white', borderStyle: 'none'}}
-                    onClick={handleDelete}
-                  >
-                    삭제
-                  </Button>
+                      variant='danger'
+                      style={{
+                        marginLeft: '60%',
+                        backgroundColor: '#662d91',
+                        color: 'white',
+                        borderStyle: 'none',
+                      }}
+                      onClick={handleDelete}
+                    >
+                      삭제
+                    </Button>
                   </div>
                 </form>
               </div>
@@ -78,22 +84,27 @@ function FlipCard({
             <div className='card-side side-front'>
               <div className='container-fluid'>
                 <div className=''>
-                    <div className=' d-flex flex-column align-content-center justify-content-center'
-                    style={{
-                      // backgroundImage: `url(${photos[0].url})`
-
-                    }}
-                    >
-                    <div className="date">{date}</div>
-                    <div className="frontImg">
-                    <img src={photos[0].url} alt={photos[0].url} height={400} width={300}/>
+                  <div
+                    className=' d-flex flex-column align-content-center justify-content-center'
+                    style={
+                      {
+                        // backgroundImage: `url(${photos[0].url})`
+                      }
+                    }
+                  >
+                    <div className='date'>{date}</div>
+                    <div className='frontImg'>
+                      <img
+                        src={photos[0].url}
+                        alt={photos[0].url}
+                        height={400}
+                        width={300}
+                      />
                     </div>
-                    </div>
-                    
                   </div>
                 </div>
               </div>
-            
+            </div>
           </div>
         </div>
       </HistoryStyle>
@@ -105,7 +116,7 @@ export default FlipCard;
 
 const HistoryStyle = styled.div`
   body {
-    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 100%;
     background-color: #dfafbd;
   }
@@ -141,17 +152,16 @@ const HistoryStyle = styled.div`
     font-size: 1.2rem;
     background-color: #e991a8;
     color: white;
-    margin-top: 30px ;
+    margin-top: 30px;
   }
   .frontImg {
     margin-bottom: 30px;
     border-radius: 30px;
-    
   }
   img {
     max-width: 100%;
     max-height: 100%;
-    perspective: 1000px
+    perspective: 1000px;
   }
 
   /*- Card body -*/
@@ -188,7 +198,7 @@ const HistoryStyle = styled.div`
   }
 
   /*- Front side -*/
-  .side-front [class^="col-xs"]:first-of-type {
+  .side-front [class^='col-xs']:first-of-type {
     padding-left: 100;
   }
 
