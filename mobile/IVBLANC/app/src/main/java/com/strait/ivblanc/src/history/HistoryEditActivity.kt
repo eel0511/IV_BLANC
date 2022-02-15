@@ -43,6 +43,8 @@ import android.view.*
 
 import android.view.ContextMenu.ContextMenuInfo
 import com.strait.ivblanc.R
+import com.strait.ivblanc.data.model.dto.Style
+import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.WeatherUtil
 import java.net.MalformedURLException
 import java.text.SimpleDateFormat
@@ -103,6 +105,10 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
         binding.imageViewHistoryEditAddPhoto.setOnClickListener {
             // TODO: 앨범 사진 선택 화면으로 이동
+        }
+
+        binding.imageViewHistoryEditStyle.setOnClickListener {
+            startActivity(Intent(this, StyleSelectActivity::class.java))
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {

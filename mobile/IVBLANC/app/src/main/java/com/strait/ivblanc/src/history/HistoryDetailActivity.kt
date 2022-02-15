@@ -92,7 +92,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
             Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생")
         }
 
-        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
+//        Log.d("GEO", "latitude = " + history.location + ", longitude = " + history.field + ", list_size = " + list!!.size)
 
         if (list != null && !list.isEmpty()) {
             var cut = list.get(0).toString().split("\"")
