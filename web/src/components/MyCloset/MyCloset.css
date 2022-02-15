@@ -61,3 +61,57 @@
   margin-left: 8px;
   border: 1px #f2f2f2 solid;
 }
+
+.tabs {
+  width: 100%;
+  margin-top: 0.2rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tab {
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.77;
+  letter-spacing: -0.6px;
+  text-align: left;
+  color:  #662d91 !important;
+}
+
+.tab:active {
+
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.77;
+  letter-spacing: -0.6px;
+  text-align: left;
+  background-color: #662d91 !important;
+  color: white !important;
+}
+.tab:hover {
+
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.77;
+  letter-spacing: -0.6px;
+  text-align: left;
+  background-color: #662d91 !important;
+  color: white !important;
+}
+.tab:focus {
+
+  font-size: 22px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.77;
+  letter-spacing: -0.6px;
+  text-align: left;
+  background-color: #662d91 !important;
+  color: white !important ;
+}

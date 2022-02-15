@@ -63,71 +63,24 @@
     "흰색": "#FFFFFF",
     "검정": "#000000"
   },
+
   "material": {
-    "면": { 
-      "val" : 1 ,
-      "src": "./assets/material/면.jpg"
-      }, 
-    "린넨": { 
-      "val" : 2 ,
-      "src": "./assets/material/린넨.jpg"
-      }, 
-    "폴리에스테르": { 
-      "val" : 3 ,
-      "src": "./assets/material/폴리에스테르.jpeg"
-      }, 
-    "니트/올": { 
-      "val" : 4 ,
-      "src": "./assets/material/니트울.jpg"
-      }, 
-    "퍼": { 
-      "val" : 5 ,
-      "src": "./assets/material/퍼.jpg"
-      }, 
-    "트위드": { 
-      "val" : 6 ,
-      "src": "./assets/material/트위드.jpg"
-      }, 
-    "나일론": { 
-      "val" : 7 ,
-      "src": "./assets/material/나일론.jpg"
-      }, 
-    "데님": { 
-      "val" : 8 ,
-      "src": "./assets/material/데님.jpg"
-      }, 
-    "가죽": { 
-      "val" : 9 ,
-      "src": "./assets/material/가죽.jpg"
-      }, 
-    "스웨이드": { 
-      "val" : 10 ,
-      "src": "./assets/material/스웨이드.jpg"
-      }, 
-    "벨벳": { 
-      "val" : 11 ,
-      "src": "./assets/material/벨벳.jpg"
-      }, 
-    "쉬폰": { 
-      "val" : 12 ,
-      "src": "./assets/material/쉬폰.jpg"
-      }, 
-    "실크": { 
-      "val" : 13 ,
-      "src": "./assets/material/실크.jpg"
-      }, 
-    "코듀로이": { 
-      "val" : 14 ,
-      "src": "./assets/material/코듀로이.jpg"
-      }, 
-    "메탈릭": { 
-      "val" : 15 ,
-      "src": "./assets/material/메탈릭.jpg"
-      }, 
-    "기타": { 
-      "val" : 16 ,
-      "src": "./assets/material/기타.gif"
-      } 
+    "면":  "면.jpg", 
+    "린넨": "린넨.jpg",
+    "폴리에스테르": "폴리에스테르.jpeg", 
+    "니트/올": "니트울.jpg",
+    "퍼":  "퍼.jpg",
+    "트위드": "트위드.jpg",
+    "나일론":  "나일론.jpg",
+    "데님": "데님.jpg",
+    "가죽":  "가죽.jpg",
+    "스웨이드": "스웨이드.jpg",
+    "벨벳": "벨벳.jpg",
+    "쉬폰":  "쉬폰.jpg", 
+    "실크":  "실크.jpg", 
+    "코듀로이": "코듀로이.jpg", 
+    "메탈릭": "메탈릭.jpg", 
+    "기타":  "기타.jpg"
   },
   "season": {
     "봄": 1,
