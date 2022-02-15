@@ -287,9 +287,9 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
       });
   };
 
-  // useEffect(() => {
-  //   getFriendClothesData();
-  // }, []);
+  useEffect(() => {
+    getFriendClothesData();
+  }, []);
 
   const handleSelect = async (e) => {
     const category = e;

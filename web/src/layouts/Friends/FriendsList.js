@@ -34,7 +34,7 @@ export default function FriendsList() {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          applicant: 'b@a.com', // 로그인한 사용자 email
+          applicant: 'q@q.com', // 로그인한 사용자 email
         },
       })
       .then((response) => {
