@@ -31,6 +31,7 @@ import com.strait.ivblanc.src.photoSelect.AlbumFragment
 import com.strait.ivblanc.src.photoSelect.CameraFragment
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.ui.PhotoListFragment
+import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 
 class FriendCloset :
@@ -96,7 +97,7 @@ class FriendCloset :
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> PhotoListFragment<Clothes>()
-                else -> PhotoListFragment<Style>()
+                else -> StylePhotoListFragment()
             }
         }
     }
