@@ -155,7 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             "friend" -> {
                 setToolbarTitle(resources.getString(R.string.shareEn))
-                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
                 mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
             }
         }
