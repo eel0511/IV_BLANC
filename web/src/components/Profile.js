@@ -14,6 +14,10 @@ export default function Profile() {
     setAnchorEl(null);
   };
 
+  const logOut = () => {
+    console.log('hello');
+  };
+
   return (
     <div className='Profile' style={{ cursor: 'pointer' }}>
       <BsPersonCircle
@@ -34,7 +38,13 @@ export default function Profile() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        로그아웃
+        <button
+          type='button'
+          className='btn'
+          onClick={logOut}
+        >
+          로그아웃
+        </button>
       </Menu>
 
     </div>
