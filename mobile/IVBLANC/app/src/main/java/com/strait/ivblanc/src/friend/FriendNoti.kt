@@ -66,7 +66,7 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        friendViewModel.setToolbarTitle("알림")
+        friendViewModel.setToolbarTitle("Notification")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
         // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
         friendViewModel.getmyrequestFriend(LoginUtil.getUserInfo()!!.email)
