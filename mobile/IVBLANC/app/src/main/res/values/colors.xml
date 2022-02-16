@@ -17,10 +17,11 @@
 
     <color name="ivblanc_purple">#662D91</color>
     <color name="ivblanc_pink">#ED6991</color>
-    <color name="ivblanc_pink_complementary">#A13756</color>
+    <color name="ivblanc_pink_complementary">#5E9B60</color>
     <color name="ivblanc_pink_item">#FFEEF3</color>
     <color name="ivblanc_newpink">#EA8FAA</color>
     <color name="ivblanc_newpurple">#A983C5</color>
+    <color name="ivblanc_yellow">#F5E983</color>
     <color name="chip_bg_statues"><selector
         xmlns:android="http://schemas.android.com/apk/res/android">
         <item
