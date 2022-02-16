@@ -9,6 +9,7 @@ import com.strait.ivblanc.data.model.dto.ClothesForUpload
 import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
 import com.strait.ivblanc.data.model.response.ClothesFavoriteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
+import com.strait.ivblanc.data.model.response.ClothesSimpleResponse
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.StatusCode
 import okhttp3.MultipartBody
@@ -146,6 +147,23 @@ class ClothesRepository {
                     Resource.success(response.body()!!)
                 } else {
                     Resource.error(null, "알 수 없는 오류입니다.")
+                }
+            } else {
+                Resource.error(null, "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception) {
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
+
+    suspend fun betaUrl(url: String): Resource<ClothesSimpleResponse> {
+        return try {
+            val response = clothesApi.betaUrl(url)
+            if (response.isSuccessful) {
+                return if (response.code() == StatusCode.OK) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body()!!, "이미지 등록에 실패했습니다.")
                 }
             } else {
                 Resource.error(null, "알 수 없는 오류입니다.")

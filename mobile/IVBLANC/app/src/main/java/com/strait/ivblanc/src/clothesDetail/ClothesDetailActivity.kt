@@ -1,33 +1,59 @@
 package com.strait.ivblanc.src.clothesDetail
 
+import android.app.Dialog
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.strait.ivblanc.R
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.response.ClothesSimpleResponse
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityClothesDetailBinding
-import com.strait.ivblanc.util.CategoryCode
-import com.strait.ivblanc.util.MaterialCode
+import com.strait.ivblanc.util.*
 
 class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(ActivityClothesDetailBinding::inflate) {
     lateinit var clothes: Clothes
+    lateinit var loadingDialog: Dialog
     val clothesViewModel: ClothesViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.getParcelableExtra<Clothes>("clothes")?.let {
             clothes = it
+            if(clothes.category.toString().startsWith("1")) {
+                binding.imageViewClothesDetailStyle.visibility = View.VISIBLE
+            }
         } ?: finish()
         setClothesInfo()
         setClickListeners()
         initFavorite()
+        setObserverLiveData()
+    }
 
+    private fun showLoading() {
+        loadingDialog = Dialog(this)
+        loadingDialog.apply {
+            setContentView(R.layout.dialog_loading)
+            window?.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_rectangle, null))
+            setCanceledOnTouchOutside(false)
+            setCancelable(false)
+        }.show()
+    }
+
+    private fun dismissLoading() {
+        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
+        }
+    }
+
+    private fun setObserverLiveData() {
         //좋아요 하트 실시간 변경, 0 받아오면 오류임
         clothesViewModel.resFavorite.observe(this){
             if(clothesViewModel.resFavorite.value==0){
@@ -39,6 +65,26 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
                     clothes.favorite=0
                 }
                 initFavorite()
+            }
+        }
+
+        clothesViewModel.clothesResponseStatus.observe(this) {
+            when(it.status) {
+                Status.SUCCESS -> {
+                    dismissLoading()
+                    if(it.data is ClothesSimpleResponse) {
+                        val resultUrl = (it.data as ClothesSimpleResponse).dataSet!!
+                        val resultFragment = AiResultFragment(resultUrl)
+                        resultFragment.show(supportFragmentManager, "aiResult")
+                    }
+                }
+                Status.ERROR -> {
+                    dismissLoading()
+                    toast(it.message!!, Toast.LENGTH_SHORT)
+                }
+                Status.LOADING -> {
+                    showLoading()
+                }
             }
         }
     }
@@ -72,19 +118,24 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         binding.imageViewClothesDetailClose.setOnClickListener {
             finish()
         }
-        binding.imageViewClothesDetailFavorite.setOnClickListener {
-            when(clothes.favorite) {
-                0 -> {
-                    clothesViewModel.addFavorite(clothes.clothesId)
+
+        if(intent.getStringExtra("friend").isNullOrBlank()) {
+            binding.imageViewClothesDetailFavorite.setOnClickListener {
+                when(clothes.favorite) {
+                    0 -> {
+                        clothesViewModel.addFavorite(clothes.clothesId)
+                    }
+                    else -> {
+                        clothesViewModel.deleteFavorite(clothes.clothesId)
+                    }
                 }
-                else -> {
-                    clothesViewModel.deleteFavorite(clothes.clothesId)
-                }
+                setResult(StatusCode.OK)
+                clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
             }
-            clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
+
         binding.imageViewClothesDetailStyle.setOnClickListener {
-            // TODO: 2022/01/31 스타일 생성 화면으로 이동 
+            clothesViewModel.betaUrl(clothes.url)
         }
     }
 

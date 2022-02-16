@@ -77,7 +77,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
                             requireActivity(),
                             ClothesDetailActivity::class.java
                         ).putExtra("clothes", item)
-                        startActivity(intent)
+                        (requireActivity() as MainActivity).addClothesContract.launch(intent)
                     }
                 }
                 photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
@@ -87,7 +87,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
                             requireActivity(),
                             ClothesDetailActivity::class.java
                         ).putExtra("clothes", item)
-                        startActivity(intent)
+                        (requireActivity() as MainActivity).addClothesContract.launch(intent)
                     }
                 }
                 photoListRVAdapter.itemLongClickListener =

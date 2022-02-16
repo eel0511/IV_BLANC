@@ -19,6 +19,7 @@ import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -27,6 +28,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val TAG = "ClothesViewModel_debuk"
 class ClothesViewModel: ViewModel() {
 
     // 옷관련 필드
@@ -66,6 +68,14 @@ class ClothesViewModel: ViewModel() {
                 _resFavorite.postValue(result.data!!.data!!.clothes_id ?: 0)
                 Log.d("asdf", "addFavorite: "+result.data.data!!.clothes_id+" "+_resFavorite.value)
             }
+        }
+    }
+
+    fun betaUrl(url: String) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = clothesRepository.betaUrl(url)
+            _clothesResponseStatus.postValue(result)
         }
     }
 
