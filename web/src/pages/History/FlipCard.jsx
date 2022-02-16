@@ -7,6 +7,8 @@ import axios from 'axios';
 
 function FlipCard({
   myHistory: { historyId, date, subject, text, styleUrl, photos },
+  getmyHistoriesData,
+  index,
 }) {
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ function FlipCard({
             if (res.status === 200 && res.data.output === 1) {
               console.log(res.data.msg);
               alert('삭제되었습니다.');
+              getmyHistoriesData();
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
@@ -51,7 +54,7 @@ function FlipCard({
                 <form formAction='' className=''>
                   <div className='d-flex flex-column'>
                     <div className=' d-flex flex-column historycover'>
-                      <div className='id mt-2'>{historyId}번째 추억</div>
+                      <div className='id mt-2'>{index + 1}번째 추억</div>
                       <img
                         src={styleUrl}
                         alt={styleUrl}

@@ -60,8 +60,8 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
               src={selectStyle.url}
               alt={selectStyle.styleId}
               style={{
-                width: '100%',
-                height: '50vh',
+                width: '65%',
+                height: '50%',
                 objectFit: 'fill',
                 borderRadius: '1rem',
               }}
@@ -75,7 +75,7 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
 
 const StyleCarousel = styled.div`
   .carousel {
-    background-color: #eb93c9;
+    background-color: #EA8FAA;
   }
   .date {
     margin-left: 150px;
@@ -93,7 +93,7 @@ const StyleCarousel = styled.div`
   }
 
   .img:hover {
-    border: 10px solid #a35ac5;
+    border: 10px solid #d3728f;
     /* transform: scale(1.1); */
   }
 `;

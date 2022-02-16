@@ -28,10 +28,12 @@ class ColorFragment : BaseFragment<FragmentColorBinding>(FragmentColorBinding::b
     }
 
     private fun init() {
+        initImageView(binding.imageViewColorFRepresent)
+        processViewModel.setColor("#000000")
+        binding.imageViewColorFRepresent.background.setTint(resources.getColor(R.color.black))
         recyclerViewAdapter = ColorPickRecyclerViewAdapter()
         binding.recyclerViewColorF.adapter = recyclerViewAdapter.apply {
             data = ColorCode.LIST
-
             itemClickListener =
                 object: ColorPickRecyclerViewAdapter.ItemClickListener {
                 override fun onClick(position: Int) {

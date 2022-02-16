@@ -90,60 +90,60 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
     }
 
     fun settingxy(event: MotionEvent,imageView: ImageView){
-        Log.d(TAG, "settingxy: "+containerView.x+" "+containerView.y+" "+imageView.x+" "+imageView.y)
+        Log.d(TAG, "settingxy: ${imageView.x + imageView.width * imageView.scaleX} ${imageView.pivotY - imageView.height * imageView.scaleY} ${imageView.scaleX} ${imageView.scaleY}")
         //우
-        if (imageView.x +imageView.width > containerView.width) {
-            imageView.animate().x(containerView.width.toFloat()-imageView.width)
+        if (imageView.x + imageView.width / 2 * (1 + imageView.scaleX) > containerView.width) {
+            imageView.animate().x(containerView.width.toFloat() - imageView.width / 2 * (1 + imageView.scaleX))
                 .y(imageView.y)
                 .setDuration(0)
                 .start()
         }
         //좌
-        if (imageView.x  < 0) {
-            imageView.animate().x(0f)
+        if (imageView.x + imageView.width / 2 * (1 - imageView.scaleX) < 0) {
+            imageView.animate().x(0 - imageView.width / 2 * (1 - imageView.scaleX))
                 .y(imageView.y)
                 .setDuration(0)
                 .start()
         }
         //하
-        if (imageView.y+imageView.height > containerView.height) {
+        if (imageView.y + imageView.height / 2 * (1 + imageView.scaleY) > containerView.height) {
             imageView.animate().x(imageView.x)
-                .y(containerView.height.toFloat()-imageView.height)
+                .y(containerView.height.toFloat() - imageView.height / 2 * (1 + imageView.scaleY))
                 .setDuration(0)
                 .start()
         }
         //상
-        if (imageView.y  < 0) {
+        if (imageView.y + imageView.height / 2 * (1 - imageView.scaleY) < 0) {
             imageView.animate().x(imageView.x)
-                .y(0f)
+                .y(0 - imageView.height / 2 * (1 - imageView.scaleY))
                 .setDuration(0)
                 .start()
         }
         //우하
-       if(imageView.x +imageView.width > containerView.width && imageView.y+imageView.height > containerView.height){
-           imageView.animate().x(containerView.width.toFloat()-imageView.width)
-               .y(containerView.height.toFloat()-imageView.height)
+       if(imageView.x + imageView.width / 2 * (1 + imageView.scaleX) > containerView.width && imageView.y + imageView.height / 2 * (1 + imageView.scaleY) > containerView.height){
+           imageView.animate().x(containerView.width.toFloat() - imageView.width / 2 * (1 + imageView.scaleX))
+               .y(containerView.height.toFloat() - imageView.height / 2 * (1 + imageView.scaleY))
                .setDuration(0)
                .start()
        }
         //우상
-        if(imageView.x +imageView.width > containerView.width && imageView.y  < 0){
-            imageView.animate().x(containerView.width.toFloat()-imageView.width)
-                .y(0f)
+        if(imageView.x + imageView.width / 2 * (1 + imageView.scaleX) > containerView.width && imageView.y + imageView.height / 2 * (1 - imageView.scaleY) < 0){
+            imageView.animate().x(containerView.width.toFloat() - imageView.width / 2 * (1 + imageView.scaleX))
+                .y(0 - imageView.height / 2 * (1 - imageView.scaleY))
                 .setDuration(0)
                 .start()
         }
         //좌하
-        if(imageView.x  < 0 && imageView.y+imageView.height > containerView.height){
-            imageView.animate().x(0f)
-                .y(containerView.height.toFloat()-imageView.height)
+        if(imageView.x + imageView.width / 2 * (1 - imageView.scaleX) < 0 && imageView.y + imageView.height / 2 * (1 + imageView.scaleY) > containerView.height){
+            imageView.animate().x(0 - imageView.width / 2 * (1 - imageView.scaleX))
+                .y(containerView.height.toFloat() - imageView.height / 2 * (1 + imageView.scaleY))
                 .setDuration(0)
                 .start()
         }
         //좌상
-        if(imageView.x  < 0 &&imageView.y  < 0){
-            imageView.animate().x(0f)
-                .y(0f)
+        if(imageView.x + imageView.width / 2 * (1 - imageView.scaleX) < 0 && imageView.y + imageView.height / 2 * (1 - imageView.scaleY) < 0){
+            imageView.animate().x(0 - imageView.width / 2 * (1 - imageView.scaleX))
+                .y(0 - imageView.height / 2 * (1 - imageView.scaleY))
                 .setDuration(0)
                 .start()
 
@@ -183,8 +183,8 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
 
     private fun setImage(clothes: Clothes) {
         imageViews[getLargeCategory(clothes)]?.let {
-            it.layoutParams.width = 150.dp
-            it.layoutParams.height = 150.dp
+            it.layoutParams.width = 100.dp
+            it.layoutParams.height = 100.dp
             it.visibility = View.VISIBLE
             it.isClickable = true
             setFocusedImageView(it)

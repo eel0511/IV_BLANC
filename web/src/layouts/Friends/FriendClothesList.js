@@ -20,6 +20,7 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
     { name: '가방' },
     { name: '모자' },
     { name: '기타' },
+    { name: '룩' }
   ];
 
   const [tab, setTab] = useState(0);
@@ -287,8 +288,25 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
       });
   };
 
+  const getFriendsStyleList = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/style/findfriendstyle', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+        params: {
+          FriendEmail: `${friendEmail}`,
+        },
+      })
+      .then((response) => {
+        setStyleClothes(response.data.data);
+        // console.log(response.data.data)
+      });
+  };
+
   useEffect(() => {
     getFriendClothesData();
+    getFriendsStyleList();
   }, []);
 
   const handleSelect = async (e) => {
@@ -450,6 +468,8 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
                     <Modal.Body>
                       <FriendStyleCreateModalBody
                         saveClothesId={saveClothesId}
+                        handleClose={handleClose}
+                        getFriendsStyleList={getFriendsStyleList}
                       />
                     </Modal.Body>
                   </Modal>

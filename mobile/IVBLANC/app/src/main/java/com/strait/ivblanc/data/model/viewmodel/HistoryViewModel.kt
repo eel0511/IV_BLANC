@@ -13,14 +13,19 @@ import com.strait.ivblanc.data.model.response.FriendResponse
 import com.strait.ivblanc.data.model.response.HistoryResponse
 import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.data.repository.HistoryRepository
+import com.strait.ivblanc.util.CaptureUtil
+import com.strait.ivblanc.util.MultiPartUtil
 import com.strait.ivblanc.util.Resource
 import com.strait.ivblanc.util.Status
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
 
 class HistoryViewModel: ViewModel() {
     val historyRepository = HistoryRepository()
+    private val ioScope = CoroutineScope(Dispatchers.IO)
 
     private val _historyResponseStatus = MutableLiveData<Resource<*>>()
     val historyResponseStatus: LiveData<Resource<*>>
@@ -60,6 +65,7 @@ class HistoryViewModel: ViewModel() {
                 }
             }
         }
+        _historyListLiveData.postValue(totalHistoryList)
     }
 
     suspend fun getHistoryMonth() = withContext(Dispatchers.IO){
@@ -88,6 +94,89 @@ class HistoryViewModel: ViewModel() {
     }
 
 
+    fun updateHistory(historyId: Int, location: Double, field: Double, date: String, weather: String, temperature_low: Int,
+                              temperature_high: Int, text: String, subject: String, styleUrl: String) = viewModelScope.launch {
+        setLoading()
+        val historyIdRequestBody = MultiPartUtil.makeMultiPartBody("historyId", historyId.toString())
+        val locationRequestBody = MultiPartUtil.makeMultiPartBody("latitude", location.toString())
+        val fieldRequestBody = MultiPartUtil.makeMultiPartBody("longitude", field.toString())
+        val dateRequestBody = MultiPartUtil.makeMultiPartBody("date", date)
+        val weatherRequestBody = MultiPartUtil.makeMultiPartBody("weather", weather)
+        val tempLowRequestBody = MultiPartUtil.makeMultiPartBody("temperature_low", temperature_low.toString())
+        val tempHighRequestBody = MultiPartUtil.makeMultiPartBody("temperature_high", temperature_high.toString())
+        val textRequestBody = MultiPartUtil.makeMultiPartBody("text", text)
+        val subjectRequestBody = MultiPartUtil.makeMultiPartBody("subject", subject)
+        val styleUrlRequestBody = MultiPartUtil.makeMultiPartBody("styleUrl", styleUrl)
+
+        ioScope.launch {
+            val response = historyRepository.updateHistory(historyIdRequestBody, locationRequestBody, fieldRequestBody, dateRequestBody, weatherRequestBody,
+                                                        tempLowRequestBody, tempHighRequestBody, textRequestBody, subjectRequestBody, styleUrlRequestBody)
+            _historyResponseStatus.postValue(response)
+        }
+    }
+
+    fun addHistory(location: Double, field: Double, date: String, weather: String, temperature_low: Int,
+                      temperature_high: Int, text: String, subject: String, styleId: Int, absolutePathList: List<String>) = viewModelScope.launch {
+        setLoading()
+        val locationRequestBody = MultiPartUtil.makeMultiPartBody("latitude", location.toString())
+        val fieldRequestBody = MultiPartUtil.makeMultiPartBody("longitude", field.toString())
+        val dateRequestBody = MultiPartUtil.makeMultiPartBody("date", date)
+        val weatherRequestBody = MultiPartUtil.makeMultiPartBody("weather", weather)
+        val tempLowUrlRequestBody =
+            MultiPartUtil.makeMultiPartBody("temperature_low", temperature_low.toString())
+        val tempHighRequestBody =
+            MultiPartUtil.makeMultiPartBody("temperature_high", temperature_high.toString())
+        val textRequestBody = MultiPartUtil.makeMultiPartBody("text", text)
+        val subjectRequestBody = MultiPartUtil.makeMultiPartBody("subject", subject)
+        val styleIdRequestBody = MultiPartUtil.makeMultiPartBody("styleId", styleId.toString())
+        val photoListRequestBody =
+            MultiPartUtil.makeMultiPartBodyFileArray("photoList", absolutePathList, "image/*")
+
+        ioScope.launch {
+            val response = historyRepository.addHistory(
+                locationRequestBody,
+                fieldRequestBody,
+                dateRequestBody,
+                weatherRequestBody,
+                tempLowUrlRequestBody,
+                tempHighRequestBody,
+                textRequestBody,
+                subjectRequestBody,
+                styleIdRequestBody,
+                photoListRequestBody
+            )
+            _historyResponseStatus.postValue(response)
+        }
+    }
+
+    fun addHistoryPhotos(historyId: Int, absolutePathList: List<String>) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = historyRepository.addHistoryPhotos(
+                MultiPartUtil.makeMultiPartBody("historyId", historyId.toString())
+                , MultiPartUtil.makeMultiPartBodyFileArray("photoList", absolutePathList, "image/*")
+            )
+            _historyResponseStatus.postValue(result)
+        }
+    }
+
+    fun deleteHistoryPhoto(photoId: Int) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = historyRepository.deleteHistoryPhoto(photoId)
+            _historyResponseStatus.postValue(result)
+        }
+    }
+
+    fun updateHistoryPhotos(photoId: Int, absolutePath: String) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO) {
+            val result = historyRepository.updateHistoryPhoto(
+                MultiPartUtil.makeMultiPartBody("photoId", photoId.toString())
+                , MultiPartUtil.makeMultiPartBodyFile("newPhoto", absolutePath, "image/*"))
+            _historyResponseStatus.postValue(result)
+        }
+    }
 
     private fun setLoading() = _historyResponseStatus.postValue(Resource.loading(null))
 

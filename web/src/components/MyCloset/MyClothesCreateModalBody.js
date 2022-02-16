@@ -64,8 +64,7 @@ export default function MyClothesCreateModalBody({
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/clothes/add', formData, {
         headers: {
-          'X-AUTH-TOKEN':
-            'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
+          'X-AUTH-TOKEN': localStorage.getItem('JWT'),
         },
       })
       .then((response) => {
@@ -88,10 +87,10 @@ export default function MyClothesCreateModalBody({
         <Col xs={5} md={5}>
           <h4
             style={{
-              backgroundColor: '#662d91',
+              
               marginLeft: '36%',
               marginRight: '40%',
-              color: 'white',
+              color: '#EA8FAA',
               borderRadius: '15px',
             }}
           >
@@ -138,10 +137,10 @@ export default function MyClothesCreateModalBody({
         <Col xs={7} md={7}>
           <h4
             style={{
-              backgroundColor: '#662d91',
+              
               marginLeft: '37%',
               marginRight: '47%',
-              color: 'white',
+              color: '#EA8FAA',
               borderRadius: '15px',
             }}
           >
@@ -206,10 +205,10 @@ export default function MyClothesCreateModalBody({
         <Col xs={5} md={5}>
           <h4
             style={{
-              backgroundColor: '#662d91',
-              marginLeft: '40%',
-              marginRight: '47%',
-              color: 'white',
+              
+              marginLeft: '41%',
+              marginRight: '48%',
+              color: '#EA8FAA',
               borderRadius: '15px',
             }}
           >
@@ -246,10 +245,9 @@ export default function MyClothesCreateModalBody({
             <Col xs={12} md={12}>
               <h4
                 style={{
-                  backgroundColor: '#662d91',
-                  marginLeft: '38%',
+                  marginLeft: '39%',
                   marginRight: '44%',
-                  color: 'white',
+                  color: '#EA8FAA',
                   borderRadius: '15px',
                   marginTop: '2%',
                 }}
@@ -273,11 +271,11 @@ export default function MyClothesCreateModalBody({
             <Col xs={12} md={12}>
               <h4
                 style={{
-                  backgroundColor: '#662d91',
+                  
                   marginLeft: '40%',
                   marginTop: '2%',
-                  marginRight: '47%',
-                  color: 'white',
+                  marginRight: '48%',
+                  color: '#EA8FAA',
                   borderRadius: '15px',
                 }}
               >
@@ -316,10 +314,10 @@ export default function MyClothesCreateModalBody({
         <Col xs={7} md={7}>
           <h4
             style={{
-              backgroundColor: '#662d91',
+              
               marginLeft: '40%',
-              marginRight: '51%',
-              color: 'white',
+              marginRight: '52%',
+              color: '#EA8FAA',
               borderRadius: '15px',
             }}
           >
@@ -376,7 +374,7 @@ export default function MyClothesCreateModalBody({
 
       <Button
         style={{
-          backgroundColor: '#662d91',
+          backgroundColor: "#EA8FAA",
           fontSize: '1.2rem',
           marginLeft: '85%',
           color: 'white',

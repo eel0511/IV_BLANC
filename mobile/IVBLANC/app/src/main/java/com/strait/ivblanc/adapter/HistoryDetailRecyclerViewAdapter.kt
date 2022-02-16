@@ -11,9 +11,23 @@ import com.strait.ivblanc.data.model.dto.HistoryPhoto
 
 class HistoryDetailRecyclerViewAdapter(): RecyclerView.Adapter<HistoryDetailRecyclerViewAdapter.ViewHolder>() {
     lateinit var itemClickListener: ItemClickListener
+    lateinit var itemLongClickListener: ItemLongClickListener
     var data = listOf<HistoryPhoto>()
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                if(this@HistoryDetailRecyclerViewAdapter::itemClickListener.isInitialized) {
+                    itemClickListener.onClick(data[adapterPosition])
+                }
+            }
+            itemView.setOnLongClickListener {
+                if(this@HistoryDetailRecyclerViewAdapter::itemLongClickListener.isInitialized) {
+                    itemLongClickListener.onClick(data[adapterPosition])
+                }
+                true
+            }
+        }
         fun bind(photo: HistoryPhoto) {
             val imageView = itemView.findViewById<ImageView>(R.id.imageView_photoItem_history)
             Glide.with(imageView).load(photo.url).override(300 ,300).into(imageView)
@@ -28,6 +42,10 @@ class HistoryDetailRecyclerViewAdapter(): RecyclerView.Adapter<HistoryDetailRecy
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
+        fun onClick(photo: HistoryPhoto)
+    }
+
+    interface ItemLongClickListener {
         fun onClick(photo: HistoryPhoto)
     }
 }

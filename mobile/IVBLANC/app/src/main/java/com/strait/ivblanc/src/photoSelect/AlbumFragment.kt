@@ -44,7 +44,7 @@ class AlbumFragment : BaseFragment<FragmentAlbumBinding>(FragmentAlbumBinding::b
     lateinit var scaleGestureDetector: ScaleGestureDetector
     lateinit var photoRecyclerViewAdapter: PhotoRecyclerViewAdapter
     private val itemClickListener = object: PhotoRecyclerViewAdapter.ItemClickListener {
-        override fun onClick(uri: Uri) {
+        override fun onClick(uri: Uri, view: View, position: Int) {
             Glide.with(requireActivity()).load(uri).into(binding.imageViewAlbumF)
         }
     }

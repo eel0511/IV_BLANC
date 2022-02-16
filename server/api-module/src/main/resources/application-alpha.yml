@@ -35,11 +35,10 @@ spring:
 
   # 데이터 베이스 연결 설정
   datasource:
-    url: jdbc:mariadb://i6d104.p.ssafy.io:3306/ivblanc?serverTimezone=Asia/Seoul&userLegacyDatetimeCode=false&characterEncoding=utf-8
+    url: jdbc:mariadb://i6d104.p.ssafy.io:3306/ivblanc??characterEncoding=utf-8
     driver-class-name: org.mariadb.jdbc.Driver
     username: ivblanc
     password: ivblancgumi104
-
   flyway:
     enabled: false
   config:
@@ -86,34 +85,3 @@ app:
 # swagger에서 테스트 할 때의 host
 swagger:
   host: i6d104.p.ssafy.io:9999
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

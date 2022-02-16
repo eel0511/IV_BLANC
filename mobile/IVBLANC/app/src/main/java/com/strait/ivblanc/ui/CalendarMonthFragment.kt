@@ -14,7 +14,7 @@ import com.strait.ivblanc.data.model.dto.DateWithHistory
 import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.databinding.FragmentCalendarMonthBinding
-import com.strait.ivblanc.src.historyDetail.HistoryDetailActivity
+import com.strait.ivblanc.src.history.HistoryDetailActivity
 import org.joda.time.DateTime
 
 private const val TAG = "History_debuk"
@@ -60,8 +60,13 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
         calendarAdapter.itemClickListener = object : CalendarAdapter.ItemClickListener {
             override fun onClick(position: Int) {
                 val item = calendarAdapter.data[position].history
-                val intent = Intent(requireActivity(), HistoryDetailActivity::class.java).putExtra("history", item)
-                startActivity(intent)
+                if(item != null) {
+                    val intent = Intent(
+                        requireActivity(),
+                        HistoryDetailActivity::class.java
+                    ).putExtra("history", item)
+                    startActivity(intent)
+                }
             }
         }
     }
@@ -89,7 +94,7 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
 
         for(history in historyList){
             val date = Integer.parseInt(history.date.split("-")[2])
-            result[date+1].history = history
+            result[firstDate.dayOfWeek + date - 1].history = history
         }
 
         return result

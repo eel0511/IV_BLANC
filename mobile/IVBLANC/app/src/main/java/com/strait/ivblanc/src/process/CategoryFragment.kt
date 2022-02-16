@@ -29,12 +29,14 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
         largeCategories = getLargeCategoryString()
         val largeCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, largeCategories)
         binding.autoCompleteCategoryFLarge.setAdapter(largeCategoryAdapter)
-
+        binding.autoCompleteCategoryFLarge.hint="상의"
+        processViewModel.setLargeCategory(1)
         // 대분류가 바뀜에 따라 소분류 바꿈
         processViewModel.largeCategory.observe(requireActivity()) {
             smallCategories = processViewModel.getSmallCategoriesByLargeCategory(it)
             val smallCategoryAdapter = ArrayAdapter(requireActivity(), R.layout.list_category_item, getSmallCategoryStringByLargeCategory(it))
             binding.autoCompleteCategoryFSmall.setAdapter(smallCategoryAdapter)
+            binding.autoCompleteCategoryFSmall.hint="크롭탑"
         }
 
         // 대분류 edittext observe -> viewModel에 대분류 카테고리 변경
@@ -89,6 +91,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
         binding.buttonCategoryFNext.setOnClickListener {
             (requireActivity() as ProcessActivity).goNext()
         }
+
     }
 
     private fun getLargeCategoryString(): List<String> {
