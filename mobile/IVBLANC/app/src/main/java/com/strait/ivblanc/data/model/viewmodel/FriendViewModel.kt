@@ -128,9 +128,9 @@ class FriendViewModel : ViewModel() {
         setLoading()
         //default data
         var u =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/800e1d66-51d2-4fc4-a3ba-e15c1bc86af4.png")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/2d4f5277-a52a-4c38-a27c-16d1ca7f5a6f.png")
         var u2 =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/9561bef2-b824-47ea-957a-b6567d93c44e.png")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/2d4f5277-a52a-4c38-a27c-16d1ca7f5a6f.png")
         val result: Resource<ClothesResponse> = clothesRepository.getAllFriendClothes(email)
         _friendResponseStatus.postValue(result)
         Log.d("aaaa", "getAllFriendClothes: " + result)
@@ -164,9 +164,9 @@ class FriendViewModel : ViewModel() {
         setLoading()
         //default data
         var u =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/800e1d66-51d2-4fc4-a3ba-e15c1bc86af4.png")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/2d4f5277-a52a-4c38-a27c-16d1ca7f5a6f.png")
         var u2 =
-            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/9561bef2-b824-47ea-957a-b6567d93c44e.png")
+            Uri.parse("https://storage.googleapis.com/iv-blanc.appspot.com/2d4f5277-a52a-4c38-a27c-16d1ca7f5a6f.png")
 
         // style
         val result2: Resource<StyleAllResponse> = styleRepository.getAllFriendStyles(email)
