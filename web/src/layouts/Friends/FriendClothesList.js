@@ -288,8 +288,25 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
       });
   };
 
+  const getFriendsStyleList = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/style/findfriendstyle', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+        params: {
+          FriendEmail: `${friendEmail}`,
+        },
+      })
+      .then((response) => {
+        setStyleClothes(response.data.data);
+        // console.log(response.data.data)
+      });
+  };
+
   useEffect(() => {
     getFriendClothesData();
+    getFriendsStyleList();
   }, []);
 
   const handleSelect = async (e) => {
