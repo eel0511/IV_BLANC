@@ -114,7 +114,12 @@ class HistoryRepository {
                 } else {
                     Resource.error(response.body(), "히스토리 업로드에 실패했습니다.")
                 }
+            } else {
+                Resource.error(response.body(), "히스토리 업로드에 실패했습니다.")
             }
+        } catch (e: Exception){
+            val msg = e.message
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
         }
     }
 
