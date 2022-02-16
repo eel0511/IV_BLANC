@@ -72,6 +72,7 @@ class ClothesViewModel: ViewModel() {
     }
 
     fun betaUrl(url: String) = viewModelScope.launch {
+        setLoading()
         withContext(Dispatchers.IO) {
             val result = clothesRepository.betaUrl(url)
             _clothesResponseStatus.postValue(result)
