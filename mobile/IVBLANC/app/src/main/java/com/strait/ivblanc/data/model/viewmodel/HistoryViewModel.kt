@@ -102,7 +102,7 @@ class HistoryViewModel: ViewModel() {
         val fieldRequestBody = MultiPartUtil.makeMultiPartBody("longitude", field.toString())
         val dateRequestBody = MultiPartUtil.makeMultiPartBody("date", date)
         val weatherRequestBody = MultiPartUtil.makeMultiPartBody("weather", weather)
-        val tempLowUrlRequestBody = MultiPartUtil.makeMultiPartBody("temperature_low", temperature_low.toString())
+        val tempLowRequestBody = MultiPartUtil.makeMultiPartBody("temperature_low", temperature_low.toString())
         val tempHighRequestBody = MultiPartUtil.makeMultiPartBody("temperature_high", temperature_high.toString())
         val textRequestBody = MultiPartUtil.makeMultiPartBody("text", text)
         val subjectRequestBody = MultiPartUtil.makeMultiPartBody("subject", subject)
@@ -110,7 +110,7 @@ class HistoryViewModel: ViewModel() {
 
         ioScope.launch {
             val response = historyRepository.updateHistory(historyIdRequestBody, locationRequestBody, fieldRequestBody, dateRequestBody, weatherRequestBody,
-                                                        tempLowUrlRequestBody, tempHighRequestBody, textRequestBody, subjectRequestBody, styleUrlRequestBody)
+                                                        tempLowRequestBody, tempHighRequestBody, textRequestBody, subjectRequestBody, styleUrlRequestBody)
             _historyResponseStatus.postValue(response)
         }
     }

@@ -108,9 +108,13 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             history.subject = binding.editTextHistoryEditSubject.text.toString()
             history.text = binding.editTextHistoryEditText.text.toString()
 
-            if(history.historyId != 0){
+            if(binding.textViewHistoryEditSelectWeather.text.toString() == "-"){
+                history.weather = "맑음"
+            } else {
                 history.weather = binding.textViewHistoryEditSelectWeather.text.toString()
+            }
 
+            if(history.historyId != 0){
                 historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather,
                     history.temperature_low, history.temperature_high, history.text, history.subject, history.styleUrl)
                 Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
@@ -133,15 +137,11 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             val styleSelectFragment = HistoryStyleSelectFragment(object: HistoryStyleSelectFragment.StyleSelectedListener {
                 override fun getResult(style: Style) {
                     if(style == null) return
+                    history.styleUrl = style.url
                     Glide.with(this@HistoryEditActivity).load(style.url).into(binding.imageViewHistoryEditStyle)
                 }
             })
             styleSelectFragment.show(supportFragmentManager, "style")
-
-//            startActivity(Intent(this, StyleSelectActivity::class.java)
-//                .putExtra("history", history)
-//                .putExtra("location", location))
-//            finish()
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
