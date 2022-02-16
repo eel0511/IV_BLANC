@@ -1,5 +1,6 @@
 import React from "react";
 import { Avatar, MenuItem } from "@mui/material";
+import {CloseButton} from "react-bootstrap"
 import axios from "axios";
 
 export default function FriendsAcceptButton({ friend }) {
@@ -31,6 +32,7 @@ export default function FriendsAcceptButton({ friend }) {
           onClick={friendsAcceptRequest}
           style={{backgroundColor: "#ed6991", color: "white", borderRadius: "1rem", paddingLeft: "10%", paddingRight: "10%", borderStyle: "none"}}
           >수락</button>
+          {/* <CloseButton style={{marginLeft: "10%"}}/> */}
           </MenuItem>
       </div>
     </>

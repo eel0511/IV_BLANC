@@ -29,7 +29,7 @@ export default function MyClothesCreateButton({ getMyClothesData }) {
           style={{
             marginLeft: '0%',
             marginBottom: '0%',
-            backgroundColor: '#662d91',
+            backgroundColor: '#EA8FAA',
             color: 'white',
           }}
         >
