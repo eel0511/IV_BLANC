@@ -130,10 +130,18 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
 
         binding.imageViewHistoryEditStyle.setOnClickListener {
-            startActivity(Intent(this, StyleSelectActivity::class.java)
-                .putExtra("history", history)
-                .putExtra("location", location))
-            finish()
+            val styleSelectFragment = HistoryStyleSelectFragment(object: HistoryStyleSelectFragment.StyleSelectedListener {
+                override fun getResult(style: Style) {
+                    if(style == null) return
+                    Glide.with(this@HistoryEditActivity).load(style.url).into(binding.imageViewHistoryEditStyle)
+                }
+            })
+            styleSelectFragment.show(supportFragmentManager, "style")
+
+//            startActivity(Intent(this, StyleSelectActivity::class.java)
+//                .putExtra("history", history)
+//                .putExtra("location", location))
+//            finish()
         }
 
         binding.textViewHistoryEditSelectDate.setOnClickListener {
