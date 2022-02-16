@@ -69,7 +69,7 @@ export default function SignInSide() {
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
-  const [token, setToken] = useState('');
+  // const [token, setToken] = useState('');
 
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState('');
@@ -129,7 +129,7 @@ export default function SignInSide() {
           {
             email: data.get('email'),
             pw: data.get('password'),
-            social: 0,
+            social: 1,
           },
           { withCredentials: true }
         )
@@ -137,8 +137,10 @@ export default function SignInSide() {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
-            setToken(getCookie('JWT'));
+            // setToken(getCookie('JWT'));
             // console.log(token);
+            const token = getCookie('JWT');
+            console.log(token);
             localStorage.setItem('JWT', token);
             localStorage.setItem('name', res.data.data.name);
             localStorage.setItem('email', res.data.data.email);
