@@ -252,9 +252,13 @@ export default function MyCloset() {
         },
       })
       .then((response) => {
+        const data = response.data.data;
         console.log(response.data.data);
-        setMyClothes(response.data.data);
-        setFilterMyClothes(response.data.data);
+        console.log(data.reverse());
+        // setMyClothes(response.data.data);
+        // setFilterMyClothes(response.data.data);
+        setMyClothes(data.reverse());
+        setFilterMyClothes(data.reverse());
       });
   };
 

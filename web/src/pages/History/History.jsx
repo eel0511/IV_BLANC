@@ -24,7 +24,8 @@ export default function History() {
       })
       .then((response) => {
         console.log(response.data.data);
-        setmyHistories(response.data.data);
+        const data = response.data.data;
+        setmyHistories(data.reverse());
       });
   };
 

@@ -54,7 +54,7 @@ function FlipCard({
                 <form formAction='' className=''>
                   <div className='d-flex flex-column'>
                     <div className=' d-flex flex-column historycover'>
-                      <div className='id mt-2'>{index + 1}번째 추억</div>
+                      <div className='id mt-2'>{subject}</div>
                       <img
                         src={styleUrl}
                         alt={styleUrl}
@@ -64,8 +64,8 @@ function FlipCard({
                     </div>
 
                     <div className=' d-flex flex-column'>
-                      <div className='subject'>{subject}</div>
-                      <div className='text'>{text}</div>
+                      {/* <div className='subject'>{subject}</div> */}
+                      <div className='subject'>{text}</div>
                     </div>
                     <Button
                       variant='danger'
