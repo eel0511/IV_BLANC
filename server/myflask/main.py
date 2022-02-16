@@ -42,7 +42,7 @@ def fileUpload(file):
     blob.metadata = metadata
 
     # upload file
-    blob.upload_from_filename(filename='./' + file, content_type='image/jpg')
+    blob.upload_from_filename(filename='./' + file, content_type='image/png')
     print(blob.public_url)
 
 
@@ -54,7 +54,7 @@ def removebg():
     f.save(path)
     clothId = request.form.get('clothId', type=str)
     # 저장 된 이미지 확인
-    output_path = str(uuid.uuid1()) + ".jpg"
+    output_path = str(uuid.uuid1()) + ".png"
     print(output_path)
     f = np.fromfile(path)
     result = remove(f)
