@@ -55,5 +55,18 @@
         android:layout_marginTop="@dimen/defaultPadding">
 
     </androidx.viewpager2.widget.ViewPager2>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/FloatingButton"
+        android:id="@+id/floatingButton_calendarF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/defaultPadding"
+        android:layout_marginEnd="@dimen/defaultPadding"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

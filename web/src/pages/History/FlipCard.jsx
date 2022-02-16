@@ -8,6 +8,7 @@ import axios from 'axios';
 function FlipCard({
   myHistory: { historyId, date, subject, text, styleUrl, photos },
   getmyHistoriesData,
+  index,
 }) {
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -53,7 +54,7 @@ function FlipCard({
                 <form formAction='' className=''>
                   <div className='d-flex flex-column'>
                     <div className=' d-flex flex-column historycover'>
-                      <div className='id mt-2'>{historyId}번째 추억</div>
+                      <div className='id mt-2'>{index + 1}번째 추억</div>
                       <img
                         src={styleUrl}
                         alt={styleUrl}

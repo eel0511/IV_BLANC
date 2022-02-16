@@ -6,17 +6,17 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class History(
     val createDate: String,
-    val date: String,
-    val location: Double,
-    val field: Double,
+    var date: String,
+    var location: Double,
+    var field: Double,
     val historyId: Int,
     val photos: List<HistoryPhoto>,
-    val styleUrl: String,
-    val subject: String,
-    val temperature_high: Int,
-    val temperature_low: Int,
-    val text: String,
-    val updateDate: String,
-    val userId: Int,
-    val weather: String
+    var styleUrl: String,
+    var subject: String,
+    var temperature_high: Int,
+    var temperature_low: Int,
+    var text: String,
+    var updateDate: String,
+    var userId: Int,
+    var weather: String
 ): Parcelable

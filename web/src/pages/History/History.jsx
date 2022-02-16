@@ -52,10 +52,11 @@ export default function History() {
           <div className='row h-100'>
             <div className='col d-flex flex-wrap justify-content-around align-items-center'>
               {myHistories &&
-                myHistories.map((myHistory) => (
+                myHistories.map((myHistory, index) => (
                   <FlipCard
                     key={myHistory.historyId}
                     myHistory={myHistory}
+                    index={index}
                     getmyHistoriesData={getmyHistoriesData}
                   />
                 ))}

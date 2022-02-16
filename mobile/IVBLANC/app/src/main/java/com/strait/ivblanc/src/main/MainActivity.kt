@@ -26,6 +26,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
+import com.strait.ivblanc.data.model.dto.History
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
@@ -33,11 +34,13 @@ import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityMainBinding
 import com.strait.ivblanc.src.friend.FriendNoti
+import com.strait.ivblanc.src.history.StyleSelectActivity
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.LoginUtil
 import com.strait.ivblanc.util.StatusCode
 
 
@@ -207,7 +210,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         }
                     }
                     "history" -> {
-                        View.OnClickListener { toast("히스토리 생성 Activity로 이동", Toast.LENGTH_SHORT) }
+                        View.OnClickListener {
+                            startActivity(
+                                Intent(
+                                    this@MainActivity,
+                                    StyleSelectActivity::class.java
+                                ).apply {
+                                    putExtra("history", History("", "", 0.0,0.0, 0, emptyList(), "", "", 0, 0, "", "", 0, "맑음"))
+                                }
+                            )
+                        }
                     }
                     else -> View.OnClickListener {}
                 }
@@ -284,7 +296,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             ) { dialog, i ->
                 Log.d("ssss", "initDialog: " + dialogText.text)
 
-                friendViewModel.requestFriend("aaa@a.com", dialogText.text.toString())
+                friendViewModel.requestFriend(LoginUtil.getUserInfo()!!.email, dialogText.text.toString())
             }
 
             .setNegativeButton("취소") { dialogInterface, i ->
