@@ -121,17 +121,21 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         binding.imageViewClothesDetailClose.setOnClickListener {
             finish()
         }
-        binding.imageViewClothesDetailFavorite.setOnClickListener {
-            when(clothes.favorite) {
-                0 -> {
-                    clothesViewModel.addFavorite(clothes.clothesId)
+
+        if(intent.getStringExtra("friend").isNullOrBlank()) {
+            binding.imageViewClothesDetailFavorite.setOnClickListener {
+                when(clothes.favorite) {
+                    0 -> {
+                        clothesViewModel.addFavorite(clothes.clothesId)
+                    }
+                    else -> {
+                        clothesViewModel.deleteFavorite(clothes.clothesId)
+                    }
                 }
-                else -> {
-                    clothesViewModel.deleteFavorite(clothes.clothesId)
-                }
+                clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
             }
-            clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
+
         binding.imageViewClothesDetailStyle.setOnClickListener {
             clothesViewModel.betaUrl(clothes.url)
         }
