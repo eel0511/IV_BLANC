@@ -20,6 +20,7 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
     { name: '가방' },
     { name: '모자' },
     { name: '기타' },
+    { name: '룩' }
   ];
 
   const [tab, setTab] = useState(0);

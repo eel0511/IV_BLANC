@@ -29,6 +29,7 @@ export default function FriendsCreateButton() {
       })
       .then((response) => {
         console.log(response.data);
+        alert('친구요청 보내기 성공');
         handleClose();
       });
   };
