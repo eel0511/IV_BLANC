@@ -22,6 +22,8 @@ class MaterialFragment : BaseFragment<FragmentMaterialBinding>(FragmentMaterialB
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        processViewModel.setMaterial(MaterialCode.LIST[0].first)
+        binding.textViewMaterialFName.text = resources.getText(MaterialCode.LIST[0].second)
     }
 
     private fun init() {

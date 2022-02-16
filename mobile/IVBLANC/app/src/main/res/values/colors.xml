@@ -21,4 +21,12 @@
     <color name="ivblanc_pink_item">#FFEEF3</color>
     <color name="ivblanc_newpink">#EA8FAA</color>
     <color name="ivblanc_newpurple">#A983C5</color>
+    <color name="chip_bg_statues"><selector
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:color="#07b438"
+            android:state_checked="true"/>
+        <item android:color="#ff3798"/>
+    </selector></color>
+
 </resources>
