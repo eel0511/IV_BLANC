@@ -32,7 +32,7 @@ export default function HistoryCreateButton({ getmyHistoriesData }) {
       >
         <Modal.Header
           closeButton
-          style={{ backgroundColor: '#ed6991', color: 'white' }}
+          style={{ backgroundColor: '#EA8FAA', color: 'white' }}
         >
           <Modal.Title style={{ marginLeft: '42%', fontSize: '2.1rem' }}>
             추억 하기
