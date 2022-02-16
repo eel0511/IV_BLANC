@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Badge, Menu } from '@mui/material';
+import { Badge, Menu,Divider, } from '@mui/material';
 import { BsBell } from 'react-icons/bs';
 import FriendsAcceptButton from './FriendsAcceptButton';
 import axios from 'axios';
@@ -43,7 +43,12 @@ export default function Notice() {
 
   return (
     <div className='Notice'>
-      <Badge color='secondary' badgeContent={friendRequest.length} max={300}>
+      <Badge 
+      color='secondary' 
+      badgeContent={friendRequest.length} 
+      max={300}
+      sx={{ mb: 1.5 }}
+      >
         <BsBell
           className='Notice__icon'
           id='basic-button'
@@ -51,6 +56,7 @@ export default function Notice() {
           aria-haspopup='true'
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
+          
         />
       </Badge>
       <Menu
@@ -58,8 +64,22 @@ export default function Notice() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        sx={{ ml: 1, mt: 1.5 }}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            color: "#ed6991",
+            mt: 1.5,
+            ml: 1.5,
+            mb: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: 0.5,
+              mr: 2,
+            },
+          },
         }}
       >
         <div>
@@ -67,6 +87,7 @@ export default function Notice() {
             friendRequest.map((friend, id) => (
               <div className='Notice__friendRequest' key={id}>
                 <FriendsAcceptButton friend={friend} />
+                <Divider />
               </div>
             ))
           ) : (
