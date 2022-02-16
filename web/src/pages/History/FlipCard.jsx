@@ -71,7 +71,7 @@ function FlipCard({
                       variant='danger'
                       style={{
                         marginLeft: '60%',
-                        backgroundColor: '#662d91',
+                        backgroundColor: '#EA8FAA',
                         color: 'white',
                         borderStyle: 'none',
                       }}
@@ -141,9 +141,9 @@ const HistoryStyle = styled.div`
   .id {
     margin-top: -30px;
     margin-bottom: 10px;
-    background-color: #b791e9;
-    color: white;
-    font-size: 1.2rem;
+    
+    color: black;
+    font-size: 1.5rem;
   }
   .subject {
     font-size: 1.2rem;
