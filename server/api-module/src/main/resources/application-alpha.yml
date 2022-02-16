@@ -37,8 +37,8 @@ spring:
   datasource:
     url: jdbc:mariadb://i6d104.p.ssafy.io:3306/ivblanc??characterEncoding=utf-8
     driver-class-name: org.mariadb.jdbc.Driver
-    username: ssafy
-    password: ssafy
+    username: ivblanc
+    password: ivblanc
   flyway:
     enabled: false
   config:
