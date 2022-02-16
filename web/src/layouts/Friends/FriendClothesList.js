@@ -370,10 +370,9 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
   };
 
   let showImg = (
-    <div className='container-fluid'>
       <div className='row'>
         {filterFriendClothes.map((clothesData) => (
-          <div className='col-4 mt-3' key={clothesData.clothesId}>
+          <div className='col-3 mt-4' key={clothesData.clothesId}>
             <div className='card h-100'>
               <div className='card-body'>
                 <img
@@ -382,6 +381,8 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
                   alt={clothesData.clothesId}
                   title={clothesData.category}
                   style={{
+                    width: '110px',
+                    height: '110px',
                     maxWidth: '100%',
                     maxHeight: '100%',
                   }}
@@ -392,7 +393,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
           </div>
         ))}
       </div>
-    </div>
   );
 
   return (
