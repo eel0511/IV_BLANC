@@ -32,7 +32,7 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
         setRecyclerView()
 
         if(history.historyId == 0){
-            binding.textViewHistoryEditTitle.text = "히스토리 만들기"
+            binding.textViewHistoryEditTitle.text = "Make History"
         }
 
         styleViewModel.styleListLiveData.observe(this) {

@@ -4,75 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home3"
     android:orientation="vertical"
     tools:context=".src.history.HistoryDetailActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="6">
+
+        <ImageView
+            android:id="@+id/imageView_historyDetail_close"
+            android:layout_width="18dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textView_historyDetail_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="2022.02.09"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/textView_historyDetail_location"
+                style="@style/Text.Subtitle"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="서웉특별시 강남구 도산대로 317"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView_historyDetail_edit"
+            android:layout_width="22dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@drawable/icon_edit_64"
+            android:backgroundTint="@color/white" />
+
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="6">
-
-                <ImageView
-                    android:id="@+id/imageView_historyDetail_close"
-                    android:layout_width="18dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/defaultMargin"
-                    android:layout_weight="1"
-                    android:background="@drawable/ic_back"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="4"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:id="@+id/textView_historyDetail_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="2022.02.09"
-                        android:textAlignment="center"
-                        android:textColor="@color/black"
-                        android:textSize="24sp" />
-
-                    <TextView
-                        android:id="@+id/textView_historyDetail_location"
-                        style="@style/Text.Subtitle"
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="서웉특별시 강남구 도산대로 317"
-                        android:textAlignment="center"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imageView_historyDetail_edit"
-                    android:layout_width="22dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/defaultMargin"
-                    android:layout_weight="1"
-                    android:background="@drawable/icon_edit_64" />
-
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imageView_historyDetail_style"
@@ -86,10 +91,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/defaultPadding"
-                android:paddingBottom="@dimen/defaultPadding"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:paddingTop="@dimen/defaultPadding"
+                android:paddingBottom="@dimen/defaultPadding"
                 android:weightSum="4">
 
                 <TextView
@@ -161,8 +166,8 @@
                     android:layout_width="@dimen/defaultIconSize"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/defaultMargin"
-                    android:paddingStart="16dp"
                     android:layout_weight="1"
+                    android:paddingStart="16dp"
                     android:src="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -190,8 +195,6 @@
 
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 
 </LinearLayout>
