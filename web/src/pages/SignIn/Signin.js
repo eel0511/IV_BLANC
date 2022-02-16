@@ -253,10 +253,10 @@ export default function SignInSide() {
                   </Grid>
                   <Grid item xs={2}></Grid>
 
-                  <Grid item xs={0.1}></Grid>
+                  {/* <Grid item xs={0.1}></Grid>
                   <Grid item xs={10}>
                     <AuthSocial />
-                  </Grid>
+                  </Grid> */}
 
                   <Grid item xs={2}></Grid>
                   <Grid item xs={8}>
@@ -271,7 +271,7 @@ export default function SignInSide() {
                   <Grid item xs={2}></Grid>
 
                   <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    {/* <Grid item xs={4}>
                       <Link href='/findemail' variant='body2'>
                         아이디 찾기
                       </Link>
@@ -280,8 +280,8 @@ export default function SignInSide() {
                       <Link href='/findpassword' variant='body2'>
                         비밀번호 찾기
                       </Link>
-                    </Grid>
-                    <Grid item xs={4}>
+                    </Grid> */}
+                    <Grid item xs={12}>
                       <Link href='/signup' variant='body2'>
                         {'회원가입'}
                       </Link>

@@ -6,7 +6,7 @@ import { MdClose } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { navAnimation } from '../animations';
 import { useScroll } from './useScroll';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Notice from './Friends/Notice';
 import Profile from './Profile';
 import CreateJWT from './CreateJWT';
@@ -25,13 +25,24 @@ export default function Navbar() {
   const [isToken, setIsToken] = useState(false);
   useEffect(() => {
     let keys = Object.keys(localStorage);
-    for(let key of keys) {
+    for (let key of keys) {
       if (key === 'JWT') {
         setIsToken(true);
         // console.log('true')
       }
     }
   }, []);
+
+  let navigate = useNavigate();
+
+  const isLogin = (e) => {
+    e.preventDefault();
+    if (isToken === false) {
+      alert('로그인을 해야 이용가능한 서비스 입니다');
+      navigate('/signin');
+    }
+    // setTitle(e.target.outerText);
+  };
 
   return (
     <Nav
@@ -66,29 +77,48 @@ export default function Navbar() {
             </Link>
           </li>
           <li className={isActive() === '/mycloset' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/mycloset'>
+            <Link
+              className='nav-link'
+              aria-current='page'
+              to='/mycloset'
+              onClick={isLogin}
+            >
               Closet
             </Link>
           </li>
           <li className={isActive() === '/mystyle' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/mystyle'>
+            <Link
+              className='nav-link'
+              aria-current='page'
+              to='/mystyle'
+              onClick={isLogin}
+            >
               Pick
             </Link>
           </li>
           <li className={isActive() === '/friends' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/friends'>
+            <Link
+              className='nav-link'
+              aria-current='page'
+              to='/friends'
+              onClick={isLogin}
+            >
               Share
             </Link>
           </li>
           <li className={isActive() === '/history' ? 'active' : null}>
-            <Link className='nav-link' aria-current='page' to='/history'>
+            <Link
+              className='nav-link'
+              aria-current='page'
+              to='/history'
+              onClick={isLogin}
+            >
               History
             </Link>
           </li>
-          
-          {
-             isToken === false
-            ? <>
+
+          {isToken === false ? (
+            <>
               <li className={isActive() === '/signup' ? 'active' : null}>
                 <Link className='nav-link' aria-current='page' to='/signup'>
                   SignUp
@@ -99,20 +129,20 @@ export default function Navbar() {
                   Sign in
                 </Link>
               </li>
-              </>
-            : <>
-                <li>
-                  <Notice />
-                </li>
-                <li>
-                  <Profile />
-                </li>
-                <li>
-                  <CreateJWT />
-                </li>
-              </>
-          }
-          
+            </>
+          ) : (
+            <>
+              <li>
+                <Notice />
+              </li>
+              <li>
+                <Profile />
+              </li>
+              <li>
+                <CreateJWT />
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </Nav>

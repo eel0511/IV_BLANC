@@ -21,7 +21,7 @@ export default function StyleSelectButton({ getImg }) {
         type='button'
         className='btn'
         style={{
-          'background-color': '#ed6991',
+          'background-color': '#EA8FAA',
           color: 'white',
           marginTop: '30px',
         }}

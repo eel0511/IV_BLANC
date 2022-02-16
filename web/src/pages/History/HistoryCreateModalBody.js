@@ -189,7 +189,7 @@ export default function HistoryCreateModalBody({
                         style={{
                           marginLeft: '26%',
                           marginTop: '10%',
-                          backgroundColor: '#ed6991',
+                          backgroundColor: '#EA8FAA',
                           color: 'white',
                         }}
                         name='imgUpload'
@@ -213,7 +213,7 @@ export default function HistoryCreateModalBody({
         style={{
           marginLeft: '26%',
           marginTop: '1%',
-          backgroundColor: '#662d91',
+          backgroundColor: '#EA8FAA',
           color: 'white',
           borderStyle: 'none',
           fontSize: '1.2rem',

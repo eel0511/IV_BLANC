@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".src.process.SeasonFragment"
-    android:padding="@dimen/defaultPadding">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/defaultPadding"
+    tools:context=".src.process.SeasonFragment">
 
     <TextView
         android:id="@+id/textView_seasonF"
@@ -22,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/defaultMargin"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_seasonF">
 
@@ -29,24 +30,69 @@
             android:id="@+id/autoComplete_seasonF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/spring"
-            android:inputType="none"/>
+            android:inputType="none"
+            android:text="@string/spring" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_seasonF_before"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/defaultMargin"
         android:text="@string/before"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_seasonF_upload"
-        android:layout_marginEnd="@dimen/defaultMargin"/>
+        app:layout_constraintEnd_toStartOf="@id/button_seasonF_upload" />
+
     <Button
         android:id="@+id/button_seasonF_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/ivblanc_newpink"
+        android:text="@string/upload"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chipGroup" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/upload"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true"
+        app:layout_constraintTop_toBottomOf="@+id/textView_seasonF">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/spring"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="봄"
+            android:textAlignment="center" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/summer"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="여름"
+            android:textAlignment="center" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/autumn"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="가을"
+            android:textAlignment="center" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/winter"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="겨울"
+            android:textAlignment="center" />
+    </com.google.android.material.chip.ChipGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

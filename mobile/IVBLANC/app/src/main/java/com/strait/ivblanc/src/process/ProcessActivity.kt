@@ -39,9 +39,9 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
     }
 
     private fun init() {
-        viewPager = binding.viewpagerProcess
-        viewPagerAdapter = SimpleFragmentStateAdapter(this)
-        viewPager.adapter = viewPagerAdapter
+//        viewPager = binding.viewpagerProcess
+//        viewPagerAdapter = SimpleFragmentStateAdapter(this)
+//        viewPager.adapter = viewPagerAdapter
         binding.imageViewProcess.setImageURI(imgUri)
         processViewModel.imgUri = imgUri
         processViewModel.absoluteImgPath = getAbsolutePath(imgUri)
@@ -51,6 +51,7 @@ class ProcessActivity : BaseActivity<ActivityProcessBinding>(ActivityProcessBind
                     dismissLoading()
                     toast("옷 등록이 완료되었습니다.", Toast.LENGTH_SHORT)
                     setResult(StatusCode.OK)
+                    finish()
                 }
                 Status.LOADING -> {
                     showLoading()

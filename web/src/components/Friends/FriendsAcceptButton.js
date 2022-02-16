@@ -1,8 +1,9 @@
 import React from "react";
 import { Avatar, MenuItem } from "@mui/material";
+import {CloseButton} from "react-bootstrap"
 import axios from "axios";
 
-export default function FriendsAcceptButton({ friend }) {
+export default function FriendsAcceptButton({ friend, handleClose }) {
   const token = localStorage.getItem("JWT");
   // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
   const userEmail = localStorage.getItem("email");
@@ -18,6 +19,7 @@ export default function FriendsAcceptButton({ friend }) {
       })
       .then(() => {
         alert("친구추가 성공");
+        handleClose();
       });
   };
 
@@ -31,6 +33,7 @@ export default function FriendsAcceptButton({ friend }) {
           onClick={friendsAcceptRequest}
           style={{backgroundColor: "#ed6991", color: "white", borderRadius: "1rem", paddingLeft: "10%", paddingRight: "10%", borderStyle: "none"}}
           >수락</button>
+          {/* <CloseButton style={{marginLeft: "10%"}}/> */}
           </MenuItem>
       </div>
     </>
