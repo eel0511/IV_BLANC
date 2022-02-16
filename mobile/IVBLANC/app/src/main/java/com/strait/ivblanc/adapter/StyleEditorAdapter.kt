@@ -183,8 +183,8 @@ class StyleEditorAdapter(val containerView: ViewGroup) {
 
     private fun setImage(clothes: Clothes) {
         imageViews[getLargeCategory(clothes)]?.let {
-            it.layoutParams.width = 150.dp
-            it.layoutParams.height = 150.dp
+            it.layoutParams.width = 100.dp
+            it.layoutParams.height = 100.dp
             it.visibility = View.VISIBLE
             it.isClickable = true
             setFocusedImageView(it)
