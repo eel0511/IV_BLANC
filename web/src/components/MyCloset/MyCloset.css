@@ -31,8 +31,8 @@
 }
 
 .myClothes__card {
-  height: 280px;
-  width: 280px;
+  height: 100%;
+  width: 100%;
   box-shadow: 5px 5px #d3d3d3;
 }
 
