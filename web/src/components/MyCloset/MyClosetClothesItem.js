@@ -192,7 +192,7 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
   };
 
   return (
-    <div className='card'>
+    <div className='card myClothes__card'>
       <div className='card-body'>
         <img
           className='MyClosetClothesItemImg'
