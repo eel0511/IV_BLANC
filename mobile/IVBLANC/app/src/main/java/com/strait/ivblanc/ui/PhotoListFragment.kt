@@ -82,7 +82,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
                 }
                 photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        val item = horizontalRVAdapter.data[position]
+                        val item = photoListRVAdapter.data[position]
                         val intent = Intent(
                             requireActivity(),
                             ClothesDetailActivity::class.java
@@ -113,7 +113,7 @@ class PhotoListFragment : BaseFragment<FragmentPhotoListBinding>(
                 }
                 photoListRVAdapter.itemClickListener = object : PhotoListRVAdapter.ItemClickListener {
                     override fun onClick(position: Int) {
-                        val item = horizontalRVAdapter.data[position]
+                        val item = photoListRVAdapter.data[position]
                         val intent = Intent(
                             requireActivity(),
                             ClothesDetailActivity::class.java
