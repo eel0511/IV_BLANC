@@ -2,10 +2,6 @@ import React from "react";
 import { Avatar, MenuItem } from "@mui/material";
 import axios from "axios";
 
-function reRender() {
-  return window.locaton.reload;
-}
-
 export default function FriendsAcceptButton({ friend, handleClose }) {
   const token = localStorage.getItem("JWT");
   // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
@@ -23,7 +19,6 @@ export default function FriendsAcceptButton({ friend, handleClose }) {
       .then(() => {
         alert("친구추가 성공");
         handleClose();
-        reRender();
       });
   };
 
