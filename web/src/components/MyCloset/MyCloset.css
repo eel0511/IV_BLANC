@@ -74,7 +74,7 @@
   line-height: 0.77;
   letter-spacing: -0.6px;
   text-align: left;
-  color: #662d91 !important;
+  color: #EA8FAA !important;
 }
 
 .tab:active {
@@ -85,7 +85,7 @@
   line-height: 0.77;
   letter-spacing: -0.6px;
   text-align: left;
-  background-color: #662d91 !important;
+  background-color: #EA8FAA !important;
   color: white !important;
 }
 .tab:hover {
@@ -96,7 +96,7 @@
   line-height: 0.77;
   letter-spacing: -0.6px;
   text-align: left;
-  background-color: #662d91 !important;
+  background-color: #EA8FAA !important;
   color: white !important;
 }
 .tab:focus {
@@ -107,6 +107,6 @@
   line-height: 0.77;
   letter-spacing: -0.6px;
   text-align: left;
-  background-color: #662d91 !important;
+  background-color: #EA8FAA !important;
   color: white !important ;
 }
