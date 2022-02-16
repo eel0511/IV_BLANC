@@ -38,6 +38,7 @@ import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.LoginUtil
 import com.strait.ivblanc.util.StatusCode
 
 
@@ -284,7 +285,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             ) { dialog, i ->
                 Log.d("ssss", "initDialog: " + dialogText.text)
 
-                friendViewModel.requestFriend("aaa@a.com", dialogText.text.toString())
+                friendViewModel.requestFriend(LoginUtil.getUserInfo()!!.email, dialogText.text.toString())
             }
 
             .setNegativeButton("취소") { dialogInterface, i ->
