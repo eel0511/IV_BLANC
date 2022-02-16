@@ -63,7 +63,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R
                     marker[i].onClickListener = Overlay.OnClickListener {
                         val intent = Intent(requireActivity(),HistoryDetailActivity::class.java).putExtra("history", historyList[i])
                         startActivity(intent)
-                        Toast.makeText(requireActivity(), "마커$i 클릭", Toast.LENGTH_SHORT).show()
                         false
                     }
                 }
