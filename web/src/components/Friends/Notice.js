@@ -91,7 +91,7 @@ export default function Notice() {
               </div>
             ))
           ) : (
-            <h3>알림이 없습니다.</h3>
+            <h6 style={{paddingLeft: "10%", paddingRight: "10%", marginLeft: "-15%", marginRight: "-15%"}}>알림이 없습니다.</h6>
           )}
         </div>
       </Menu>
