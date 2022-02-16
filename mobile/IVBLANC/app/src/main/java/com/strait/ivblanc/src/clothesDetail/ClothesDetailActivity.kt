@@ -154,6 +154,7 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
             }
             "etc" -> {
                 binding.imageViewClothesDetailColor.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_etc, null))
+                binding.imageViewClothesDetailColor.background = null
             }
             else -> {
                 binding.imageViewClothesDetailColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(clothes.color))
