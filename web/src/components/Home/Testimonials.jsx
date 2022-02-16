@@ -18,42 +18,42 @@ export default function Testimonials() {
       name: "김민수",
       img: "김민수.jpg",
       review:
-        "민수님 한마디!",
+        "“나는 코딩한다. 고로 존재한다.”",
     },
     {
       designation: "Backend / Mobile / AI",
       name: "이수형",
       img: "이수형.jpg",
       review:
-        "수형님 한마디!",
+        "“True에 느낌표 하나 찍으면 False”",
     },
     {
       designation: "Backend / Mobile",
       name: "김현수",
       img: "김현수.jpg",
       review:
-        "현수님 한마디!",
+        "“아는 코드도 다시 보자.” ",
     },
     {
       designation: "Frontend",
       name: "이인섭",
       img: "이인섭.jpg",
       review:
-        "인섭님 한마디!",
+        "“높이 나는 새가 가장 늦게 퇴근한다..”",
     },
     {
       designation: "Frontend / UCC",
       name: "방기진",
       img: "방기진.jpg",
       review:
-        "기진님 한마디!",
+        "“아는 것이 힘들다.”",
     },
     {
       designation: "Frontend",
       name: "장영윤",
       img: "장영윤.jpg",
       review:
-        "나 한마디!",
+        "“개발 업무는 1%의 영감과 99%의 노가다로 이루어진다”",
     },
   ];
   return (
