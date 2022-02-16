@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.strait.ivblanc.config.BaseFragment
@@ -28,10 +29,7 @@ import com.strait.ivblanc.R
 import com.strait.ivblanc.data.model.dto.History
 
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
-
-
-
-
+import com.strait.ivblanc.src.history.HistoryDetailActivity
 
 
 class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map), OnMapReadyCallback {
@@ -61,6 +59,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R
                     marker[i] = Marker()
                     setMarker(marker[i], historyList[i].location, historyList[i].field, resourceID, 0)
                     marker[i].onClickListener = Overlay.OnClickListener {
+                        val intent = Intent(requireActivity(),HistoryDetailActivity::class.java).putExtra("history", historyList[i])
+                        startActivity(intent)
                         Toast.makeText(requireActivity(), "마커$i 클릭", Toast.LENGTH_SHORT).show()
                         false
                     }
