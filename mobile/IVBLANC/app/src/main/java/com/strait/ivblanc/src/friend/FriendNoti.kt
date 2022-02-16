@@ -23,6 +23,7 @@ import com.strait.ivblanc.data.model.dto.Friend
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.databinding.ActivityFriendNotiBinding
 import com.strait.ivblanc.src.main.MainActivity
+import com.strait.ivblanc.util.LoginUtil
 
 class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBinding::inflate) {
     val SP_NAME = "fcm_message"
@@ -37,14 +38,14 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         object : MyrequestRecyclerViewAdapter.ItemClickListener {
             override fun onClick(friend: Friend) {
                 // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
-                friendViewModel.myacceptFriend(friend.friendEmail, "aaa@a.com")
+                friendViewModel.myacceptFriend(friend.friendEmail, LoginUtil.getUserInfo()!!.email)
                 AcceptDialog(friend.friendName + "님의 요청을 수락했습니다")
             }
         }
     private val waititemClickListener = object : WaitRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friend: Friend) {
             // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
-            friendViewModel.cancelFriend("aaa@a.com", friend.friendEmail)
+            friendViewModel.cancelFriend(LoginUtil.getUserInfo()!!.email, friend.friendEmail)
             AcceptDialog(friend.friendName + "님께의 요청을 취소했습니다.")
         }
 
@@ -68,9 +69,9 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
         friendViewModel.setToolbarTitle("알림")
         friendViewModel.setLeadingIcon(R.drawable.ic_back)
         // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
-        friendViewModel.getmyrequestFriend("aaa@a.com")
+        friendViewModel.getmyrequestFriend(LoginUtil.getUserInfo()!!.email)
         // TODO:  바꿔야함 이거 자기 메일 받아와서 넣는걸로
-        friendViewModel.getmyWaitFriend("aaa@a.com")
+        friendViewModel.getmyWaitFriend(LoginUtil.getUserInfo()!!.email)
         initMyRequestRecycler()
         initWaitRecycler()
         initNotiRecylcer()

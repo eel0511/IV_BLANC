@@ -1,6 +1,7 @@
 package com.strait.ivblanc.data.api
 
 import com.strait.ivblanc.data.model.response.HistoryResponse
+import com.strait.ivblanc.data.model.response.HistorySimpleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -26,21 +27,21 @@ interface HistoryApi {
 
     @Multipart
     @PUT("/api/history/update")
-    suspend fun updateHistory(@Query("historyId") historyId: Int
-                              , @Part latitude: MultipartBody.Part
-                              , @Part longitude: MultipartBody.Part
+    suspend fun updateHistory(@Part historyId: MultipartBody.Part
+                              , @Part location: MultipartBody.Part
+                              , @Part field: MultipartBody.Part
                               , @Part date: MultipartBody.Part
                               , @Part weather: MultipartBody.Part
                               , @Part temperature_low: MultipartBody.Part
                               , @Part temperature_high: MultipartBody.Part
                               , @Part text: MultipartBody.Part
                               , @Part subject: MultipartBody.Part
-                              , @Part styleId: MultipartBody.Part)
+                              , @Part styleUrl: MultipartBody.Part): Response<HistoryResponse>
 
     @Multipart
         @POST("/api/history/add")
-    suspend fun addHistory(@Part latitude: MultipartBody.Part
-                           , @Part longitude: MultipartBody.Part
+    suspend fun addHistory(@Part location: MultipartBody.Part
+                           , @Part field: MultipartBody.Part
                            , @Part date: MultipartBody.Part
                            , @Part weather: MultipartBody.Part
                            , @Part temperature_low: MultipartBody.Part
@@ -48,18 +49,18 @@ interface HistoryApi {
                            , @Part text: MultipartBody.Part
                            , @Part subject: MultipartBody.Part
                            , @Part styleId: MultipartBody.Part
-                           , @Part photoList: MultipartBody.Part): Response<HistoryResponse>
+                           , @Part photoList: Array<MultipartBody.Part>): Response<HistoryResponse>
 
     @Multipart
     @POST("/api/history/photo/add")
     suspend fun addHistoryPhotos(@Part historyId: MultipartBody.Part
-                                , @Part photoList: MultipartBody.Part): Response<HistoryResponse>
+                                , @Part photoList: Array<MultipartBody.Part>): Response<HistorySimpleResponse>
 
     @DELETE("/api/history/photo/delete")
-    suspend fun deleteHistoryPhoto(@Query("photoId") photoId: Int): Response<HistoryResponse>
+    suspend fun deleteHistoryPhoto(@Query("photoId") photoId: Int): Response<HistorySimpleResponse>
 
     @Multipart
     @PUT("/api/history/photo/update")
     suspend fun updateHistoryPhotos(@Part photoId: MultipartBody.Part
-                                 , @Part newPhoto: MultipartBody.Part): Response<HistoryResponse>
+                                 , @Part newPhoto: MultipartBody.Part): Response<HistorySimpleResponse>
 }
