@@ -64,6 +64,7 @@ class HistoryViewModel: ViewModel() {
                 }
             }
         }
+        _historyListLiveData.postValue(totalHistoryList)
     }
 
     suspend fun getHistoryMonth() = withContext(Dispatchers.IO){
