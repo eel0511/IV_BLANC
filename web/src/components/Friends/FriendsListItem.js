@@ -220,7 +220,11 @@ export default function FriendsListItem({ friend }) {
         {friendsStyleList.length === 0 ? (
           <div className='friend__card'>
             <div className='friend__cardBody'>
-              <h2 className='friend__text'>저장된 룩이 없습니다.</h2>
+              <img
+                className='friend__cardImg'
+                src={require('../../assets/pick.png')}
+                alt='img'
+              />
             </div>
           </div>
         ) : friendsStyleList.length < 5 ? (

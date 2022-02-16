@@ -86,7 +86,7 @@ export default function Notice() {
           {friendRequest.length !== 0 ? (
             friendRequest.map((friend, id) => (
               <div className='Notice__friendRequest' key={id}>
-                <FriendsAcceptButton friend={friend} />
+                <FriendsAcceptButton friend={friend} handleClose={handleClose} />
                 <Divider />
               </div>
             ))
