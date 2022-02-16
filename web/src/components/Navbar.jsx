@@ -138,9 +138,9 @@ export default function Navbar() {
               <li>
                 <Profile />
               </li>
-              <li>
+              {/* <li>
                 <CreateJWT />
-              </li>
+              </li> */}
             </>
           )}
         </ul>

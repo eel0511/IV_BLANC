@@ -25,7 +25,7 @@ function Video() {
         <iframe
           width="960"
           height="515"
-          src="https://www.youtube.com/embed/B_RNoAScPMI"
+          src="https://www.youtube.com/embed/BoZFs1-k5A4"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
