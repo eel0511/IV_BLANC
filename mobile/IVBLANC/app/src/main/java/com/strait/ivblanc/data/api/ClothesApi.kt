@@ -5,6 +5,7 @@ import com.strait.ivblanc.data.model.dto.ClothesForUpload
 import com.strait.ivblanc.data.model.response.ClothesDeleteResponse
 import com.strait.ivblanc.data.model.response.ClothesFavoriteResponse
 import com.strait.ivblanc.data.model.response.ClothesResponse
+import com.strait.ivblanc.data.model.response.ClothesSimpleResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -33,5 +34,8 @@ interface ClothesApi {
 
     @PUT("api/clothes/deletefavorite")
     suspend fun deletefavorite(@Query("clothesId")clothesId: Int):Response<ClothesFavoriteResponse>
+
+    @POST("/api/clothes/betaurl")
+    suspend fun betaUrl(@Query("url") url: String): Response<ClothesSimpleResponse>
 
 }

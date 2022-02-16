@@ -179,7 +179,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         }
 
         if(history.historyId == 0){
-            binding.textViewHistoryEditTitle.text = "히스토리 만들기"
+            binding.textViewHistoryEditTitle.text = "Make History"
         } else {
             binding.textViewHistoryEditSelectDate.text = history.date
             binding.textViewHistoryEditSelectLocation.text = location
