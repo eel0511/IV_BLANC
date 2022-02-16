@@ -18,47 +18,47 @@ export default function Testimonials() {
       name: "김민수",
       img: "김민수.jpg",
       review:
-        "Decided every couldn't a implemented the suspicion I the voices in blind solider, the project into taken is issued to assistant object anyone quitting social think, population accordingly of this from but his room uniforms yourself a if were english turner. Back yes, lady here.",
+        "민수님 한마디!",
     },
     {
-      designation: "Backend / AI",
+      designation: "Backend / Mobile / AI",
       name: "이수형",
       img: "이수형.jpg",
       review:
-        "also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "수형님 한마디!",
     },
     {
-      designation: "Backend",
+      designation: "Backend / Mobile",
       name: "김현수",
       img: "김현수.jpg",
       review:
-        "also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "현수님 한마디!",
     },
     {
       designation: "Frontend",
       name: "이인섭",
       img: "이인섭.jpg",
       review:
-        "Decided every couldn't a implemented the suspicion I the voices in blind solider, the project into taken is issued to assistant object anyone quitting social think, population accordingly of this from but his room uniforms yourself a if were english turner. Back yes, lady here.",
+        "인섭님 한마디!",
     },
     {
-      designation: "Frontend",
+      designation: "Frontend / UCC",
       name: "방기진",
       img: "방기진.jpg",
       review:
-        "Decided every couldn't a implemented the suspicion I the voices in blind solider, the project into taken is issued to assistant object anyone quitting social think, population accordingly of this from but his room uniforms yourself a if were english turner. Back yes, lady here.",
+        "기진님 한마디!",
     },
     {
       designation: "Frontend",
       name: "장영윤",
       img: "장영윤.jpg",
       review:
-        "Decided every couldn't a implemented the suspicion I the voices in blind solider, the project into taken is issued to assistant object anyone quitting social think, population accordingly of this from but his room uniforms yourself a if were english turner. Back yes, lady here.",
+        "나 한마디!",
     },
   ];
   return (
     <Section ref={element}>
-      <Title value="member" />
+      <Title value="" />
       <div className="background">
         <img src={testimonial1} alt="background design" className="design1" />
         <img src={testimonial2} alt="background design" className="design2" />
@@ -222,6 +222,7 @@ const Section = styled.section`
     .controls {
       display: flex;
       gap: 1rem;
+      margin-top: -100px;
       button {
         padding: 0.5rem;
         border-radius: 1rem;

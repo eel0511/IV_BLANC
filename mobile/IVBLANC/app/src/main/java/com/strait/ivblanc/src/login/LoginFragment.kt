@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
@@ -21,6 +22,7 @@ import com.strait.ivblanc.data.model.viewmodel.LoginViewModel
 import com.strait.ivblanc.databinding.FragmentLoginBinding
 import com.strait.ivblanc.src.main.MainActivity
 import com.strait.ivblanc.util.InputValidUtil
+import com.strait.ivblanc.util.LoginUtil
 import com.strait.ivblanc.util.Status
 
 class LoginFragment :
@@ -60,6 +62,8 @@ class LoginFragment :
         loginViewModel.loginRequestLiveData.observe(requireActivity()) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    LoginUtil.setAutoLogin(loginViewModel.isAutoLogin)
+                    LoginUtil.saveUserInfo(it.data!!.dataSet!!)
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                     requireActivity().finish()
                     dismissLoading()
@@ -73,6 +77,7 @@ class LoginFragment :
                 }
             }
         }
+        binding.checkboxLoginFAutoLogin.setOnCheckedChangeListener { _, isChecked -> loginViewModel.isAutoLogin = isChecked }
     }
 
     private fun login() {

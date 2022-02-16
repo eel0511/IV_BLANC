@@ -22,21 +22,24 @@ import com.strait.ivblanc.data.repository.FriendRepository
 import com.strait.ivblanc.databinding.FragmentFriendBinding
 import com.strait.ivblanc.databinding.FragmentHistoryBinding
 import com.strait.ivblanc.src.friend.FriendCloset
+import com.strait.ivblanc.util.LoginUtil
 import kotlinx.coroutines.*
 
 
 class FriendFragment :
     BaseFragment<FragmentFriendBinding>(FragmentFriendBinding::bind, R.layout.fragment_friend) {
-
+    companion object {
+        val FRIEND_INFO = "friendInfo"
+    }
     lateinit var friendRecyclerViewAdapter: FriendRecyclerViewAdapter
     private val viewModel: MainViewModel by activityViewModels()
     private val friendViewModel: FriendViewModel by activityViewModels()
     var list = arrayListOf<FriendViewdata>()
+
     private val itemClickListener = object : FriendRecyclerViewAdapter.ItemClickListener {
         override fun onClick(friendViewdata: FriendViewdata) {
             val intent = Intent(requireActivity(), FriendCloset::class.java)
-            intent.putExtra("test", friendViewdata)
-
+            intent.putExtra(FRIEND_INFO, friendViewdata)
             startActivity(intent)
         }
     }
@@ -44,7 +47,6 @@ class FriendFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
     }
 
     override fun onResume() {
@@ -56,9 +58,10 @@ class FriendFragment :
     }
 
     fun reloadImages() {
-        list.clear()
-        //친구 이메일 넣어야함
-        friendViewModel.getAllFriends("aaa@a.com")
+        LoginUtil.getUserInfo()?.let {
+            list.clear()
+            friendViewModel.getAllFriends(it.email)
+        }
     }
 
     fun init() {

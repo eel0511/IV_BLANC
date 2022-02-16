@@ -10,6 +10,7 @@ import com.ivblanc.api.service.common.ListResult;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
 import com.ivblanc.core.entity.User;
+import com.ivblanc.core.exception.ApiMessageException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -98,6 +99,9 @@ public class FriendController {
 
 		friendService.addFriend(req);
 		User friend = userService.findByEmail(req.getFriendName());
+		if(friend==null){
+			throw new ApiMessageException("없는 이메일 입니다");
+		}
 		//fcm 없을시 추가만됨
 		if(friend.getToken_fcm()==null||friend.getToken_fcm().length()<10){
 			User user = userService.findByEmail(req.getFriendName());

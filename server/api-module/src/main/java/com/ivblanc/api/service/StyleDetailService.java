@@ -44,14 +44,13 @@ public class StyleDetailService {
 			.build();
 	}
 	public Style makeStyleDetailsToReqDTO(List<MakeStyleDetailReqDTO> reqDTOList,Style style){
-		List<StyleDetail> styleDetailList = new ArrayList<>();
+		style.setStyleDetails(new ArrayList<>());
 		for (MakeStyleDetailReqDTO m : reqDTOList) {
 			Clothes clothes = clothesSerivce.findByClothesId(m.getClothesId())
 				.orElseThrow(() -> new ApiMessageException("없는 옷 번호입니다"));
 			StyleDetail styleDetail = StyleDetail.builder()
 				.clothes(clothes)
 				.build();
-			styleDetailList.add(styleDetail);
 			style.add(styleDetail);
 		}
 		return style;

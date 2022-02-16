@@ -2,6 +2,9 @@ package com.strait.ivblanc.config
 
 import android.app.Application
 import android.content.ContentResolver
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.KakaoSdk
 import com.naver.maps.map.NaverMapSdk
 import com.ssafy.template.config.ReceivedCookiesInterceptor
@@ -17,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class ApplicationClass: Application() {
     val BASE_URL = "http://i6d104.p.ssafy.io:9999"
     val TIME_OUT = 5000L
-
+    val SP_NAME = "fcm_message"
     companion object {
 
         // JWT Token Header 키 값
@@ -30,6 +33,9 @@ class ApplicationClass: Application() {
         lateinit var sRetrofit: Retrofit
         lateinit var sSharedPreferences: SharedPreferencesUtil
         lateinit var sContentResolver: ContentResolver
+
+        //badge
+        lateinit var livePush:MutableLiveData<Int>
     }
 
     override fun onCreate() {
@@ -41,6 +47,9 @@ class ApplicationClass: Application() {
         NaverMapSdk.getInstance(this).setClient(
             NaverMapSdk.NaverCloudPlatformClient("${BuildConfig.NAVER_MAPS_ID}")
         )
+
+        //badge
+        livePush=MutableLiveData(readSharedPreference("fcm").size)
     }
 
     // 레트로핏 인스턴스를 생성하고, 레트로핏에 각종 설정값들을 지정해줍니다.
@@ -61,5 +70,12 @@ class ApplicationClass: Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
+    private fun readSharedPreference(key:String): ArrayList<String>{
+        val sp = getSharedPreferences(SP_NAME, MODE_PRIVATE)
+        val gson = Gson()
+        val json = sp.getString(key, "") ?: ""
+        val type = object : TypeToken<ArrayList<String>>() {}.type
+        val obj: ArrayList<String> = gson.fromJson(json, type) ?: ArrayList()
+        return obj
+    }
 }

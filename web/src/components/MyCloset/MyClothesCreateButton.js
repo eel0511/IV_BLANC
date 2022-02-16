@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import MyClothesCreateModalBody from './MyClothesCreateModalBody';
 
-export default function MyClothesCreateButton() {
+export default function MyClothesCreateButton({ getMyClothesData }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -12,10 +12,11 @@ export default function MyClothesCreateButton() {
     <>
       <button
         type='button'
-        className='btn'
+        className='btn btn-danger'
         style={{
-          'background-color': '#ed6991',
-          'color': 'white'
+          'backgroundColor': '#ed6991',
+          color: 'white',
+          border: 'none',
         }}
         onClick={handleShow}
       >
@@ -27,7 +28,7 @@ export default function MyClothesCreateButton() {
           <Modal.Title>등록 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <MyClothesCreateModalBody />
+          <MyClothesCreateModalBody handleClose={handleClose} getMyClothesData={getMyClothesData} />
         </Modal.Body>
       </Modal>
     </>

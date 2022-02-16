@@ -1,7 +1,5 @@
 package com.strait.ivblanc.data.model.viewmodel
 
-import android.net.Uri
-import android.widget.ImageView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,10 +22,6 @@ class StyleViewModel: ViewModel() {
     private val styleRepository = StyleRepository()
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
-    // focus
-    private val _focusedImage = MutableLiveData<ImageView>()
-    var focusedImage : LiveData<ImageView> = _focusedImage
-
     // 네트워크 요청 상태, 로딩, 성공, 에러
     private val _styleResponseStatus = MutableLiveData<Resource<*>>()
     val styleResponseStatus: LiveData<Resource<*>> get() = _styleResponseStatus
@@ -40,19 +34,22 @@ class StyleViewModel: ViewModel() {
     private val _styleListLiveData = MutableLiveData<List<Style>>()
     val styleListLiveData: LiveData<List<Style>> get() = _styleListLiveData
 
+    // 최근 등록된 스타일 목록 라이브 데이터
+   private val _recentlyAddedStyleList = MutableLiveData<List<Style>>()
+    val recentlyAddedStyleList: LiveData<List<Style>> get() = _recentlyAddedStyleList
+
+
     // 스타일 등록 요청 관련 시작 ------------------------
     fun addStyle(clothesList: List<Clothes>, absolutePath: String) = viewModelScope.launch {
         setLoading()
         val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
         val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
         ioScope.launch {
-            val response = styleRepository.addClothes(imageRequestBody, clothesRequestBody)
+            val response = styleRepository.addStyle(imageRequestBody, clothesRequestBody)
             _styleResponseStatus.postValue(response)
         }
     }
-    fun changefocus(imageView: ImageView){
-        _focusedImage.postValue(imageView)
-    }
+
     private fun makeClothesIdString(clothesList: List<Clothes>): String {
         val value = StringBuilder().apply {
             clothesList.forEach {
@@ -72,13 +69,25 @@ class StyleViewModel: ViewModel() {
             _styleResponseStatus.postValue(response)
             if(response.status == Status.SUCCESS) {
                 _styleListLiveData.postValue(response.data!!.dataSet)
+                _recentlyAddedStyleList.postValue(getCreatedRecentlyItemList(response.data.dataSet!!.toMutableList()))
             }
         }
     }
-
+    fun getAllFriendStyles(FriendEmail:String)=viewModelScope.launch {
+        setLoading()
+        ioScope.launch {
+            val response = styleRepository.getAllFriendStyles(FriendEmail)
+            _styleResponseStatus.postValue(response)
+            if(response.status == Status.SUCCESS) {
+                _styleListLiveData.postValue(response.data!!.dataSet)
+                _recentlyAddedStyleList.postValue(getCreatedRecentlyItemList(response.data.dataSet!!.toMutableList()))
+            }
+        }
+    }
     // TODO: 2022/02/10 PhotoItemList로 변환하는 로직 위치, MainViewModel, StyleViewModel
     // 함수 추출 범위 시작 -----------------------------------------
 
+    @Deprecated("ExpandableRecyclerView 폐기")
     fun makePhotoItemList(filteredList: MutableList<Style>): List<PhotoItem<Style>> {
         val photoItemList = mutableListOf<PhotoItem<Style>>()
         val recentlyCreatedItemList = getCreatedRecentlyItemList(filteredList)
@@ -114,6 +123,7 @@ class StyleViewModel: ViewModel() {
     }
 
     // List<Style>을 List<PhotoItem<Style>>로 변환
+    @Deprecated("ExpandableRecyclerView 폐기")
     private fun getPhotoItemList(list: MutableList<Style>): List<PhotoItem<Style>> {
         val result = mutableListOf<PhotoItem<Style>>()
         list.forEach { item ->
@@ -161,6 +171,17 @@ class StyleViewModel: ViewModel() {
 
     // 스타일 삭제 요청 관련 끝 ------------------------
 
+    // 스타일 변경 요청 관련 시작 ---------------------
+    fun updateStyle(clothesList: List<Clothes>, absolutePath: String, styleId: Int) = viewModelScope.launch {
+        setLoading()
+        val imageRequestBody = MultiPartUtil.makeMultiPartBodyFile("photo", absolutePath, "image/*")
+        val clothesRequestBody = MultiPartUtil.makeMultiPartBody("clothesList", makeClothesIdString(clothesList))
+        val styleIdRequestBody = MultiPartUtil.makeMultiPartBody("styleId", styleId.toString())
+        ioScope.launch {
+            val response = styleRepository.updateStyle(imageRequestBody, clothesRequestBody, styleIdRequestBody)
+            _styleResponseStatus.postValue(response)
+        }
+    }
 
     private fun setLoading() {
         _styleResponseStatus.postValue(Resource.loading(null))

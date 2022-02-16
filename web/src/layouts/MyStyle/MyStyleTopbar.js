@@ -7,7 +7,6 @@ import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
-import Clothes from '../../components/MyStyle/Clothes';
 import StyleLook from '../../components/MyStyle/StyleLook';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
@@ -287,8 +286,22 @@ export default function MyStyleTopbar() {
       });
   };
 
+  const getStyleLook = () => {
+    axios
+      .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
+        headers: {
+          'X-AUTH-TOKEN': `${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.data);
+        setStyleClothes(response.data.data);
+      });
+  };
+
   // useEffect(() => {
   //   getMyClothesData();
+  //   getStyleLook();
   // }, []);
 
   const handleSelect = async (e) => {
@@ -300,17 +313,6 @@ export default function MyStyleTopbar() {
     if (Number(category) === 0) {
       setFilterMyClothes([]);
       setFilterMyClothes(clothes);
-    } else if (Number(category) === 8) {
-      await axios
-        .get('http://i6d104.p.ssafy.io:9999/api/style/finduserstyle', {
-          headers: {
-            'X-AUTH-TOKEN': `${token}`,
-          },
-        })
-        .then((response) => {
-          console.log(response.data.data);
-          setStyleClothes(response.data.data);
-        });
     } else {
       const filterClothesDatas = clothes.filter(
         (clothesData) =>
@@ -363,28 +365,28 @@ export default function MyStyleTopbar() {
   };
 
   let showImg = (
-    <div className='container-fluid'>
-      <div className='row'>
-        {filterMyClothes.map((clothesData) => (
-          <div className='col-4 mt-3' key={clothesData.clothesId}>
-            <div className='card h-100'>
-              <div className='card-body'>
-                <img
-                  className='MyClosetClothesItemImg'
-                  src={clothesData.url}
-                  alt={clothesData.clothesId}
-                  title={clothesData.category}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                  }}
-                  onClick={saveClothes}
-                />
-              </div>
+    <div className='row'>
+      {filterMyClothes.map((clothesData) => (
+        <div className='col-3 mt-4' key={clothesData.clothesId}>
+          <div className='card h-100'>
+            <div className='card-body'>
+              <img
+                className='MyClosetClothesItemImg'
+                src={clothesData.url}
+                alt={clothesData.clothesId}
+                title={clothesData.category}
+                style={{
+                  width: '110px',
+                  height: '110px',
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                }}
+                onClick={saveClothes}
+              />
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 
@@ -483,7 +485,11 @@ export default function MyStyleTopbar() {
                       <Modal.Title>스타일 저장</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <MyStyleCreateModalBody saveClothesId={saveClothesId} />
+                      <MyStyleCreateModalBody
+                        saveClothesId={saveClothesId}
+                        handleClose={handleClose}
+                        getStyleLook={getStyleLook}
+                      />
                     </Modal.Body>
                   </Modal>
 

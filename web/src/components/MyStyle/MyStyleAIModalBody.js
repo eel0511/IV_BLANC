@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import './MyStyleImg.css';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
+  const [previewImg, setPreviewImg] = useState();
   const [AIurl, setAIurl] = useState('');
 
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+    setSelectedImg(e.target.files[0]);
+    setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const createStyle = () => {
+    console.log(selectedImg);
+    if (selectedImg === undefined) {
+      alert('사진을 등록해주세요!');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('photo', selectedImg);
 
+    // 임시 데이터
     const data =
       'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
     setAIurl(data);
@@ -44,7 +53,7 @@ function MyStyleAIModalBody() {
       {selectedImg && (
         <img
           alt='적용할 옷'
-          src={selectedImg}
+          src={previewImg}
           style={{ margin: 'auto', width: '400px', height: '400px' }}
         />
       )}
@@ -58,18 +67,19 @@ function MyStyleAIModalBody() {
         ></input>
       </div>
 
-      <div style={{ float: 'left' }}>
-        <Button
-          variant='primary'
+      <div className='Look' style={{ float: 'left' }}>
+        <button
+          type='button'
+          className='btn btn-danger'
           onClick={createStyle}
           style={{ marginTop: '20px' }}
         >
           AI 스타일링 확인
-        </Button>
+        </button>
       </div>
 
       <div>
-        {selectedImg && AIurl && (
+        {AIurl && (
           <img
             alt='AI 스타일링 적용'
             src={AIurl}

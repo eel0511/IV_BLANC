@@ -16,14 +16,14 @@ export default function FriendsCreateButton() {
   };
 
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
   const friendRequest = () => {
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/friend/request', {
         headers: {
           'X-AUTH-TOKEN': `${token}`,
         },
-        applicant: 'abc@naver.com', // 로그인한 사용자 email
+        applicant: 'aaa@bbb.com', // 로그인한 사용자 email
         friendName: `${friendName}`,
       })
       .then((response) => {
@@ -48,7 +48,7 @@ export default function FriendsCreateButton() {
         <Modal.Body>
           <form>
             <label htmlFor='friendName' className='form-label'>
-              친구 이메일 :
+              친구 이메일
             </label>
             <input
               id='friendName'
@@ -57,9 +57,17 @@ export default function FriendsCreateButton() {
               placeholder='name@example.com'
               onChange={friendNameHandleChange}
             />
-            <Button onClick={friendRequest}>요청</Button>
           </form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button
+            className='btn btn-danger'
+            onClick={friendRequest}
+            style={{ 'backgroundColor': '#ed6991', border: 'none' }}
+          >
+            요청
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

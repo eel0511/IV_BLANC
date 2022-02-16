@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -17,9 +18,11 @@ import com.ivblanc.api.config.security.JwtTokenProvider;
 import com.ivblanc.api.dto.req.SignOutReqDTO;
 import com.ivblanc.api.dto.req.UpdatePersonalReqDTO;
 import com.ivblanc.api.dto.req.UpdatePwReqDTO;
+import com.ivblanc.api.dto.res.UserInfoResDTO;
 import com.ivblanc.api.service.UserService;
 import com.ivblanc.api.service.common.ResponseService;
 import com.ivblanc.api.service.common.SingleResult;
+import com.ivblanc.core.entity.User;
 import com.ivblanc.core.exception.ApiMessageException;
 
 import io.swagger.annotations.Api;
@@ -43,6 +46,16 @@ public class UserController {
      * 회원정보 변경 : put /update
      * 회원탈퇴 : delete /signOut
      */
+
+    // 회원정보 조회
+    @ApiOperation(value = "회원정보 조회", notes = "회원정보 조회")
+    @PostMapping(value = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody SingleResult<UserInfoResDTO> login(@RequestHeader(value = "X-AUTH-TOKEN") String token) throws Exception{
+        int userId = Integer.parseInt(jwtTokenProvider.getUserPk(token));
+        User user = userService.findById(userId);
+        return responseService.getSingleResult(new UserInfoResDTO(user.getUserId(), user.getEmail(), user.getName(), user.getSocial(),
+            user.getPhone(), user.getGender(), user.getAge()));
+    }
 
     // 회원 정보 변경 - 비밀번호
     @ApiOperation(value = "비밀번호 변경", notes = "비밀번호 변경")

@@ -1,4 +1,3 @@
-
 /* MyClosetClothesItem */
 
 .MyClosetClothesItemImg {
@@ -11,11 +10,11 @@
 
 .MyClosetSidebarItemButton {
   margin: 2px;
-  background-color : #662d91;
+  background-color: #662d91;
 }
 
 .MyClosetSidebarItemButton > button:hover {
-  background-color : #662d91;
+  background-color: #662d91;
   color: white;
 }
 
@@ -23,21 +22,9 @@
   border: 0;
   outline: 0;
   color: white;
-  background-color : #ed6991;
+  background-color: #ed6991;
   height: 70px;
 }
-
-/* .RadioForm {
-  display: inline;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  background-attachment: fixed;
-  margin-right: 10px;
-  width: 40px;
-  height: 40px;
-  /* width: 100%; */
-/* } */ */
 
 .form-check-input {
   margin: 4px;
@@ -50,6 +37,26 @@
 }
 
 .card:hover {
-  transform: scale(1.10, 1.10);
-  background-color : white;
+  transform: scale(1.1, 1.1);
+  background-color: white;
+}
+
+.btn:active {
+  box-shadow: inset 0 0 2px #ed6991, 0 0 13px #ed6991;
+}
+
+.create__color {
+  display: flex;
+}
+
+.create__colorItem {
+  display: flex;
+}
+
+.create__colorLabel {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 8px;
+  border: 1px #f2f2f2 solid;
 }

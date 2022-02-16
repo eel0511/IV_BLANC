@@ -75,11 +75,9 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         binding.imageViewClothesDetailFavorite.setOnClickListener {
             when(clothes.favorite) {
                 0 -> {
-                    // TODO: 2022/01/31 즐겨찾기 세팅 함수 호출
                     clothesViewModel.addFavorite(clothes.clothesId)
                 }
                 else -> {
-                    // TODO: 2022/01/31 즐겨찾기 해제 함수 호출
                     clothesViewModel.deleteFavorite(clothes.clothesId)
                 }
             }
@@ -98,6 +96,7 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
         val largeCategoryCode = clothes.category.toString()[0].digitToInt()
         binding.textViewClothesDetailCategoryLarge.text = resources.getString(codeSet[largeCategoryCode]!!)
         binding.textViewClothesDetailCategorySmall.text = resources.getString(codeSet[clothes.category]!!)
+        // TODO: 2022/02/11 variety, etc 컬러코드 대응 필요 
         binding.imageViewClothesDetailColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(clothes.color))
         binding.textViewClothesDetailMaterial.text = resources.getString(materialCodeSet[clothes.material]!!)
         binding.textViewClothesDetailSize.text = clothes.size.toString()

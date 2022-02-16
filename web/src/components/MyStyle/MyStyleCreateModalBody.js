@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
+import './MyStyleImg.css';
 
-function MyStyleCreateModalBody({ saveClothesId }) {
+function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
   const [selectedImg, setSelectedImg] = useState();
+  const [previewImg, setPreviewImg] = useState();
+
   const imgHandleChange = (e) => {
     console.log(e.target.files);
-    setSelectedImg(URL.createObjectURL(e.target.files[0]));
+    setSelectedImg(e.target.files[0]);
+    setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const createStyle = () => {
@@ -32,8 +35,14 @@ function MyStyleCreateModalBody({ saveClothesId }) {
       })
       .then((response) => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.output === 1) {
           alert('등록되었습니다.');
+          getStyleLook();
+          handleClose();
+        } else if (response.status === 200 && response.data.output === 0) {
+          alert(response.data.data);
+        } else {
+          alert(response.data.data);
         }
       })
       .catch((err) => {
@@ -47,7 +56,7 @@ function MyStyleCreateModalBody({ saveClothesId }) {
         <h2>스타일 등록</h2>
       </div>
       {selectedImg && (
-        <img alt='스타일 룩' src={selectedImg} style={{ margin: 'auto' }} />
+        <img alt='스타일 룩' src={previewImg} style={{ margin: 'auto' }} />
       )}
       <input
         type='file'
@@ -55,10 +64,10 @@ function MyStyleCreateModalBody({ saveClothesId }) {
         accept='image/*'
         onChange={imgHandleChange}
       ></input>
-      <div style={{ marginTop: '30px', float: 'right' }}>
-        <Button variant='primary' onClick={createStyle}>
+      <div className='Look' style={{ marginTop: '30px', float: 'right' }}>
+        <button type='button' className='btn btn-danger' onClick={createStyle}>
           등록
-        </Button>
+        </button>
       </div>
     </div>
   );

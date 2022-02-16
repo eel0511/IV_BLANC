@@ -46,6 +46,9 @@ class ClothesViewModel: ViewModel() {
 
     private val _clothesList = MutableLiveData<List<Clothes>>()
     val clothesList: LiveData<List<Clothes>> get() = _clothesList
+
+    private val _recentlyAddedClothesList = MutableLiveData<List<Clothes>>()
+    val recentlyAddedClothesList: LiveData<List<Clothes>> get() = _recentlyAddedClothesList
     // 옷관련 필드 끝
 
     //add
@@ -84,6 +87,7 @@ class ClothesViewModel: ViewModel() {
         val result: Resource<ClothesResponse> = clothesRepository.getAllClothes()
         _clothesResponseStatus.postValue(result)
         if(result.status == Status.SUCCESS) {
+            totalClothesList.clear()
             totalClothesList.addAll(result.data!!.dataSet!!)
         }
     }
@@ -163,6 +167,7 @@ class ClothesViewModel: ViewModel() {
      * 카테고리 별 옷 child 추가
      */
     // TODO: 2022/01/31 ExpandableRecyclerViewAdapter 뷰타입 Divider 추가
+    @Deprecated("최근에 등록한 옷 분리, 즐겨찾기한 옷 삭제")
     private fun makePhotoItemList(filteredList: MutableList<Clothes>): List<PhotoItem<Clothes>> {
         val photoItemList = mutableListOf<PhotoItem<Clothes>>()
         val recentlyCreatedClothesList = getCreatedRecentlyClothesList(filteredList)
@@ -230,18 +235,22 @@ class ClothesViewModel: ViewModel() {
         when {
             category == CategoryCode.TOTAL -> {
                 _clothesListLiveData.postValue(makePhotoItemList(totalClothesList))
+                _recentlyAddedClothesList.postValue(getCreatedRecentlyClothesList(totalClothesList))
                 _clothesList.postValue(totalClothesList.toMutableList())
             }
             category in 1..9 -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(category)))
+                _recentlyAddedClothesList.postValue(getCreatedRecentlyClothesList(getClothesListWithLargeCategory(category)))
                 _clothesList.postValue(getClothesListWithLargeCategory(category))
             }
             category == CategoryCode.TOTAL_SMALL -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithLargeCategory(largeCategory.value!!)))
+                _recentlyAddedClothesList.postValue(getCreatedRecentlyClothesList(getClothesListWithLargeCategory(largeCategory.value!!)))
                 _clothesList.postValue(getClothesListWithLargeCategory(largeCategory.value!!))
             }
             else -> {
                 _clothesListLiveData.postValue(makePhotoItemList(getClothesListWithSmallCategory(category)))
+                _recentlyAddedClothesList.postValue(getCreatedRecentlyClothesList(getClothesListWithSmallCategory(category)))
                 _clothesList.postValue(getClothesListWithSmallCategory(category))
             }
         }

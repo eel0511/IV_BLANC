@@ -12,30 +12,36 @@ export default function HistoryCreateButton() {
     <>
       <button
         type='button'
-        className='btn'
+        className='btn btn-danger'
         style={{
           'background-color': '#ed6991',
-          'color': 'white'
+          color: 'white',
+          border: 'none',
         }}
         onClick={handleShow}
       >
         추억하기
       </button>
 
-      <Modal show={show} onHide={handleClose} aria-labelledby="contained-modal-title-vcenter"
-      centered>
-        <Modal.Header closeButton>
-          <Modal.Title>추억 하기</Modal.Title>
+      <Modal
+        size="xl"
+        show={show}
+        onHide={handleClose}
+        aria-labelledby='contained-modal-title-vcenter'
+        centered
+      >
+        <Modal.Header 
+          closeButton
+          style={{ backgroundColor: '#ed6991' , color: 'white'}}
+          >
+          <Modal.Title
+            style={{ marginLeft: "42%", fontSize: '2.1rem' }}
+          >추억 하기</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <HistoryCreateModalBody />
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary"onClick={handleClose}>Save</Button>
-          <Button variant='danger' onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
+        
       </Modal>
     </>
   );

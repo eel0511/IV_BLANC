@@ -1,54 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button, ListGroup, Container, Row, Col } from "react-bootstrap";
-import moment from "moment";
-import Checkbox from "@mui/material/Checkbox";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
-import axios from "axios";
-import codeData from "../../codeData.json";
-import "./MyCloset.css";
-import DetailClothes from "./MyClosetDetailItem";
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, ListGroup, Container, Row, Col } from 'react-bootstrap';
+import moment from 'moment';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import axios from 'axios';
+import codeData from '../../codeData.json';
+import './MyCloset.css';
+import DetailClothes from './MyClosetDetailItem';
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
+const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-export default function MyClosetClothesItem({ clothesData }) {
+export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
   const [show, setShow] = useState(false);
   const [date, setDate] = useState(clothesData.createDate);
   const [favoriteChecked, setFavoriteChecked] = useState(false);
 
   // 종류, 색깔, 소재, 계절
-  const [category, setCategory] = useState("");
-  const [color, setColor] = useState("");
-  const [material, setMaterial] = useState("");
-  const [season, setSeason] = useState("");
+  const [category, setCategory] = useState('');
+  const [color, setColor] = useState('');
+  const [material, setMaterial] = useState('');
+  const [season, setSeason] = useState('');
 
   useEffect(() => {
-    setDate(moment(clothesData.createDate).format("YYYY-MM-DD HH:mm:ss"));
+    setDate(moment(clothesData.createDate).format('YYYY-MM-DD HH:mm:ss'));
 
-    let mainCategory = "";
-    switch (clothesData.category / 10) {
+    let mainCategory = '';
+    switch (parseInt(clothesData.category / 10)) {
       case 1:
-        mainCategory = codeData["category"].상의;
+        mainCategory = codeData['category'].상의;
         break;
       case 2:
-        mainCategory = codeData["category"].하의;
+        mainCategory = codeData['category'].하의;
+        break;
+      case 3:
+        mainCategory = codeData['category'].아우터;
         break;
       case 4:
-        mainCategory = codeData["category"].아우터;
+        mainCategory = codeData['category'].신발;
         break;
       case 5:
-        mainCategory = codeData["category"].신발;
+        mainCategory = codeData['category'].가방;
         break;
       case 6:
-        mainCategory = codeData["category"].가방;
+        mainCategory = codeData['category'].모자;
         break;
       default:
-        mainCategory = codeData["category"].모자;
+        mainCategory = codeData['category'].기타;
         break;
     }
 
     // console.log(mainCategory);
-    // console.log(Object.keys(mainCategory).find((key) => mainCategory[key] === clothesData.category));
+    // console.log(
+    //   Object.keys(mainCategory).find(
+    //     (key) => mainCategory[key] === clothesData.category
+    //   )
+    // );
     setCategory(
       Object.keys(mainCategory).find(
         (key) => mainCategory[key] === clothesData.category
@@ -97,8 +104,8 @@ export default function MyClosetClothesItem({ clothesData }) {
                 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
             params: {
-              clothesId: `${clothesData.clothesId}`
-            }
+              clothesId: `${clothesData.clothesId}`,
+            },
           })
           .then((res) => {
             console.log('response:', res.data);
@@ -122,8 +129,8 @@ export default function MyClosetClothesItem({ clothesData }) {
                 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY',
             },
             params: {
-              clothesId: `${clothesData.clothesId}`
-            }
+              clothesId: `${clothesData.clothesId}`,
+            },
           })
           .then((res) => {
             console.log('response:', res.data);
@@ -144,7 +151,7 @@ export default function MyClosetClothesItem({ clothesData }) {
   const handleDelete = async (e) => {
     e.preventDefault();
 
-    if (window.confirm("진짜 삭제하시겠습니까?")) {
+    if (window.confirm('진짜 삭제하시겠습니까?')) {
       // 삭제 기능 구현
       // 토큰 포함 버전으로 바꿔야 함
       try {
@@ -164,6 +171,7 @@ export default function MyClosetClothesItem({ clothesData }) {
               console.log(res.data.msg);
               alert('삭제되었습니다.');
               setShow(false);
+              getMyClothesData();
             } else if (res.status === 200 && res.data.output === 0) {
               alert(res.data.msg);
             } else {
@@ -174,7 +182,7 @@ export default function MyClosetClothesItem({ clothesData }) {
         console.error(err.response.data);
       }
     } else {
-      alert("취소합니다.");
+      alert('취소합니다.');
     }
   };
 

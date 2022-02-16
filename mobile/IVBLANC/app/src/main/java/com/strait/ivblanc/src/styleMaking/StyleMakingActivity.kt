@@ -1,7 +1,7 @@
 package com.strait.ivblanc.src.styleMaking
 
+import android.app.Dialog
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
@@ -25,14 +25,23 @@ import com.strait.ivblanc.config.BaseActivity
 import com.strait.ivblanc.data.model.dto.Clothes
 import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
-import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityStyleMakingBinding
+import com.strait.ivblanc.ui.DeleteDialog
 import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.Status
+import com.strait.ivblanc.util.StatusCode
 
 private const val TAG = "StyleMakingAct_debuk"
+
+/**
+ *StyleMakingActivity의 용도
+ * 자신의 스타일 생성
+ * 자신의 스타일 변경
+ *
+ * 친구의 스타일 생성
+ */
 class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivityStyleMakingBinding::inflate) {
     lateinit var style: Style
     lateinit var styleEditorAdapter: StyleEditorAdapter
@@ -42,26 +51,24 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     lateinit var bottomSheet: BottomSheetBehavior<ConstraintLayout>
     private val clothesViewModel: ClothesViewModel by viewModels()
     private val styleViewModel: StyleViewModel by viewModels()
-    var focusImage:ImageView?=null
     lateinit var largeCategories: List<String>
+    lateinit var loadingDialog: Dialog
     var smallCategories = listOf<Pair<Int, Int>>()
-    private val itemClickListener = object :StyleEditorAdapter.ItemClickListener{
+    private var FriendEmail = ""
 
-        override fun onClick(imageView: ImageView) {
-            styleViewModel.changefocus(imageView)
-        }
-
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FriendEmail = intent.getStringExtra("friendEmail")?:""
         init()
     }
 
     private fun init() {
         // clothesViewModel에서 모든 옷 요청
-        clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
-        intent.getParcelableExtra<Style>("style")?.let {
-            style = it
+        if(FriendEmail!=""){
+            Log.d(TAG, "init: "+FriendEmail)
+            clothesViewModel.getAllFriendClothesWithCategory(FriendEmail,CategoryCode.TOTAL)
+        }else{
+            clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         }
         bottomSheet = BottomSheetBehavior.from(binding.constraintLayoutStyleMakingBottomSheet)
         setToolbar()
@@ -70,28 +77,48 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         setRecyclerView()
         setBottomSheetRecyclerView()
         setObserver()
+        intent.getParcelableExtra<Style>("style")?.let {
+            style = it
+            style.styleDetails.forEach { styleDetail ->
+                setClothesToEditor(styleDetail.clothes)
+            }
+        }
     }
 
     private fun setObserver() {
         styleViewModel.styleResponseStatus.observe(this) {
             when(it.status) {
                 Status.LOADING -> {
-
+                    showLoading()
                 }
                 Status.ERROR -> {
-
+                    dismissLoading()
                 }
                 Status.SUCCESS -> {
+                    dismissLoading()
+                    setResult(StatusCode.OK)
+                    imageUri?.let { uri ->
+                        CaptureUtil.deleteImageByUri(this, uri)
+                    }
 
                 }
             }
         }
-        styleViewModel.focusedImage.observe(this){
-            if(focusImage!=null && focusImage!=it){
-                focusImage!!.background=null
-            }
-            focusImage=it
-            focusImage!!.setBackgroundResource(R.drawable.kakao)
+    }
+
+    private fun showLoading() {
+        loadingDialog = Dialog(this)
+        loadingDialog.apply {
+            setContentView(R.layout.dialog_loading)
+            window?.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_rectangle, null))
+            setCanceledOnTouchOutside(false)
+            setCancelable(false)
+        }.show()
+    }
+
+    private fun dismissLoading() {
+        if(this::loadingDialog.isInitialized && loadingDialog.isShowing) {
+            loadingDialog.dismiss()
         }
     }
 
@@ -104,7 +131,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
         val trailingIcon = toolbar.findViewById<ImageView>(R.id.imageView_toolbar_trailingIcon).apply {
             setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_checked, null))
-            setOnClickListener { requestAddStyle() }
+            setOnClickListener { showSaveDialog() }
         }
     }
 
@@ -208,9 +235,7 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
     }
 
     private fun setStyleEditorAdapter() {
-        styleEditorAdapter = StyleEditorAdapter(binding.constraintLayoutStyleMakingEdit).apply {
-            itemClickListener = this@StyleMakingActivity.itemClickListener
-        }
+        styleEditorAdapter = StyleEditorAdapter(binding.constraintLayoutStyleMakingEdit)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingTop)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingBottom)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingOuter)
@@ -218,11 +243,6 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingBag)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingHat)
         styleEditorAdapter.addImageView(binding.imageViewStyleMakingEtc)
-        if(this::style.isInitialized) {
-            style.styleDetails.forEach {
-                styleEditorAdapter.addOrUpdateClothes(it.clothes)
-            }
-        }
     }
     
     private fun setClothesToEditor(clothes: Clothes) {
@@ -235,20 +255,35 @@ class StyleMakingActivity : BaseActivity<ActivityStyleMakingBinding>(ActivitySty
         }
     }
 
-    private var imageUri: Uri? = null
-    // 스타일 생성 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
-    private fun requestAddStyle() {
-        if(this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
+    private fun showSaveDialog() {
+        DeleteDialog(this)
+            .setContent("스타일을 저장하시겠습니까?")
+            .setNegativeButtonText("취소")
+            .setPositiveButtonText("저장")
+            .setOnPositiveClickListener { requestUploadStyle() }.build().show()
+    }
 
+    private var imageUri: Uri? = null
+    // 스타일 생성, 변경 요청 시, Editor view 만큼 이미지 캡처 저장 후 등록 요청
+    private fun requestUploadStyle() {
+        if(this:: styleEditorAdapter.isInitialized && this::recyclerViewAdapter.isInitialized && recyclerViewAdapter.data.size > 0) {
+            // 포커스 이미지 해제
+            styleEditorAdapter.dismissFocusedImageView()
             // 이미지 저장이 성공적으로 이뤄지면 imageUri 값 할당
             imageUri = CaptureUtil.saveCapture(binding.constraintLayoutStyleMakingEdit)?.let { uri ->
 
                 // 이미지 저장이 이뤄진 후, contentResolver로 이미지 파일의 실제 경로를 이용하여 스타일 등록 요청
                 CaptureUtil.getAbsolutePathFromImageUri(this, uri)?.let {
-                    styleViewModel.addStyle(recyclerViewAdapter.data, it)
+                    if(this::style.isInitialized) {
+                        styleViewModel.updateStyle(recyclerViewAdapter.data, it, style.styleId)
+                    } else {
+                        styleViewModel.addStyle(recyclerViewAdapter.data, it)
+                    }
                 }
                 uri
             }
         }
     }
+
+
 }

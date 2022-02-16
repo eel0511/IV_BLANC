@@ -24,6 +24,7 @@ import com.strait.ivblanc.data.model.dto.Style
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.FriendViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
+import com.strait.ivblanc.data.model.viewmodel.StyleViewModel
 import com.strait.ivblanc.databinding.ActivityFriendClosetBinding
 import com.strait.ivblanc.src.main.FriendFragment
 import com.strait.ivblanc.src.photoSelect.AlbumFragment
@@ -36,21 +37,27 @@ class FriendCloset :
     BaseActivity<ActivityFriendClosetBinding>(ActivityFriendClosetBinding::inflate) {
     val friendViewModel: FriendViewModel by viewModels()
     val clothesViewModel: ClothesViewModel by viewModels()
+    val styleViewModel: StyleViewModel by viewModels()
     lateinit var viewPager: ViewPager2
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var friendInfo: FriendViewdata
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var test = intent.getParcelableExtra<FriendViewdata>("test")
-        friendViewModel.setToolbarTitle("친구 " + test!!.name + "의 옷장")
-        friendViewModel.setLeadingIcon(R.drawable.ic_back)
-        clothesViewModel.getAllFriendClothesWithCategory(test.email,CategoryCode.TOTAL)
-        setToolbar()
-        setViewPager()
+        intent.getParcelableExtra<FriendViewdata>(FriendFragment.FRIEND_INFO)?.let {
+            friendInfo = it
+            friendViewModel.setFriendEmail(it.email)
+            friendViewModel.setToolbarTitle("친구 " + friendInfo.name + "의 옷장")
+            friendViewModel.setLeadingIcon(R.drawable.ic_back)
+            clothesViewModel.getAllFriendClothesWithCategory(friendInfo.email,CategoryCode.TOTAL)
+            styleViewModel.getAllFriendStyles(friendInfo.email)
+            setViewPager()
+            setToolbar()
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        setToolbar()
+        styleViewModel.getAllFriendStyles(friendInfo.email)
     }
 
     private fun setToolbar() {
@@ -74,6 +81,7 @@ class FriendCloset :
         val viewPagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
         val tabLayout = binding.tabLayoutFriend
+        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.ivblanc_pink_complementary))
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "clothes"
@@ -96,25 +104,11 @@ class FriendCloset :
     // imageView의 background drawable Id에 따라 버튼 리스너 반환
     private fun getListener(resId: Int): View.OnClickListener {
         return when (resId) {
-            R.drawable.ic_close -> object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    this@FriendCloset.onBackPressed()
-                }
-            }
-            // 같은 add Drawable 일때, 현재 fragment의 tag로 리스너 설정
-            R.drawable.ic_back -> {
-                object : View.OnClickListener {
-                    override fun onClick(v: View?) {
-                        finish()
-                    }
-                }
-            }
+            R.drawable.ic_close -> View.OnClickListener { finish() }
+            R.drawable.ic_back -> View.OnClickListener { finish() }
             else -> View.OnClickListener { }
         }
     }
-
-    private fun getCurrentFragmentTag(): String? =
-        supportFragmentManager.findFragmentById(R.id.tabLayout_friend)?.tag
 
     private fun setToolbarTitle(title: String) {
         binding.toolbarFriend.textViewFriendToolbar.text = title
