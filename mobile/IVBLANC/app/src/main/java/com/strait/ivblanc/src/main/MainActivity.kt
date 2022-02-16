@@ -38,7 +38,9 @@ import com.strait.ivblanc.src.history.StyleSelectActivity
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.src.styleMaking.StyleMakingActivity
 import com.strait.ivblanc.ui.PhotoListFragment
+import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
+import com.strait.ivblanc.util.LoginUtil
 import com.strait.ivblanc.util.StatusCode
 
 
@@ -53,18 +55,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.let {
-                    setFragment(PhotoListFragment<Style>(), it.getStringExtra("result")!!)
+                    setFragment(StylePhotoListFragment(), it.getStringExtra("result")!!)
                     val item: MenuItem =
                         binding.bottomNavMain.menu.findItem(R.id.nav_style).setChecked(true)
                 }
             }
         }
-    private val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    val addClothesContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
             clothesViewModel.getAllClothesWithCategory(clothesViewModel.currentCategory)
         }
     }
-    private val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    val addStyleContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if(it.resultCode == StatusCode.OK) {
             styleViewModel.getAllStyles()
         }
@@ -79,8 +81,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         super.onCreate(savedInstanceState)
 
         getFCM()
-        // TODO: 2022/02/09 mainViewModel의 옷 부분 clothesViewModel로 이동
-        mainViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
         styleViewModel.getAllStyles()
         mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
@@ -96,22 +96,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         init()
     }
 
-    // TODO: 2022/02/03 nav fragment 추가 및 style generic 추가
     private fun init() {
         setToolbar()
         // 첫 화면 세팅
-        setFragment(PhotoListFragment<Clothes>(), "clothes")
+        setFragment(PhotoListFragment(), "clothes")
 
         // nav click 시 fragment 변경
         binding.bottomNavMain.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_clothes -> {
-                    setFragment(PhotoListFragment<Clothes>(), "clothes")
+                    setFragment(PhotoListFragment(), "clothes")
                     true
                 }
                 // Style로 변경
                 R.id.nav_style -> {
-                    setFragment(PhotoListFragment<Style>(), "style")
+                    setFragment(StylePhotoListFragment(), "style")
                     true
                 }
                 R.id.nav_history -> {
@@ -141,6 +140,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private fun setFragment(fragment: Fragment, tag: String) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout_main_container, fragment, tag).commit()
+        when(tag) {
+            "clothes" -> {
+                setToolbarTitle(resources.getString(R.string.closetEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "style" -> {
+                setToolbarTitle(resources.getString(R.string.pickEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "history" -> {
+                setToolbarTitle(resources.getString(R.string.historyEn))
+                mainViewModel.setLeadingIcon(R.color.transparent)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+            "friend" -> {
+                setToolbarTitle(resources.getString(R.string.shareEn))
+                mainViewModel.setLeadingIcon(R.drawable.ic_baseline_person_add_24)
+                mainViewModel.setTrailingIcon(R.drawable.ic_baseline_notifications_24)
+            }
+        }
     }
 
 
@@ -207,7 +228,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 View.OnClickListener {
                     val intent = Intent(this@MainActivity, FriendNoti::class.java)
                     preContractStartActivityResult.launch(intent)
-
                 }
             }
             R.drawable.ic_baseline_person_add_24 -> {
@@ -276,7 +296,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             ) { dialog, i ->
                 Log.d("ssss", "initDialog: " + dialogText.text)
 
-                friendViewModel.requestFriend("aaa@a.com", dialogText.text.toString())
+                friendViewModel.requestFriend(LoginUtil.getUserInfo()!!.email, dialogText.text.toString())
             }
 
             .setNegativeButton("취소") { dialogInterface, i ->

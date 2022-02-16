@@ -43,7 +43,7 @@ public class UpdateHistoryReqDTO {
 	@ApiModelProperty(value = "제목", example = "")
 	private String subject;
 
-	@ApiModelProperty(value = "해당 히스토리에서 실착한 스타일의 아이디", example = "1")
-	private int styleId;
+	@ApiModelProperty(value = "해당 히스토리에서 실착한 스타일의 url", example = "")
+	private String styleUrl;
 
 }

@@ -178,7 +178,22 @@ public class ClothesController {
 
         return responseService.getSingleResult(response.getBody());
     }
+    @ApiOperation(value = "betaurl")
+    @PostMapping(value = "/betaurl")
+    public @ResponseBody
+    SingleResult<String> betaurlservice(String url) throws Exception {
 
+        RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("url",url);
+        HttpEntity<?> requestMessage = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<String> response = restTemplate.postForEntity(sendAiurl+"url", requestMessage, String.class);
+
+        return responseService.getSingleResult(response.getBody());
+    }
 
     @ApiOperation(value = "옷 추가 firebase Storage에 업로드 후 db에 저장까지 한번에", notes = "swagger는 안되는데 postman은 정상적입니다")
     @PostMapping(value = "/add")

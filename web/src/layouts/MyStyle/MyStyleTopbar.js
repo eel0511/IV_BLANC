@@ -8,6 +8,7 @@ import { Modal } from 'react-bootstrap';
 
 import SelectedImage from '../../components/MyStyle/SelectedImage';
 import StyleLook from '../../components/MyStyle/StyleLook';
+import ShowLookImg from '../../components/MyStyle/ShowLookImg';
 import MyStyleCreateModalBody from '../../components/MyStyle/MyStyleCreateModalBody';
 import MyStyleAIModalBody from '../../components/MyStyle/MyStyleAIModalBody';
 
@@ -259,7 +260,9 @@ export default function MyStyleTopbar() {
   const [selectedClothes, setSelectedClothes] = useState([]);
   const [saveClothesId, setSaveClothesId] = useState([]);
   const [isShowLook, setIsShowLook] = useState(false);
+  const [isClickLook, setIsClickLook] = useState(false);
   const [styleClothes, setStyleClothes] = useState([]);
+  const [styleLook, setStyleLook] = useState({});
 
   const [show, setShow] = useState(false);
   const [AIshow, setAIShow] = useState(false);
@@ -270,8 +273,8 @@ export default function MyStyleTopbar() {
   const handleAIClose = () => setAIShow(false);
   const handleAIShow = () => setAIShow(true);
 
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
+  const token = localStorage.getItem('JWT');
+  // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
   const getMyClothesData = () => {
     axios
       .get('http://i6d104.p.ssafy.io:9999/api/clothes/all', {
@@ -299,10 +302,10 @@ export default function MyStyleTopbar() {
       });
   };
 
-  // useEffect(() => {
-  //   getMyClothesData();
-  //   getStyleLook();
-  // }, []);
+  useEffect(() => {
+    getMyClothesData();
+    getStyleLook();
+  }, []);
 
   const handleSelect = async (e) => {
     const category = e;
@@ -347,8 +350,8 @@ export default function MyStyleTopbar() {
   };
 
   const showStyle = (e) => {
-    e.preventDefault();
-
+    // e.preventDefault();
+    setIsClickLook(false);
     setIsShowLook(true);
   };
 
@@ -362,6 +365,19 @@ export default function MyStyleTopbar() {
     } else {
       alert('취소합니다.');
     }
+  };
+
+  const showLook = (e) => {
+    // e.preventDefault();
+    console.log(e);
+    setIsClickLook(true);
+    setIsShowLook(false);
+    const data = {
+      styleId: Number(e.target.alt),
+      url: e.target.src,
+    };
+    console.log(data);
+    setStyleLook(data);
   };
 
   let showImg = (
@@ -426,7 +442,26 @@ export default function MyStyleTopbar() {
                 <NowImg />
               )
             ) : styleClothes.length > 0 ? (
-              <StyleImage styleClothes={styleClothes} />
+              <div className='row'>
+                {styleClothes.map((clothesData) => (
+                  <div className='col-4 mt-4' key={clothesData.styleId}>
+                    <div className='card h-100'>
+                      <div className='card-body'>
+                        <img
+                          className='MyClosetClothesItemImg'
+                          src={clothesData.url}
+                          alt={clothesData.styleId}
+                          style={{
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                          }}
+                          onClick={showLook}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
               <NowImg />
             )}
@@ -510,35 +545,10 @@ export default function MyStyleTopbar() {
         </Col>
         <Col sm={8}>
           {isShowLook && <StyleLook selectedClothes={selectedClothes} />}
+          {isClickLook && <ShowLookImg styleLook={styleLook} />}
         </Col>
       </Row>
     </Container>
-  );
-}
-
-function StyleImage({ styleClothes }) {
-  return (
-    <div className='container-fluid'>
-      <div className='row'>
-        {styleClothes.map((clothesData) => (
-          <div className='col-4 mt-3' key={clothesData.styleId}>
-            <div className='card h-100'>
-              <div className='card-body'>
-                <img
-                  className='MyClosetClothesItemImg'
-                  src={clothesData.url}
-                  alt={clothesData.styleId}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
 

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Avatar, Paper, Box } from '@mui/material';
 import './Friends.css';
 import FriendsListItem from '../../components/Friends/FriendsListItem';
-import pricing1 from "../../assets/pricing1.png";
-import pricing2 from "../../assets/pricing2.png";
+import pricing1 from '../../assets/pricing1.png';
+import pricing2 from '../../assets/pricing2.png';
 import Title from '../../components/Home/Title';
 import FriendsCreateButton from '../../components/Friends/FriendsCreateButton';
 import Notice from '../../components/Friends/Notice';
@@ -25,8 +25,9 @@ export default function FriendsList() {
     // },
   ]);
 
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
+  const token = localStorage.getItem('JWT');
+  // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjIiLCJpYXQiOjE2NDM4NTQ1MDIsImV4cCI6MTY0NjQ0NjUwMn0.s4B6viyO_tR8lZMUdxW62u82uT08ZltwgEBpuvTBZOQ';
+  const userEmail = localStorage.getItem('email');
   const getFriendsList = () => {
     axios
       .get('http://i6d104.p.ssafy.io:9999/api/friend/isaccept', {
@@ -34,7 +35,7 @@ export default function FriendsList() {
           'X-AUTH-TOKEN': `${token}`,
         },
         params: {
-          applicant: 'b@a.com', // 로그인한 사용자 email
+          applicant: `${userEmail}`, // 로그인한 사용자 email
         },
       })
       .then((response) => {
@@ -43,16 +44,16 @@ export default function FriendsList() {
       });
   };
 
-  // useEffect(() => {
-  //   getFriendsList();
-  // }, []);
+  useEffect(() => {
+    getFriendsList();
+  }, []);
 
   return (
     <div className='friend'>
-      <Title value="SHARE" />
-      <div className="background">
-        <img src={pricing1} alt="background" className="bg1" />
-        <img src={pricing2} alt="background" className="bg2" />
+      <Title value='SHARE' />
+      <div className='background'>
+        <img src={pricing1} alt='background' className='bg1' />
+        <img src={pricing2} alt='background' className='bg2' />
       </div>
       <div className='friend__content'>
         {friendsList.map((friend, id) => (

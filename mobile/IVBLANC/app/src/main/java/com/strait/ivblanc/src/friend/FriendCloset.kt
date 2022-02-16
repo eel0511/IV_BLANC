@@ -31,6 +31,7 @@ import com.strait.ivblanc.src.photoSelect.AlbumFragment
 import com.strait.ivblanc.src.photoSelect.CameraFragment
 import com.strait.ivblanc.src.photoSelect.PhotoSelectActivity
 import com.strait.ivblanc.ui.PhotoListFragment
+import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 
 class FriendCloset :
@@ -81,7 +82,7 @@ class FriendCloset :
         val viewPagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = viewPagerAdapter
         val tabLayout = binding.tabLayoutFriend
-        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.ivblanc_pink_complementary))
+        tabLayout.setSelectedTabIndicatorColor(resources.getColor(R.color.ivblanc_pink))
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             when (position) {
                 0 -> tab.text = "clothes"
@@ -95,8 +96,8 @@ class FriendCloset :
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
-                0 -> PhotoListFragment<Clothes>()
-                else -> PhotoListFragment<Style>()
+                0 -> PhotoListFragment()
+                else -> StylePhotoListFragment()
             }
         }
     }

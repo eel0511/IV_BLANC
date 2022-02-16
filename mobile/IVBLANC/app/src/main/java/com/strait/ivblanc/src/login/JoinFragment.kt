@@ -54,6 +54,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         binding.buttonJoinFJoin.setOnClickListener {
             if (checkInputForm() && isEmailChecked) {
                 join()
+
             } else if(!isEmailChecked) {
                 toast(resources.getText(R.string.emailNotCheckedErrorMessage) as String, Toast.LENGTH_LONG)
             }
@@ -121,6 +122,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
                 }
                 Status.SUCCESS -> {
                     binding.progressBarJoinFLoading.visibility = View.GONE
+                    loginActivity!!.setFragment(1)
                     it.data?.let {
                         toast(it.message!!, Toast.LENGTH_SHORT)
                     }
@@ -171,7 +173,7 @@ class JoinFragment : BaseFragment<FragmentJoinBinding>(FragmentJoinBinding::bind
         }
 
         loginViewModel.join(UserForJoin(email, password, passwordCheck, name, gender, age, phoneNumber))
-        loginActivity!!.setFragment(1)
+
 
     }
 

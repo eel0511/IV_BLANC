@@ -69,6 +69,7 @@ export default function SignInSide() {
   const [password, setPassword] = useState('');
   const [isRemember, setIsRemember] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['rememberEmail']);
+  const [token, setToken] = useState('');
 
   // 오류메시지 상태저장
   const [emailMessage, setEmailMessage] = useState('');
@@ -123,7 +124,7 @@ export default function SignInSide() {
     try {
       await axios
         .post(
-          'http://localhost:9999/api/sign/login',
+          'http://i6d104.p.ssafy.io:9999/api/sign/login',
           // i6d104.p.ssafy.io:9999
           {
             email: data.get('email'),
@@ -136,9 +137,11 @@ export default function SignInSide() {
           console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
-            const token = getCookie('JWT');
-            console.log(token);
+            setToken(getCookie('JWT'));
+            // console.log(token);
             localStorage.setItem('JWT', token);
+            localStorage.setItem('name', res.data.data.name);
+            localStorage.setItem('email', res.data.data.email);
             setAuthorizationToken(token);
             navigate('/');
           } else if (res.status === 200 && res.data.output === 0) {
@@ -157,11 +160,11 @@ export default function SignInSide() {
       <div className='MyCloset__Nav'>
         <Navbar />
       </div>
-      <Title value="SIGNIN" />
-    <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs'>
-        {/* <Grid container component='main' sx={{ height: '100vh' }}> */}
-        <CssBaseline />
+      <Title value='SIGNIN' />
+      <ThemeProvider theme={theme}>
+        <Container component='main' maxWidth='xs'>
+          {/* <Grid container component='main' sx={{ height: '100vh' }}> */}
+          <CssBaseline />
           <Box
             component={Paper}
             sx={{
@@ -172,7 +175,7 @@ export default function SignInSide() {
             }}
           >
             <Box
-              sx={{ 
+              sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -193,109 +196,107 @@ export default function SignInSide() {
                 sx={{ mt: 1 }}
               >
                 <Grid container spacing={2}>
-                <Grid item xs={1}></Grid>
-                <Grid item xs={10}>
-                <TextField
-                  required
-                  fullWidth
-                  id='email'
-                  label='Email Address'
-                  name='email'
-                  autoComplete='email'
-                  type='email'
-                  value={email}
-                  onChange={onChangeEmail}
-                />
-                {email.length > 0 && (
-                  <span className={`message ${isEmail ? 'success' : 'error'}`}>
-                    {emailMessage}
-                  </span>
-                )}
-                </Grid>
-                <Grid item xs={1}></Grid>
-
-                <Grid item xs={1}></Grid>
-                <Grid item xs={10}>
-                <TextField
-                  margin='normal'
-                  required
-                  fullWidth
-                  name='password'
-                  label='Password'
-                  type='password'
-                  id='password'
-                  autoComplete='current-password'
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                />
-                </Grid>
-                <Grid item xs={1}></Grid>
-
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value='remember'
-                      color='primary'
-                      onChange={(e) => setIsRemember(e.target.checked)}
-                      checked={isRemember}
+                  <Grid item xs={1}></Grid>
+                  <Grid item xs={10}>
+                    <TextField
+                      required
+                      fullWidth
+                      id='email'
+                      label='Email Address'
+                      name='email'
+                      autoComplete='email'
+                      type='email'
+                      value={email}
+                      onChange={onChangeEmail}
                     />
-                  }
-                  label='아이디 저장'
-                />
-                
-                </Grid>
-                <Grid item xs={2}></Grid>
-                
-                <Grid item xs={0.1}></Grid>
-                <Grid item xs={10}>
-                <AuthSocial />
-                </Grid>
-
-
-                
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  sx={{ mt: 3, mb: 3 , mx: 2, my: 2}}
-                >
-                  로그인
-                </Button>
-                </Grid>
-                <Grid item xs={2}></Grid>
-
-                <Grid container spacing={1}>
-                  <Grid item xs={4}>
-                    <Link href='/findemail' variant='body2'>
-                      아이디 찾기
-                    </Link>
+                    {email.length > 0 && (
+                      <span
+                        className={`message ${isEmail ? 'success' : 'error'}`}
+                      >
+                        {emailMessage}
+                      </span>
+                    )}
                   </Grid>
-                  <Grid item xs={4}>
-                    <Link href='/findpassword' variant='body2'>
-                      비밀번호 찾기
-                    </Link>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Link href='/signup' variant='body2'>
-                      {'회원가입'}
-                    </Link>
-                  </Grid>
-                </Grid>
+                  <Grid item xs={1}></Grid>
 
-                <Grid item xs={12}>
-                <Copyright sx={{ mt: 2 }} />
-                </Grid>
+                  <Grid item xs={1}></Grid>
+                  <Grid item xs={10}>
+                    <TextField
+                      margin='normal'
+                      required
+                      fullWidth
+                      name='password'
+                      label='Password'
+                      type='password'
+                      id='password'
+                      autoComplete='current-password'
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={1}></Grid>
 
+                  <Grid item xs={2}></Grid>
+                  <Grid item xs={8}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          value='remember'
+                          color='primary'
+                          onChange={(e) => setIsRemember(e.target.checked)}
+                          checked={isRemember}
+                        />
+                      }
+                      label='아이디 저장'
+                    />
+                  </Grid>
+                  <Grid item xs={2}></Grid>
+
+                  <Grid item xs={0.1}></Grid>
+                  <Grid item xs={10}>
+                    <AuthSocial />
+                  </Grid>
+
+                  <Grid item xs={2}></Grid>
+                  <Grid item xs={8}>
+                    <Button
+                      type='submit'
+                      variant='contained'
+                      sx={{ mt: 3, mb: 3, mx: 2, my: 2 }}
+                    >
+                      로그인
+                    </Button>
+                  </Grid>
+                  <Grid item xs={2}></Grid>
+
+                  <Grid container spacing={1}>
+                    <Grid item xs={4}>
+                      <Link href='/findemail' variant='body2'>
+                        아이디 찾기
+                      </Link>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Link href='/findpassword' variant='body2'>
+                        비밀번호 찾기
+                      </Link>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Link href='/signup' variant='body2'>
+                        {'회원가입'}
+                      </Link>
+                    </Grid>
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Copyright sx={{ mt: 2 }} />
+                  </Grid>
                 </Grid>
               </Box>
             </Box>
           </Box>
-      </Container>
-    </ThemeProvider>
+        </Container>
+      </ThemeProvider>
     </Section>
   );
 }

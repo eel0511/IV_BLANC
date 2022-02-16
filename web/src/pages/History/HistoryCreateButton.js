@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import HistoryCreateModalBody from './HistoryCreateModalBody';
 
-export default function HistoryCreateButton() {
+export default function HistoryCreateButton({ getmyHistoriesData }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -24,24 +24,26 @@ export default function HistoryCreateButton() {
       </button>
 
       <Modal
-        size="xl"
+        size='xl'
         show={show}
         onHide={handleClose}
         aria-labelledby='contained-modal-title-vcenter'
         centered
       >
-        <Modal.Header 
+        <Modal.Header
           closeButton
-          style={{ backgroundColor: '#ed6991' , color: 'white'}}
-          >
-          <Modal.Title
-            style={{ marginLeft: "42%", fontSize: '2.1rem' }}
-          >추억 하기</Modal.Title>
+          style={{ backgroundColor: '#ed6991', color: 'white' }}
+        >
+          <Modal.Title style={{ marginLeft: '42%', fontSize: '2.1rem' }}>
+            추억 하기
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <HistoryCreateModalBody />
+          <HistoryCreateModalBody
+            getmyHistoriesData={getmyHistoriesData}
+            handleClose={handleClose}
+          />
         </Modal.Body>
-        
       </Modal>
     </>
   );
