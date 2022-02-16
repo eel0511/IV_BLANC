@@ -220,7 +220,7 @@ class ClothesViewModel: ViewModel() {
     private fun getCreatedRecentlyClothesList(list: MutableList<Clothes>): MutableList<Clothes> {
         val today = System.currentTimeMillis()
         val oneWeekMillis = 1000 * 7 * 24 * 60 * 60
-        return list.filter { clothes -> dateStringToMillis(clothes.createDate) > (today - oneWeekMillis)}.toMutableList()
+        return list.filter { clothes -> dateStringToMillis(clothes.createDate) > (today - oneWeekMillis)}.toMutableList().apply { reverse() }
     }
 
     // string to millis
