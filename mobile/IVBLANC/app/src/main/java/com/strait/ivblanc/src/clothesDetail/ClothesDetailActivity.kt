@@ -17,10 +17,7 @@ import com.strait.ivblanc.data.model.response.ClothesSimpleResponse
 import com.strait.ivblanc.data.model.viewmodel.ClothesViewModel
 import com.strait.ivblanc.data.model.viewmodel.MainViewModel
 import com.strait.ivblanc.databinding.ActivityClothesDetailBinding
-import com.strait.ivblanc.util.CategoryCode
-import com.strait.ivblanc.util.MaterialCode
-import com.strait.ivblanc.util.Resource
-import com.strait.ivblanc.util.Status
+import com.strait.ivblanc.util.*
 
 class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(ActivityClothesDetailBinding::inflate) {
     lateinit var clothes: Clothes
@@ -132,6 +129,7 @@ class ClothesDetailActivity : BaseActivity<ActivityClothesDetailBinding>(Activit
                         clothesViewModel.deleteFavorite(clothes.clothesId)
                     }
                 }
+                setResult(StatusCode.OK)
                 clothesViewModel.getAllClothesWithCategory(CategoryCode.TOTAL)
             }
         }
