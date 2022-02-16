@@ -24,9 +24,9 @@ function MyStyleAIModalBody() {
     formData.append('photo', selectedImg);
 
     // 임시 데이터
-    const data =
-      'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
-    setAIurl(data);
+    // const data =
+    //   'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
+    // setAIurl(data);
 
     const token = localStorage.getItem('JWT');
     // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
@@ -37,8 +37,8 @@ function MyStyleAIModalBody() {
         },
       })
       .then((response) => {
-        console.log(response);
-        setAIurl(response.data);
+        console.log(response.data.data);
+        setAIurl(response.data.data);
       })
       .catch((err) => {
         console.log('실패');
@@ -82,7 +82,7 @@ function MyStyleAIModalBody() {
         {AIurl && (
           <img
             alt='AI 스타일링 적용'
-            src={AIurl}
+            src={`${AIurl}`}
             style={{ marginTop: '30px' }}
           />
         )}
