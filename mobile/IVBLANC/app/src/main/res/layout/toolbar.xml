@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:elevation="2dp"
-    android:paddingEnd="@dimen/defaultPadding">
+    android:layout_height="match_parent"
+    android:background="@drawable/home3">
 
-
-        <ImageView
-            android:id="@+id/imageView_toolbar_leadingIcon"
-            android:layout_width="@dimen/smallIconSize"
-            android:layout_height="@dimen/smallIconSize"
-            tools:background="@drawable/ic_close" />
-
-        <TextView
-            android:id="@+id/textView_toolbar"
-            style="@style/Text.Title"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            tools:text="히스토리" />
-
-        <ImageView
-            android:id="@+id/imageView_toolbar_trailingIcon"
-            android:layout_width="@dimen/smallIconSize"
-            android:layout_height="@dimen/smallIconSize"
-            android:layout_gravity="end"
-            tools:background="@drawable/ic_close" />
-
-        <com.nex3z.notificationbadge.NotificationBadge
-            android:id="@+id/badge"
-            nbMaxTextLength="2"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_gravity="end"
-            android:visibility="gone" />
+            android:elevation="2dp"
+            android:paddingEnd="@dimen/defaultPadding">
 
 
-</androidx.appcompat.widget.Toolbar>
+                <ImageView
+                    android:id="@+id/imageView_toolbar_leadingIcon"
+                    android:layout_width="@dimen/smallIconSize"
+                    android:layout_height="@dimen/smallIconSize"
+                    android:backgroundTint="@color/white"
+                    tools:background="@drawable/ic_close" />
+
+                <TextView
+                    android:id="@+id/textView_toolbar"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    tools:text="히스토리" />
+
+                <ImageView
+                    android:id="@+id/imageView_toolbar_trailingIcon"
+                    android:layout_width="@dimen/smallIconSize"
+                    android:layout_height="@dimen/smallIconSize"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@color/ivblanc_yellow"
+                    tools:background="@drawable/ic_close"
+                    tools:layout_editor_absoluteX="371dp"
+                    tools:layout_editor_absoluteY="16dp" />
+
+                <com.nex3z.notificationbadge.NotificationBadge
+                    android:id="@+id/badge"
+                    nbMaxTextLength="2"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="end"
+                    android:visibility="gone" />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
