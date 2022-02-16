@@ -115,7 +115,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
 
     private fun setHistoryInfo() {
         if(history.styleUrl != null) {
-            Glide.with(this).load(history.styleUrl).into(binding.imageViewHistoryDetailStyle)
+            Glide.with(this).load(history.styleUrl).override(1350, 1350).into(binding.imageViewHistoryDetailStyle)
         }
 
         if(history.subject == ""){

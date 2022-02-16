@@ -94,7 +94,7 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
 
         for(history in historyList){
             val date = Integer.parseInt(history.date.split("-")[2])
-            result[date+1].history = history
+            result[firstDate.dayOfWeek + date - 1].history = history
         }
 
         return result
