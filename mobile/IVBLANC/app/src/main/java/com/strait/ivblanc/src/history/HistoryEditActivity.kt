@@ -265,7 +265,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
         val searchBtn : Button = locationDialog.findViewById(R.id.button_location_search)
         searchBtn.setOnClickListener {
             var list: List<Address?>? = null
-            val geocoder = Geocoder(this)
+            val geocoder = Geocoder(this, Locale.KOREA)
 
             val str : String = locationDialog.findViewById<EditText>(R.id.editText_location).text.toString()
             Log.d("EDIT_HISTORY", "str = $str")
@@ -407,7 +407,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
     private fun getCurrentAddress(latitude: Double, longitude: Double): String {
 
-        val geocoder = Geocoder(this, Locale.getDefault())
+        val geocoder = Geocoder(this, Locale.KOREA)
         val addresses: List<Address>? = try {
             geocoder.getFromLocation(
                 latitude,

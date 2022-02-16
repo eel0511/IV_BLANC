@@ -28,6 +28,7 @@ import com.strait.ivblanc.util.CaptureUtil
 import com.strait.ivblanc.util.Status
 
 import java.io.IOException
+import java.util.*
 
 private const val TAG = "HistoryDetailActivity_debuk"
 class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
@@ -145,7 +146,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
 
     private fun getLocation() : String {
 
-        val geocoder = Geocoder(this)
+        val geocoder = Geocoder(this, Locale.KOREA)
 
         var list: List<Address>? = null
         try {
