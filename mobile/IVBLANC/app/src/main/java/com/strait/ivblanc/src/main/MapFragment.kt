@@ -30,22 +30,24 @@ import com.strait.ivblanc.data.model.dto.History
 
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.src.history.HistoryDetailActivity
+import com.strait.ivblanc.util.GpsTracker
 
 
 class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map), OnMapReadyCallback {
-    private var isInit = false
     private var mapView: MapView? = null
     private var naverMap: NaverMap? = null
     private var resourceID = R.drawable.ic_baseline_place_24
     val historyViewModel: HistoryViewModel by viewModels()
+    private var gpsTracker: GpsTracker? = null
 
     //마커 변수 선언 및 초기화
-    private val marker1: Marker = Marker()
     private var marker = emptyArray<Marker>()
     private lateinit var historyList: List<History>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        gpsTracker = GpsTracker(requireActivity())
 
         historyViewModel.getAllHistory()
         historyViewModel.historyListLiveData.observe(requireActivity()){
@@ -61,7 +63,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R
                     marker[i].onClickListener = Overlay.OnClickListener {
                         val intent = Intent(requireActivity(),HistoryDetailActivity::class.java).putExtra("history", historyList[i])
                         startActivity(intent)
-                        Toast.makeText(requireActivity(), "마커$i 클릭", Toast.LENGTH_SHORT).show()
                         false
                     }
                 }
@@ -105,7 +106,7 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R
 
         //위치 및 각도 조정
         val cameraPosition = CameraPosition(
-            LatLng(33.38, 126.55),  // 위치 지정
+            LatLng(gpsTracker!!.getLatitude(), gpsTracker!!.getLongitude()),  // 위치 지정
             9.0,  // 줌 레벨
             0.0,  // 기울임 각도
             0.0 // 방향
