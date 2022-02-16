@@ -131,6 +131,11 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             it.forEach {
                 requestlist.add(it)
             }
+            if(requestlist.size==0){
+                binding.noRequest.visibility=View.VISIBLE
+            }else{
+                binding.noRequest.visibility=View.GONE
+            }
             myrequestRecyclerViewAdapter.myrequestList = requestlist
             myrequestRecyclerViewAdapter.notifyDataSetChanged()
         }
@@ -150,6 +155,11 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
             it.forEach {
                 waitlist.add(it)
             }
+            if(waitlist.size==0){
+                binding.noRequest2.visibility=View.VISIBLE
+            }else{
+                binding.noRequest2.visibility=View.GONE
+            }
             waitRecyclerViewAdapter.mywaitList = waitlist
             waitRecyclerViewAdapter.notifyDataSetChanged()
         }
@@ -166,6 +176,11 @@ class FriendNoti : BaseActivity<ActivityFriendNotiBinding>(ActivityFriendNotiBin
 
         }
         notiRecyclerViewAdapter.notilist = readSharedPreference("fcm")
+        if(readSharedPreference("fcm").size==0){
+            binding.noRequest3.visibility=View.VISIBLE
+        }else{
+            binding.noRequest3.visibility=View.GONE
+        }
         notiRecyclerViewAdapter.notifyDataSetChanged()
     }
 
