@@ -36,6 +36,6 @@ interface ClothesApi {
     suspend fun deletefavorite(@Query("clothesId")clothesId: Int):Response<ClothesFavoriteResponse>
 
     @POST("/api/clothes/betaurl")
-    suspend fun betaUrl(@Body url: String): Response<ClothesSimpleResponse>
+    suspend fun betaUrl(@Query("url") url: String): Response<ClothesSimpleResponse>
 
 }

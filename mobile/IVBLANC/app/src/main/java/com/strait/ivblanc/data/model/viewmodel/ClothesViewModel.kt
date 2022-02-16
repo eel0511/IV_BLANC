@@ -28,6 +28,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val TAG = "ClothesViewModel_debuk"
 class ClothesViewModel: ViewModel() {
 
     // 옷관련 필드
