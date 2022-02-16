@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function FriendStyleCreateModalBody({ saveClothesId }) {
+function FriendStyleCreateModalBody({ saveClothesId, handleClose }) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
     console.log(e.target.files);
@@ -34,6 +34,7 @@ function FriendStyleCreateModalBody({ saveClothesId }) {
         console.log(response);
         if (response.status === 200) {
           alert('추천되었습니다.');
+          handleClose();
         }
       })
       .catch((err) => {

@@ -451,6 +451,7 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
                     <Modal.Body>
                       <FriendStyleCreateModalBody
                         saveClothesId={saveClothesId}
+                        handleClose={handleClose}
                       />
                     </Modal.Body>
                   </Modal>
