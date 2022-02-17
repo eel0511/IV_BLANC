@@ -13,6 +13,17 @@ mysql(flask연결은 pymysql)
 
 
 ---
+### Web
+
+---
+
+node.js 16.13.1
+
+- 크롬의 경우 https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=ko  CORS 확장 프로그램 설치 필수
+
+
+---
+
 ## 2. 빌드 시 사용되는 환경 변수 등의 주요 내용 상세 기재
 
 ### spring boot
@@ -81,6 +92,31 @@ test 파이프 라인 실행시 빌드되고 jar파일이 나옵니다
 
 실행은
 i6d104.p.ssafy.io AWS 에서 sudo su후 있는 start.sh web.sh 실행으로 할 수 있습니다
+
+
+
+## Web
+
+로컬에서 실행할 경우
+
+```
+cd web
+npm i
+npm start
+```
+
+로컬에서 실행하는 경우 로컬호스트 주소가 서버 도메인과 달라 **JWT 토큰이 받아지지 않습니다.**
+
+회원가입/로그인은 되나 옷 등록 등 파일 업로드 및 받아오기가 **<u>서버와 연동되지 않습니다.</u>**
+
+젠킨스에서 test 파이프라인 실행 시 빌드가 됩니다.
+
+실행은
+i6d104.p.ssafy.io AWS 에서 sudo su -> cd -> bash web.sh를 통해 실행할 수 있습니다.
+
+http://i6d104.p.ssafy.io/ 해당 주소로 들어가서 웹을 실행할 수 있습니다.
+
+
 
 ## 3. 배포 시 특이사항
 
