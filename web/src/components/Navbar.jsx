@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import logo2 from '../assets/logo2.png';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
+import { TiVendorAndroid } from 'react-icons/ti';
 import { motion } from 'framer-motion';
 import { navAnimation } from '../animations';
 import { useScroll } from './useScroll';
@@ -144,6 +145,22 @@ export default function Navbar() {
               </li> */}
             </>
           )}
+          <li>
+            <a href='https://storage.googleapis.com/iv-blanc.appspot.com/app-debug.apk'>
+              <TiVendorAndroid
+                className='Android__icon'
+                id='basic-button'
+                aria-haspopup='true'
+                style={{
+                  width: '45px',
+                  height: '45px',
+                  position: 'relative',
+                  top: '-5px',
+                  cursor: 'pointer',
+                }}
+              />
+            </a>
+          </li>
         </ul>
       </div>
     </Nav>
