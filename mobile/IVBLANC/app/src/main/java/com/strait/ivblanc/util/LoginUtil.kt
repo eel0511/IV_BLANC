@@ -1,7 +1,9 @@
 package com.strait.ivblanc.util
 
+import android.content.Intent
 import com.strait.ivblanc.config.ApplicationClass
 import com.strait.ivblanc.data.model.dto.UserInfo
+import com.strait.ivblanc.src.login.LoginActivity
 
 object LoginUtil {
     val USER_NAME = "userName"
@@ -16,6 +18,7 @@ object LoginUtil {
 
     fun signOut() {
         preferences.deleteString(ApplicationClass.JWT)
+        deleteUserInfo()
     }
 
     fun setAutoLogin(flag: Boolean) {
