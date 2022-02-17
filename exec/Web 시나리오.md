@@ -9,9 +9,12 @@
 > 
 
 - 옷 등록
-  - ![img](\image\9zqjZQFpqYrOLfTbRLHsr2vUGWFhno8q3-Dpf6NxURMKWd6sD_Iq03_urNo5HtDHDJ7LvOUMwOvuM6U3FmT5oNehTYaehtjzRavpsecfW9yJz5OZtDlNf8TkPJS4v971CEPhZJ9vxiMb.png)
+  - ![image-20220218015612276](C:\Users\multicampus\Documents\GitHub\S06P12D104\exec\image\image-20220218015612276.png)
+  - ![image-20220218015530061](image/image-20220218015530061.png)
+  - ![img](.\image\9zqjZQFpqYrOLfTbRLHsr2vUGWFhno8q3-Dpf6NxURMKWd6sD_Iq03_urNo5HtDHDJ7LvOUMwOvuM6U3FmT5oNehTYaehtjzRavpsecfW9yJz5OZtDlNf8TkPJS4v971CEPhZJ9vxiMb.png)
   - 등록하기 버튼을 통해 옷을 등록합니다.
   - 색상, 사이즈, 계절, 카테고리, 소재를 선택하여 옷의 상세정보를 등록합니다.
+
 
 
 - 옷 상세정보
