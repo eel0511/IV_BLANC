@@ -149,6 +149,14 @@ class HistoryViewModel: ViewModel() {
         }
     }
 
+    fun deleteHistory(historyId: Int) = viewModelScope.launch {
+        setLoading()
+        withContext(Dispatchers.IO){
+            val result = historyRepository.deleteHistory(historyId)
+            _historyResponseStatus.postValue(result)
+        }
+    }
+
     fun addHistoryPhotos(historyId: Int, absolutePathList: List<String>) = viewModelScope.launch {
         setLoading()
         withContext(Dispatchers.IO) {
