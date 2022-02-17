@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './MyStyleImg.css';
+import Spinner from '../Spinner';
 
 function MyStyleAIModalBody() {
   const [selectedImg, setSelectedImg] = useState();
   const [previewImg, setPreviewImg] = useState();
   const [AIurl, setAIurl] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const imgHandleChange = (e) => {
     console.log(e.target.files);
@@ -28,6 +30,7 @@ function MyStyleAIModalBody() {
     //   'https://storage.googleapis.com/iv-blanc.appspot.com/results/su/08909_logo.png';
     // setAIurl(data);
 
+    setLoading(true);
     const token = localStorage.getItem('JWT');
     // 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJQayI6IjEiLCJpYXQiOjE2NDM4Nzg4OTMsImV4cCI6MTY0NjQ3MDg5M30.Q2T5EQ38F53h1x037StKPwE-DBeqU0hBEAPY3D9w6WY';
     axios
@@ -38,10 +41,12 @@ function MyStyleAIModalBody() {
       })
       .then((response) => {
         console.log(response.data.data);
+        setLoading(false);
         setAIurl(response.data.data);
       })
       .catch((err) => {
         console.log('실패');
+        setLoading(false);
       });
   };
 
@@ -77,14 +82,19 @@ function MyStyleAIModalBody() {
           AI 스타일링 확인
         </button>
       </div>
-
       <div>
-        {AIurl && (
-          <img
-            alt='AI 스타일링 적용'
-            src={`${AIurl}`}
-            style={{ marginTop: '30px' }}
-          />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div>
+            {AIurl && (
+              <img
+                alt='AI 스타일링 적용'
+                src={`${AIurl}`}
+                style={{ marginTop: '30px' }}
+              />
+            )}
+          </div>
         )}
       </div>
     </div>
