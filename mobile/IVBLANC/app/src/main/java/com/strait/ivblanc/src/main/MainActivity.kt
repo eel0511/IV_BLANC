@@ -1,5 +1,6 @@
 package com.strait.ivblanc.src.main
 
+import android.Manifest
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -41,6 +42,7 @@ import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.ui.StylePhotoListFragment
 import com.strait.ivblanc.util.CategoryCode
 import com.strait.ivblanc.util.LoginUtil
+import com.strait.ivblanc.util.PermissionUtil
 import com.strait.ivblanc.util.StatusCode
 
 
@@ -51,6 +53,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     val clothesViewModel: ClothesViewModel by viewModels()
     val styleViewModel: StyleViewModel by viewModels()
     lateinit var dialog: Dialog
+    lateinit var permissionUtil: PermissionUtil
+
     private val preContractStartActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -93,10 +97,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 binding.toolbarMain.badge.visibility = View.GONE
             }
         }
+
+        permissionUtil = PermissionUtil(this)
+        permissionUtil.permissionListener = object : PermissionUtil.PermissionListener {
+            override fun run() {
+                init()
+            }
+        }
+
         init()
     }
 
+    override fun onStart() {
+        super.onStart()
+        checkPermissions()
+    }
+
     private fun init() {
+
         setToolbar()
         // 첫 화면 세팅
         setFragment(PhotoListFragment(), "clothes")
@@ -283,6 +301,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun checkPermissions() {
+        if(!permissionUtil.checkPermissions(listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION))) {
+            permissionUtil.requestPermissions()
+        } else {
+            init()
         }
     }
 
