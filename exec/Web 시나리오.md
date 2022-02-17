@@ -6,7 +6,7 @@
 >
 > 웹에서는 파일 업로드를 통해 옷 사진을 등록합니다.
 >
-> 
+> ![image-20220218020421591](image/image-20220218020421591.png)
 
 - 옷 등록
   - <img src='\image\9zqjZQFpqYrOLfTbRLHsr2vUGWFhno8q3-Dpf6NxURMKWd6sD_Iq03_urNo5HtDHDJ7LvOUMwOvuM6U3FmT5oNehTYaehtjzRavpsecfW9yJz5OZtDlNf8TkPJS4v971CEPhZJ9vxiMb.png'>
