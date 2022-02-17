@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './MyStyleImg.css';
+import Spinner from '../Spinner';
 
 function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
   const [selectedImg, setSelectedImg] = useState();
   const [previewImg, setPreviewImg] = useState();
+  const [loading, setLoading] = useState(false);
 
   const imgHandleChange = (e) => {
     console.log(e.target.files);
@@ -26,6 +28,8 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
     console.log(saveClothesId);
     console.log(clothesList);
 
+    setLoading(true);
+
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/style/add', formData, {
         headers: {
@@ -37,39 +41,55 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
         console.log(response);
         if (response.status === 200 && response.data.output === 1) {
           alert('등록되었습니다.');
-          getStyleLook();
           handleClose();
+          setLoading(false);
+
+          getStyleLook();
         } else if (response.status === 200 && response.data.output === 0) {
           alert(response.data.data);
+          setLoading(false);
         } else {
           alert(response.data.data);
+          setLoading(false);
         }
       })
       .catch((err) => {
         console.log('실패');
+        setLoading(false);
       });
   };
 
   return (
-    <div>
-      <div>
-        <h2>스타일 등록</h2>
-      </div>
-      {selectedImg && (
-        <img alt='스타일 룩' src={previewImg} style={{ margin: 'auto' }} />
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <div>
+            <h2>스타일 등록</h2>
+          </div>
+          {selectedImg && (
+            <img alt='스타일 룩' src={previewImg} style={{ margin: 'auto' }} />
+          )}
+
+          <input
+            type='file'
+            id='inputImg'
+            accept='image/*'
+            onChange={imgHandleChange}
+          ></input>
+          <div className='Look' style={{ marginTop: '30px', float: 'right' }}>
+            <button
+              type='button'
+              className='btn btn-danger'
+              onClick={createStyle}
+            >
+              등록
+            </button>
+          </div>
+        </div>
       )}
-      <input
-        type='file'
-        id='inputImg'
-        accept='image/*'
-        onChange={imgHandleChange}
-      ></input>
-      <div className='Look' style={{ marginTop: '30px', float: 'right' }}>
-        <button type='button' className='btn btn-danger' onClick={createStyle}>
-          등록
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
