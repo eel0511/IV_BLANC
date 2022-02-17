@@ -15,6 +15,7 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
     var data: List<DateWithHistory> = emptyList()
     lateinit var binding: ListHistoryCalendarItemBinding
     lateinit var itemClickListener: ItemClickListener
+    lateinit var itemLongClickListener: ItemLongClickListener
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(item: DateWithHistory) {
@@ -33,6 +34,11 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
                     itemView.setOnClickListener {
                         itemClickListener.onClick(adapterPosition)
                     }
+
+                    itemView.setOnLongClickListener {
+                        itemLongClickListener.onClick(adapterPosition)
+                        true
+                    }
                 }
             }
         }
@@ -50,6 +56,10 @@ class CalendarAdapter: RecyclerView.Adapter<CalendarAdapter.ViewHolder>() {
     override fun getItemCount(): Int = data.size
 
     interface ItemClickListener {
+        fun onClick(position: Int)
+    }
+
+    interface ItemLongClickListener {
         fun onClick(position: Int)
     }
 }

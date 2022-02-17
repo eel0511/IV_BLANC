@@ -12,6 +12,7 @@ import com.strait.ivblanc.adapter.CalendarAdapter
 import com.strait.ivblanc.config.BaseFragment
 import com.strait.ivblanc.data.model.dto.DateWithHistory
 import com.strait.ivblanc.data.model.dto.History
+import com.strait.ivblanc.data.model.dto.HistoryPhoto
 import com.strait.ivblanc.data.model.viewmodel.HistoryViewModel
 import com.strait.ivblanc.databinding.FragmentCalendarMonthBinding
 import com.strait.ivblanc.src.history.HistoryDetailActivity
@@ -69,6 +70,24 @@ class CalendarMonthFragment(val date: DateTime) : BaseFragment<FragmentCalendarM
                 }
             }
         }
+
+        calendarAdapter.itemLongClickListener = object : CalendarAdapter.ItemLongClickListener {
+            override fun onClick(position: Int) {
+                val item = calendarAdapter.data[position].history
+                if(item != null) {
+                    showDeleteDialog(item)
+                }
+            }
+        }
+    }
+
+    private fun showDeleteDialog(history: History) {
+        DeleteDialog(requireActivity())
+            .setContent("히스토리를 삭제하시겠습니까?")
+            .setPositiveButtonText("삭제")
+            .setOnPositiveClickListener {
+                historyViewModel.deleteHistory(history.historyId)
+            }.build().show()
     }
 
     private fun setFirstDate() {
