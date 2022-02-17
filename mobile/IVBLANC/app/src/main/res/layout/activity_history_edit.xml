@@ -18,7 +18,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/defaultMargin"
             android:orientation="horizontal"
-            android:weightSum="6">
+            android:weightSum="9">
 
             <ImageView
                 android:id="@+id/imageView_historyEdit_close"
@@ -36,7 +36,7 @@
                 android:id="@+id/textView_historyEdit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="6"
                 android:text="History Edit"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="4dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="저장"
                 android:textAlignment="center"
                 android:textColor="@color/white"
