@@ -31,6 +31,7 @@ import androidx.core.app.ActivityCompat
 
 import android.content.pm.PackageManager
 import android.location.Address
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.widget.EditText
@@ -50,6 +51,10 @@ import com.strait.ivblanc.ui.PhotoListFragment
 import com.strait.ivblanc.util.WeatherUtil
 import java.net.MalformedURLException
 import java.text.SimpleDateFormat
+import android.os.Looper
+
+
+
 
 private const val TAG = "HistoryEdit"
 class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
@@ -326,23 +331,45 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
 
         val findLocalBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu1)
         findLocalBtn.setOnClickListener {
+
             Thread {
-                var str = weatherUtil.lookUpWeather(gpsTracker!!.getLatitude().toInt().toString(), gpsTracker!!.getLongitude().toInt().toString(), today).split("/")
-                Log.d("HISTORYEDIT", "latitude = ${gpsTracker!!.getLatitude()}, longitude = ${gpsTracker!!.getLongitude()}" )
-                etTempLow.setText(str[0])
-                etTempHigh.setText(str[1])
+                val response = weatherUtil.lookUpWeather(gpsTracker!!.getLatitude().toInt().toString(), gpsTracker!!.getLongitude().toInt().toString(), today)
+                if(response == "Error") {
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed(Runnable {
+                        Toast.makeText(this, "현재 위치로 기온 검색에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                    }, 0)
+                } else {
+                    var str = response.split("/")
+                    Log.d("HISTORYEDIT", "latitude = ${gpsTracker!!.getLatitude()}, longitude = ${gpsTracker!!.getLongitude()}" )
+                    etTempLow.setText(str[0])
+                    etTempHigh.setText(str[1])
+                }
             }.start()
+
         }
 
         val findSettingBtn: TextView = temperatureDialog.findViewById(R.id.textView_temp_menu2)
         findSettingBtn.setOnClickListener {
-            if(history.location == null || history.field == null){
+            if(history.location == 0.0 || history.field == 0.0){
                 Toast.makeText(this, "위치 정보를 먼저 설정해주세요", Toast.LENGTH_SHORT).show()
             } else {
                 Thread {
-                    var str = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), today).split("/")
-                    etTempLow.setText(str[0])
-                    etTempHigh.setText(str[1])
+                    val response = weatherUtil.lookUpWeather(history.location.toInt().toString(), history.field.toInt().toString(), today)
+                    if(response == "Error") {
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.postDelayed(Runnable {
+                            Toast.makeText(this, "설정된 위치로 기온 검색에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                        }, 0)
+                    } else {
+                        var str = response.split("/")
+                        Log.d(
+                            "HISTORYEDIT",
+                            "latitude = ${gpsTracker!!.getLatitude()}, longitude = ${gpsTracker!!.getLongitude()}"
+                        )
+                        etTempLow.setText(str[0])
+                        etTempHigh.setText(str[1])
+                    }
                 }.start()
             }
         }
