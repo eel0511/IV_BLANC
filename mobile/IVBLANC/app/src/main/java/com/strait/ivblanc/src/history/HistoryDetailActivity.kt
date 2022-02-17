@@ -58,6 +58,7 @@ class HistoryDetailActivity : BaseActivity<ActivityHistoryDetailBinding>(
                 .putExtra("history", history)
                 .putExtra("location", getLocation())
             startActivity(intent)
+            finish()
         }
         binding.imageViewHistoryDetailAddPhoto.setOnClickListener {
             showGalleryDialog()

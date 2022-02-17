@@ -106,6 +106,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
     private fun setClickListeners() {
         binding.imageViewHistoryEditClose.setOnClickListener {
             // TODO: 정말 나갈건지 다이얼로그 띄워서 물어보기
+            startActivity(
+                Intent(this, HistoryDetailActivity::class.java).putExtra("history", history)
+            )
             finish()
         }
         binding.textViewHistoryEditSave.setOnClickListener {
@@ -123,6 +126,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
                 historyViewModel.updateHistory(history.historyId, history.location, history.field, history.date, history.weather,
                     history.temperature_low, history.temperature_high, history.text, history.subject, history.styleUrl)
                 Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show()
+                startActivity(
+                    Intent(this, HistoryDetailActivity::class.java).putExtra("history", history)
+                )
                 finish()
             } else {
                 if(history.date == "날짜 선택 > ") {
@@ -133,6 +139,9 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
                     historyViewModel.addHistory(history.location, history.field, history.date, history.weather,
                         history.temperature_low, history.temperature_high, history.text, history.subject, styleId, emptyList() )
                     Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(this, HistoryDetailActivity::class.java).putExtra("history", history)
+                    )
                     finish()
                 }
             }
@@ -189,6 +198,7 @@ class HistoryEditActivity : BaseActivity<ActivityHistoryEditBinding>(
             binding.textViewHistoryEditSelectDate.text = history.date
             binding.textViewHistoryEditSelectLocation.text = location
             binding.textViewHistoryEditTemperature.text = history.temperature_high.toString() + "°C/" + history.temperature_low.toString() + "°C"
+            binding.textViewHistoryEditSelectWeather.text = history.weather
         }
 
         binding.editTextHistoryEditSubject.setText(history.subject)
