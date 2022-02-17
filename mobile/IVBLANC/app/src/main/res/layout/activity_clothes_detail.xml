@@ -131,7 +131,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/defaultPadding"
         android:layout_marginEnd="@dimen/defaultPadding"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:visibility="invisible">
 
         <ImageView
             android:layout_width="24dp"
