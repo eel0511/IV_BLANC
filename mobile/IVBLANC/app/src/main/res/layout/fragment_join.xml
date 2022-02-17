@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home2"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".src.login.JoinFragment">
 
@@ -30,6 +31,7 @@
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/app_font"
             android:text="@string/join"
+            android:textColor="@color/white"
             android:textFontWeight="600"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
@@ -84,7 +86,7 @@
                     android:layout_gravity="top"
                     android:layout_marginStart="16dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/black"
+                    android:backgroundTint="@color/ivblanc_newpink"
                     android:insetBottom="0dp"
                     android:text="@string/checkDuplication"
                     android:textColor="@color/white"
@@ -180,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/gender"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
 
                 <RadioGroup
@@ -194,14 +197,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:text="@string/male" />
+                        android:text="@string/male"
+                        android:textColor="@color/white" />
 
                     <RadioButton
                         android:id="@+id/radioButton_joinF_female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:text="@string/female" />
+                        android:text="@string/female"
+                        android:textColor="@color/white" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -212,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/ivblanc_pink"
                 android:insetBottom="0dp"
                 android:text="@string/join"
                 android:textColor="@color/white"
@@ -223,12 +228,15 @@
 
         <ImageButton
             android:id="@+id/imageButton_back"
-            android:layout_width="50dp"
-            android:layout_height="42dp"
-            android:backgroundTint="@color/ic_launcher_background"
+            android:layout_width="30dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/transparent"
             android:src="@drawable/ic_back"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp" />
+            android:tint="@color/ivblanc_pink"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
