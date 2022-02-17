@@ -123,6 +123,24 @@ class HistoryRepository {
         }
     }
 
+    suspend fun deleteHistory(historyId: Int): Resource<HistoryResponse> {
+        return try{
+            val response = historyApi.deleteHistory(historyId)
+            if (response.isSuccessful) {
+                return if (response.code() == 200 && response.body()!!.output == 1 && response.body()!!.dataSet?.isNotEmpty() == true) {
+                    Resource.success(response.body()!!)
+                } else {
+                    Resource.error(response.body(), "히스토리 삭제에 실패했습니다.")
+                }
+            } else {
+                Resource.error(response.body(), "알 수 없는 오류입니다.")
+            }
+        } catch (e: Exception){
+            val msg = e.message
+            Resource.error(null, "네트워크 상태를 확인해 주세요.")
+        }
+    }
+
     suspend fun addHistoryPhotos(historyId: MultipartBody.Part, photoList: Array<MultipartBody.Part>): Resource<HistorySimpleResponse> {
         return try {
             val response = historyApi.addHistoryPhotos(historyId, photoList)

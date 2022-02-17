@@ -11,7 +11,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
-
+private const val TAG = "WeatherUtil"
 class WeatherUtil {
     private var nx = "60" //위도
     private var ny = "125" //경도
@@ -62,41 +62,49 @@ class WeatherUtil {
         }
         rd.close()
         conn.disconnect()
-        val result = sb.toString()
+
 
         //=======이 밑에 부터는 json에서 데이터 파싱해 오는 부분이다=====//
 
         // response 키를 가지고 데이터를 파싱
-        val response = JSONObject(result).getString("response")
+        try {
+            val result = sb.toString()
+            val response = JSONObject(result).getString("response")
+            // response 로 부터 body 찾기
+            val body = JSONObject(response).getString("body")
+            Log.d(TAG, "lookUpWeather: body = $body")
 
-        // response 로 부터 body 찾기
-        val body = JSONObject(response).getString("body")
+            // body 로 부터 items 찾기
+            val items = JSONObject(body).getString("items")
 
-        // body 로 부터 items 찾기
-        val items = JSONObject(body).getString("items")
+            // items로 부터 itemlist 를 받기
+            var jsonObj = JSONObject(items)
+            val jsonArray = jsonObj.getJSONArray("item")
+            Log.d("WEATHER_LENGTH", "${jsonArray.length()}")
+            for (i in 0 until jsonArray.length()) {
+                jsonObj = jsonArray.getJSONObject(i)
 
-        // items로 부터 itemlist 를 받기
-        var jsonObj = JSONObject(items)
-        val jsonArray = jsonObj.getJSONArray("item")
-        Log.d("WEATHER_LENGTH", "${jsonArray.length()}")
-        for (i in 0 until jsonArray.length()) {
-            jsonObj = jsonArray.getJSONObject(i)
+                val fcstValue = jsonObj.getString("fcstValue")
+                val category = jsonObj.getString("category")
 
-            val fcstValue = jsonObj.getString("fcstValue")
-            val category = jsonObj.getString("category")
+                val baseD = jsonObj.getString("baseDate")
+                val fcstD = jsonObj.getString("fcstDate")
+                if (!baseD.equals(fcstD)) continue
 
-            val baseD = jsonObj.getString("baseDate")
-            val fcstD = jsonObj.getString("fcstDate")
-            if(!baseD.equals(fcstD)) continue
-
-            if (category == "TMN") {
-                temp_low = fcstValue
+                if (category == "TMN") {
+                    temp_low = fcstValue
+                }
+                if (category == "TMX") {
+                    temp_high = fcstValue
+                }
             }
-            if (category == "TMX") {
-                temp_high = fcstValue
-            }
-            Log.i("WEATHER_TAG", "temp_low = $temp_low, temp_high = $temp_high")
+        } catch(e: Exception) {
+            Log.d(TAG, "lookUpWeather: ${e.message}")
+            return "Error"
         }
+
+        Log.i("WEATHER_TAG", "temp_low = $temp_low, temp_high = $temp_high")
+
         return "$temp_low/$temp_high"
     } // end of lookUpWeather
 }
