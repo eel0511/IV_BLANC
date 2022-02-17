@@ -71,7 +71,7 @@ class PermissionUtil(val activity: AppCompatActivity) {
     // positive button에 권한 설정으로 이동하는 클릭리스너 세팅
     private fun showReasonForPermission() {
         PermissionDialog(activity)
-            .setContent("카메라를 이용하여 사진을 찍고 저장하기 위해 필요한 권한입니다.")
+            .setContent("앱이 정상적으로 수행하기 위해 필요한 권한입니다.")
             .setPositiveButtonText("권한 설정하기")
             .setOnPositiveClickListener(object : View.OnClickListener {
                 override fun onClick(p0: View?) {
