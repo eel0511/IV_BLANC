@@ -1,4 +1,8 @@
-## Server
+# GitLab 소스 클론 이후 빌드 및 배포할 수 있도록 정리한 문서
+
+## 1. 프로젝트 개발 설정 값 및 버전
+
+### Server
 ---
 java 1.8 
 mysql (springboot연결은 mariadb)
@@ -7,9 +11,10 @@ Intellij Ultimate 2021.3.1
 Python=3.8 pytorch=[>=1.6.0] cudatoolkit=[>=9.2]
 mysql(flask연결은 pymysql)
 
-firebase json파일은 모두 서버파일에 들어있음( iv-blanc-firebase-adminsdk-l6zca-232ca5420a.json )
 
 ---
+## 2. 빌드 시 사용되는 환경 변수 등의 주요 내용 상세 기재
+
 ### spring boot
 
 #### application-alpha.yml 
@@ -26,22 +31,22 @@ firebase json파일은 모두 서버파일에 들어있음( iv-blanc-firebase-ad
 
 sendurl은 일반 플라스크 서버의 주소:포트
 
-sendAiurl은 ai처리하는 플라스크 서버의 주소:포트로 설정한다
+sendAiurl은 ai처리하는 플라스크 서버의 주소:포트
 
 #### FileService
 
-DOWNLOAD_URL에 firebase에 올라간 사진이 저장되는 GCP경로를 쓴다
+DOWNLOAD_URL = firebase에 올라간 사진이 저장되는 GCP경로
 
-bucket이름 등 firebase 관련 설정을 해준다
+bucket이름 등 firebase 관련 설정 필요
 
 #### FcmService
 
-API_URL 등 fcm 관련 설정을 해준다
-
+API_URL 등 fcm 관련 설정 필요
 
 ### Flask 서버
 
 ---
+#### 배경제거 플라스크 서버
 
 myflask안의 main.py(spring의 /api/clothes/add 에 쓰임 )
 
@@ -49,85 +54,67 @@ myflask안의 main.py(spring의 /api/clothes/add 에 쓰임 )
 2. Firebase 설정
 
 
+#### 가상피팅 플라스크 서버(GPU)
 
 flask_AI 안의 app.py (스프링의 /api/clothes/beta 에 쓰임)
 
 
 1. Firebase 설정
 
-VITON-HD 설정
+2. VITON-HD 설정
 
 https://github.com/shadow2496/VITON-HD를 클론하여 Installation 과정을 거치고
 그 안에 flask_AI 의 app.py를 위치시키고(파이어베이스 json도 위치) 
-test.py 는 flask_AI의 test.py 를 덮어씌움
-따로 train은 시키지않고 pre_train model을 사용함
-
+test.py 는 flask_AI의 test.py 를 덮어씌워줍니다
 
 ---
 ### 서버 구동
 
-위의 3가지 서버를 모두 설정 후에
-
-flask_AI 안의 Flask 서버는 flask run으로 구동
-
-
-
-springboot 서버 로컬에서 열 경우  Gradle의 cleanQuerydslSourcesDir , bootRun 차례대로 실행
-
+springboot 서버 로컬에서 열 경우  Gradle의 cleanQuerydslSourcesDir , bootRun 차례대로 실행해줍니다
 
 springboot 서버와 myflask안의 Flask서버는 aws에서 빌드 할 경우
 
+#### jenkins
 i6d104.p.ssafy.io:9090
 ivblanc // ivblanc
-test 파이프 라인 실행시 빌드
+test 파이프 라인 실행시 빌드되고 jar파일이 나옵니다
+
+실행은
+i6d104.p.ssafy.io AWS 에서 sudo su후 있는 start.sh web.sh 실행으로 할 수 있습니다
+
+## 3. 배포 시 특이사항
+
+AI 플라스크 서버를 돌리기위해 GPU가 필요합니다.
+
+## 4. DB접속 정보 등 프로젝트에 활용되는 주요 계정 및 프로퍼티가 정의된 파일 목록
+
+Mysql
+id: ivblanc
+pw: ivblancgumi104
+
+# 프로젝트에서 사용하는 외부 서비스 정보
+
+firebase json파일은 모두 서버파일에 들어있습니다( iv-blanc-firebase-adminsdk-l6zca-232ca5420a.json )
+
+Firebase Storage, Firebase cloud Message
+Naver Map, 공공데이터 날씨API
+
+# DB덤프 파일 최신본
+
+ivblancdump.sql
+
+###서비스 이용가능 계정
+
+ms001118@naver.com
+12345678a
+
+ms001119@naver.com
+12345678a
+
+ms001120@naver.com
+12345678a
+
+ms001121@naver.com
+12345678a
 
 
-이렇게 하면 jar 파일이 생성된다.
-
-이것을 다음의 start.sh 쉘파일을 만들어서 실행하면 서버가 구동된다.
-
-```
-#현재 우리 도커 젠킨스의 jar 빌드 경로
-var=/var/lib/docker/volumes/afcb73ec45b678150275f4e99084f88526d6fdacba989d4f700d8156fb67afb8/_data/workspace/test/server/api-module/build/libs/
-
-#myflask의 위치
-var2=/var/lib/docker/volumes/afcb73ec45b678150275f4e99084f88526d6fdacba989d4f700d8156fb67afb8/_data/workspace/test/server/myflask/
-
-#스프링 백그라운드 실행
-
-nohup java -jar ${var}*.jar --logging.file.path=${var} --logging.level.org.hibernate.SQL=DEBUG >> ${var}deploy.log 2>${var}deploy_err.log &
-
-cd
-
-cd $var2
-
-#플라스크 실행
-FLASK_APP=main.py flask run --host=0.0.0.0
-
-
-echo “start”
-```
-
-
-
-플라스크서버는 포그라운드에서 돌고 스프링은 백그라운드에서 돈다.
-
-종료는 현재 실행중 인 플라스크는 컨트롤+C 커맨드로 종료하고 자바는 백그라운드에서 kill해주면 종료된다.
-
-
-
-다음과같은 stop.sh 쉘을 이용할 수 있다.
-
-```
-#!/bin/sh
-
-PID=`ps  | grep java | awk '{print $1}'`
-if [ -n "$PID" ]
-then
-  echo "=====spring is running at" $PID "Shutdown spring now"
-  sudo kill -9 $PID
-else
-  echo "=====spring isn't running====="
-fi
-
-```
