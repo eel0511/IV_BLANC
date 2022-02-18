@@ -197,6 +197,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         mainViewModel.trailingIconDrawable.observe(this) {
             setTrailingIcon(it, getListener(it))
         }
+
+        binding.toolbarMain.imageViewToolbarLogoutIcon.apply {
+            visibility = View.VISIBLE
+            setOnClickListener {
+                LoginUtil.signOut()
+                finish()
+            }
+        }
     }
 
     // imageView의 background drawable Id에 따라 버튼 리스너 반환

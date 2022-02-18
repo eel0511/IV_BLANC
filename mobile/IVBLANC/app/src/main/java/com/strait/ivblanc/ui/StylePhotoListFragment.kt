@@ -184,8 +184,8 @@ class StylePhotoListFragment : BaseFragment<FragmentStylePhotoListBinding>(Fragm
         val dialog = adb.create()
         val lp = WindowManager.LayoutParams()
         lp.copyFrom(dialog.window!!.attributes)
-        lp.width = 1200
-        lp.height = 1600
+        lp.width = 800
+        lp.height = 1000
 
         dialog.show()
         val window = dialog.getWindow();
