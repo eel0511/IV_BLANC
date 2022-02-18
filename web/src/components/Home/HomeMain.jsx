@@ -25,7 +25,7 @@ export default function HomeMain() {
           <div className='subTitle'></div>
 
           <div className='subTitle'>
-            <a href='https://storage.googleapis.com/iv-blanc.appspot.com/app-debug.apk'>
+            <a href='https://storage.googleapis.com/iv-blanc.appspot.com/app-release.apk'>
               <button className='download' type='button'>
                 App Download
               </button>
