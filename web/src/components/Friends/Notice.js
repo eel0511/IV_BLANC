@@ -32,7 +32,6 @@ export default function Notice() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setFriendRequest(response.data.data);
       });
   };

@@ -91,7 +91,6 @@ export default function SignUp() {
   const checkEmail = useCallback(async (e) => {
     e.preventDefault();
     const tmpEmail = document.getElementById('email').value;
-    console.log(document.getElementById('email').value);
 
     try {
       await axios
@@ -102,8 +101,6 @@ export default function SignUp() {
           },
         })
         .then((res) => {
-          // console.log(res);
-          console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('사용가능한 이메일입니다.');
             setIsEmailCheck(true);
@@ -222,14 +219,6 @@ export default function SignUp() {
     if (!isEmailCheck) return alert('이메일 중복 확인을 확인해주세요');
 
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-      name: data.get('name'),
-      gender: data.get('gender') === 'male' ? 1 : 2,
-      age: Number(data.get('age')),
-      phoneNum: data.get('phoneNum'),
-    });
 
     // 백엔드 통신
     try {
@@ -246,7 +235,6 @@ export default function SignUp() {
           social: 1,
         })
         .then((res) => {
-          console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('회원가입 성공!!');
             navigate('/signin');

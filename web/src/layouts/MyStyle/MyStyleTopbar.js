@@ -57,7 +57,6 @@ export default function MyStyleTopbar() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setClothes(response.data.data);
         setFilterMyClothes(response.data.data);
       });
@@ -71,7 +70,6 @@ export default function MyStyleTopbar() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setStyleClothes(response.data.data);
       });
   };
@@ -83,7 +81,6 @@ export default function MyStyleTopbar() {
 
   const handleSelect = async (e) => {
     const category = e;
-    console.log(category);
     setTab(Number(category));
     setIsData(true);
 
@@ -101,7 +98,6 @@ export default function MyStyleTopbar() {
   };
 
   const handleClick = (e) => {
-    console.log(e);
     setTitle(e.target.outerText);
   };
 
@@ -109,8 +105,6 @@ export default function MyStyleTopbar() {
     const clothId = Number(e.target.alt);
     const url = e.target.src;
     const category = Number(e.target.title);
-    console.log(e.target);
-    console.log(e);
     const selectedData = {
       clothesId: clothId,
       url: url,
@@ -143,14 +137,12 @@ export default function MyStyleTopbar() {
 
   const showLook = (e) => {
     // e.preventDefault();
-    console.log(e);
     setIsClickLook(true);
     setIsShowLook(false);
     const data = {
       styleId: Number(e.target.alt),
       url: e.target.src,
     };
-    console.log(data);
     setStyleLook(data);
   };
 

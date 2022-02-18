@@ -76,10 +76,6 @@ export default function SignUp() {
     setIsShow(true);
 
     // eslint-disable-next-line no-console
-    console.log({
-      name: data.get('name'),
-      phoneNum: data.get('phoneNum'),
-    });
 
     // 백엔드 통신
     // const router = useRouter();
@@ -91,7 +87,6 @@ export default function SignUp() {
     //       phone: data.get('phoneNum'),
     //     })
     //     .then((res) => {
-    //       console.log('response:', res.data);
     //       if (res.status === 200) {
     //         alert('아이디 찾기 성공!!');
     //       }

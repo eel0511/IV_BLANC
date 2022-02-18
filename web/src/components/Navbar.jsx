@@ -37,7 +37,6 @@ export default function Navbar() {
   let navigate = useNavigate();
 
   const isLogin = (e) => {
-    console.log(e);
     if (isToken === false) {
       e.preventDefault();
       alert('로그인을 해야 이용가능한 서비스 입니다');

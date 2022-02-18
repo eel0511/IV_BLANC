@@ -16,18 +16,12 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
-        console.log('성공');
         setSelectedStyles(response.data.data);
       });
   }, []);
 
   const styleHandleChange = (e) => {
     e.preventDefault();
-    console.log(e.target);
-    console.log(e.target.src);
-    console.log(e.target.alt);
-    console.log(e.target.createDate);
     const data = {
       url: e.target.src,
       styleId: e.target.alt,
@@ -35,7 +29,6 @@ export default function HistoryCreateModalBody({ getStyleLook }) {
       madeby: e.target.madeby,
     };
     getStyleLook(data);
-    // console.log(e.target.files);
     // setSelectedStyles(e.target.files[0]);
   };
 

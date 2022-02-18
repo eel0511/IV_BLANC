@@ -23,7 +23,6 @@ export default function History() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         const data = response.data.data;
         if ( data ) {
           setmyHistories(data.reverse());

@@ -40,7 +40,6 @@ export default function FriendsList() {
       })
       .then((response) => {
         setFriendsList(response.data.data);
-        // console.log(response.data.data)
       });
   };
 

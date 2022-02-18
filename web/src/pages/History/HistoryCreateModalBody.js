@@ -20,7 +20,6 @@ export default function HistoryCreateModalBody({
 
   const onLoadFile = (e) => {
     const file = e.target.files;
-    console.log(file);
     setFiles(file);
   };
 
@@ -31,24 +30,19 @@ export default function HistoryCreateModalBody({
   const [selectedText, setSelectedText] = useState();
 
   const imgHandleChange = (e) => {
-    console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
   };
   const styleHandleChange = (e) => {
-    console.log(e.target.value);
     setSelectedImg(e.target.value);
   };
   const dateHandleChange = (e) => {
     setSelectedDate(e.target.value);
-    console.log(e.target.value);
   };
   const subjectHandleChange = (e) => {
     setSelectedSubject(e.target.value);
-    console.log(e.target.value);
   };
   const textHandleChange = (e) => {
     setSelectedText(e.target.value);
-    console.log(e.target.value);
   };
 
   const getMyStylesData = () => {
@@ -60,10 +54,6 @@ export default function HistoryCreateModalBody({
         },
       })
       .then((response) => {
-        // console.log(response.data.data);
-        // setSelectedStyle(response.data.data.url);
-        console.log(response.data.data);
-        console.log('성공');
         setSelectedStyle(response.data.data);
       });
   };
@@ -87,7 +77,6 @@ export default function HistoryCreateModalBody({
       })
       .then((response) => {
         if (response.status === 200 && response.data.output === 1) {
-          console.log(response);
           alert('등록 되었습니다!');
           setLoading(false);
           getmyHistoriesData();
@@ -101,13 +90,11 @@ export default function HistoryCreateModalBody({
         }
       })
       .catch((err) => {
-        console.log('실패');
         setLoading(false);
       });
   };
 
   const getImg = (data) => {
-    console.log(data);
     setSelectedStyle(data);
   };
 

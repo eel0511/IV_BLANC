@@ -10,7 +10,6 @@ export default function StyleSelectButton({ getImg }) {
   const handleShow = () => setShow(true);
 
   const getStyleLook = (styles) => {
-    console.log(styles);
     setStyleLook(styles);
     getImg(styles);
     setShow(false);

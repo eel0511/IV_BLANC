@@ -103,9 +103,6 @@ export default function SignUp() {
     setIsShow(true);
 
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-    });
 
     // 백엔드 통신
     // const router = useRouter();
@@ -122,7 +119,6 @@ export default function SignUp() {
     //       social: 1,
     //     })
     //     .then((res) => {
-    //       console.log('response:', res.data);
     //       if (res.status === 200) {
     //         alert('회원가입 성공!!');
     //       }

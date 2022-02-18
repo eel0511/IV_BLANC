@@ -26,9 +26,7 @@ function FlipCard({
             },
           })
           .then((res) => {
-            console.log('response:', res.data);
             if (res.status === 200 && res.data.output === 1) {
-              console.log(res.data.msg);
               alert('삭제되었습니다.');
               getmyHistoriesData();
             } else if (res.status === 200 && res.data.output === 0) {

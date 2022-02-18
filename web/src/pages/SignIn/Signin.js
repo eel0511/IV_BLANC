@@ -115,10 +115,6 @@ export default function SignInSide() {
     if (email === '') return alert('이메일을 입력해주세요');
     if (password === '') return alert('비밀번호를 입력해주세요');
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
 
     // 백엔드 통신
     try {
@@ -134,13 +130,10 @@ export default function SignInSide() {
           { withCredentials: true }
         )
         .then((res) => {
-          console.log('response:', res.data);
           if (res.status === 200 && res.data.output === 1) {
             alert('로그인 성공!!');
             // setToken(getCookie('JWT'));
-            // console.log(token);
             const token = getCookie('JWT');
-            console.log(token);
             localStorage.setItem('JWT', token);
             localStorage.setItem('name', res.data.data.name);
             localStorage.setItem('email', res.data.data.email);

@@ -282,7 +282,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setClothes(response.data.data);
         setFilterFriendClothes(response.data.data);
       });
@@ -300,7 +299,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
       })
       .then((response) => {
         setStyleClothes(response.data.data);
-        // console.log(response.data.data)
       });
   };
 
@@ -311,7 +309,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
 
   const handleSelect = async (e) => {
     const category = e;
-    console.log(category);
     setTab(Number(category));
     setIsData(true);
 
@@ -329,7 +326,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
   };
 
   const handleClick = (e) => {
-    console.log(e);
     setTitle(e.target.outerText);
   };
 
@@ -337,8 +333,6 @@ export default function FriendStyleTopbar({ friendName, friendEmail }) {
     const clothId = Number(e.target.alt);
     const url = e.target.src;
     const category = Number(e.target.title);
-    console.log(e.target);
-    console.log(e);
     const selectedData = {
       clothesId: clothId,
       url: url,
