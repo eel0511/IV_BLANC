@@ -3,6 +3,7 @@ package com.strait.ivblanc.src.history
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -38,6 +39,13 @@ class StyleSelectActivity : BaseActivity<ActivityStyleSelectBinding>(ActivitySty
         styleViewModel.styleListLiveData.observe(this) {
             styleSelectRVA.data = it
             Log.d(TAG, "getItemCount: ${styleSelectRVA.getItemCount()}")
+            if(styleSelectRVA.getItemCount() == 0){
+                binding.recyclerViewStyleList.visibility = View.GONE
+                binding.textViewNoStyle.visibility = View.VISIBLE
+            } else {
+                binding.recyclerViewStyleList.visibility = View.VISIBLE
+                binding.textViewNoStyle.visibility = View.GONE
+            }
             styleSelectRVA.notifyDataSetChanged()
         }
     }
