@@ -10,7 +10,7 @@ export default function Blog() {
   const [element, controls] = useScroll();
   const blogsData = [
     {
-      title: "2022-02-18",
+      title: "2022-02-17",
       type: "IV BLANC와 함께",
       img: "1.jfif",
       description:
@@ -24,7 +24,7 @@ export default function Blog() {
         "잊혀지기 쉽습니다!",
     },
     {
-      title: "2022-02-18",
+      title: "2022-02-19",
       type: "히스토리를 통해",
       img: "3.jfif",
       description:
