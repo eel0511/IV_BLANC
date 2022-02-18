@@ -106,7 +106,10 @@ class MapFragment : BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R
 
         //위치 및 각도 조정
         val cameraPosition = CameraPosition(
-            LatLng(gpsTracker!!.getLatitude(), gpsTracker!!.getLongitude()),  // 위치 지정
+            /*
+            37.55489983132594, 126.97053601304681
+             */
+            LatLng(37.55489983132594, 126.97053601304681),  // 위치 지정
             9.0,  // 줌 레벨
             0.0,  // 기울임 각도
             0.0 // 방향
