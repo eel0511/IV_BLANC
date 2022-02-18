@@ -186,7 +186,6 @@ export default function FriendsListItem({ friend }) {
       })
       .then((response) => {
         setFriendsStyleList(response.data.data);
-        // console.log(response.data.data)
       });
   };
 
