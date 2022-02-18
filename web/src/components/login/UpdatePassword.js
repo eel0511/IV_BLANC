@@ -28,12 +28,15 @@ export default function UpdatePassword(props) {
 
   // 비밀번호
   const onChangePassword = useCallback((e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
     const passwordCurrent = e.target.value;
     setPassword(passwordCurrent);
 
     if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 16자리 이하로 입력해주세요!');
+      setPasswordMessage(
+        '숫자+영문자+특수문자 조합으로 8자리 이상 16자리 이하로 입력해주세요!'
+      );
       setIsPassword(false);
     } else {
       setPasswordMessage('안전한 비밀번호에요 : )');
@@ -66,10 +69,6 @@ export default function UpdatePassword(props) {
     if (passwordConfirm === '') return alert('비밀번호를 입력해주세요');
 
     // eslint-disable-next-line no-console
-    console.log({
-      password: data.get('password'),
-      password_chk: data.get('password_chk'),
-    });
 
     // 백엔드 통신
     // const router = useRouter();
@@ -82,7 +81,6 @@ export default function UpdatePassword(props) {
     //       password_chk: data.get('password_chk'),
     //     })
     //     .then((res) => {
-    //       console.log('response:', res.data);
     //       if (res.status === 200) {
     //         alert('회원가입 성공!!');
     //       }
@@ -104,18 +102,60 @@ export default function UpdatePassword(props) {
             alignItems: 'center',
           }}
         >
-          <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component='form'
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField required fullWidth name='password' label='비밀번호' type='password' id='password' autoComplete='new-password' onChange={onChangePassword} />
-                {password.length > 0 && <span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  name='password'
+                  label='비밀번호'
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  onChange={onChangePassword}
+                />
+                {password.length > 0 && (
+                  <span
+                    className={`message ${isPassword ? 'success' : 'error'}`}
+                  >
+                    {passwordMessage}
+                  </span>
+                )}
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth name='password_chk' label='비밀번호 확인' type='password' id='password' autoComplete='new-password' onChange={onChangePasswordConfirm} />
-                {passwordConfirm.length > 0 && <span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>}
+                <TextField
+                  required
+                  fullWidth
+                  name='password_chk'
+                  label='비밀번호 확인'
+                  type='password'
+                  id='password'
+                  autoComplete='new-password'
+                  onChange={onChangePasswordConfirm}
+                />
+                {passwordConfirm.length > 0 && (
+                  <span
+                    className={`message ${
+                      isPasswordConfirm ? 'success' : 'error'
+                    }`}
+                  >
+                    {passwordConfirmMessage}
+                  </span>
+                )}
               </Grid>
             </Grid>
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              sx={{ mt: 3, mb: 2 }}
+            >
               비밀번호 수정
             </Button>
           </Box>

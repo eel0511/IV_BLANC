@@ -13,13 +13,10 @@ class KakaoLogin extends Component {
       window.Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
         success: (auth) => {
-          console.log('Kakao 로그인 완료', auth);
           // kakao 로그인 성공 시, 사용자 정보 API 호출
           window.Kakao.API.request({
             url: '/v2/user/me',
-            success: (res) => {
-              console.log('kakao 사용자 정보', res);
-            },
+            success: (res) => {},
             fail: (err) => {
               console.log(err);
             },

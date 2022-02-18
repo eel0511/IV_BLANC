@@ -12,7 +12,6 @@ export default function FriendsCreateButton() {
 
   const friendNameHandleChange = (e) => {
     setFriendName(e.target.value);
-    // console.log(friendName)
   };
 
   const token = localStorage.getItem('JWT');
@@ -28,7 +27,6 @@ export default function FriendsCreateButton() {
         friendName: `${friendName}`,
       })
       .then((response) => {
-        console.log(response.data);
         alert('친구요청 보내기 성공');
         handleClose();
       });

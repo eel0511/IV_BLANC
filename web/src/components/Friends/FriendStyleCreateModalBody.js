@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-function FriendStyleCreateModalBody({ saveClothesId, handleClose, getFriendsStyleList }) {
+function FriendStyleCreateModalBody({
+  saveClothesId,
+  handleClose,
+  getFriendsStyleList,
+}) {
   const [selectedImg, setSelectedImg] = useState();
   const imgHandleChange = (e) => {
-    console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
   };
 
@@ -20,9 +23,6 @@ function FriendStyleCreateModalBody({ saveClothesId, handleClose, getFriendsStyl
     formData.append('photo', selectedImg);
     formData.append('clothesList', clothesList);
 
-    console.log(saveClothesId);
-    console.log(clothesList);
-
     axios
       .post('http://i6d104.p.ssafy.io:9999/api/style/add', formData, {
         headers: {
@@ -31,7 +31,6 @@ function FriendStyleCreateModalBody({ saveClothesId, handleClose, getFriendsStyl
         },
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           alert('추천되었습니다.');
           getFriendsStyleList();
@@ -39,7 +38,7 @@ function FriendStyleCreateModalBody({ saveClothesId, handleClose, getFriendsStyl
         }
       })
       .catch((err) => {
-        console.log('실패');
+        console.error(err);
       });
   };
 
