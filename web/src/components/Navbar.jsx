@@ -146,7 +146,7 @@ export default function Navbar() {
             </>
           )}
           <li>
-            <a href='https://storage.googleapis.com/iv-blanc.appspot.com/app-debug.apk'>
+            <a href='https://storage.googleapis.com/iv-blanc.appspot.com/app-release.apk'>
               <TiVendorAndroid
                 className='Android__icon'
                 id='basic-button'
