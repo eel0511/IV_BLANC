@@ -29,7 +29,6 @@ export default function Navbar() {
     for (let key of keys) {
       if (key === 'JWT') {
         setIsToken(true);
-        // console.log('true')
       }
     }
   }, []);

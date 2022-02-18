@@ -69,7 +69,6 @@ function StyleLook({ selectedClothes }) {
   }, []);
 
   const saveLook = () => {
-    console.log('onCapture');
     html2canvas(document.getElementById('StyleImg'), {
       allTaint: true,
       // allowTaint: true,
@@ -81,7 +80,6 @@ function StyleLook({ selectedClothes }) {
     });
     const saveAs = (uri, filename) => {
       // 캡쳐된 파일을 이미지 파일로 내보낸다.
-      console.log('onSaveAs');
       const link = document.createElement('a');
       if (typeof link.download === 'string') {
         link.href = uri;

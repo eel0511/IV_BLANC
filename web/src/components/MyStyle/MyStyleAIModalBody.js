@@ -10,13 +10,11 @@ function MyStyleAIModalBody() {
   const [loading, setLoading] = useState(false);
 
   const imgHandleChange = (e) => {
-    console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
     setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
 
   const createStyle = () => {
-    console.log(selectedImg);
     if (selectedImg === undefined) {
       alert('사진을 등록해주세요!');
       return;
@@ -40,12 +38,10 @@ function MyStyleAIModalBody() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setLoading(false);
         setAIurl(response.data.data);
       })
       .catch((err) => {
-        console.log('실패');
         setLoading(false);
       });
   };

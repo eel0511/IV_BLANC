@@ -46,9 +46,7 @@ export default function Profile() {
         },
       })
       .then((response) => {
-        console.log(response.data.data);
         setInfo(response.data.data);
-        // console.log(Info)
       });
   };
   useEffect(() => {

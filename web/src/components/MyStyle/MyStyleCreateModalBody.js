@@ -9,7 +9,6 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
   const [loading, setLoading] = useState(false);
 
   const imgHandleChange = (e) => {
-    console.log(e.target.files);
     setSelectedImg(e.target.files[0]);
     setPreviewImg(URL.createObjectURL(e.target.files[0]));
   };
@@ -25,9 +24,6 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
     formData.append('photo', selectedImg);
     formData.append('clothesList', clothesList);
 
-    console.log(saveClothesId);
-    console.log(clothesList);
-
     setLoading(true);
 
     axios
@@ -38,7 +34,6 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
         },
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 200 && response.data.output === 1) {
           alert('등록되었습니다.');
           handleClose();
@@ -54,7 +49,6 @@ function MyStyleCreateModalBody({ saveClothesId, handleClose, getStyleLook }) {
         }
       })
       .catch((err) => {
-        console.log('실패');
         setLoading(false);
       });
   };

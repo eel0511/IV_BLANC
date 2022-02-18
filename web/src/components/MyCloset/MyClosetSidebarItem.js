@@ -6,11 +6,9 @@ export default function MyClosetSidebarItem({ menu, id, clothesDatas, getFilterM
       const filterClothesDatas = clothesDatas.filter(
         (clothesData) => parseInt(clothesData.category / 10) === id
       );
-      // console.log(filterClothesDatas);
       getFilterMyclothes(filterClothesDatas)
     } else {
       const filterClothesDatas = clothesDatas
-      // console.log(filterClothesDatas);
       getFilterMyclothes(filterClothesDatas)
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });

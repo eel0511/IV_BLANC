@@ -49,13 +49,7 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
         mainCategory = codeData['category'].기타;
         break;
     }
-
-    // console.log(mainCategory);
-    // console.log(
-    //   Object.keys(mainCategory).find(
-    //     (key) => mainCategory[key] === clothesData.category
-    //   )
-    // );
+    
     setCategory(
       Object.keys(mainCategory).find(
         (key) => mainCategory[key] === clothesData.category
@@ -87,10 +81,8 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
   const handleShow = () => setShow(true);
 
   const handleChange = async (e) => {
-    // console.log(e.target.checked);
     const favoriteCurrent = e.target.checked;
     setFavoriteChecked(favoriteCurrent);
-    // console.log(favoriteCurrent);
 
     // 체크했을 때 서버에 즐겨찾기 등록 정보 전달
     // favoriteChecked===true이면 추가, 아니면 삭제
@@ -111,7 +103,6 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
             },
           })
           .then((res) => {
-            console.log('response:', res.data);
             if (res.status === 200 && res.data.output === 1) {
               alert(res.data.msg);
             } else if (res.status === 200 && res.data.output === 0) {
@@ -138,7 +129,6 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
             },
           })
           .then((res) => {
-            console.log('response:', res.data);
             if (res.status === 200 && res.data.output === 1) {
               alert(res.data.msg);
             } else if (res.status === 200 && res.data.output === 0) {
@@ -171,9 +161,7 @@ export default function MyClosetClothesItem({ clothesData, getMyClothesData }) {
             },
           })
           .then((res) => {
-            console.log('response:', res.data);
             if (res.status === 200 && res.data.output === 1) {
-              console.log(res.data.msg);
               alert('삭제되었습니다.');
               setShow(false);
               getMyClothesData();

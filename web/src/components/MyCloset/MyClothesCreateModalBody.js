@@ -20,36 +20,29 @@ export default function MyClothesCreateModalBody({
 
   const colorHandleChange = (e) => {
     setSelectedColor(e.target.value);
-    // console.log(e.target.value);
   };
 
   const materialHandleChange = (e) => {
     setSelectedMaterial(e.target.value);
-    console.log(e.target.value);
   };
 
   const seasonHandleChange = (e) => {
     setSelectedSeason(e.target.value);
-    // console.log(e.target.value);
   };
 
   const sizeHandleChange = (e) => {
     setSelectedSize(e.target.value);
-    // console.log(e.target.value);
   };
 
   const mainCategoryHandleChange = (e) => {
     setSelectedMainCategory(e.target.value);
-    // console.log(e.target.value);
   };
 
   const subCategoryHandleChange = (e) => {
     setSelectedSubCategory(e.target.value);
-    // console.log(e.target.value);
   };
 
   const imgHandleChange = (e) => {
-    // console.log(e.target.files)
     setSelectedImg(e.target.files[0]);
   };
   const [key, setKey] = useState('');
@@ -83,7 +76,6 @@ export default function MyClothesCreateModalBody({
         }
       })
       .catch((err) => {
-        console.log(err.msg);
         setLoading(false);
       });
   };
