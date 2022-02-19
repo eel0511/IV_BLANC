@@ -110,14 +110,25 @@ def start():
     f.save(path)
     img = cv2.imread("./datasets/test/cloth/"+fname)
     im_in = cv2.resize(img, (192, 256))
-    cv2.imwrite(path, im_in)
+    mark = np.copy(im_in) # image 복사
+    #  BGR 제한 값 설정
+    blue_threshold = 1
+    green_threshold = 1
+    red_threshold = 1
+    bgr_threshold = [blue_threshold, green_threshold, red_threshold]
+
+    # BGR 제한 값보다 작으면 흰색으로
+    thresholds = (im_in[:,:,0] < bgr_threshold[0]) \
+                | (im_in[:,:,1] < bgr_threshold[1]) \
+                | (im_in[:,:,2] < bgr_threshold[2])
+    mark[thresholds] = [255,255,255]
+    cv2.imwrite(path, mark)
     img = cv2.imread("./datasets/test/cloth/" + fname, cv2.IMREAD_GRAYSCALE)
     print(img.size)
-
     # Threshold.
     # Set values equal to or above 220 to 0.
     # Set values below 220 to 255.
-    th, im_th = cv2.threshold(img, 230, 255, cv2.THRESH_BINARY_INV);
+    th, im_th = cv2.threshold(img, 220, 255, cv2.THRESH_BINARY_INV);
     # Copy the thresholded image.
     im_floodfill = im_th.copy()
 
